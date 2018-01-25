@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+
+<head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -15,7 +16,8 @@
 
     <!-- ADD FAVICON -->
 
-    </head>
+</head>
+
 <body>
     <div class="div-1" id="div-1">
         <p>
@@ -24,7 +26,15 @@
             <a href="https://www.komu.engineer/blog">Blog</a>&nbsp;&nbsp;
         </p>
         <p>
-            Blog posts coming soon...
+            </br>
+            1.
+            <a href="blogs/go-gc-maps.html">Go Garbage collector and Large maps with pointers.</a>
+            </br>
+            I'm left wondering, shouldn't the Go runtime then not do it for me/you by default?</br>
+            Anytime the runtime sees a map that is larger than X and the keys to that map contains pointers,</br>
+            the runtime inlines(for lack of a better term) that map into one whose keys are ints(or whatever) and does the string->ints
+            hashing for you without you even noticing.
+            <a href="blogs/go-gc-maps.html">Read More>></a>
         </p>
     </div>
 </body>
