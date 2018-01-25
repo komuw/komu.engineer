@@ -45,16 +45,16 @@
             In the tweet, he suggested that a minimum perfect hash function can be created to be used in place of the string keys to
             the map thus reducing GC times.</br>
             I was curious as to how using a hash would help to relieve the pressure on the garbage collector.</br>
-            So, I set out to profile the GC times when you have a map whose keys are strings and another map whose strings are strings
-            that have been hashed into ints.</br>
+            So, I set out to profile the GC times; first when you have a map whose keys are strings and second when you have a map whose
+            keys are strings that have been hashed into ints.</br>
             </br>
 
             The program I used to profile that is below:</br>
             <script src="https://gist.github.com/komuw/4f1ca71a54e49d7187d0fa30ebdc9a2b.js"></script>
             </br>
-            On running it the results were;</br>
+            On running it, the results were;</br>
             <i>
-                With a map of strings, GC took: 775.280442ms</br>
+                With a map of strings, GC took:: 775.280442ms</br>
                 With map of strings(that are hashed to ints), GC took:: 19.086413ms
             </i>
             </br>
