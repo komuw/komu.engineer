@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+
+<head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -15,17 +16,116 @@
 
     <!-- ADD FAVICON -->
 
-    </head>
+    <style>
+        /*
+         styled using css-grid:
+         https://css-tricks.com/snippets/css/complete-guide-grid/
+         */
+
+        .container {
+            /* grid | inline-grid | subgrid; */
+            display: grid;
+
+            grid-template-columns: [column1-start] 1fr [column1-end] 4fr [column2-end] 1fr [column3-end];
+            grid-template-rows: [row1-start] 0.2fr [row1-end] 1fr [row2-end] auto [row3-end];
+
+            grid-template-areas: "header header header" "left-sidebar main right-sidebar" ". . .";
+
+            /* this two may not be needed */
+            grid-column-gap: 1px;
+            grid-row-gap: 1px;
+
+            /* start | end | center | stretch; */
+            /* align, content inside a grid item, along horizontal ie to the left or right */
+            justify-items: center;
+
+            /* start | end | center | stretch; */
+            /* align, content inside a grid item, top or bottom */
+            align-items: center;
+
+            /* start | end | center | stretch | space-around | space-between | space-evenly; */
+            /* sets the alignment of the grid within the grid container. left or right.
+                esp if ua grid is less than the size of its grid container*/
+            justify-content: stretch;
+
+            /* start | end | center | stretch | space-around | space-between | space-evenly; */
+            /* sets the alignment of the grid within the grid container. top or bottom.
+                esp if ua grid is less than the size of its grid container*/
+            align-content: stretch;
+
+
+        }
+
+        .item-header {
+            grid-area: header;
+
+            grid-column-start: column1-start;
+            grid-column-end: column3-end;
+            grid-row-start: row1-start;
+            grid-row-end: row1-end;
+        }
+
+        .item-left-sidebar {
+            grid-area: left-sidebar;
+
+            grid-column-start: column1-start;
+            grid-column-end: column1-end;
+            grid-row-start: row1-end;
+            grid-row-end: auto;
+
+            justify-self: center;
+        }
+
+        .item-main {
+            grid-area: main;
+
+            grid-column-start: column1-end;
+            grid-column-end: column2-end;
+            grid-row-start: row1-end;
+            grid-row-end: auto;
+
+            /* start | end | center | stretch; */
+            /* Aligns the content inside a grid item left to right */
+            justify-self: center;
+            /* start | end | center | stretch; */
+            /* aligns top bottom */
+            align-self: start;
+        }
+
+        .item-right-sidebar {
+            grid-area: right-sidebar;
+
+            grid-column-start: column2-end;
+            grid-column-end: column3-end;
+            grid-row-start: row1-end;
+            grid-row-end: auto;
+
+            justify-self: center;
+        }
+    </style>
+
+</head>
+
 <body>
-    <div class="div-1" id="div-1">
-        <p>
-            <a href="https://www.komu.engineer">Home</a>&nbsp;&nbsp;
-            <a href="https://www.komu.engineer/about">About Me</a>&nbsp;&nbsp;
-            <a href="https://www.komu.engineer/blog">Blog</a>&nbsp;&nbsp;
-        </p>
-        <p>
-            Sorry, I don't own a dog.<br/>
-            <a href="https://www.youtube.com/results?search_query=puppies+playing">But here is a link to videos of random puppies playing.</a>
-        </p>
+    <div class="container">
+        <div class="item-header">
+            <a target="_blank" rel="noopener" href="https://www.komu.engineer">Home</a>&nbsp;&nbsp;
+            <a target="_blank" rel="noopener" href="https://www.komu.engineer/about">About Me</a>&nbsp;&nbsp;
+            <a target="_blank" rel="noopener" href="https://www.komu.engineer/blog">Blog</a>&nbsp;&nbsp;
+        </div>
+        <div class="item-left-sidebar">
+            .
+        </div>
+        <div class="item-right-sidebar">
+            .
+        </div>
+
+        <div class="item-main">
+            <p>
+                Sorry, I don't own a dog.
+                <br/>
+                <a target="_blank" rel="noopener" href="https://www.youtube.com/results?search_query=puppies+playing">But here is a link to videos of random puppies playing.</a>
+            </p>
+        </div>
     </div>
 </body>

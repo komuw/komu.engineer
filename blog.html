@@ -16,25 +16,119 @@
 
     <!-- ADD FAVICON -->
 
+    <style>
+        /*
+         styled using css-grid:
+         https://css-tricks.com/snippets/css/complete-guide-grid/
+         */
+
+        .container {
+            /* grid | inline-grid | subgrid; */
+            display: grid;
+
+            grid-template-columns: [column1-start] 1fr [column1-end] 4fr [column2-end] 1fr [column3-end];
+            grid-template-rows: [row1-start] 0.3fr [row1-end] 1fr [row2-end] auto [row3-end];
+
+            grid-template-areas: "header header header" "left-sidebar main right-sidebar" ". . .";
+
+            /* this two may not be needed */
+            grid-column-gap: 1px;
+            grid-row-gap: 1px;
+
+            /* start | end | center | stretch; */
+            /* align, content inside a grid item, along horizontal ie to the left or right */
+            justify-items: center;
+
+            /* start | end | center | stretch; */
+            /* align, content inside a grid item, top or bottom */
+            align-items: center;
+
+            /* start | end | center | stretch | space-around | space-between | space-evenly; */
+            /* sets the alignment of the grid within the grid container. left or right.
+                esp if ua grid is less than the size of its grid container*/
+            justify-content: stretch;
+
+            /* start | end | center | stretch | space-around | space-between | space-evenly; */
+            /* sets the alignment of the grid within the grid container. top or bottom.
+                esp if ua grid is less than the size of its grid container*/
+            align-content: stretch;
+
+
+        }
+
+        .item-header {
+            grid-area: header;
+
+            grid-column-start: column1-start;
+            grid-column-end: column3-end;
+            grid-row-start: row1-start;
+            grid-row-end: row1-end;
+        }
+
+        .item-left-sidebar {
+            grid-area: left-sidebar;
+
+            grid-column-start: column1-start;
+            grid-column-end: column1-end;
+            grid-row-start: row1-end;
+            grid-row-end: auto;
+
+            justify-self: center;
+        }
+
+        .item-main {
+            grid-area: main;
+
+            grid-column-start: column1-end;
+            grid-column-end: column2-end;
+            grid-row-start: row1-end;
+            grid-row-end: auto;
+
+            /* start | end | center | stretch; */
+            /* Aligns the content inside a grid item left to right */
+            justify-self: center;
+            /* start | end | center | stretch; */
+            /* aligns top bottom */
+            align-self: start;
+        }
+
+        .item-right-sidebar {
+            grid-area: right-sidebar;
+
+            grid-column-start: column2-end;
+            grid-column-end: column3-end;
+            grid-row-start: row1-end;
+            grid-row-end: auto;
+
+            justify-self: center;
+        }
+    </style>
+
 </head>
 
 <body>
-    <div class="div-1" id="div-1">
-        <p>
-            <a href="https://www.komu.engineer">Home</a>&nbsp;&nbsp;
-            <a href="https://www.komu.engineer/about">About Me</a>&nbsp;&nbsp;
-            <a href="https://www.komu.engineer/blog">Blog</a>&nbsp;&nbsp;
-        </p>
-        <p>
-            </br>
+    <div class="container">
+        <div class="item-header">
+            <a target="_blank" rel="noopener" href="https://www.komu.engineer">Home</a>&nbsp;&nbsp;
+            <a target="_blank" rel="noopener" href="https://www.komu.engineer/about">About Me</a>&nbsp;&nbsp;
+            <a target="_blank" rel="noopener" href="https://www.komu.engineer/blog">Blog</a>&nbsp;&nbsp;
+        </div>
+        <div class="item-left-sidebar">
+            .
+        </div>
+        <div class="item-right-sidebar">
+            .
+        </div>
+
+        <div class="item-main">
             1.
-            <a href="blogs/go-gc-maps.html">Go Garbage collector and Large maps with pointers.</a>
+            <a target="_blank" rel="noopener" href="blogs/go-gc-maps.html">Go Garbage collector and Large maps with pointers.(25 Jan 2018)</a>
             </br>
             I'm left wondering, shouldn't the Go runtime then not do it for me/you by default?</br>
             Anytime the runtime sees a map that is larger than X and the keys to that map contains pointers,</br>
             the runtime inlines(for lack of a better term) that map into one whose keys are ints(or whatever) and does the string->ints
             hashing for you without you even noticing.
-            <a href="blogs/go-gc-maps.html">Read More>></a>
-        </p>
+            <a target="_blank" rel="noopener" href="blogs/go-gc-maps.html">Read More>></a>
+        </div>
     </div>
 </body>

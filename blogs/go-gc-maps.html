@@ -15,90 +15,192 @@
     <![endif]-->
 
     <!-- ADD FAVICON -->
+
+    <style>
+        /*
+         styled using css-grid:
+         https://css-tricks.com/snippets/css/complete-guide-grid/
+         */
+
+        .container {
+            /* grid | inline-grid | subgrid; */
+            display: grid;
+
+            grid-template-columns: [column1-start] 1fr [column1-end] 4fr [column2-end] 1fr [column3-end];
+            grid-template-rows: [row1-start] auto [row1-end] auto [row2-end] auto [row3-end];
+
+            grid-template-areas: "header header header" "left-sidebar main right-sidebar" ". . .";
+
+            /* this two may not be needed */
+            grid-column-gap: 1px;
+            grid-row-gap: 1px;
+
+            /* start | end | center | stretch; */
+            /* align, content inside a grid item, along horizontal ie to the left or right */
+            justify-items: center;
+
+            /* start | end | center | stretch; */
+            /* align, content inside a grid item, top or bottom */
+            align-items: center;
+
+            /* start | end | center | stretch | space-around | space-between | space-evenly; */
+            /* sets the alignment of the grid within the grid container. left or right.
+                esp if ua grid is less than the size of its grid container*/
+            justify-content: stretch;
+
+            /* start | end | center | stretch | space-around | space-between | space-evenly; */
+            /* sets the alignment of the grid within the grid container. top or bottom.
+                esp if ua grid is less than the size of its grid container*/
+            align-content: stretch;
+
+
+        }
+
+        .item-header {
+            grid-area: header;
+
+            grid-column-start: column1-start;
+            grid-column-end: column3-end;
+            grid-row-start: row1-start;
+            grid-row-end: row1-end;
+        }
+
+        .item-left-sidebar {
+            grid-area: left-sidebar;
+
+            grid-column-start: column1-start;
+            grid-column-end: column1-end;
+            grid-row-start: row1-end;
+            grid-row-end: auto;
+
+            justify-self: center;
+        }
+
+        .item-main {
+            grid-area: main;
+
+            grid-column-start: column1-end;
+            grid-column-end: column2-end;
+            grid-row-start: row1-end;
+            grid-row-end: auto;
+
+            /* start | end | center | stretch; */
+            /* Aligns the content inside a grid item left to right */
+            justify-self: center;
+            /* start | end | center | stretch; */
+            /* aligns top bottom */
+            align-self: start;
+        }
+
+        .item-right-sidebar {
+            grid-area: right-sidebar;
+
+            grid-column-start: column2-end;
+            grid-column-end: column3-end;
+            grid-row-start: row1-end;
+            grid-row-end: auto;
+
+            justify-self: center;
+        }
+    </style>
 </head>
 
 <body>
-    <div class="div-1" id="div-1">
-        <p>
-            <a href="https://www.komu.engineer">Home</a>&nbsp;&nbsp;
-            <a href="https://www.komu.engineer/about">About Me</a>&nbsp;&nbsp;
-            <a href="https://www.komu.engineer/blog">Blog</a>&nbsp;&nbsp;
-        </p>
-        <p>
-            The other day I read a blog post titled
-            <a href="https://syslog.ravelin.com/gc-is-bad-and-you-should-feel-bad-e9bdd9324f0">GC is bad and you should feel bad</a> by
-            <a href="https://twitter.com/philpearl">@philpearl.</a> It's a well written blogpost and I would welcome you to go read it.
-            </br>
-            In it he says:</br>
-            <q>In our ML fraud scoring pipeline we have a huge (>5GB) table of pre-calculated probabilities that we kept in
-                Go map[string]X in RAM. </br>
-                Recently we’d seen high GC pause times, corresponding with high 95th percentile response time peaks on our API.</br>
-                Once we’d moved the allocations off-heap into a custom hash-map backed by mmap allocated memory,.., the GC pauses practically
-                disappeared.
-            </q>
-            </br>
-            </br>
+    <div class="container">
+        <div class="item-header">
+            <a target="_blank" rel="noopener" href="https://www.komu.engineer">Home</a>&nbsp;&nbsp;
+            <a target="_blank" rel="noopener" href="https://www.komu.engineer/about">About Me</a>&nbsp;&nbsp;
+            <a target="_blank" rel="noopener" href="https://www.komu.engineer/blog">Blog</a>&nbsp;&nbsp;
+        </div>
+        <div class="item-left-sidebar">
+            .
+        </div>
+        <div class="item-right-sidebar">
+            .
+        </div>
 
-            Soon after, I saw a tweet by
-            <a href="https://twitter.com/dgryski">Damian Gryski,</a> (if you are on twitter and love Go, then I would highly recommend you follow Damian)
-            </br>
-            In the tweet, he suggested that a minimum perfect hash function can be created to be used in place of the string keys to
-            the map thus reducing GC times.</br>
-            I was curious as to how using a hash would help to relieve the pressure on the garbage collector.</br>
-            So, I set out to profile the GC times; first when you have a map whose keys are strings and second when you have a map whose
-            keys are strings that have been hashed into ints.</br>
-            </br>
+        <div class="item-main">
+            <p>
+                <strong> Go GC and maps with pointers.(25 Jan 2018)</strong>
+                </br>
+                </br>
+                The other day I read a blog post titled
+                <a target="_blank" rel="noopener" href="https://syslog.ravelin.com/gc-is-bad-and-you-should-feel-bad-e9bdd9324f0">GC is bad and you should feel bad</a> by
+                <a target="_blank" rel="noopener" href="https://twitter.com/philpearl">@philpearl.</a> It's a well written blogpost and I would welcome you to go read it.
+                </br>
+                In it he says:</br>
+                <q>In our ML fraud scoring pipeline we have a huge (>5GB) table of pre-calculated probabilities that we kept
+                    in Go map[string]X in RAM. </br>
+                    Recently we’d seen high GC pause times, corresponding with high 95th percentile response time peaks on our API.</br>
+                    Once we’d moved the allocations off-heap into a custom hash-map backed by mmap allocated memory,.., the GC pauses practically
+                    disappeared.
+                </q>
+                </br>
+                </br>
 
-            The program I used to profile that is below:</br>
-            <script src="https://gist.github.com/komuw/4f1ca71a54e49d7187d0fa30ebdc9a2b.js"></script>
-            </br>
-            On running it, the results were;</br>
-            <i>
-                With a map of strings, GC took:: 775.280442ms</br>
-                With map of strings(that are hashed to ints), GC took:: 19.086413ms
-            </i>
-            </br>
-            </br>
+                Soon after, I saw a tweet by
+                <a target="_blank" rel="noopener" href="https://twitter.com/dgryski">Damian Gryski,</a> (if you are on twitter and love Go, then I would highly recommend you follow Damian)
+                </br>
+                In the tweet, he suggested that a minimum perfect hash function can be created to be used in place of the string keys to
+                the map thus reducing GC times.</br>
+                I was curious as to how using a hash would help to relieve the pressure on the garbage collector.</br>
+                So, I set out to profile the GC times; first when you have a map whose keys are strings and second when you have a map whose
+                keys are strings that have been hashed into ints.</br>
+                </br>
 
-            For the map whose keys are strings(ie *pointers) the Garbage collector ran for 775.2ms on my machine, while for the other
-            map whose keys are strings that have been hashed into ints the GC ran for 19ms.</br>
-            NB: Note that I used
-            <i>strconv.Atoi(str)</i> in place of a proper string to integer hash function. In practice, you would be using
-            <a href="https://godoc.org/?q=mph">a proper hash implementation</a>
-            </br>
-            </br>
+                The program I used to profile that is:</br>
+                <a target="_blank" rel="noopener" href="https://play.golang.org/p/aLNFN87sFO0"> link to the code on play.golang.org</a>
+                </br>
+                </br>
+                On running it, the results were;</br>
+                <i>
+                    With a map of strings, GC took:: 775.280442ms</br>
+                    With map of strings(that are hashed to ints), GC took:: 19.086413ms
+                </i>
+                </br>
+                </br>
 
-            That contrast is much more clear when visualized, So I used
-            <a href="https://github.com/davecheney/gcvis">Dave Cheney's gcvis</a> program to visualize the programs GC trace data.</br>
-            The results are as shown below:</br>
-            </br>
+                For the map whose keys are strings(ie *pointers) the Garbage collector ran for 775.2ms on my machine, while for the other
+                map whose keys are strings that have been hashed into ints the GC ran for 19ms.</br>
+                NB: Note that I used
+                <i>strconv.Atoi(str)</i> in place of a proper string to integer hash function. In practice, you would be using
+                <a target="_blank" rel="noopener" href="https://godoc.org/?q=mph">a proper hash implementation</a>
+                </br>
+                </br>
 
-            GC profile of a creating a large Go map whose keys are strings;</br>
-            <img src="https://raw.githubusercontent.com/komuw/komu.engineer/master/imgs/string%5Bstring%5D.png" alt="map with string keys GC profile"
-                style="width:800px;height:220px;">
-            </br>
+                That contrast is much more clear when visualized, So I used
+                <a target="_blank" rel="noopener" href="https://github.com/davecheney/gcvis">Dave Cheney's gcvis</a> program to visualize the programs GC trace data.</br>
+                The results are as shown below:</br>
+                </br>
 
-            GC profile of a creating a large Go map whose keys are ints(ie keys are strings that are hashed into ints);</br>
-            <img src="https://raw.githubusercontent.com/komuw/komu.engineer/master/imgs/int%5Bint%5D.png" alt="map with string keys hashed to ints GC profile"
-                style="width:800px;height:220px;">
+                GC profile of a creating a large Go map whose keys are strings;</br>
+                <img src="https://raw.githubusercontent.com/komuw/komu.engineer/master/imgs/string%5Bstring%5D.png" alt="map with string keys GC profile"
+                    style="width:800px;height:220px;">
+                </br>
 
-            </br>
-            </br>
-            In conclusion; </br>
-            (a) The Go Garbage collector is
-            <a href="https://blog.golang.org/go15gc">designed</a> to
-            <a href="https://blog.golang.org/go15gc">minimise</a> latencies. </br>
-            (b) And it seems like one of the things that can cause the Garbage collector to have long pause times are large maps that
-            have strings(any pointer really) as keys.</br>
-            (c) And it seems like one of the ways to solve the issue in (b) above is to hash the strings into ints and then using the
-            ints as keys, (You would of course have
-            <a href="https://github.com/dgryski/go-mph/blob/0a5ec2a4fe0d4b43b522f13c59b2a74979a91172/mph.go#L114-L125">methods to Query the map</a> using your earlier strings)
-            </br>
-            I'm left wondering, shouldn't the Go runtime then not do it for me/you by default? Anytime the runtime sees a map that is
-            larger than X and the keys to that map contains pointers, the runtime inlines(for lack of a better term) that
-            map into one whose keys are ints(or whatever) and does the string->ints hashing for you without you even noticing.</br>
-            Maybe it is just my naivety...</br>
-            </br>
-        </p>
+                GC profile of a creating a large Go map whose keys are ints(ie keys are strings that are hashed into ints);</br>
+                <img src="https://raw.githubusercontent.com/komuw/komu.engineer/master/imgs/int%5Bint%5D.png" alt="map with string keys hashed to ints GC profile"
+                    style="width:800px;height:220px;">
+
+                </br>
+                </br>
+                In conclusion; </br>
+                (a) The Go Garbage collector is
+                <a target="_blank" rel="noopener" href="https://blog.golang.org/go15gc">designed</a> to
+                <a target="_blank" rel="noopener" href="https://blog.golang.org/go15gc">minimise</a> latencies. </br>
+                (b) And it seems like one of the things that can cause the Garbage collector to have long pause times are large maps that
+                have strings(any pointer really) as keys.</br>
+                (c) And it seems like one of the ways to solve the issue in (b) above is to hash the strings into ints and then using the
+                ints as keys, (You would of course have
+                <a target="_blank" rel="noopener" href="https://github.com/dgryski/go-mph/blob/0a5ec2a4fe0d4b43b522f13c59b2a74979a91172/mph.go#L114-L125">methods to Query the map</a> using your earlier strings)
+                </br>
+                I'm left wondering, shouldn't the Go runtime then not do it for me/you by default? Anytime the runtime sees a map that is
+                larger than X and the keys to that map contains pointers, the runtime inlines(for lack of a better term)
+                that map into one whose keys are ints(or whatever) and does the string->ints hashing for you without you
+                even noticing.</br>
+                Maybe it is just my naivety...</br>
+                </br>
+            </p>
+        </div>
     </div>
 </body>
