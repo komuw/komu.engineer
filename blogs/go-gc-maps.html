@@ -163,7 +163,8 @@
                     /*
                     #!/bin/bash
                     for t in 1 2; do go run gctest.go $t; done
-                    */
+                    */          
+                    
                     func timeGC() time.Duration {
                         start := time.Now()
                         runtime.GC()
