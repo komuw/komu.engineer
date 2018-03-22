@@ -22,13 +22,24 @@
          https://css-tricks.com/snippets/css/complete-guide-grid/
          */
 
+        @media (max-width: 720px) {
+            /* applies if your viewport width is equal to or less than 720px */
+            .container {
+                grid-template-columns: [column1-start] 1fr [column1-end] 10fr [column2-end] 1fr [column3-end];
+            }
+        }
+
+        @media (min-width: 721px) {
+            .container {
+                grid-template-columns: [column1-start] 2fr [column1-end] 8fr [column2-end] 2fr [column3-end];
+            }
+        }
+
         .container {
             /* grid | inline-grid | subgrid; */
             display: grid;
 
-            grid-template-columns: [column1-start] 1fr [column1-end] 4fr [column2-end] 1fr [column3-end];
-            grid-template-rows: [row1-start] 0.5fr [row1-end] 1fr [row2-end] auto [row3-end];
-
+            grid-template-rows: [row1-start] auto [row1-end] auto [row2-end] auto [row3-end];
             grid-template-areas: "header header header" "left-sidebar main right-sidebar" ". . .";
 
             /* this two may not be needed */
@@ -90,6 +101,10 @@
             /* start | end | center | stretch; */
             /* aligns top bottom */
             align-self: start;
+
+            /* https://developer.mozilla.org/en-US/docs/Web/CSS/overflow */
+            max-width: 100%;
+            overflow: auto;
         }
 
         .item-right-sidebar {
@@ -102,8 +117,17 @@
 
             justify-self: center;
         }
-    </style>
 
+        pre {
+            margin-left: -150px;
+        }
+
+        pre.prettyprint {
+            padding: 2px;
+            border: 0px !important;
+        }
+    </style>
+    <script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
 </head>
 
 <body>
