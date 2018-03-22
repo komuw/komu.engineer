@@ -27,11 +27,17 @@
             .container {
                 grid-template-columns: [column1-start] 1fr [column1-end] 10fr [column2-end] 1fr [column3-end];
             }
+            pre {
+                margin-left: -62%;
+            }
         }
 
         @media (min-width: 721px) {
             .container {
                 grid-template-columns: [column1-start] 2fr [column1-end] 8fr [column2-end] 2fr [column3-end];
+            }
+            pre {
+                margin-left: -15%;
             }
         }
 
@@ -116,10 +122,6 @@
             grid-row-end: auto;
 
             justify-self: center;
-        }
-
-        pre {
-            margin-left: -150px;
         }
 
         pre.prettyprint {
