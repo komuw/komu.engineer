@@ -106,8 +106,16 @@
 
             justify-self: center;
         }
+
+        pre {
+            margin-left: -150px;
+        }
     </style>
-    <script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
+    <!-- <script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script> -->
+
+    <link rel="stylesheet" href="../highlightjs/styles/default.css">
+    <script src="../highlightjs/highlight.pack.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
 </head>
 
 <body>
@@ -154,7 +162,7 @@
                 </br>
 
                 The program I used to profile that is:</br>
-                <pre class="prettyprint"><code class="language-go">
+                <pre><code class="go">
                     package main
                     import (
                         "strconv"
