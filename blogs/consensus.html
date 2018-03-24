@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Komu W - blog.</title>
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ADD FAVICON -->
+
+    <style>
+        /*
+         styled using css-grid:
+         https://css-tricks.com/snippets/css/complete-guide-grid/
+         */
+
+        @media (max-width: 720px) {
+            /* applies if your viewport width is equal to or less than 720px */
+            .container {
+                grid-template-columns: [column1-start] 1fr [column1-end] 10fr [column2-end] 1fr [column3-end];
+            }
+            pre {
+                margin-left: -62%;
+            }
+        }
+
+        @media (min-width: 721px) {
+            .container {
+                grid-template-columns: [column1-start] 2fr [column1-end] 8fr [column2-end] 2fr [column3-end];
+            }
+            pre {
+                margin-left: -15%;
+            }
+        }
+
+        .container {
+            /* grid | inline-grid | subgrid; */
+            display: grid;
+
+            grid-template-rows: [row1-start] auto [row1-end] auto [row2-end] auto [row3-end];
+            grid-template-areas: "header header header" "left-sidebar main right-sidebar" ". . .";
+
+            /* this two may not be needed */
+            grid-column-gap: 1px;
+            grid-row-gap: 1px;
+
+            /* start | end | center | stretch; */
+            /* align, content inside a grid item, along horizontal ie to the left or right */
+            justify-items: center;
+
+            /* start | end | center | stretch; */
+            /* align, content inside a grid item, top or bottom */
+            align-items: center;
+
+            /* start | end | center | stretch | space-around | space-between | space-evenly; */
+            /* sets the alignment of the grid within the grid container. left or right.
+                esp if ua grid is less than the size of its grid container*/
+            justify-content: stretch;
+
+            /* start | end | center | stretch | space-around | space-between | space-evenly; */
+            /* sets the alignment of the grid within the grid container. top or bottom.
+                esp if ua grid is less than the size of its grid container*/
+            align-content: stretch;
+
+
+        }
+
+        .item-header {
+            grid-area: header;
+
+            grid-column-start: column1-start;
+            grid-column-end: column3-end;
+            grid-row-start: row1-start;
+            grid-row-end: row1-end;
+        }
+
+        .item-left-sidebar {
+            grid-area: left-sidebar;
+
+            grid-column-start: column1-start;
+            grid-column-end: column1-end;
+            grid-row-start: row1-end;
+            grid-row-end: auto;
+
+            justify-self: center;
+        }
+
+        .item-main {
+            grid-area: main;
+
+            grid-column-start: column1-end;
+            grid-column-end: column2-end;
+            grid-row-start: row1-end;
+            grid-row-end: auto;
+
+            /* start | end | center | stretch; */
+            /* Aligns the content inside a grid item left to right */
+            justify-self: center;
+            /* start | end | center | stretch; */
+            /* aligns top bottom */
+            align-self: start;
+
+            /* https://developer.mozilla.org/en-US/docs/Web/CSS/overflow */
+            max-width: 100%;
+            overflow: auto;
+        }
+
+        .item-right-sidebar {
+            grid-area: right-sidebar;
+
+            grid-column-start: column2-end;
+            grid-column-end: column3-end;
+            grid-row-start: row1-end;
+            grid-row-end: auto;
+
+            justify-self: center;
+        }
+
+        pre.prettyprint {
+            padding: 2px;
+            border: 0px !important;
+        }
+    </style>
+
+    <!-- Get highlightjs by going to https://highlightjs.org/download/, select the languages you want and download. -->
+    <link rel="stylesheet" href="../highlightjs/styles/default.css">
+    <script src="../highlightjs/highlight.pack.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+</head>
+
+<body>
+    <div class="container">
+        <div class="item-header">
+            <a href="https://www.komu.engineer">Home</a>&nbsp;&nbsp;
+            <a href="https://www.komu.engineer/about">About Me</a>&nbsp;&nbsp;
+            <a href="https://www.komu.engineer/blog">Blog</a>&nbsp;&nbsp;
+        </div>
+        <div class="item-left-sidebar">
+            .
+        </div>
+        <div class="item-right-sidebar">
+            .
+        </div>
+
+        <div class="item-main">
+            <p>
+                <strong> Exploring consensus via python.(24 Mar 2018)</strong>
+                </br>
+                </br>
+                <strong>Intro</strong>
+                </br>
+                How do you get different computers that are part of a larger cluster to agree on what the value of something is?
+                </br>
+                Suppose a client sent a request to server 1 to set the value of a key
+                <i>foo</i> to the value
+                <i>bar.</i> However, server 1 is part of a cluster of N servers(there are good reasons for having servers be
+                part of a cluster, but we wont got into that)
+                </br>
+                </br>
+                <img src="../imgs/client-request.png" alt="client request" style="width:750px;height:200px;">
+                </br>
+                </br>
+                Thus the request; set foo=bar needs to be propagated to all the servers. A naive approach would go something like;</br>
+                When server 1 gets the request, it also sends that request to sever 2 which in turn sends the request to server 3 ...</br>
+                However, a couple of problems arise with that approach;</br>
+                - What happens if there is some network error anywhere in that chain of requests?</br>
+                - Does the client have to wait for all those round-trips of requests to finish before it can get a response?</br>
+                - What if a 3 letter named goverment agency intercepts the request and changes it from
+                <i>foo=bar</i> to
+                <i>foo=baz</i>?
+                </br>
+                - And so forth</br>
+                </br>
+                How we get computers to agree on the value of some data is through consensus.</br>
+                There are a number of consensus protocols with varying degrees of usage in the real world. Here is a
+                <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Consensus_algorithm">wikipedia rabbit hole</a> to get you started.</br>
+                For the remainder of this post, we will explore one of those algorithms; CASPaxos.
+                </br>
+                </br>
+                <strong>CASPaxos</strong>
+
+
+
+            </p>
+        </div>
+    </div>
+</body>
