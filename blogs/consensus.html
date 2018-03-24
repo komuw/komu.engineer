@@ -186,10 +186,48 @@
                 </br>
                 </br>
                 <strong>CASPaxos</strong>
+                </br>
+                CASPaxos is a consensus algorithm by Denis Rystsov, the
+                <a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1802.07000.pdf">white paper</a> is available from arxiv.
+                </br>
+                The paper is surprisingly simple and also easy to comprehend.</br>
+                In a nutshell, the algorithm goes like this;</br>
+                </br>
+                <strong>A. Prepare phase:</strong>
+                <img src="../imgs/caspaxos-prepare.png" alt="CASPaxos prepare" style="width:750px;height:200px;">
+                </br>
+                1. client sends request to server 1. Server 1 generates a ballot number and sends that ballot to all other servers</br>
+                2. The other servers will return a conflict(to server 1) if they already saw a greater ballot number. Persists the ballot
+                number and returns a confirmation either with an empty value (if they haven't accepted any value yet) or
+                with a tuple of an accepted value and its ballot number.</br>
+                3. Server 1 waits for the F + 1 confirmations.</br>
+                </br>
 
 
 
-            </p>
+
+                <strong>B. Accept phase:</strong>
+                <img src="../imgs/caspaxos-accept.png" alt="CASPaxos accept" style="width:750px;height:200px;">
+                </br>
+                4. Server 1 sends the earlier generated ballot number and value(ie foo=bar) to all other servers.</br>
+                5. The servers will return a conflict if they already saw a greater ballot number. They mark the received ballot number and
+                value as the accepted value and returns a confirmation.</br>
+                </br>
+
+
+                <strong>C. End:</strong>
+                </br>
+                <img src="../imgs/caspaxos-end.png" alt="CASPaxos end" style="width:750px;height:200px;">
+                </br>
+                6. Server 1 waits for the F + 1 confirmations.</br>
+                7. Returns a response to the client.</br>
+                </br>
+                <strong>Disclaimer:</strong> The description above is not 100% correct. I have left out a number of important details(eg
+                in the paper, the client doesn't send a request like, set foo=bar, instead it sends a change function). You
+                should read the actual paper for full details. However, the description above will suffice for now.
+
+
+
         </div>
     </div>
 </body>
