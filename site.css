@@ -18,7 +18,7 @@
         grid-template-columns: [column1-start] 2fr [column1-end] 8fr [column2-end] 2fr [column3-end];
     }
     pre {
-        margin-left: -15%;
+        margin-left: -20%;
     }
 }
 
