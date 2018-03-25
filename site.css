@@ -9,7 +9,7 @@
         grid-template-columns: [column1-start] 0fr [column1-end] 12fr [column2-end] 0fr [column3-end];
     }
     pre {
-        margin-left: -60%;
+        margin-left: -65%;
     }
 }
 
