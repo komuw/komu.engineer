@@ -109,3 +109,8 @@ pre.prettyprint {
     padding: 2px;
     border: 0px !important;
 }
+
+img {
+    max-width: 100%;
+    height: auto;
+}

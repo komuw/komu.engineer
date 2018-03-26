@@ -15,7 +15,6 @@
     <![endif]-->
 
     <!-- ADD FAVICON -->
-
     <link rel="stylesheet" href="../site.css">
 
     <!-- Get highlightjs by going to https://highlightjs.org/download/, select the languages you want and download. -->
@@ -53,7 +52,7 @@
                 part of a cluster, but we wont got into that)
                 </br>
                 </br>
-                <img src="../imgs/client-request.png" alt="client request" style="width:750px;height:200px;">
+                <img src="../imgs/client-request.png" alt="client request">
                 </br>
                 </br>
                 Thus the request; set foo=bar needs to be propagated to all the servers. A naive approach would go something like;</br>
@@ -83,7 +82,7 @@
                 In a nutshell, the algorithm goes like this;</br>
                 </br>
                 <strong>A. Prepare phase:</strong>
-                <img src="../imgs/caspaxos-prepare.png" alt="CASPaxos prepare" style="width:750px;height:200px;">
+                <img src="../imgs/caspaxos-prepare.png" alt="CASPaxos prepare">
                 </br>
                 1. client sends request to server 1. Server 1 generates a ballot number and sends that ballot to all other servers</br>
                 2. The other servers will return a conflict(to server 1) if they already saw a greater ballot number. Persists the ballot
@@ -93,7 +92,7 @@
                 </br>
 
                 <strong>B. Accept phase:</strong>
-                <img src="../imgs/caspaxos-accept.png" alt="CASPaxos accept" style="width:750px;height:200px;">
+                <img src="../imgs/caspaxos-accept.png" alt="CASPaxos accept">
                 </br>
                 4. Server 1 sends the earlier generated ballot number and value(ie foo=bar) to all other servers.</br>
                 5. The servers will return a conflict if they already saw a greater ballot number. They mark the received ballot number and
@@ -102,7 +101,7 @@
 
                 <strong>C. End:</strong>
                 </br>
-                <img src="../imgs/caspaxos-end.png" alt="CASPaxos end" style="width:750px;height:200px;">
+                <img src="../imgs/caspaxos-end.png" alt="CASPaxos end">
                 </br>
                 6. Server 1 waits for a majority of servers to respond with confirmation.</br>
                 7. Returns a response to the client.</br>
