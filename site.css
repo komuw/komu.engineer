@@ -1,7 +1,8 @@
 /*
     styled using css-grid:
-    https://css-tricks.com/snippets/css/complete-guide-grid/
-    https://www.w3.org/TR/css-align-3/#overview
+    1. https://css-tricks.com/snippets/css/complete-guide-grid/
+    2. https://www.w3.org/TR/css-align-3/#overview
+    3. https://developer.mozilla.org/en-US/docs/Web/CSS/Reference
     */
 
 @media (max-width: 720px) {
