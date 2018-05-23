@@ -1,6 +1,7 @@
 /*
     styled using css-grid:
     https://css-tricks.com/snippets/css/complete-guide-grid/
+    https://www.w3.org/TR/css-align-3/#overview
     */
 
 @media (max-width: 720px) {
@@ -44,11 +45,19 @@
     /* start | end | center | stretch | space-around | space-between | space-evenly; */
     /* sets the alignment of the grid within the grid container. left or right.
         esp if ua grid is less than the size of its grid container*/
+
+    /* aligns the contents of the box as a whole within the box itself. left or right.
+    it effectively adjusts padding. - https://www.w3.org/TR/css-align-3/#overview
+    */
     justify-content: stretch;
 
     /* start | end | center | stretch | space-around | space-between | space-evenly; */
     /* sets the alignment of the grid within the grid container. top or bottom.
         esp if ua grid is less than the size of its grid container*/
+
+    /* aligns the contents of the box as a whole within the box itself. top or bottom.
+    it effectively adjusts padding. - https://www.w3.org/TR/css-align-3/#overview
+    */
     align-content: stretch;
 
 
