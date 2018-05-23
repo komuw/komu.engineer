@@ -54,7 +54,7 @@
 
 }
 
-.item-header {
+.header {
     grid-area: header;
 
     grid-column-start: column1-start;
@@ -63,7 +63,7 @@
     grid-row-end: row1-end;
 }
 
-.item-left-sidebar {
+.left-sidebar {
     grid-area: left-sidebar;
 
     grid-column-start: column1-start;
@@ -74,7 +74,7 @@
     justify-self: center;
 }
 
-.item-main {
+.main {
     grid-area: main;
 
     grid-column-start: column1-end;
@@ -94,7 +94,7 @@
     overflow: auto;
 }
 
-.item-right-sidebar {
+.right-sidebar {
     grid-area: right-sidebar;
 
     grid-column-start: column2-end;
