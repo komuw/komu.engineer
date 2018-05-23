@@ -61,6 +61,24 @@
     align-content: stretch;
 
 
+    /*
+    1. The justify-content property controls the alignment of grid tracks (columns or rows). 
+    It is set on the grid container. 
+    It does not apply to or control the alignment of grid items.
+    
+    2. The justify-items property controls the alignment of grid items. 
+    It is set on the grid container.
+
+    3. The justify-self property controls the alignment of grid items.
+    It is set on grid items. 
+    Basically, justify-self overrides the justify-items command (coming from the parent) on individual items.
+
+    4. align-content, align-items and align-self
+    These properties do the same as their justify-* counterparts, but in the perpendicular direction. 
+
+    - https://stackoverflow.com/a/48571889/2768067
+    */
+
 }
 
 .header {
