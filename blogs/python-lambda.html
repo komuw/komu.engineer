@@ -172,6 +172,27 @@ python manage.py runserver 0.0.0.0:8080
                 When you visit
                 <i>http://localhost:8080/</i> with your favorite browser, you see that you get the
                 <i>Hello. Welcome to Python and AWS lambda.</i> greeting.</br>
+                </br>
+
+                We were not making a greetings app, we want a website uptime checker. So lets add the logic in our views to check on the
+                uptime of our two websites; google and twitter.</br>
+                The modified
+                <i>views.py</i> becomes;
+                <pre><code class="bash">
+import urllib
+from django.http import HttpResponse
+def home(request):
+    g = urllib.urlopen("http://www.google.com")
+    google_status_code = g.getcode()
+    g.close()
+    t = urllib.urlopen("http://www.twitter.com")
+    twitter_status_code = t.getcode()
+    t.close()
+    return HttpResponse("""Uptime Checker. google.com status={0}. twitter.com status={1}""".format(
+        google_status_code,
+        twitter_status_code)) 
+                </code></pre>
+                </br>
             </p>
         </div>
     </div>
