@@ -11,18 +11,12 @@
     .container {
         grid-template-columns: [column1-start] minmax(0, 0fr) [column1-end] minmax(0, 12fr) [column2-end] minmax(0, 0fr) [column3-end];
     }
-    pre {
-        margin-left: -70%;
-    }
 }
 
 
 @media (min-width: 721px) {
     .container {
         grid-template-columns: [column1-start] minmax(0, 2fr) [column1-end] minmax(0, 8fr) [column2-end] minmax(0, 2fr) [column3-end];
-    }
-    pre {
-        margin-left: -12%;
     }
 }
 
