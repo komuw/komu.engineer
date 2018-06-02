@@ -178,7 +178,7 @@ python manage.py runserver 0.0.0.0:8080
                 uptime of our two websites; google and twitter.</br>
                 The modified
                 <i>views.py</i> becomes;
-                <pre><code class="bash">
+                <pre><code class="python">
 import urllib
 from django.http import HttpResponse
 def home(request):
@@ -200,6 +200,18 @@ def home(request):
                 </br>
                 </br>
                 <strong>Deploying django app to AWS lambda.</strong>
+                </br>
+                First we need to install
+                <a href="https://github.com/apex/up">up.</a>
+                </br>
+                <i>up</i> bills itself thus; </br>
+                Up focuses on deploying "vanilla" HTTP servers
+                <strong>there's nothing new to learn</strong>, just develop with your favorite existing frameworks such as Express,
+                Koa, Django, Golang net/http or others. -- https://github.com/apex/up (emphasis is mine.)</br>
+                <i>up</i> can be installed via curl;
+                <pre><code class="python">
+curl -sf https://up.apex.sh/install | sh
+            </code></pre>
                 </br>
             </p>
         </div>
