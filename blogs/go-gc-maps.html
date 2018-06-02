@@ -69,61 +69,61 @@
 
                 The program I used to profile that is:</br>
                 <pre><code class="go">
-                    package main
-                    import (
-                        "strconv"
-                        "fmt"
-                        "os"
-                        "runtime"
-                        "time"
-                    )
-                    // run this program as:
-                    /*
-                    #!/bin/bash
-                    for t in 1 2; do go run gctest.go $t; done
-                    */          
-                    
-                    func timeGC() time.Duration {
-                        start := time.Now()
-                        runtime.GC()
-                        return time.Since(start)
-                    }
+package main
+import (
+    "strconv"
+    "fmt"
+    "os"
+    "runtime"
+    "time"
+)
+// run this program as:
+/*
+#!/bin/bash
+for t in 1 2; do go run gctest.go $t; done
+*/          
 
-                    func main() {
-                        const N = 30e6
-                        if len(os.Args) != 2 {
-                            fmt.Printf("usage: %s [1 2]\n(number selects the test)\n", os.Args[0])
-                            return
-                        }
-                        switch os.Args[1] {
-                        case "1":
-                            // create a big map of strings. since strings contain pointers, 
-                            // we expect this to have more pressure on GC.
-                            m := make(map[string]string)
-                            for i := 0; i < N; i++ {
-                                n := strconv.Itoa(i)
-                                m[n] = n
-                            }
-                            runtime.GC()
-                            fmt.Printf("With a map of strings, GC took: %s\n", timeGC())
-                            _ = m["0"]
-                        case "2":
-                            // create a map of ints. We want to store strings in the map but unlike in case 1, 
-                            // we will hash the strings to ints (which have no pointer)
-                            // so we expect less pressure on GC. We are using  strconv.Atoi(str) 
-                            // as a stand-in for a proper hash function
-                            m := make(map[int]int)
-                            for i := 0; i < N; i++ {
-                                str := strconv.Itoa(i)
-                                // hash string to int
-                                n,_ := strconv.Atoi(str)
-                                m[n] = n
-                            }
-                            runtime.GC()
-                            fmt.Printf("With map of strings(that are hashed to ints), GC took:: %s\n", timeGC())
-                            _ = m[0]
-                        }
-                    }
+func timeGC() time.Duration {
+    start := time.Now()
+    runtime.GC()
+    return time.Since(start)
+}
+
+func main() {
+    const N = 30e6
+    if len(os.Args) != 2 {
+        fmt.Printf("usage: %s [1 2]\n(number selects the test)\n", os.Args[0])
+        return
+    }
+    switch os.Args[1] {
+    case "1":
+        // create a big map of strings. since strings contain pointers, 
+        // we expect this to have more pressure on GC.
+        m := make(map[string]string)
+        for i := 0; i < N; i++ {
+            n := strconv.Itoa(i)
+            m[n] = n
+        }
+        runtime.GC()
+        fmt.Printf("With a map of strings, GC took: %s\n", timeGC())
+        _ = m["0"]
+    case "2":
+        // create a map of ints. We want to store strings in the map but unlike in case 1, 
+        // we will hash the strings to ints (which have no pointer)
+        // so we expect less pressure on GC. We are using  strconv.Atoi(str) 
+        // as a stand-in for a proper hash function
+        m := make(map[int]int)
+        for i := 0; i < N; i++ {
+            str := strconv.Itoa(i)
+            // hash string to int
+            n,_ := strconv.Atoi(str)
+            m[n] = n
+        }
+        runtime.GC()
+        fmt.Printf("With map of strings(that are hashed to ints), GC took:: %s\n", timeGC())
+        _ = m[0]
+    }
+}
                  </code></pre>
                 </br>
                 </br>
