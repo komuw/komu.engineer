@@ -77,9 +77,53 @@ virtualenv .uptime-checker && \
 source .uptime-checker/bin/activate && \
 pip install django && \
 pip freeze >> requirements.txt
+                </code></pre> </br>
+                Create a
+                <i>settings.py</i> file with the following contents:</br>
+                <pre><code class="python">
+import os
+
+def here(*args):
+    return os.path.join(os.path.abspath(os.path.dirname(__file__)), *args)
+
+PROJECT_ROOT = here('')
+def project_root_joiner(*args):
+    return os.path.join(os.path.abspath(PROJECT_ROOT), *args)
+
+SECRET_KEY =  'A-random-and-secure-secret-key'
+ROOT_URLCONF = 'urls'
+WSGI_APPLICATION = 'wsgi.application'
+INSTALLED_APPS = (
+    'django.contrib.admin',
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.messages',
+    'django.contrib.staticfiles',
+)
+STATIC_ROOT = project_root_joiner('', 'static/')
+STATIC_URL = '/static/'
                 </code></pre>
-
-
+                </br>
+                Create a
+                <i>wsgi.py</i> file with contents;
+                <pre><code class="python">
+import os
+from django.core.wsgi import get_wsgi_application
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "settings")
+application = get_wsgi_application()
+</code></pre>
+                </br>
+                And
+                <i>urls.py</i>;
+                <pre><code class="python">
+from django.conf.urls import url
+import views
+urlpatterns = (
+    url(r'^$', views.api_root, name='api-root'),
+)
+</code></pre>
+                </br>
+                </br>
             </p>
         </div>
     </div>
