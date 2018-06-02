@@ -201,18 +201,29 @@ def home(request):
                 </br>
                 <strong>Deploying django app to AWS lambda.</strong>
                 </br>
-                First we need to install
+                1. First we need to install
                 <a href="https://github.com/apex/up">up.</a>
                 </br>
                 <i>up</i> bills itself thus; </br>
                 Up focuses on deploying "vanilla" HTTP servers
                 <strong>there's nothing new to learn</strong>, just develop with your favorite existing frameworks such as Express,
                 Koa, Django, Golang net/http or others. -- https://github.com/apex/up (emphasis is mine.)</br>
+                </br>
                 <i>up</i> can be installed via curl;
-                <pre><code class="python">
+                <pre><code class="bash">
 curl -sf https://up.apex.sh/install | sh
             </code></pre>
                 </br>
+                You can make sure that
+                <i>up</i> has installed succesfully by checking it's help command.
+                <pre><code class="bash">
+up --help
+                </code></pre>
+                </br>
+                </br>
+
+                2. Next we need to make sure that our AWS setup is ok.</br>
+                make sure that your aws credentials are okay and stored in the right place/s. For my case, I have
             </p>
         </div>
     </div>
