@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Komu W - blog.</title>
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ADD FAVICON -->
+    <link rel="stylesheet" href="../site.css">
+
+    <!-- Get highlightjs by going to https://highlightjs.org/download/, select the languages you want and download. -->
+    <link rel="stylesheet" href="../highlightjs/styles/default.css">
+    <script src="../highlightjs/highlight.pack.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <a href="https://www.komu.engineer">Home</a>&nbsp;&nbsp;
+            <a href="https://www.komu.engineer/about">About Me</a>&nbsp;&nbsp;
+            <a href="https://www.komu.engineer/blog">Blog</a>&nbsp;&nbsp;
+        </div>
+        <div class="left-sidebar">
+            .
+        </div>
+        <div class="right-sidebar">
+            .
+        </div>
+
+        <div class="main">
+            <p>
+                <strong>Migrating a python app to AWS lambda as is; without code change.(02 June 2018)</strong>
+                </br>
+                </br>
+                <strong>Intro</strong>
+                AWS Lambda lets you run code without provisioning or managing servers.</br>
+                In this article, we will go through an example of how to migrate a python applicatioon to AWS lambda. </br>
+                Of importance to note is that; we will not make any significant code change to our app in order to migrate it.</br>
+                You may have heard of Python frameworks that help you write python code targeted for running on AWS lambda. for example;
+                <a href="https://github.com/aws/chalice">Chalice</a> or
+                <a href="https://github.com/Miserlou/Zappa">Zappa</a>. </br>
+                A drawback of those frameworks - in my opinion - is that they require you to change the way you architect your applications.
+                </br>
+                They require you to make code changes to suit their way of things.</br>
+                In this post we wont do any of that, you will keep your familiar architect/code and still get to run your app on lambda.</br>
+                </br>
+
+                - We will create a small python/django app from the ground up, using the same old familiar django pattern.</br>
+                - We will then run that app on AWS lambda.
+            </p>
+        </div>
+    </div>
+</body>
