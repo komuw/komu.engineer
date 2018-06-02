@@ -119,10 +119,38 @@ application = get_wsgi_application()
 from django.conf.urls import url
 import views
 urlpatterns = (
-    url(r'^$', views.api_root, name='api-root'),
+    url(r'^$', views.home, name='home'),
 )
 </code></pre>
                 </br>
+                We also need the manage.py file. </br>
+                Create
+                <i>manage.py</i> file with content;
+                <pre><code class="python">
+#!/usr/bin/env python
+import os
+import sys
+if __name__ == "__main__":
+    os.environ.setdefault("DJANGO_SETTINGS_MODULE", "settings")
+    from django.core.management import execute_from_command_line
+    execute_from_command_line(sys.argv)          
+                </code></pre>
+                </br>
+
+                We created urls.py and the code in there is referring to views, but we haven't created views yet.</br>
+                So lets do just that, create
+                <i>views.py</i> whose content is;
+                <pre><code class="python">
+from django.http import HttpResponse
+def home(request):
+    return HttpResponse("Hello. Welcome to Python and AWS lambda.") 
+                     </code></pre>
+                </br>
+
+                And this been python, we need an empty __init__ file, so create it.</br>
+                <pre><code class="bash">
+touch __init__.py
+                    </code></pre>
                 </br>
             </p>
         </div>
