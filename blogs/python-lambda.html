@@ -43,6 +43,7 @@
                 </br>
                 </br>
                 <strong>Intro</strong>
+                </br>
                 AWS Lambda lets you run code without provisioning or managing servers.</br>
                 In this article, we will go through an example of how to migrate a python applicatioon to AWS lambda. </br>
                 Of importance to note is that; we will not make any significant code change to our app in order to migrate it.</br>
@@ -57,6 +58,28 @@
 
                 - We will create a small python/django app from the ground up, using the same old familiar django pattern.</br>
                 - We will then run that app on AWS lambda.
+
+                </br>
+                </br>
+                <strong>Create django app.</strong>
+                </br>
+                The app we will build is a simple one. It is a website uptime checker.</br>
+                It will have one webpage that a user can go to enter a website, and then the app will tell them if that website is up or
+                not.
+                </br>
+
+                We'll create a new directory for our app, create a virtualenv, install django and also create a requirements file with the
+                installed packages.
+                <pre><code class="bash">
+mkdir uptime-checker && \
+cd uptime-checker && \
+virtualenv .uptime-checker && \
+source .uptime-checker/bin/activate && \
+pip install django && \
+pip freeze >> requirements.txt
+                </code></pre>
+
+
             </p>
         </div>
     </div>
