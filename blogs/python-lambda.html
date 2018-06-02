@@ -90,6 +90,7 @@ PROJECT_ROOT = here('')
 def project_root_joiner(*args):
     return os.path.join(os.path.abspath(PROJECT_ROOT), *args)
 
+ALLOWED_HOSTS = '*'
 SECRET_KEY =  'A-random-and-secure-secret-key'
 ROOT_URLCONF = 'urls'
 WSGI_APPLICATION = 'wsgi.application'
@@ -151,6 +152,23 @@ def home(request):
                 <pre><code class="bash">
 touch __init__.py
                     </code></pre>
+                </br>
+
+                So your final directory structure looks like;</br>
+                <pre><code class="bash">
+uptime-checker/
+    __init__.py
+    manage.py
+    settings.py
+    urls.py
+    views.py
+    wsgi.py
+</code></pre>
+                </br>
+                But does the app really work? There's only one way to find out; let's run it.
+                <pre><code class="bash">
+python manage.py runserver 0.0.0.0:8080
+                </code></pre>
                 </br>
             </p>
         </div>
