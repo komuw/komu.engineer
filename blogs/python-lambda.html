@@ -111,7 +111,7 @@ import os
 from django.core.wsgi import get_wsgi_application
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "settings")
 application = get_wsgi_application()
-</code></pre>
+                </code></pre>
                 </br>
                 And
                 <i>urls.py</i>;
@@ -121,7 +121,7 @@ import views
 urlpatterns = (
     url(r'^$', views.home, name='home'),
 )
-</code></pre>
+                </code></pre>
                 </br>
                 We also need the manage.py file. </br>
                 Create
@@ -162,7 +162,7 @@ uptime-checker/
     urls.py
     views.py
     wsgi.py
-</code></pre>
+                </code></pre>
                 </br>
                 But does the app really work? There's only one way to find out; let's run it.
                 <pre><code class="bash">
@@ -201,6 +201,7 @@ def home(request):
                 </br>
                 <strong>Deploying django app to AWS lambda.</strong>
                 </br>
+                </br>
                 1. First we need to install
                 <a href="https://github.com/apex/up">up.</a>
                 </br>
@@ -212,7 +213,7 @@ def home(request):
                 <i>up</i> can be installed via curl;
                 <pre><code class="bash">
 curl -sf https://up.apex.sh/install | sh
-            </code></pre>
+                </code></pre>
                 </br>
                 You can make sure that
                 <i>up</i> has installed succesfully by checking it's help command.
@@ -223,7 +224,53 @@ up --help
                 </br>
 
                 2. Next we need to make sure that our AWS setup is ok.</br>
-                make sure that your aws credentials are okay and stored in the right place/s. For my case, I have
+                - make sure that your aws credentials are okay and stored in the
+                <a href="https://up.docs.apex.sh/#aws_credentials">right place/s.</a> For my case, I have a
+                <i>~/.aws/credentials</i> file that looks like;
+                <pre><code class="bash">
+[apex-up-profile]
+aws_access_key_id = myAccessId
+aws_secret_access_key = myAccessKey
+region = eu-west-1
+                </code></pre>
+                </br>
+                - also make sure that you create
+                <a href="https://up.docs.apex.sh/#aws_credentials.iam_policy_for_up_cli">this AWS policy</a> in your AWS account.</br>
+                </br>
+
+                3. In the
+                <i>uptime-checker</i> directory, create an
+                <i>up.json</i> file whose contents are;
+                <pre><code class="bash">
+{
+  "name": "uptime-checker",
+  "profile": "apex-up-profile"
+}
+                </code></pre>
+                </br>
+                where the value of the profile json key is the same as the profile name in your aws config(
+                <i>~/.aws/credentials</i> for my case)</br>
+                </br>
+
+                4. to deploy your app to AWS lambda, run the following command;
+                <pre><code class="bash">
+up deploy
+                </code></pre>
+                </br>
+                You will see an output like;
+                <pre><code class="bash">
+build: 15 files, 4.4 MB (770ms)
+deploy: commit c9fda96 (11.942s)
+stack: complete (47.398s)
+                </code></pre>
+                </br>
+                To see the domain/url that your app was deployed to, run the command;
+                <pre><code class="bash">
+up url
+                </code></pre>
+                </br>
+                You can copy paste that url to your browser and access your app.
+
             </p>
         </div>
     </div>
