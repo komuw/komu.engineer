@@ -201,14 +201,14 @@ def home(request):
                 </br>
                 <strong>Deploying django app to AWS lambda.</strong>
                 </br>
-                </br>
                 1. First we need to install
                 <a target="_blank" rel="noopener" href="https://github.com/apex/up">up.</a>
                 </br>
                 <i>up</i> bills itself thus; </br>
                 Up focuses on deploying "vanilla" HTTP servers
                 <strong>there's nothing new to learn</strong>, just develop with your favorite existing frameworks such as Express,
-                Koa, Django, Golang net/http or others. -- https://github.com/apex/up (emphasis is mine.)</br>
+                Koa, Django, Golang net/http or others. --
+                <a target="_blank" rel="noopener" href="https://github.com/apex/up">https://github.com/apex/up</a> (emphasis is mine.)</br>
                 </br>
                 <i>up</i> can be installed via curl;
                 <pre><code class="bash">
@@ -272,6 +272,10 @@ mv manage.py app.py
                 </br>
                 where the value of the profile json key is the same as the profile name in your aws config(
                 <i>~/.aws/credentials</i> for my case)</br>
+                <i>up.json</i> is
+                <i>up's</i> configuration file. See this
+                <a target="_blank" rel="noopener" href="https://up.docs.apex.sh/#configuration">link</a> for more about the config file.
+                </br>
                 </br>
 
 
@@ -292,7 +296,7 @@ stack: complete (47.398s)
 up url
                 </code></pre>
                 </br>
-                You can copy paste that url to your browser and access your app.</br>
+                You can copy and paste the url you get, into your browser to access your app.</br>
                 This is what I get;
                 <img src="../imgs/uptime-checker-staging.png" alt="uptime-checker staging" style="width:800px;height:220px;">
                 </br>
@@ -301,8 +305,7 @@ up url
 up logs -fv
                 </code></pre>
                 </br>
-                Also
-                <i>up</i> sends your logs to AWS cloudwatch, so you can search for them there.
+                <i>Up</i> also sends your logs to AWS cloudwatch, so you can search for them there.
                 <img src="../imgs/uptime-checker-cloudwatch-logs.png" alt="uptime-checker cloudwatch logs" style="width:850px;height:320px;">
                 </br>
                 </br>
