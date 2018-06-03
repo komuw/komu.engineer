@@ -26,9 +26,9 @@
 <body>
     <div class="container">
         <div class="header">
-            <a href="https://www.komu.engineer">Home</a>&nbsp;&nbsp;
-            <a href="https://www.komu.engineer/about">About Me</a>&nbsp;&nbsp;
-            <a href="https://www.komu.engineer/blog">Blog</a>&nbsp;&nbsp;
+            <a target="_blank" rel="noopener" href="https://www.komu.engineer">Home</a>&nbsp;&nbsp;
+            <a target="_blank" rel="noopener" href="https://www.komu.engineer/about">About Me</a>&nbsp;&nbsp;
+            <a target="_blank" rel="noopener" href="https://www.komu.engineer/blog">Blog</a>&nbsp;&nbsp;
         </div>
         <div class="left-sidebar">
             .
@@ -48,8 +48,8 @@
                 In this article, we will go through an example of how to migrate a python applicatioon to AWS lambda. </br>
                 Of importance to note is that; we will not make any significant code change to our app in order to migrate it.</br>
                 You may have heard of Python frameworks that help you write python code targeted for running on AWS lambda. for example;
-                <a href="https://github.com/aws/chalice">Chalice</a> or
-                <a href="https://github.com/Miserlou/Zappa">Zappa</a>. </br>
+                <a target="_blank" rel="noopener" href="https://github.com/aws/chalice">Chalice</a> or
+                <a target="_blank" rel="noopener" href="https://github.com/Miserlou/Zappa">Zappa</a>. </br>
                 A drawback of those frameworks - in my opinion - is that they require you to change the way you architect your applications.
                 </br>
                 They require you to make code changes to suit their way of things.</br>
@@ -203,7 +203,7 @@ def home(request):
                 </br>
                 </br>
                 1. First we need to install
-                <a href="https://github.com/apex/up">up.</a>
+                <a target="_blank" rel="noopener" href="https://github.com/apex/up">up.</a>
                 </br>
                 <i>up</i> bills itself thus; </br>
                 Up focuses on deploying "vanilla" HTTP servers
@@ -225,7 +225,7 @@ up --help
 
                 2. Next we need to make sure that our AWS setup is ok.</br>
                 - make sure that your aws credentials are okay and stored in the
-                <a href="https://up.docs.apex.sh/#aws_credentials">right place/s.</a> For my case, I have a
+                <a target="_blank" rel="noopener" href="https://up.docs.apex.sh/#aws_credentials">right place/s.</a> For my case, I have a
                 <i>~/.aws/credentials</i> file that looks like;
                 <pre><code class="bash">
 [apex-up-profile]
@@ -235,7 +235,7 @@ region = eu-west-1
                 </code></pre>
                 </br>
                 - also make sure that you create
-                <a href="https://up.docs.apex.sh/#aws_credentials.iam_policy_for_up_cli">this AWS policy</a> in your AWS account.</br>
+                <a target="_blank" rel="noopener" href="https://up.docs.apex.sh/#aws_credentials.iam_policy_for_up_cli">this AWS policy</a> in your AWS account.</br>
                 </br>
 
                 3. There's only one change that you have to make to your app files in order to satisfy
@@ -249,7 +249,7 @@ mv manage.py app.py
                 The reason we have to do that is because
                 <i>up</i> can be used to deploy apps created using other programming languages/runtimes, and the way
                 <i>up</i> is able to tell which runtime it is you want to deploy is by looking for
-                <a href="https://github.com/apex/up/blob/182d948547ad6643c225da01557fd4d37db43988/config/runtimes.go#L27">specific file names.</a>
+                <a target="_blank" rel="noopener" href="https://github.com/apex/up/blob/182d948547ad6643c225da01557fd4d37db43988/config/runtimes.go#L27">specific file names.</a>
                 </br>
                 The file name that tells
                 <i>up</i> you are using a python runtime is
@@ -324,8 +324,8 @@ logging.basicConfig(
                 deploy to multiple AWS regions, deploy to multiple stages(test/staging/prod etc) and so much more. </br>
                 Before this article turns into a marketing article for
                 <i>up</i>(up is
-                <a href="https://github.com/apex/up">open source</a>, though they also have a paid plan) let me invite you to go check it out for yourselves;
-                <a href="https://github.com/apex/up">https://github.com/apex/up</a>
+                <a target="_blank" rel="noopener" href="https://github.com/apex/up">open source</a>, though they also have a paid plan) let me invite you to go check it out for yourselves;
+                <a target="_blank" rel="noopener" href="https://github.com/apex/up">https://github.com/apex/up</a>
                 </br>
                 </br>
                 We have deployed a Python/django app to AWS lambda as is, without changing the way we write our app.</br>
@@ -338,9 +338,10 @@ logging.basicConfig(
 up stack delete
                 </code></pre>
                 </br>
+                All the code in this blogpost can be found here:-
+                <a target="_blank" rel="noopener" href="https://github.com/komuw/uptime-checker">https://github.com/komuw/uptime-checker</a>
                 </br>
-
-
+                </br>
             </p>
         </div>
     </div>
