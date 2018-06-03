@@ -292,7 +292,47 @@ stack: complete (47.398s)
 up url
                 </code></pre>
                 </br>
-                You can copy paste that url to your browser and access your app.
+                You can copy paste that url to your browser and access your app.</br>
+                This is what I get;
+                <img src="../imgs/uptime-checker-staging.png" alt="uptime-checker staging" style="width:800px;height:220px;">
+                </br>
+                If you want to debug/introspect what is going on, you can always look at the logs of your app via;
+                <pre><code class="bash">
+up logs -fv
+                </code></pre>
+                </br>
+                Also
+                <i>up</i> sends your logs to AWS cloudwatch, so you can search for them there.
+                <img src="../imgs/uptime-checker-cloudwatch-logs.png" alt="uptime-checker cloudwatch logs" style="width:850px;height:320px;">
+                </br>
+                </br>
+                Anything you log to stdout in your app, will show up in the logs. So you can use a python logging config like;
+                <pre><code class="python">
+import logging
+logging.basicConfig(
+    format="%(message)s\n",
+    stream=sys.stdout,
+    level=logging.DEBUG,
+)
+                </code></pre>
+                </br>
+                </br>
+                <strong>Conclusion</strong>
+                </br>
+                There are lot more bells in
+                <i>up</i>, you can do log querying/filtering from your command line, use custom domains for your app, use secrets,
+                deploy to multiple AWS regions and so much more. </br>
+                Before this article turns into a marketing article for
+                <i>up</i>(up is
+                <a href="https://github.com/apex/up">open source</a>, though they also have a paid plan) let me invite you to go check it out for yourselves;
+                <a href="https://github.com/apex/up">https://github.com/apex/up</a>
+                </br>
+                </br>
+                We have deployed a Python/django app to AWS lambda as is, without changing the way we write our app.</br>
+                </br>
+                <img src="../imgs/uptime-checker-on-lambda.png" alt="uptime-checker on lambda" style="width:850px;height:450px;">
+                </br>
+                </br>
 
             </p>
         </div>
