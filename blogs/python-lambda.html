@@ -238,21 +238,7 @@ region = eu-west-1
                 <a href="https://up.docs.apex.sh/#aws_credentials.iam_policy_for_up_cli">this AWS policy</a> in your AWS account.</br>
                 </br>
 
-                3. In the
-                <i>uptime-checker</i> directory, create an
-                <i>up.json</i> file whose contents are;
-                <pre><code class="bash">
-{
-  "name": "uptime-checker",
-  "profile": "apex-up-profile"
-}
-                </code></pre>
-                </br>
-                where the value of the profile json key is the same as the profile name in your aws config(
-                <i>~/.aws/credentials</i> for my case)</br>
-                </br>
-
-                4. There's only one change that you have to make to your app files in order to satisfy
+                3. There's only one change that you have to make to your app files in order to satisfy
                 <i>up</i>, we have to rename our
                 <i>manage.py</i> file to
                 <i>app.py</i>; but the contents of that file remain the same.
@@ -269,6 +255,23 @@ mv manage.py app.py
                 <i>up</i> you are using a python runtime is
                 <i>app.py</i>
                 </br>
+                </br>
+
+                4. In the
+                <i>uptime-checker</i> directory, create an
+                <i>up.json</i> file whose contents are;
+                <pre><code class="bash">
+{
+    "name": "uptime-checker",
+    "profile": "apex-up-profile",
+    "proxy": {
+        "command": "python app.py runserver 0.0.0.0:$PORT"
+    }
+}
+                </code></pre>
+                </br>
+                where the value of the profile json key is the same as the profile name in your aws config(
+                <i>~/.aws/credentials</i> for my case)</br>
                 </br>
 
 
