@@ -252,7 +252,27 @@ region = eu-west-1
                 <i>~/.aws/credentials</i> for my case)</br>
                 </br>
 
-                4. to deploy your app to AWS lambda, run the following command;
+                4. There's only one change that you have to make to your app files in order to satisfy
+                <i>up</i>, we have to rename our
+                <i>manage.py</i> file to
+                <i>app.py</i>; but the contents of that file remain the same.
+                <pre><code class="bash">
+mv manage.py app.py
+                </code></pre>
+                </br>
+                The reason we have to do that is because
+                <i>up</i> can be used to deploy apps created using other programming languages/runtimes, and the way
+                <i>up</i> is able to tell which runtime it is you want to deploy is by looking for
+                <a href="https://github.com/apex/up/blob/182d948547ad6643c225da01557fd4d37db43988/config/runtimes.go#L27">specific file names.</a>
+                </br>
+                The file name that tells
+                <i>up</i> you are using a python runtime is
+                <i>app.py</i>
+                </br>
+                </br>
+
+
+                5. to deploy your app to AWS lambda, run the following command;
                 <pre><code class="bash">
 up deploy
                 </code></pre>
