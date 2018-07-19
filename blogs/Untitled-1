@@ -1,0 +1,411 @@
+
+go modules::
+
+In this article, we will take go modules(earlier on it had the codename vgo) for a spin. 
+A module is a collection of related Go packages. Modules are the unit of source code interchange and versioning.
+With modules, you can now work outside of GOPATH and also version your code in such a way that go is aware of.
+
+At the time of writing this, we need to be using go compiled from master branch for us to be able to use go modules. 
+So lets to do that, We could clone go from master and compile it ourselves, but I won't do that; instead I'll use 
+https://github.com/travis-ci/gimme which is a tool developed by TravisCI peeps to help in installing various go versions. 
+
+The instructions on how to install gimme can be found at; https://github.com/travis-ci/gimme 
+
+But since I'm on OSX;
+brew install gimme
+
+And then install go from the master branch using gimme;
+gimme master
+
+Then activate, that version;
+source ~/.gimme/envs/gomaster.env
+
+And run go version to confirm
+go version
+go version devel +d278f09333 Thu Jul 19 05:40:37 2018 +0000 darwin/amd64
+
+
+I have a go package called meli, https://github.com/komuw/meli and we are going to convert that to use go modules.
+meli is a faster, smaller alternative to docker-compose(albeit with less features.) 
+
+So lets clone meli in a directory that is outside GOPATH. My GOPATH is at ~/go so we'll clone into ~/mystuff instead.
+git clone git@github.com:komuw/meli.git ~/mystuff/meli
+cd ~/mystuff/meli
+
+run;
+go mod -init
+  go: creating new go.mod: module github.com/komuW/meli
+  go: copying requirements from Gopkg.lock
+
+the -init flag initializes and writes a new go.mod to the current directory, in effect creating a new module rooted at the current directory.
+If you were using another dependency manager before, mod -nit will intialize the go.mod file using that dependency manager's files. 
+I was using dep as my dependency manager so go mod -init used that. 
+From what I understand, go mod 
+"already supports reading nine different legacy file formats (GLOCKFILE, Godeps/Godeps.json, Gopkg.lock, dependencies.tsv, glide.lock, vendor.conf, vendor.yml, vendor/manifest, vendor/vendor.json) - https://github.com/golang/go/issues/23966#issuecomment-367428464
+
+Let's have a look at the go.mod file it created;
+cat go.mod
+
+module github.com/komuw/meli
+
+require (
+	github.com/Microsoft/go-winio v0.4.8
+	github.com/docker/distribution v0.0.0-20170720211245-48294d928ced
+	github.com/docker/docker v1.13.1
+	github.com/docker/docker-credential-helpers v0.6.1
+	github.com/docker/go-connections v0.3.0
+	github.com/docker/go-units v0.3.3
+	github.com/pkg/errors v0.8.0
+	golang.org/x/net v0.0.0-20180712202826-d0887baf81f4
+	golang.org/x/sys v0.0.0-20180715085529-ac767d655b30
+	gopkg.in/yaml.v2 v2.2.1
+)
+
+All my dependencies that were listed in Gopkg.lock have been added to go.mod with their correct versions.
+Notice though that under dep, meli depended on github.com/docker/distribution version v2.6.2
+https://github.com/komuw/meli/blob/3127f1c5bdb82db7c0df6112ada8e6e953546aa4/Gopkg.lock#L12-L21  
+However go mod added it with version v0.0.0-20170720211245-48294d928ced
+
+That is called a pseudo-version, the first part is v0.0.0 and the second part(20170720211245) is the timestamp in UTC of the 
+commit hash 48294d928ced. The commit 48294d928ced is the commit corresponding to version v2.6.2 - 
+https://github.com/docker/distribution/commit/48294d928ced5dd9b378f7fd7c6f5da3ff3f2c89
+
+
+Pretty neat, huh; but does it work?
+Let's build the damn thing and see if it works(remember we are doing all these outside of GOPATH)
+go build -o meli cli/cli.go
+
+./meli --help
+  Usage of ./meli:
+    -build
+        Rebuild services
+    -d	Run containers in the background
+    -f string
+        path to docker-compose.yml file. (default "docker-compose.yml")
+    -up
+        Builds, re/creates, starts, and attaches to containers for a service.
+    -v	Show version information.
+    -version
+        Show version information.
+
+go.mod is not the only file created, a go.sum file was also created.
+cat go.sum
+github.com/Microsoft/go-winio v0.4.8/go.mod h1:VhR8bwka0BXejwEJY73c50VrPtXAaKcyvVC4A4RozmA=
+github.com/docker/distribution v0.0.0-20170720211245-48294d928ced h1:/ybq/Enozyi+nBSAkL4j7vd+IBV6brrxB2srIO5VWos=
+....
+
+It contains the expected cryptographic checksums of the content of specific module versions
+The go command maintains a cache of downloaded packages(in $GOPATH/src/mod) and computes and records the cryptographic checksum of each package at download time.
+The 'go mod -verify' command checks that the cached copies of module downloads still match both their recorded checksums and the entries in go.sum
+
+Lets check this crypto thing.
+echo "Im a hacker" >> ~/go/src/mod/github.com/pkg/errors@v0.8.0/README.md
+Then run;
+go mod -verify
+    github.com/pkg/errors v0.8.0: dir has been modified (/Users/komuw/go/src/mod/github.com/pkg/errors@v0.8.0)   
+
+If you work in enterprise, this is the point at which you call in your Red team to figure out who is messing up with your packages.
+Even though, we messed with the cached github.com/pkg/errors package, it doesnt stop us from building our package.
+go build -o meli cli/cli.go still works okay. I do not know if go build should complain if it finds the cached packages have been messed with, 
+or whether it should redownload them afresh or just build the package as if nothing has happened(like it did.) 
+
+However, if you mess with the go.sum file; go build fails with an error.
+sed -i.bak "s/1NNxqwp/hackedHash/" go.sum
+
+go mod -verify
+  go: verifying gopkg.in/yaml.v2@v2.2.1/go.mod: checksum mismatch
+    downloaded: h1:hI93XBmqTisBFMUTm0b8Fm+jr3Dg1NNxqwp+5A1VGuI=
+    go.sum:     h1:hI93XBmqTisBFMUTm0b8Fm+jr3DghackedHash+5A1VGuI=
+
+
+go build -o meli cli/cli.go
+  go: verifying gopkg.in/yaml.v2@v2.2.1/go.mod: checksum mismatch
+    downloaded: h1:hI93XBmqTisBFMUTm0b8Fm+jr3Dg1NNxqwp+5A1VGuI=
+    go.sum:     h1:hI93XBmqTisBFMUTm0b8Fm+jr3DghackedHash+5A1VGuI=
+
+I like this crypto thing(real crypto, not that cryptocurrency nonsense; I'm sorry #holdgang).
+
+go mod has other flags that you can try out, run go help mod to see them all.
+lets try the -sync flag which "synchronizes go.mod with the source code in the module.
+It adds any missing modules necessary to build the current module's packages and dependencies, and it removes unused modules that
+don't provide any relevant packages."
+synchronization of modules seems like something we might want to do, right?
+
+
+go mod -sync
+go: finding github.com/stretchr/testify/assert latest
+go: finding github.com/stevvooe/resumable/sha256 latest
+go: finding github.com/stevvooe/resumable latest
+go: downloading github.com/Microsoft/go-winio v0.4.8
+go: finding github.com/pmezard/go-difflib/difflib latest
+go: finding github.com/davecgh/go-spew/spew latest
+
+wait, why is it adding new packages?
+
+cat go.mod
+module github.com/komuw/meli
+
+require (
+	github.com/Microsoft/go-winio v0.4.8 // indirect
+	github.com/davecgh/go-spew v1.1.0 // indirect
+	github.com/docker/distribution v0.0.0-20170720211245-48294d928ced // indirect
+	github.com/docker/docker v1.13.1
+	github.com/docker/docker-credential-helpers v0.6.1
+	github.com/docker/go-connections v0.3.0
+	github.com/docker/go-units v0.3.3 // indirect
+	github.com/pkg/errors v0.8.0 // indirect
+	github.com/pmezard/go-difflib v1.0.0 // indirect
+	github.com/stevvooe/resumable v0.0.0-20170302213456-2aaf90b2ceea // indirect
+	github.com/stretchr/testify v1.2.2 // indirect
+	golang.org/x/net v0.0.0-20180712202826-d0887baf81f4 // indirect
+	golang.org/x/sys v0.0.0-20180715085529-ac767d655b30 // indirect
+	gopkg.in/yaml.v2 v2.2.1
+)
+
+It added new packages to go.mod with a comment //indirect
+Let's see if the documentation can help us discover what is up with these //indirect thing.
+
+go help mod | grep -i indirect -A 2 -B 2
+  Note that this only describes the go.mod file itself, not other modules
+  referred to indirectly. For the full set of modules available to a build,
+  use 'go list -m -json all'.
+
+not useful, lets try go help modules instead. I do not know why the documentation is spread between 
+go help mod and go help modules; but anyway;
+
+go help modules | grep -i indirect -A 2 -B 2
+  As part of maintaining the require statements in go.mod, the go command
+  tracks which ones provide packages imported directly by the current module
+  and which ones provide packages only used indirectly by other module
+  dependencies. Requirements needed only for indirect uses are marked with a
+  "// indirect" comment in the go.mod file. Indirect requirements are
+  automatically removed from the go.mod file once they are implied by other
+  --
+  automatically removed from the go.mod file once they are implied by other
+  direct requirements. Indirect requirements only arise when using modules
+  that fail to state some of their own dependencies or when explicitly
+  upgrading a module's dependencies ahead of its own stated requirements.
+
+Okay, so the documentation seems to be saying that for example in meli's case;
+although meli does not use github.com/stretchr/testify one of it's dependencies may be using it. 
+So which dependency of meli is using testify(meli doesnt use testify or any other non-stdlib testing libraries)?
+Because meli still vendors its dependencies, lets see if we can use grep to find out;
+
+grep -rsIin testify .
+  ./go.mod:14:	github.com/stretchr/testify v1.2.2 // indirect
+  ./go.sum:21:github.com/stretchr/testify v1.2.2 h1:bSDNvY7ZPG5RlJ8otE/7V6gMiyenm9RtJ7IUVIAoJ1w=
+  ./go.sum:22:github.com/stretchr/testify v1.2.2/go.mod h1:a8OnRcib4nhh0OaRAV+Yts87kKdq0PP7pXfy6kDkUVs=
+
+grep isn't helping, maybe go mod has a flag to give us this information.
+go mod has a -graph flag which according to the documentation; "The -graph flag prints the module requirement graph (with replacements applied)
+in text form."
+niice, looks like what we need.
+
+go mod -graph
+  github.com/komuw/meli github.com/Microsoft/go-winio@v0.4.8
+  github.com/komuw/meli github.com/davecgh/go-spew@v1.1.0
+  github.com/komuw/meli github.com/docker/distribution@v0.0.0-20170720211245-48294d928ced
+  github.com/komuw/meli github.com/docker/docker@v1.13.1
+  github.com/komuw/meli github.com/docker/docker-credential-helpers@v0.6.1
+  github.com/komuw/meli github.com/docker/go-connections@v0.3.0
+  github.com/komuw/meli github.com/docker/go-units@v0.3.3
+  github.com/komuw/meli github.com/pkg/errors@v0.8.0
+  github.com/komuw/meli github.com/pmezard/go-difflib@v1.0.0
+  github.com/komuw/meli github.com/stevvooe/resumable@v0.0.0-20170302213456-2aaf90b2ceea
+  github.com/komuw/meli github.com/stretchr/testify@v1.2.2
+  github.com/komuw/meli golang.org/x/net@v0.0.0-20180712202826-d0887baf81f4
+  github.com/komuw/meli golang.org/x/sys@v0.0.0-20180715085529-ac767d655b30
+  github.com/komuw/meli gopkg.in/check.v1@v0.0.0-20161208181325-20d25e280405
+  github.com/komuw/meli gopkg.in/yaml.v2@v2.2.1
+  gopkg.in/yaml.v2@v2.2.1 gopkg.in/check.v1@v0.0.0-20161208181325-20d25e280405
+
+maybe not. I still do not know which dependency introduced github.com/stretchr/testify
+
+I asked on the #modules slack channel at https://gophers.slack.com and someone suggested I try go list, let's do that;
+go list -test -deps | grep testify
+
+No lack either.
+
+
+One of the hardest things I've had before with Go is contributing to other peoples' projects. 
+Usually -in other languages- you would fork the project, make changes, run to make sure everything works okay, then when happy open 
+a pull request from your fork to the project.
+With Go however, I've had problems because whenever I would fork a project and make changes; when it came to running the 
+thing, things would go haywire. This is because import paths would still be pointing to the old project instead of mine. 
+Note; this is probably my own failing rather than of Go.
+I recently came across this tweet by Francesc Campoy https://twitter.com/francesc/status/1009487969198075905 and it has improved things for me
+but it still felt odd. Talking of Campoy, he has a fantastic youtube channel that is all things Go, If you have never checked out, do yourselve a 
+favour; https://www.youtube.com/channel/UC_BzFbxG2za3bp5NRRRXJSw
+
+Can go modules help us here? 
+It turns out, they can!
+meli depends on github.com/docker/docker/client , let's say we want to add something to the docker client that we will later 
+send a pull request to docker for.
+So, let's fork docker. I forked docker over to https://github.com/komuw/moby
+Now lets clone our fork into a directory that is outside GOPATH
+
+git clone git@github.com:komuw/moby.git ~/mystuff/moby
+
+Let say that the feature we want to add is, every time you declare a docker client, it should log the docker version that you are using.
+The way you declare a docker client is via 
+
+import "github.com/docker/docker/client"
+
+myClient, err := client.NewEnvClient()
+if err != nil {
+  log.Fatal(err, "unable to intialize docker client")
+}
+defer myClient.Close()
+// do something with client
+
+so we want to a feature such that the call client.NewEnvClient() logs the docker version 
+before returning the client.
+Here's the change I made to the NewEnvClient function https://github.com/komuw/moby/compare/683738900eec52f86b834234eeef054c4e135031...komuw:master
+
+We have made changes to the docker client on the cloned repo that we have locally at ~/mystuff/moby 
+How do we use that change in meli before even pushing those changes to our fork(before even sending a pull request to docker)?
+
+Well, go modules supports dependency replacement. And the replacement can point to go code that is anywhere(including in our machine)
+Lets add the following line to go.mod
+
+replace github.com/docker/docker v1.13.1 => ~/mystuff/moby
+
+That is telling go to replace the docker dependency with a local dependency at the path ~/mystuff/moby
+This is our local clone of our fork of docker.
+Let's run go mod -verify
+
+go mod -verify
+  go: errors parsing go.mod:
+  ~/mystuff/meli/go.mod:20: replacement module without version must be directory path (rooted or starting with ./ or ../)
+
+nice error message, let's comply; change the line in go.mod to
+
+replace github.com/docker/docker v1.13.1 => ../moby
+
+since our docker clone is ../ relative to the meli code location.
+
+go mod -verify
+  go: parsing ../moby/go.mod: open /home/komuw/mystuff/moby/go.mod: no such file or directory
+  go: error loading module requirements
+
+This time around the error message is not that descriptive. I opened an issue with the go repo; https://github.com/golang/go/issues/26417
+Paul Jolly(who has been doing an amazing job answering go module related questions all over the internet), mentioned that 
+"the new path should be a directory on the local system that contains a module"
+
+So lets add a go.mod file to our clone of moby(docker)
+
+echo 'module "github.com/docker/docker"' >> ~/mystuff/moby/go.mod
+
+go mod -verify
+all modules verified
+
+
+Lets rebuild meli to use our modified copy of docker.
+go build -o meli cli/cli.go
+
+go build -o meli cli/cli.go
+  go: finding github.com/gogo/protobuf/proto latest
+  go: finding github.com/gogo/protobuf v1.1.1
+  go: downloading github.com/gogo/protobuf v1.1.1
+  go: finding github.com/opencontainers/image-spec/specs-go latest
+  go: finding github.com/opencontainers/image-spec v1.0.1
+  go: downloading github.com/opencontainers/image-spec v1.0.1
+  # github.com/komuw/meli
+  ./types.go:77:44: undefined: volume.VolumesCreateBody
+  ./types.go:120:70: undefined: volume.VolumesCreateBody
+  ./volume.go:16:3: undefined: volume.VolumesCreateBody
+  # github.com/docker/docker/client
+  ../moby/client/container_commit.go:17:15: undefined: reference.ParseNormalizedNamed
+  ../moby/client/container_commit.go:25:9: undefined: reference.TagNameOnly
+  ../moby/client/container_commit.go:30:16: undefined: reference.FamiliarName
+  ../moby/client/image_create.go:16:14: undefined: reference.ParseNormalizedNamed
+  ../moby/client/image_create.go:22:25: undefined: reference.FamiliarName
+  ../moby/client/image_import.go:18:16: undefined: reference.ParseNormalizedNamed
+  ../moby/client/image_pull.go:23:14: undefined: reference.ParseNormalizedNamed
+  ../moby/client/image_pull.go:29:25: undefined: reference.FamiliarName
+  ../moby/client/image_pull.go:59:8: undefined: reference.TagNameOnly
+  ../moby/client/image_push.go:19:14: undefined: reference.ParseNormalizedNamed
+  ../moby/client/image_push.go:19:14: too many errors
+
+
+Looks like I picked a hard one. I'm guessing that I'm running into issues that go much deeper 
+than just go modules? 
+My speculation is that the docker renaming from https://github.com/docker/docker to  https://github.com/moby/moby and 
+the fact that docker uses import path comments of the form 
+
+package client // import "github.com/docker/docker/client"
+
+see; https://github.com/moby/moby/blob/683738900eec52f86b834234eeef054c4e135031/client/client.go#L42
+
+is not helping. 
+
+So probably, even though I have added a replace statement github.com/docker/docker v1.13.1 => ../moby 
+the code in ../moby still has import comments // import "github.com/docker/docker/client" that makes go 
+try and use github.com/docker/docker which is what we wanted to replace in the first place?
+
+Hey, I'm just speculating; I'll open an issue with the go repo sometime later if just to satisfy my curiosty.
+
+Even though I was not able to use a local copy of docker, I was able to carry out the same procedure with another package.
+
+Take 2:
+From what I gather, docker and/or kubernetes are some of the hardest Go packages you can use as a dependency. 
+So lets try something simpler.
+Lets undo the replace directive we had in go.mod
+
+We are going to try and add github.com/pkg/errors as a dependency to meli, then we will clone github.com/pkg/errors, clone 
+it locally, make changes to it and try to use our local copy.
+
+lets add github.com/pkg/errors to https://github.com/komuw/meli/blob/master/cli/cli.go 
+here's the change;
+
+import "github.com/pkg/errors"
+func main() {
+
+	err := errors.New("whoops useless error")
+	fmt.Printf("%v", err)
+  ....
+}
+The full change is:
+https://github.com/komuw/meli/commit/a714df2b3b91dc0e0972a6ca0789e9f57e3f0e24
+
+
+go mod -sync so that those changes get picked up. When you do that, github.com/pkg/errors v0.8.0 is added as a direct dependency.
+
+Lets fork it to https://github.com/komuw/errors and clone it locally to a path outside GOPATH
+
+https://github.com/komuw/errors
+git clone git@github.com:komuw/errors.git ~/mystuff/errors
+
+Lets add a replace directive to meli's go.mod to point to the local ~/mystuff/errors
+replace github.com/pkg/errors v0.8.0 => ../errors
+
+and add a go.mod file to the local errors package
+
+echo 'module "github.com/pkg/errors"' >> ~/mystuff/errors/go.mod
+
+
+Let's modify the local errors package. We want to modify the errors.New function to log 
+something when called. 
+The change I made is 
+func New(message string) error {
+	fmt.Println("\n\t hello new called.")
+	return &fundamental{
+		msg:   message,
+		stack: callers(),
+	}
+}
+see: https://github.com/komuw/errors/commit/0c8091c60870f222b0642edb0893361b0185aedf
+
+Lets build meli and run it.
+
+go build -o meli cli/cli.go && ./meli --help
+
+	 hello new called.
+whoops useless errorUsage of ./meli:
+  -build
+    	Rebuild services
+
+
+Whoops! We done made it.
+
+
