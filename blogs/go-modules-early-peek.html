@@ -76,6 +76,182 @@ go version devel +d278f09333 Thu Jul 19 05:40:37 2018 +0000 darwin/amd64
                 </br>
                 <strong>What up now</strong>
                 </br>
+                I have a go package called
+                <a href="https://github.com/komuw/meli">meli</a> and we are going to convert that to use go modules. </br>
+                meli is a faster, smaller alternative to docker-compose(albeit with less features.) So lets clone meli in a directory that
+                is outside GOPATH. </br>
+                My GOPATH is at ~/go so we'll clone into ~/mystuff instead.
+                <pre><code class="bash">
+git clone git@github.com:komuw/meli.git ~/mystuff/meli && cd ~/mystuff/meli
+                </code></pre>
+                </br>
+                run;
+                <pre><code class="bash">
+go mod -init
+  go: creating new go.mod: module github.com/komuW/meli
+  go: copying requirements from Gopkg.lock
+                </code></pre>
+                </br>
+                the -init flag initializes and writes a new go.mod to the current directory, in effect creating a new module rooted at the
+                current directory. </br>
+                If you were using another dependency manager before, mod -nit will intialize the go.mod file using that dependency manager's
+                files. I was using dep as my dependency manager so go mod -init used that. </br>
+                From what I understand, go mod "already supports reading
+                <strong>nine</strong> different legacy file formats (GLOCKFILE, Godeps/Godeps.json, Gopkg.lock, dependencies.tsv,
+                glide.lock, vendor.conf, vendor.yml, vendor/manifest, vendor/vendor.json)" -
+                <a href="https://github.com/golang/go/issues/23966#issuecomment-367428464">see this comment by Russ Cox.</a>
+                </br>
+                It's nice to see that, the Go team has put some thought into that.</br>
+
+                Let's have a look at the go.mod file it created;
+                <pre><code class="bash">
+module github.com/komuw/meli
+
+require (
+	github.com/Microsoft/go-winio v0.4.8
+	github.com/docker/distribution v0.0.0-20170720211245-48294d928ced
+	github.com/docker/docker v1.13.1
+	github.com/docker/docker-credential-helpers v0.6.1
+	github.com/docker/go-connections v0.3.0
+	github.com/docker/go-units v0.3.3
+	github.com/pkg/errors v0.8.0
+	golang.org/x/net v0.0.0-20180712202826-d0887baf81f4
+	golang.org/x/sys v0.0.0-20180715085529-ac767d655b30
+	gopkg.in/yaml.v2 v2.2.1
+)
+                </code></pre>
+                </br>
+                All my dependencies that were listed in Gopkg.lock have been added to go.mod with their correct versions.</br>
+                Notice though that under dep, meli depended on github.com/docker/distribution
+                <a href="https://github.com/komuw/meli/blob/3127f1c5bdb82db7c0df6112ada8e6e953546aa4/Gopkg.lock#L12-L21">version v2.6.2</a>
+
+                However go mod added it with version v0.0.0-20170720211245-48294d928ced </br>
+                That is called a pseudo-version, the second part(20170720211245) is the timestamp in UTC of the commit hash 48294d928ced.
+                The commit 48294d928ced is the commit corresponding to version v2.6.2,
+                <a href=" https://github.com/docker/distribution/commit/48294d928ced5dd9b378f7fd7c6f5da3ff3f2c89">see</a>
+                </br>
+
+                Pretty neat, huh; but does it work? </br>
+                Let's build the damn thing and see if it works(remember we are doing all these outside of GOPATH) </br>
+                <pre><code class="bash">
+go build -o meli cli/cli.go && ./meli --help 
+    Usage of ./meli:
+    -build
+        Rebuild services
+    -d	Run containers in the background
+    -f string
+        path to docker-compose.yml file. (default "docker-compose.yml")
+    -up
+        Builds, re/creates, starts, and attaches to containers for a service.
+    -v	Show version information.
+    -version
+        Show version information.
+                </code></pre>
+                </br>
+                </br>
+
+                go.mod is not the only file created, a go.sum file was also created.
+                <pre><code class="bash">
+cat go.sum
+    github.com/Microsoft/go-winio v0.4.8/go.mod h1:VhR8bwka0BXejwEJY73c50VrPtXAaKcyvVC4A4RozmA=
+    github.com/docker/distribution v0.0.0-20170720211245-48294d928ced h1:/ybq/Enozyi+nBSAkL4j7vd+IBV6brrxB2srIO5VWos=
+    ....
+                </code></pre>
+                </br>
+                go.sum contains the expected cryptographic checksums of the content of specific module versions</br>
+                The go command maintains a cache of downloaded packages(in $GOPATH/src/mod) and computes and records the cryptographic checksum
+                of each package at download time. </br>
+                The 'go mod -verify' command checks that the cached copies of module downloads still match both their recorded checksums
+                and the entries in go.sum</br>
+
+                Lets check this crypto thing.
+                <pre><code class="bash">
+echo "Im a hacker" >> ~/go/src/mod/github.com/pkg/errors@v0.8.0/README.md
+                </code></pre>
+                </br>
+                Then run;
+                <pre><code class="bash">
+go mod -verify
+    github.com/pkg/errors v0.8.0: dir has been modified (~/go/src/mod/github.com/pkg/errors@v0.8.0)   
+                </code></pre>
+                </br>
+                If you work in enterprise, this is the point at which you call in your Red team to figure out who is messing up with your
+                packages.
+                </br>
+                Even though, we messed with the cached github.com/pkg/errors package, it doesnt stop us from building our package.</br>
+                <i>go build -o meli cli/cli.go</i> still works okay. I do not know if go build should complain if it finds the
+                cached packages have been messed with, or whether it should redownload them afresh or just build the package
+                as if nothing has happened(like it did.)</br>
+                </br>
+                However, if you mess with the go.sum file; go build fails with an error.
+                <pre><code class="bash">
+sed -i.bak "s/1NNxqwp/hackedHash/" go.sum && go build -o meli cli/cli.go
+    go: verifying gopkg.in/yaml.v2@v2.2.1/go.mod: checksum mismatch
+    downloaded: h1:hI93XBmqTisBFMUTm0b8Fm+jr3Dg1NNxqwp+5A1VGuI=
+    go.sum:     h1:hI93XBmqTisBFMUTm0b8Fm+jr3DghackedHash+5A1VGuI=
+                </code></pre>
+                </br>
+                I'm liking this crypto thing(real crypto, not that cryptocurrency mumbo-jumbo; I'm sorry #holdgang).</br>
+                </br>
+
+                go mod has other flags that you can try out, run
+                <i>go help mod</i> to see them all. lets try the -sync flag which "synchronizes go.mod with the source code
+                in the module.</br>
+                Synchronization of modules seems like something we might want to do, right?</br>
+                <pre><code class="bash">
+go mod -sync
+go: finding github.com/stretchr/testify/assert latest
+go: finding github.com/stevvooe/resumable/sha256 latest
+..
+                </code></pre>
+                </br>
+                wait, why is it adding new packages?</br>
+                It added new packages to go.mod with a comment //indirect Let's see if the documentation can help us discover what is up
+                with these //indirect thing.</br>
+                <pre><code class="bash">
+go help mod | grep -i indirect -A 2 -B 2
+  Note that this only describes the go.mod file itself, not other modules
+  referred to indirectly. For the full set of modules available to a build,
+  use 'go list -m -json all'.
+                </code></pre>
+                </br>
+                not useful, lets try go help modules instead. I do not know why the documentation is spread between go help mod and go help
+                modules; but anyway;</br>
+                <pre><code class="bash">
+go help modules | grep -i indirect -A 2 -B 2
+... Requirements needed only for indirect uses are marked with a
+"// indirect" comment in the go.mod file. Indirect requirements are
+automatically removed from the go.mod file once they are implied by other
+                </code></pre>
+                </br>
+                Okay, so the documentation seems to be saying that for example in meli's case; although meli does not use github.com/stretchr/testify
+                one of it's dependencies may be using it.</br>
+                So which dependency of meli is using testify(meli doesnt use testify or any other non-stdlib testing libraries)? </br>
+                Because meli still vendors its dependencies, lets see if we can use grep to find out;
+                <pre><code class="bash">
+grep -rsIin testify .
+  ./go.mod:14:	github.com/stretchr/testify v1.2.2 // indirect
+  ./go.sum:21:github.com/stretchr/testify v1.2.2 h1:bSDNvY7ZPG5RlJ8otE/7V6gMiyenm9RtJ7IUVIAoJ1w=
+  ./go.sum:22:github.com/stretchr/testify v1.2.2/go.mod h1:a8OnRcib4nhh0OaRAV+Yts87kKdq0PP7pXfy6kDkUVs=
+                </code></pre>
+                </br>
+                grep isn't helping, maybe go mod has a flag to give us this information?</br>
+                go mod has a -graph flag which according to the documentation; "The -graph flag prints the module requirement graph (with
+                replacements applied) in text form." </br>
+                niice, looks like what we need.
+                <pre><code class="bash">
+go mod -graph
+  github.com/komuw/meli github.com/stevvooe/resumable@v0.0.0-20170302213456-2aaf90b2ceea
+  github.com/komuw/meli github.com/stretchr/testify@v1.2.2
+  github.com/komuw/meli golang.org/x/net@v0.0.0-20180712202826-d0887baf81f4
+                </code></pre>
+                </br>
+                I still do not know which dependency introduced
+                <i>github.com/stretchr/testify</i> I asked on the #modules slack channel at https://gophers.slack.com and someone
+                suggested I try go list; but
+                <i>go list -test -deps | grep testify</i> didn't help either.
+
+
 
 
 
