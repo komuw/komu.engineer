@@ -228,8 +228,8 @@ go mod -graph
   github.com/komuw/meli github.com/stevvooe/resumable@v0.0.0-20170302213456-2aaf90b2ceea
   github.com/komuw/meli github.com/stretchr/testify@v1.2.2
   github.com/komuw/meli golang.org/x/net@v0.0.0-20180712202826-d0887baf81f4
-                </code></pre> I still do not know which dependency introduced
-                <i>github.com/stretchr/testify</i> I asked on the
+                </code></pre> That's not very helpful, I still do not know which dependency introduced
+                <i>github.com/stretchr/testify.</i> I asked on the
                 <a target="_blank" rel="noopener" href="https://gophers.slack.com">#modules slack channel</a> and someone suggested I try go list; but
                 <i>go list -test -deps | grep testify</i> didn't help either.
 
