@@ -416,8 +416,40 @@ go build -o meli cli/cli.go && ./meli --help
     whoops useless errorUsage of ./meli:
     -build
             Rebuild services
-                </code></pre> Look ma, We done made it.
+                </code></pre> Look ma, We done made it.</br>
+                <i>meli</i> is now using
+                <i>github.com/pkg/errors</i> for error handling, but we are using a local copy of our fork of
+                <i>github.com/pkg/errors</i>
+                </br>
+                Pretty neat if you ask me.
 
+                </br>
+                </br>
+                <strong>Conclusion</strong>
+                </br>
+                I like the direction that go modules is taking. Not all t's are tied and i's dotted. At the time of writing this, there are
+                about
+                <a target="_blank" rel="noopener" href="https://github.com/golang/go/issues?q=is%3Aissue+is%3Aopen+label%3Amodules">40 open issues</a>
+                concerning go modules. I expect that number to rise as more people try out go modules.</br>
+                go modules is expected to ship with Go version 1.11(eta ~August) as an experimental feature.</br>
+
+                Shout out to Paul Jolly, Jeff Wendling, Bryan C. Mills, Russ Cox among others who have had to do a lot of hand holding all
+                over the internet on go modules related issues/questions.</br>
+                Special shout out to Sam Boyer for his critique(in the literary sense) of go modules(links below.)
+                </br>
+                </br>
+
+                Related readings:</br>
+                1.
+                <a target="_blank" rel="noopener" href="https://research.swtch.com/vgo">Go & Versioning</a>, by Russ Cox.
+                </br>
+                2.
+                <a target="_blank" rel="noopener" href="https://dave.cheney.net/2018/07/14/taking-go-modules-for-a-spin">Taking Go modules for a spin</a>, by Dave Cheney</br>
+                3.
+                <a target="_blank" rel="noopener" href="https://sdboyer.io/blog/vgo-and-dep/">Thoughts on vgo and dep</a>, by Sam Boyer</br>
+                4.
+                <a target="_blank" rel="noopener" href="https://sdboyer.io/vgo/intro/">An Analysis of Vgo</a>, by Sam Boyer</br>
+                </br>
 
             </p>
         </div>
