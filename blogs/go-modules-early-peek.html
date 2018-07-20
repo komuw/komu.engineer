@@ -359,9 +359,11 @@ go build -o meli cli/cli.go
                 <i>go.mod</i>
                 </br>
                 We are going to try and add
-                <i>github.com/pkg/errors</i> as a dependency to meli, we will fork it, clone it outside GOPATH, make changes
-                to it and try to use our local copy.</br>
-                here's the change;
+                <i>github.com/pkg/errors</i> as a dependency to meli, we will fork it(pkg/errors), clone it outside GOPATH,
+                make changes to it and try to use our local copy.</br>
+                here's the change I made to
+                <i>meli</i> to use
+                <i>github.com/pkg/errors</i> for error handling;
                 <pre><code class="go">
 import "github.com/pkg/errors"
 func main() {
@@ -376,11 +378,12 @@ func main() {
                 <i>go mod -sync</i> so that those changes get picked up. When you do that,
                 <i>github.com/pkg/errors v0.8.0</i> is added as a direct dependency.</br>
                 Lets fork errors package to
-                <i>https://github.com/komuw/errors</i> and clone it locally to a path outside GOPATH ie
+                <a target="_blank" rel="noopener" href="https://github.com/komuw/errors">https://github.com/komuw/errors</a> and clone it locally to a path outside GOPATH ie
                 <i>~/mystuff/errors</i>
                 </br>
 
                 Then we add a replacement directive in
+                <i>meli's</i>
                 <i>go.mod</i>
                 <pre><code class="bash">
 replace github.com/pkg/errors v0.8.0 => ../errors
