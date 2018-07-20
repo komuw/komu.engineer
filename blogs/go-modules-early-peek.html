@@ -253,29 +253,31 @@ go mod -graph
                 </br>
 
                 meli depends on
-                <i>github.com/docker/docker/client</i>, let's say we want to add some feature to that docker client and we will
-                later propose in a pull request to docker. I forked docker over to
+                <i>github.com/docker/docker/client</i>. </br>
+                Let's say we wanted to add some feature to the docker client that we would later propose in a pull request to docker. I forked
+                docker over to
                 <a target="_blank" rel="noopener" href="https://github.com/komuw/moby">https://github.com/komuw/moby</a>
                 </br>
                 Now lets clone our fork into a directory that is outside GOPATH
                 <pre><code class="bash">
 git clone git@github.com:komuw/moby.git ~/mystuff/moby
-                </code></pre> The feature we want to add is, every time you declare a docker client(using
+                </code></pre> The feature we want to add is; every time you declare a docker client(using
                 <i>client.NewEnvClient() </i>), it should log the docker version that you are using. </br>
-                Here's the change I made to the NewEnvClient function
+                Here's the change I made to the
+                <i>NewEnvClient</i> function
                 <pre><code class="go">
 func NewEnvClient() (*Client, error) {
     +	fmt.Println("\n\t You are using docker version:", api.DefaultVersion)
         return NewClientWithOpts(FromEnv)
 }
                 </code></pre> The full diff
-                <a target="_blank" rel="noopener" href="https://github.com/komuw/moby/compare/683738900eec52f86b834234eeef054c4e135031...komuw:master">is here</a>
+                <a target="_blank" rel="noopener" href="https://github.com/komuw/moby/compare/683738900eec52f86b834234eeef054c4e135031...komuw:master">can be seen here</a>
                 </br>
                 We have made changes to the docker client on our local clone at
                 <i>~/mystuff/moby</i>. How do we use that change in
                 <i>meli</i> before even pushing those changes to our fork(before even sending a pull request to docker)?</br>
 
-                go modules supports dependency replacement. The replacement can point to go code that is anywhere(including in our machine.
+                go modules supports dependency replacement. The replacement can point to go code that is anywhere(including in our machine.)</br>
                 Add the following line to
                 <i>go.mod</i>
                 <pre><code class="bash">
@@ -293,7 +295,7 @@ replace github.com/docker/docker v1.13.1 => ../moby
 
                 <pre><code class="bash">
 go mod -verify
-  go: parsing ../moby/go.mod: open /home/komuw/mystuff/moby/go.mod: no such file or directory
+  go: parsing ../moby/go.mod: open ~/mystuff/moby/go.mod: no such file or directory
   go: error loading module requirements
                 </code></pre> This time around the error message is not that descriptive. Paul Jolly(who has been doing an amazing job
                 answering go module related questions all over the internet),
@@ -332,13 +334,15 @@ go build -o meli cli/cli.go
   ../moby/client/image_push.go:19:14: too many errors
                 </code></pre> Looks like I picked a hard one. I'm guessing that I'm running into issues that go much deeper than just
                 go modules?? Maybe?</br>
-                My speculation is that the way docker uses import path comments of the form
+                My speculation is that the way docker uses import path comments of the form</br>
                 <i>package client // import "github.com/docker/docker/client"</i>
                 <a target="_blank" rel="noopener" href="https://github.com/moby/moby/blob/683738900eec52f86b834234eeef054c4e135031/client/client.go#L42">
                     see here
                 </a>, is muddying things.</br>
-                So probably, even though I have added a replace statement
-                <i>github.com/docker/docker v1.13.1 => ../moby</i> the code in
+                So probably, even though I have added a replace statement</br>
+                <i>github.com/docker/docker v1.13.1 => ../moby</i>
+                </br>
+                the code in
                 <i>../moby</i> still has import comments
                 <i>// import "github.com/docker/docker/client"</i>
                 that makes go try and use
