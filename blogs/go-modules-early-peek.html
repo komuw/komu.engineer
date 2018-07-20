@@ -30,9 +30,9 @@
 <body>
     <div class="container">
         <div class="header">
-            <a href="https://www.komu.engineer">Home</a>&nbsp;&nbsp;
-            <a href="https://www.komu.engineer/about">About Me</a>&nbsp;&nbsp;
-            <a href="https://www.komu.engineer/blog">Blog</a>&nbsp;&nbsp;
+            <a target="_blank" rel="noopener" href="https://www.komu.engineer">Home</a>&nbsp;&nbsp;
+            <a target="_blank" rel="noopener" href="https://www.komu.engineer/about">About Me</a>&nbsp;&nbsp;
+            <a target="_blank" rel="noopener" href="https://www.komu.engineer/blog">Blog</a>&nbsp;&nbsp;
         </div>
         <div class="left-sidebar">
             .
@@ -54,15 +54,13 @@
 
                 At the time of writing this, we need to be using go compiled from master branch for us to be able to use go modules. </br>
                 So lets do that, We could clone go from master and compile it ourselves, but I won't do that; instead I'll use
-                <a href="https://github.com/travis-ci/gimme">gimme</a> which is a tool developed by TravisCI peeps to help in installing various go versions.
+                <a target="_blank" rel="noopener" href="https://github.com/travis-ci/gimme">gimme</a> which is a tool developed by TravisCI peeps to help in installing various go versions.
                 </br>
                 The instructions on how to install gimme can
-                <a href="https://github.com/travis-ci/gimme"> be found here</a>; But since I'm on OSX; </br>
+                <a target="_blank" rel="noopener" href="https://github.com/travis-ci/gimme"> be found here</a>; But since I'm on OSX; </br>
                 <pre><code class="bash">
 brew install gimme && gimme master
-                </code></pre>
-                </br>
-                That installs gimme and then uses gimme to install Go from master branch.</br>
+                </code></pre> That installs gimme and then uses gimme to install Go from master branch.</br>
                 </br>
 
                 Lets activate the newly installed go and check version
@@ -73,26 +71,21 @@ go version devel +d278f09333 Thu Jul 19 05:40:37 2018 +0000 darwin/amd64
                 </code></pre>
 
                 </br>
-                </br>
                 <strong>What up now</strong>
                 </br>
                 I have a go package called
-                <a href="https://github.com/komuw/meli">meli</a> and we are going to convert that to use go modules. </br>
+                <a target="_blank" rel="noopener" href="https://github.com/komuw/meli">meli</a> and we are going to convert that to use go modules. </br>
                 meli is a faster, smaller alternative to docker-compose(albeit with less features.) So lets clone meli in a directory that
                 is outside GOPATH. </br>
                 My GOPATH is at ~/go so we'll clone into ~/mystuff instead.
                 <pre><code class="bash">
 git clone git@github.com:komuw/meli.git ~/mystuff/meli && cd ~/mystuff/meli
-                </code></pre>
-                </br>
-                run;
+                </code></pre> run;
                 <pre><code class="bash">
 go mod -init
   go: creating new go.mod: module github.com/komuW/meli
   go: copying requirements from Gopkg.lock
-                </code></pre>
-                </br>
-                the -init flag initializes and writes a new
+                </code></pre> the -init flag initializes and writes a new
                 <i>go.mod</i> to the current directory, in effect creating a new module rooted at the current directory. </br>
                 If you were using another dependency manager before, mod -nit will intialize the
                 <i>go.mod</i> file using that dependency manager's files. I was using dep as my dependency manager so go mod
@@ -100,7 +93,7 @@ go mod -init
                 From what I understand, go mod "already supports reading
                 <strong>nine</strong> different legacy file formats (GLOCKFILE, Godeps/Godeps.json, Gopkg.lock, dependencies.tsv,
                 glide.lock, vendor.conf, vendor.yml, vendor/manifest, vendor/vendor.json)" -
-                <a href="https://github.com/golang/go/issues/23966#issuecomment-367428464">see this comment by Russ Cox.</a>
+                <a target="_blank" rel="noopener" href="https://github.com/golang/go/issues/23966#issuecomment-367428464">see this comment by Russ Cox.</a>
                 </br>
                 It's nice to see that, the Go team has put some thought into that.</br>
 
@@ -121,18 +114,16 @@ require (
 	golang.org/x/sys v0.0.0-20180715085529-ac767d655b30
 	gopkg.in/yaml.v2 v2.2.1
 )
-                </code></pre>
-                </br>
-                All my dependencies that were listed in
+                </code></pre> All my dependencies that were listed in
                 <i>Gopkg.lock</i> have been added to
                 <i>go.mod</i> with their correct versions.</br>
                 Notice though that under dep, meli depended on github.com/docker/distribution
-                <a href="https://github.com/komuw/meli/blob/3127f1c5bdb82db7c0df6112ada8e6e953546aa4/Gopkg.lock#L12-L21">version v2.6.2</a>
+                <a target="_blank" rel="noopener" href="https://github.com/komuw/meli/blob/3127f1c5bdb82db7c0df6112ada8e6e953546aa4/Gopkg.lock#L12-L21">version v2.6.2</a>
 
                 However go mod added it with version v0.0.0-20170720211245-48294d928ced </br>
                 That is called a pseudo-version, the second part(20170720211245) is the timestamp in UTC of the commit hash 48294d928ced.
                 The commit 48294d928ced is the commit corresponding to version v2.6.2,
-                <a href=" https://github.com/docker/distribution/commit/48294d928ced5dd9b378f7fd7c6f5da3ff3f2c89">see</a>
+                <a target="_blank" rel="noopener" href=" https://github.com/docker/distribution/commit/48294d928ced5dd9b378f7fd7c6f5da3ff3f2c89">see</a>
                 </br>
 
                 Pretty neat, huh; but does it work? </br>
@@ -151,8 +142,6 @@ go build -o meli cli/cli.go && ./meli --help
     -version
         Show version information.
                 </code></pre>
-                </br>
-                </br>
 
                 <i>go.mod</i> is not the only file created, a
                 <i>go.sum</i>file was also created.
@@ -162,7 +151,7 @@ cat go.sum
     github.com/docker/distribution v0.0.0-20170720211245-48294d928ced h1:/ybq/Enozyi+nBSAkL4j7vd+IBV6brrxB2srIO5VWos=
     ....
                 </code></pre>
-                </br>
+
                 <i>go.sum</i> contains the expected cryptographic checksums of the content of specific module versions</br>
                 The go command maintains a cache of downloaded packages(in $GOPATH/src/mod) and computes and records the cryptographic checksum
                 of each package at download time. </br>
@@ -174,16 +163,12 @@ cat go.sum
                 Lets check this crypto thing.
                 <pre><code class="bash">
 echo "Im a hacker" >> ~/go/src/mod/github.com/pkg/errors@v0.8.0/README.md
-                </code></pre>
-                </br>
-                Then run;
+                </code></pre> Then run;
                 <pre><code class="bash">
 go mod -verify
     github.com/pkg/errors v0.8.0: dir has been modified (~/go/src/mod/github.com/pkg/errors@v0.8.0)   
-                </code></pre>
-                </br>
-                If you work in enterprise, this is the point at which you call in your Red team to figure out who is messing up with your
-                packages.
+                </code></pre> If you work in enterprise, this is the point at which you call in your Red team to figure out who is messing
+                up with your packages.
                 </br>
                 Even though, we messed with the cached github.com/pkg/errors package, it doesnt stop us from building our package.</br>
                 <i>go build -o meli cli/cli.go</i> still works okay. I do not know if go build should complain if it finds the
@@ -197,9 +182,7 @@ sed -i.bak "s/1NNxqwp/hackedHash/" go.sum && go build -o meli cli/cli.go
     go: verifying gopkg.in/yaml.v2@v2.2.1/go.mod: checksum mismatch
     downloaded: h1:hI93XBmqTisBFMUTm0b8Fm+jr3Dg1NNxqwp+5A1VGuI=
     go.sum:     h1:hI93XBmqTisBFMUTm0b8Fm+jr3DghackedHash+5A1VGuI=
-                </code></pre>
-                </br>
-                I'm liking the look of this crypto checksuming thing.</br>
+                </code></pre> I'm liking the look of this crypto checksuming thing.</br>
                 </br>
 
                 go mod has other flags that you can try out, run
@@ -211,9 +194,7 @@ go mod -sync
 go: finding github.com/stretchr/testify/assert latest
 go: finding github.com/stevvooe/resumable/sha256 latest
 ..
-                </code></pre>
-                </br>
-                wait, why is it adding new packages?</br>
+                </code></pre> wait, why is it adding new packages?</br>
                 It added new packages to
                 <i>go.mod</i> with a comment //indirect Let's see if the documentation can help us discover what is up with
                 these //indirect thing.</br>
@@ -222,19 +203,15 @@ go help mod | grep -i indirect -A 2 -B 2
   Note that this only describes the go.mod file itself, not other modules
   referred to indirectly. For the full set of modules available to a build,
   use 'go list -m -json all'.
-                </code></pre>
-                </br>
-                not useful, lets try go help modules instead. I do not know why the documentation is spread between go help mod and go help
-                modules; but anyway;</br>
+                </code></pre> not useful, lets try go help modules instead. I do not know why the documentation is spread between go help
+                mod and go help modules; but anyway;</br>
                 <pre><code class="bash">
 go help modules | grep -i indirect -A 2 -B 2
 ... Requirements needed only for indirect uses are marked with a
 "// indirect" comment in the go.mod file. Indirect requirements are
 automatically removed from the go.mod file once they are implied by other
-                </code></pre>
-                </br>
-                Okay, so the documentation seems to be saying that for example in meli's case; although meli does not use github.com/stretchr/testify
-                one of it's dependencies may be using it.</br>
+                </code></pre> Okay, so the documentation seems to be saying that for example in meli's case; although meli does not use
+                github.com/stretchr/testify one of it's dependencies may be using it.</br>
                 So which dependency of meli is using testify(meli doesnt use testify or any other non-stdlib testing libraries)? </br>
                 Because meli still vendors its dependencies, lets see if we can use grep to find out;
                 <pre><code class="bash">
@@ -242,9 +219,7 @@ grep -rsIin testify .
   ./go.mod:14:	github.com/stretchr/testify v1.2.2 // indirect
   ./go.sum:21:github.com/stretchr/testify v1.2.2 h1:bSDNvY7ZPG5RlJ8otE/7V6gMiyenm9RtJ7IUVIAoJ1w=
   ./go.sum:22:github.com/stretchr/testify v1.2.2/go.mod h1:a8OnRcib4nhh0OaRAV+Yts87kKdq0PP7pXfy6kDkUVs=
-                </code></pre>
-                </br>
-                grep isn't helping, maybe go mod has a flag to give us this information?</br>
+                </code></pre> grep isn't helping, maybe go mod has a flag to give us this information?</br>
                 go mod has a -graph flag which according to the documentation; "The -graph flag prints the module requirement graph (with
                 replacements applied) in text form." </br>
                 niice, looks like what we need.
@@ -253,11 +228,9 @@ go mod -graph
   github.com/komuw/meli github.com/stevvooe/resumable@v0.0.0-20170302213456-2aaf90b2ceea
   github.com/komuw/meli github.com/stretchr/testify@v1.2.2
   github.com/komuw/meli golang.org/x/net@v0.0.0-20180712202826-d0887baf81f4
-                </code></pre>
-                </br>
-                I still do not know which dependency introduced
+                </code></pre> I still do not know which dependency introduced
                 <i>github.com/stretchr/testify</i> I asked on the
-                <a href="https://gophers.slack.com">#modules slack channel</a> and someone suggested I try go list; but
+                <a target="_blank" rel="noopener" href="https://gophers.slack.com">#modules slack channel</a> and someone suggested I try go list; but
                 <i>go list -test -deps | grep testify</i> didn't help either.
 
                 </br>
@@ -272,9 +245,9 @@ go mod -graph
                 This is because import paths would still be pointing to the old project instead of mine. Note; this is probably my own failing
                 rather than that of Go. If you think I've been doing it wrong, let me know.</br>
                 I recently came across this tweet by
-                <a href="https://twitter.com/francesc/status/1009487969198075905">Francesc Campoy</a> and it has improved things for me, but it still felt odd. </br>
+                <a target="_blank" rel="noopener" href="https://twitter.com/francesc/status/1009487969198075905">Francesc Campoy</a> and it has improved things for me, but it still felt odd. </br>
                 Talking of Campoy, he has a fantastic
-                <a href="https://www.youtube.com/channel/UC_BzFbxG2za3bp5NRRRXJSw">youtube channel</a> that is all things Go, If you have never checked out, do yourselve a favour.</br>
+                <a target="_blank" rel="noopener" href="https://www.youtube.com/channel/UC_BzFbxG2za3bp5NRRRXJSw">youtube channel</a> that is all things Go, If you have never checked out, do yourselve a favour.</br>
                 </br>
                 Can go modules help us here? It turns out, they can! I guess.</br>
                 </br>
@@ -282,14 +255,12 @@ go mod -graph
                 meli depends on
                 <i>github.com/docker/docker/client</i>, let's say we want to add some feature to that docker client and we will
                 later propose in a pull request to docker. I forked docker over to
-                <a href="https://github.com/komuw/moby">https://github.com/komuw/moby</a>
+                <a target="_blank" rel="noopener" href="https://github.com/komuw/moby">https://github.com/komuw/moby</a>
                 </br>
                 Now lets clone our fork into a directory that is outside GOPATH
                 <pre><code class="bash">
 git clone git@github.com:komuw/moby.git ~/mystuff/moby
-                </code></pre>
-                </br>
-                The feature we want to add is, every time you declare a docker client(using
+                </code></pre> The feature we want to add is, every time you declare a docker client(using
                 <i>client.NewEnvClient() </i>), it should log the docker version that you are using. </br>
                 Here's the change I made to the NewEnvClient function
                 <pre><code class="go">
@@ -297,10 +268,8 @@ func NewEnvClient() (*Client, error) {
     +	fmt.Println("\n\t You are using docker version:", api.DefaultVersion)
         return NewClientWithOpts(FromEnv)
 }
-                </code></pre>
-                </br>
-                The full diff
-                <a href="https://github.com/komuw/moby/compare/683738900eec52f86b834234eeef054c4e135031...komuw:master">is here</a>
+                </code></pre> The full diff
+                <a target="_blank" rel="noopener" href="https://github.com/komuw/moby/compare/683738900eec52f86b834234eeef054c4e135031...komuw:master">is here</a>
                 </br>
                 We have made changes to the docker client on our local clone at
                 <i>~/mystuff/moby</i>. How do we use that change in
@@ -311,38 +280,30 @@ func NewEnvClient() (*Client, error) {
                 <i>go.mod</i>
                 <pre><code class="bash">
 replace github.com/docker/docker v1.13.1 => ~/mystuff/moby
-                </code></pre>
-                </br>
-                That is telling go to replace the docker dependency with a local dependency at the path ~/mystuff/moby</br>
+                </code></pre> That is telling go to replace the docker dependency with a local dependency at the path ~/mystuff/moby</br>
                 <pre><code class="bash">
 go mod -verify
     go: errors parsing go.mod:
     ~/mystuff/meli/go.mod:20: replacement module without version must be directory path (rooted or starting with ./ or ../)
-                </code></pre>
-                </br>
-                nice error message, let's comply and use relative paths; change the line in
+                </code></pre> nice error message, let's comply and use relative paths; change the line in
                 <i>go.mod</i> to
                 <pre><code class="bash">
 replace github.com/docker/docker v1.13.1 => ../moby
                 </code></pre>
-                </br>
+
                 <pre><code class="bash">
 go mod -verify
   go: parsing ../moby/go.mod: open /home/komuw/mystuff/moby/go.mod: no such file or directory
   go: error loading module requirements
-                </code></pre>
-                </br>
-                This time around the error message is not that descriptive. Paul Jolly(who has been doing an amazing job answering go module
-                related questions all over the internet),
-                <a href="https://github.com/golang/go/issues/26417#issuecomment-405586562">mentioned</a> that "the new path should be a directory on the local system that contains a module"</br>
+                </code></pre> This time around the error message is not that descriptive. Paul Jolly(who has been doing an amazing job
+                answering go module related questions all over the internet),
+                <a target="_blank" rel="noopener" href="https://github.com/golang/go/issues/26417#issuecomment-405586562">mentioned</a> that "the new path should be a directory on the local system that contains a module"</br>
                 So lets add a go.mod file to our clone of moby(docker)
                 <pre><code class="bash">
 echo 'module "github.com/docker/docker"' >> ~/mystuff/moby/go.mod && \
 go mod -verify
   all modules verified
-                </code></pre>
-                </br>
-                This is looking good.</br>
+                </code></pre> This is looking good.</br>
                 </br>
                 Lets rebuild meli to use our modified copy of docker.
                 <pre><code class="bash">
@@ -369,12 +330,11 @@ go build -o meli cli/cli.go
   ../moby/client/image_pull.go:59:8: undefined: reference.TagNameOnly
   ../moby/client/image_push.go:19:14: undefined: reference.ParseNormalizedNamed
   ../moby/client/image_push.go:19:14: too many errors
-                </code></pre>
-                </br>
-                Looks like I picked a hard one. I'm guessing that I'm running into issues that go much deeper than just go modules?? Maybe?</br>
+                </code></pre> Looks like I picked a hard one. I'm guessing that I'm running into issues that go much deeper than just
+                go modules?? Maybe?</br>
                 My speculation is that the way docker uses import path comments of the form
                 <i>package client // import "github.com/docker/docker/client"</i>
-                <a href="https://github.com/moby/moby/blob/683738900eec52f86b834234eeef054c4e135031/client/client.go#L42">
+                <a target="_blank" rel="noopener" href="https://github.com/moby/moby/blob/683738900eec52f86b834234eeef054c4e135031/client/client.go#L42">
                     see here
                 </a>, is muddying things.</br>
                 So probably, even though I have added a replace statement
@@ -387,7 +347,6 @@ go build -o meli cli/cli.go
                 </br>
                 I'll try and open an issue with the go repo(or ask on #modules slack channel) sometime later if just to satisfy my curiosty.</br>
 
-                </br>
                 </br>
                 <strong>Go modules and code contribution, take II</strong>
                 </br>
@@ -407,10 +366,8 @@ func main() {
 	fmt.Printf("%v", err)
   ....
 }
-                </code></pre>
-                </br>
-                The full diff
-                <a href="https://github.com/komuw/meli/commit/a714df2b3b91dc0e0972a6ca0789e9f57e3f0e24">can be seen here</a>
+                </code></pre> The full diff
+                <a target="_blank" rel="noopener" href="https://github.com/komuw/meli/commit/a714df2b3b91dc0e0972a6ca0789e9f57e3f0e24">can be seen here</a>
                 </br>
                 run
                 <i>go mod -sync</i> so that those changes get picked up. When you do that,
@@ -424,18 +381,14 @@ func main() {
                 <i>go.mod</i>
                 <pre><code class="bash">
 replace github.com/pkg/errors v0.8.0 => ../errors
-                </code></pre>
-                </br>
-                of course we also add a go.mod file to the local errors package
+                </code></pre> of course we also add a go.mod file to the local errors package
                 <pre><code class="bash">
 echo 'module "github.com/pkg/errors"' >> ~/mystuff/errors/go.mod
-                </code></pre>
-                </br>
-                As more packages/modules add
+                </code></pre> As more packages/modules add
                 <i>go.mod</i> files to their repo's we won't have to do this. I wish go mod would be able to automatically add
                 a
                 <i>go.mod</i> file for you, but it seems like per
-                <a href="https://github.com/golang/go/issues/25739#issuecomment-395256639">this comment from Russ Cox</a> that it is not possible to do so without unwanted side effects?</br>
+                <a target="_blank" rel="noopener" href="https://github.com/golang/go/issues/25739#issuecomment-395256639">this comment from Russ Cox</a> that it is not possible to do so without unwanted side effects?</br>
 
                 Let's modify the local errors package. We want to modify the
                 <i>errors.New</i> function to log something when called. The change I made is pre>
@@ -447,11 +400,8 @@ func New(message string) error {
 		stack: callers(),
 	}
 }
-                </code>
-                </pre>
-                </br>
-                The full
-                <a href="https://github.com/komuw/errors/commit/0c8091c60870f222b0642edb0893361b0185aedf">diff is here</a>
+                </code></pre> The full
+                <a target="_blank" rel="noopener" href="https://github.com/komuw/errors/commit/0c8091c60870f222b0642edb0893361b0185aedf">diff is here</a>
                 </br>
                 Lets build meli and run it.
                 <pre><code class="bash">
@@ -460,11 +410,7 @@ go build -o meli cli/cli.go && ./meli --help
     whoops useless errorUsage of ./meli:
     -build
             Rebuild services
-                </code>
-                </pre>
-                </br>
-                </br>
-                Look ma, We done made it.
+                </code></pre> Look ma, We done made it.
 
 
             </p>
