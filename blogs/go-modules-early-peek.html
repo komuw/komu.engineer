@@ -397,7 +397,7 @@ echo 'module "github.com/pkg/errors"' >> ~/mystuff/errors/go.mod
                 <a target="_blank" rel="noopener" href="https://github.com/golang/go/issues/25739#issuecomment-395256639">this comment from Russ Cox</a> that it is not possible to do so without unwanted side effects?</br>
 
                 Let's modify the local errors package. We want to modify the
-                <i>errors.New</i> function to log something when called. The change I made is pre>
+                <i>errors.New</i> function to log something when called. The change I made is;
                 <pre><code class="go">
 func New(message string) error {
 	fmt.Println("\n\t hello new called.")
