@@ -210,8 +210,8 @@ go help modules | grep -i indirect -A 2 -B 2
 ... Requirements needed only for indirect uses are marked with a
 "// indirect" comment in the go.mod file. Indirect requirements are
 automatically removed from the go.mod file once they are implied by other
-                </code></pre> Okay, so the documentation seems to be saying that for example in meli's case; although meli does not use
-                github.com/stretchr/testify one of it's dependencies may be using it.</br>
+                </code></pre> Okay, so the documentation seems to be saying that, for example in meli's case; although meli does not use
+                <i>github.com/stretchr/testify</i> one of it's dependencies may be using it.</br>
                 So which dependency of meli is using testify(meli doesnt use testify or any other non-stdlib testing libraries)? </br>
                 Because meli still vendors its dependencies, lets see if we can use grep to find out;
                 <pre><code class="bash">
