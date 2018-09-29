@@ -25,9 +25,6 @@ import subprocess
 # c. upload mylambda.zip to AWS lambda
 # d. set Runtime to python3.6 and Handler to lambda.handle
 
-# currently on local dev.
-# python lambda.py works but
-# python3 lambda.py hangs on readline
 
 os.environ["PATH"] = (
     os.environ["PATH"] + ":" + os.environ.get("LAMBDA_TASK_ROOT", "LAMBDA_TASK_ROOT")
@@ -43,18 +40,34 @@ except Exception as e:
 
 
 proc = subprocess.Popen(
-    ["/tmp/main"], stdin=subprocess.PIPE, stdout=subprocess.PIPE, universal_newlines=True, bufsize=1
+    ["/tmp/main"], stdin=subprocess.PIPE, stdout=subprocess.PIPE, universal_newlines=True
 )
 
 
 def handle(event, context):
-    proc.stdin.write(json.dumps({"event": event}))
-    # read event
+    """
+    When sending data to another program via it's stdin, don't forget to send a newline.
+    Always flush the stream after placing data into it, since it may be buffered.
+
+    It's is possible to make the program hang on the proc.stdout.readline() line:
+      - we send something to the binary program's stdin,
+      - then in the next line we try reading from binary programs stdout(via readline)
+      - however that binary program is still awating for input (maybe because we sent data without a newline or the binary program is buffering.)
+    """
+    # write to binary program
+    write_data = json.dumps({"event": event}) + "\n"
+    proc.stdin.write(write_data)
+    proc.stdin.flush()
+
+    # read from binary program
     line = proc.stdout.readline()
     event = json.loads(line)
 
     proc.stdin.close()
     proc.stdout.close()
+
+    proc.terminate()
+    proc.wait(timeout=2)
     return event
 
 

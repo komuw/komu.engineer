@@ -44,12 +44,16 @@ type Response struct {
 }
 
 func main() {
+	/*
+			We should remember to send a newline, so as to avoid deadlocks on the parent(python) process.
+		That's why we use fmt.Println instead of fmt.Printl
+	*/
 	req := Request{}
 	err := json.NewDecoder(os.Stdin).Decode(&req)
 	if err != nil {
 		errResponse := ErrResponse{Error: "unable to json Marshal"}
 		jsonErr, _ := json.Marshal(errResponse)
-		fmt.Print(string(jsonErr))
+		fmt.Println(string(jsonErr))
 	}
 
 	res := Response{EchoEvent: req.Event, GOOS: runtime.GOOS, GOARCH: runtime.GOARCH}
@@ -57,7 +61,7 @@ func main() {
 	if err != nil {
 		errResponse := ErrResponse{Error: "unable to json Marshal"}
 		jsonErr, _ := json.Marshal(errResponse)
-		fmt.Print(string(jsonErr))
+		fmt.Println(string(jsonErr))
 	}
-	fmt.Print(string(b))
+	fmt.Println(string(b))
 }
