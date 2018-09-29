@@ -51,7 +51,7 @@ func main() {
 	req := Request{}
 	err := json.NewDecoder(os.Stdin).Decode(&req)
 	if err != nil {
-		errResponse := ErrResponse{Error: "unable to json Marshal"}
+		errResponse := ErrResponse{Error: err.Error()}
 		jsonErr, _ := json.Marshal(errResponse)
 		fmt.Println(string(jsonErr))
 	}
@@ -59,7 +59,7 @@ func main() {
 	res := Response{EchoEvent: req.Event, GOOS: runtime.GOOS, GOARCH: runtime.GOARCH}
 	b, err := json.Marshal(res)
 	if err != nil {
-		errResponse := ErrResponse{Error: "unable to json Marshal"}
+		errResponse := ErrResponse{Error: err.Error()}
 		jsonErr, _ := json.Marshal(errResponse)
 		fmt.Println(string(jsonErr))
 	}
