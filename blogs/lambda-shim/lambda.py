@@ -1,6 +1,8 @@
 import os
+import sys
 import json
 import shutil
+import traceback
 import subprocess
 
 
@@ -49,24 +51,30 @@ def handle(event, context):
       - then in the next line we try reading from binary programs stdout(via readline)
       - however that binary program is still awating for input (maybe because we sent data without a newline or the binary program is buffering.)
     """
-    proc = subprocess.Popen(
-        ["/tmp/main"], stdin=subprocess.PIPE, stdout=subprocess.PIPE, universal_newlines=True
-    )
+    try:
+        proc = subprocess.Popen(
+            ["/tmp/main"], stdin=subprocess.PIPE, stdout=subprocess.PIPE, universal_newlines=True
+        )
 
-    # write to binary program
-    write_data = json.dumps({"event": event}) + "\n"
-    proc.stdin.write(write_data)
-    proc.stdin.flush()
+        # write to binary program
+        write_data = json.dumps({"event": event}) + "\n"
+        proc.stdin.write(write_data)
+        proc.stdin.flush()
 
-    # read from binary program
-    line = proc.stdout.readline()
-    event = json.loads(line)
+        # read from binary program
+        line = proc.stdout.readline()
 
-    proc.stdin.close()
-    proc.stdout.close()
+        event = json.loads(line)
 
-    proc.terminate()
-    proc.wait(timeout=1.2)
+        proc.stdin.close()
+        proc.stdout.close()
+
+        proc.terminate()
+        proc.wait(timeout=1.2)
+    except Exception as e:
+        exc_type, exc_value, exc_traceback = sys.exc_info()
+        traceback.print_exception(exc_type, exc_value, exc_traceback, limit=2, file=sys.stdout)
+        return {"error": repr(e)}
     return event
 
 
