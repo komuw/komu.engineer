@@ -17,6 +17,13 @@ import subprocess
 # a. go build main.go
 # b. python lambda.py
 
+# To run this programs in AWS lambda:
+# a. CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build main.go
+# b. zip mylambda.zip main lambda.py
+# c. upload mylambda.zip to AWS lambda
+# d. set Runtime to python3.6 and Handler to lambda.handle
+
+
 proc = subprocess.Popen(
     ["./main"], stdin=subprocess.PIPE, stdout=subprocess.PIPE, universal_newlines=True, bufsize=1
 )
