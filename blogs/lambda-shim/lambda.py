@@ -25,6 +25,10 @@ import subprocess
 # c. upload mylambda.zip to AWS lambda
 # d. set Runtime to python3.6 and Handler to lambda.handle
 
+# currently on local dev.
+# python lambda.py works but
+# python3 lambda.py hangs on readline
+
 os.environ["PATH"] = (
     os.environ["PATH"] + ":" + os.environ.get("LAMBDA_TASK_ROOT", "LAMBDA_TASK_ROOT")
 )
