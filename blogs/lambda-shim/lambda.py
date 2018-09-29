@@ -34,12 +34,12 @@ os.environ["PATH"] = (
 )
 
 try:
-    shutil.copyfile('/var/task/main', '/tmp/main')
-    os.chmod('/tmp/main', 0o777)
+    shutil.copyfile("/var/task/main", "/tmp/main")
+    os.chmod("/tmp/main", 0o777)
 except Exception as e:
     # local dev
-    shutil.copyfile('./main', '/tmp/main')
-    os.chmod('/tmp/main', 0o777)
+    shutil.copyfile("./main", "/tmp/main")
+    os.chmod("/tmp/main", 0o777)
 
 
 proc = subprocess.Popen(

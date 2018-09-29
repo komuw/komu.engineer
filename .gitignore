@@ -5,3 +5,5 @@ debug
 .main.gopry
 
 .DS_Store
+
+.venv
