@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"os"
 	"runtime"
+	"time"
 )
 
 //  1. the python program gets a request from AWS lambda.
@@ -48,9 +49,10 @@ type Request struct {
 }
 
 type Response struct {
-	EchoEvent string `json:"echoevent,omitempty"`
-	GOOS      string `json:"goos,omitempty"`
-	GOARCH    string `json:"goarch,omitempty"`
+	EchoEvent   string `json:"echoevent,omitempty"`
+	GOOS        string `json:"goos,omitempty"`
+	GOARCH      string `json:"goarch,omitempty"`
+	CurrentTime string `json:"currentTime,omitempty"`
 }
 
 func main() {
@@ -66,7 +68,8 @@ func main() {
 		fmt.Println(string(jsonErr))
 	}
 
-	res := Response{EchoEvent: req.Event, GOOS: runtime.GOOS, GOARCH: runtime.GOARCH}
+	t := time.Now()
+	res := Response{EchoEvent: req.Event, GOOS: runtime.GOOS, GOARCH: runtime.GOARCH, CurrentTime: t.Format(time.UnixDate)}
 	b, err := json.Marshal(res)
 	if err != nil {
 		errResponse := ErrResponse{Error: err.Error()}

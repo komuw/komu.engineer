@@ -32,14 +32,6 @@ os.environ["PATH"] = (
     os.environ["PATH"] + ":" + os.environ.get("LAMBDA_TASK_ROOT", "LAMBDA_TASK_ROOT")
 )
 
-try:
-    shutil.copyfile("/var/task/main", "/tmp/main")
-    os.chmod("/tmp/main", 0o777)
-except Exception as e:
-    # local dev
-    shutil.copyfile("./main", "/tmp/main")
-    os.chmod("/tmp/main", 0o777)
-
 
 def handle(event, context):
     """
@@ -54,7 +46,7 @@ def handle(event, context):
     """
     try:
         proc = subprocess.Popen(
-            ["/tmp/main"], stdin=subprocess.PIPE, stdout=subprocess.PIPE, universal_newlines=True
+            ["./main"], stdin=subprocess.PIPE, stdout=subprocess.PIPE, universal_newlines=True
         )
 
         # write to binary program
