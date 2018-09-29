@@ -17,9 +17,9 @@ import subprocess
 
 # To run this programs:
 # a. go build main.go
-# b. python lambda.py
+# b. python3 lambda.py
 
-# To run this programs in AWS lambda(Python2):
+# To run this programs in AWS lambda(Python3.6):
 # a. CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o main main.go
 # b. zip mylambda.zip main lambda.py
 # c. upload mylambda.zip to AWS lambda
