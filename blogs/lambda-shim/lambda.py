@@ -1,4 +1,6 @@
+import os
 import json
+import shutil
 import subprocess
 
 
@@ -17,8 +19,8 @@ import subprocess
 # a. go build main.go
 # b. python lambda.py
 
-# To run this programs in AWS lambda:
-# a. CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build main.go
+# To run this programs in AWS lambda(Python2):
+# a. CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o main main.go
 # b. zip mylambda.zip main lambda.py
 # c. upload mylambda.zip to AWS lambda
 # d. set Runtime to python3.6 and Handler to lambda.handle
@@ -27,13 +29,21 @@ os.environ["PATH"] = (
     os.environ["PATH"] + ":" + os.environ.get("LAMBDA_TASK_ROOT", "LAMBDA_TASK_ROOT")
 )
 
+try:
+    shutil.copyfile('/var/task/main', '/tmp/main')
+    os.chmod('/tmp/main', 0o777)
+except Exception as e:
+    # local dev
+    shutil.copyfile('./main', '/tmp/main')
+    os.chmod('/tmp/main', 0o777)
+
+
 proc = subprocess.Popen(
-    ["./main"], stdin=subprocess.PIPE, stdout=subprocess.PIPE, universal_newlines=True, bufsize=1
+    ["/tmp/main"], stdin=subprocess.PIPE, stdout=subprocess.PIPE, universal_newlines=True, bufsize=1
 )
 
 
 def handle(event, context):
-
     proc.stdin.write(json.dumps({"event": event}))
     # read event
     line = proc.stdout.readline()
