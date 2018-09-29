@@ -28,6 +28,16 @@ import (
 // c. upload mylambda.zip to AWS lambda
 // d. set Runtime to python3.6 and Handler to lambda.handle
 
+// to test create an AWS test event that is just a string
+// the default AWS test event looks like;
+// {
+// 	"key1": "value1",
+// 	"key2": "value2",
+// 	"key3": "value3"
+//   }
+// Do not use that since it does not match our Request struct.
+// Use something like: "hey this is a test event."
+
 type ErrResponse struct {
 	Error string
 }
