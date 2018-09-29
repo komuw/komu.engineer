@@ -50,6 +50,7 @@ def handle(event, context):
       - we send something to the binary program's stdin,
       - then in the next line we try reading from binary programs stdout(via readline)
       - however that binary program is still awating for input (maybe because we sent data without a newline or the binary program is buffering.)
+    ref: https://eli.thegreenplace.net/2017/interacting-with-a-long-running-child-process-in-python/
     """
     try:
         proc = subprocess.Popen(
