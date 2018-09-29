@@ -13,6 +13,10 @@ import subprocess
 # 8. it unmarshals what it read(the response)
 # 9. it sends the response back to AWS lambda.
 
+# To run this programs:
+# a. go build main.go
+# b. python lambda.py
+
 proc = subprocess.Popen(
     ["./main"], stdin=subprocess.PIPE, stdout=subprocess.PIPE, universal_newlines=True, bufsize=1
 )

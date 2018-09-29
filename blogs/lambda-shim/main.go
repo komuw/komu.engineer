@@ -18,6 +18,10 @@ import (
 //  8. it unmarshals what it read(the response)
 //  9. it sends the response back to AWS lambda.
 
+// To run this programs:
+// a. go build main.go
+// b. python lambda.py
+
 type ErrResponse struct {
 	Error string
 }
