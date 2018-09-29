@@ -4,6 +4,8 @@ debug
 # go-pry debug stuff
 .main.gopry
 
-.DS_Store
+# vscode editor
+*.vscode
+*.DS_Store
 
 .venv
