@@ -23,6 +23,9 @@ import subprocess
 # c. upload mylambda.zip to AWS lambda
 # d. set Runtime to python3.6 and Handler to lambda.handle
 
+os.environ["PATH"] = (
+    os.environ["PATH"] + ":" + os.environ.get("LAMBDA_TASK_ROOT", "LAMBDA_TASK_ROOT")
+)
 
 proc = subprocess.Popen(
     ["./main"], stdin=subprocess.PIPE, stdout=subprocess.PIPE, universal_newlines=True, bufsize=1
@@ -30,6 +33,7 @@ proc = subprocess.Popen(
 
 
 def handle(event, context):
+
     proc.stdin.write(json.dumps({"event": event}))
     # read event
     line = proc.stdout.readline()
