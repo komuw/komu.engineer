@@ -39,11 +39,6 @@ except Exception as e:
     os.chmod("/tmp/main", 0o777)
 
 
-proc = subprocess.Popen(
-    ["/tmp/main"], stdin=subprocess.PIPE, stdout=subprocess.PIPE, universal_newlines=True
-)
-
-
 def handle(event, context):
     """
     When sending data to another program via it's stdin, don't forget to send a newline.
@@ -54,6 +49,10 @@ def handle(event, context):
       - then in the next line we try reading from binary programs stdout(via readline)
       - however that binary program is still awating for input (maybe because we sent data without a newline or the binary program is buffering.)
     """
+    proc = subprocess.Popen(
+        ["/tmp/main"], stdin=subprocess.PIPE, stdout=subprocess.PIPE, universal_newlines=True
+    )
+
     # write to binary program
     write_data = json.dumps({"event": event}) + "\n"
     proc.stdin.write(write_data)
@@ -67,7 +66,7 @@ def handle(event, context):
     proc.stdout.close()
 
     proc.terminate()
-    proc.wait(timeout=2)
+    proc.wait(timeout=1.2)
     return event
 
 
