@@ -246,19 +246,28 @@ zip mylambda.zip main lambda.py
                 This creates a zip file called <i>mylambda.zip</i> in the current directory.</br></br>
 
                 1. create an AWS lambda function where we chose Python 3.6 as the runtime:</br></br>
-                <img src="./imgs/create-func.png" alt="create lambda function">
+                <img src="./imgs/create-func.png" alt="create lambda function" style="max-height:220px;">
                 </br></br>
                 2. upload our zip file:</br></br>
-                <img src="./imgs/upload-func.png" alt="upload lambda zip file"></br>
+                <img src="./imgs/upload-func.png" alt="upload lambda zip file" style="max-height:220px;"></br>
                 make sure the runtime is Python 3.6 and Handler is <i>lambda.handle</i> ie our python file is called <i>lambda.py</i>
                 and the function inside it is <i>def handle(event, context)</i></br></br>
 
                 3. click save and you'll be taken to a page that shows the unzipped file contents:
                 </br></br>
-                <img src="./imgs/saved-func.png" alt="unzipped lambda contents"></br></br>
+                <img src="./imgs/saved-func.png" alt="unzipped lambda contents" style="max-height:220px;"></br></br>
 
-                4. create a AWS lamda test:
-                <img src="./imgs/create-lambda-test.png" alt="create lambda test"></br></br>
+                4. create a AWS lamda test:</br></br>
+                <img src="./imgs/create-lambda-test.png" alt="create lambda test" style="max-height:220px;"></br></br>
+
+                5. execute/run that lambda test:</br></br>
+                <img src="./imgs/execute-lambda-test.png" alt="execute lambda test" style="max-height:220px;"></br></br></br>
+
+                As you can see, the lambda function was executed/invoked and it ran calling our Nim binary which
+                returned results accordingly.
+
+
+
 
 
 
