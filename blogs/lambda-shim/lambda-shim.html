@@ -19,11 +19,14 @@
 
     <!-- ADD FAVICON -->
 
-    <link rel="stylesheet" href="../site.css">
+    <link rel="stylesheet" href="../../site.css">
+
+    <!-- we want to blog this primarily on linkedin(https://www.linkedin.com/post), so let's set linkedin as the canonical -->
+    <link rel="canonical" href="https://www.linkedin.com/pulse/draft/somestuff" />
 
     <!-- Get highlightjs by going to https://highlightjs.org/download/, select the languages you want and download. -->
-    <link rel="stylesheet" href="../highlightjs/styles/default.css">
-    <script src="../highlightjs/highlight.pack.js"></script>
+    <link rel="stylesheet" href="../../highlightjs/styles/default.css">
+    <script src="../../highlightjs/highlight.pack.js"></script>
     <script>hljs.initHighlightingOnLoad();</script>
 </head>
 
@@ -43,19 +46,249 @@
 
         <div class="main">
             <p>
-                <strong> Create an AWS lambda shim for any language.(29 September 2018)</strong>
+                <strong>Create an AWS lambda shim for any language.(1 October 2018)</strong>
                 </br>
                 </br>
 
                 <strong>Intro</strong>
                 </br>
-                AWS lambda is ...</br>
-                Sometimes you may have a usecase for AWS lambda(serverless) but the language that you are using is not
-                currently supported.</br>
+                <a target="_blank" rel="noopener" href="https://aws.amazon.com/lambda">AWS lambda</a> is a service that
+                lets you run code without provisioning or managing servers.</br>
+                At the time of writing this blogpost, AWS lambda natively supports <strong>only</strong> the following
+                programming
+                languages/runtimes; <i>Node.js, Java, Python, .NET
+                    Core</i> and <i>Go</i></br>
+                Sometimes you may have a usecase for AWS lambda(serverless) but the programming language that you are
+                using is not natively supported by AWS lambda.</br>
+
                 If that is the case, worry not; you can still use your favorite programming language with AWS lambda
                 even if AWS lambda does not natively support that language. </br>
                 In this article, we explore how to do exactly that.
 
+                </br></br>
+                <strong>What up now</strong>
+                </br>
+                Let's say that our favorite programming language is <a target="_blank" rel="noopener" href="https://nim-lang.org">Nim</a>
+                and we want to run our program written with Nim on AWS lambda.</br>
+                The way to do that(at least the one we will explore in this blog) is by creating a <a target="_blank"
+                    rel="noopener" href="https://en.wikipedia.org/wiki/Shim_(computing)">shim</a> using a programming
+                language that is already supported on AWS lambda.</br>
+                The shim will accept lambda requests, it will then pass those requests to our Nim program and finally
+                it will accept/listen for responses from our Nim program and marshal them into a
+                form that AWS lambda can understand.</br></br>
+
+                We will use python to create the shim(but you can use any of the other AWS lambda supported languages.)</br>
+                The python program/shim;
+                <ol>
+                    <li>gets a request from AWS lambda.</li>
+                    <li>it serializes that request into json.</li>
+                    <li>it writes that json into stdin</li>
+                    <li>the Nim program reads from stdin</li>
+                    <li>it unmarshals what it has read from stdin and acts on it.</li>
+                    <li>it creates a json marshaled response</li>
+                    <li>it writes that json response to stdout</li>
+                    <li>the python program reads that response from stdout</li>
+                    <li>it unmarshals what it read(the response)</li>
+                    <li>it sends the response back to AWS lambda.</li>
+                </ol>
+
+                So the python program and the Nim program communicate using JSON over stdin/stdout. </br>
+                <strong>NB:</strong> You do not have to use json over stdin/stdout if you do not want; you could use
+                rpc, unix
+                sockets etc.</br></br>
+                We have talked about python talking to Nim program, but how will python talk to the Nim program if we
+                can't run Nim on AWS lambda?</br>
+                The answer lies with the fact that AWS supports <a target="_blank" rel="noopener" href="https://aws.amazon.com/blogs/compute/running-executables-in-aws-lambda">running
+                    arbitrary executables</a></br>
+                So, as long as you are using a programming language that can compile binaries(that are either
+                statically
+                linked or built for the matching version of Amazon Linux) then you are good to go.
+
+                </br></br>
+                <strong>The Shim</strong>
+                </br>
+                Let's create our shim python program, <i>lambda.py</i>;
+                <pre><code class="python">
+# lambda.py
+import os
+import sys
+import json
+import shutil
+import traceback
+import subprocess
+
+os.environ["PATH"] = (
+    os.environ["PATH"] + ":" + os.environ.get("LAMBDA_TASK_ROOT", "LAMBDA_TASK_ROOT")
+)
+
+def handle(event, context):
+    try:
+        proc = subprocess.Popen(
+            ["./main"],
+            stdin=subprocess.PIPE,
+            stdout=subprocess.PIPE,
+            universal_newlines=True
+        )
+
+        # write to binary program
+        write_data = json.dumps({"event": event}) + "\n"
+        proc.stdin.write(write_data)
+        proc.stdin.flush()
+
+        # read from binary program
+        line = proc.stdout.readline()
+
+        event = json.loads(line)
+
+        proc.stdin.close()
+        proc.stdout.close()
+
+        proc.terminate()
+        proc.wait(timeout=1.2)
+    except Exception as e:
+        exc_type, exc_value, exc_traceback = sys.exc_info()
+        traceback.print_exception(exc_type, exc_value, exc_traceback, limit=2, file=sys.stdout)
+        return {"error": repr(e)}
+    return event
+                </code></pre>
+
+                The <i>os.environ["PATH"]</i> part is <a target="_blank" rel="noopener" href="https://aws.amazon.com/blogs/compute/running-executables-in-aws-lambda">necessary</a>
+                for you to be able to
+                reference(via relative path) any binaries that you upload.</br>
+                So, in the python shim; </br>
+                <ul>
+                    <li>receives request from AWS lambda(lambda calls the <i>handle</i> function for every invocation)</li>
+                    <li>runs the binary Nim program(<i>./main</i>) via python's subprocess lib, converts the lamda
+                        request to json and it then writes that request to the Nim program's stdin </li>
+                    <li>it reads from the Nim program's stdout using readline and converts what it has read(the
+                        response) from json</li>
+                    <li>it returns that response to AWS lambda</li>
+                </ul>
+                The part where you need to be careful in writing the shim is:
+                <ul>
+                    <li>you need to make sure that you terminate whatever you are writing with a newline, <i>+"\n"</i></li>
+                    <li>you should actually flush what you have written, <i>proc.stdin.flush()</i></li>
+                    <li>you should use readline() to read from Nim program's stdout as opposed to read()</li>
+                </ul>
+                These precautions are necessary to avoid deadlocks <a target="_blank" rel="noopener" href="https://eli.thegreenplace.net/2017/interacting-with-a-long-running-child-process-in-python">[1]</a>
+                <a target="_blank" rel="noopener" href="https://docs.python.org/3/library/subprocess.html">[2]</a>
+
+                </br></br>
+                <strong>The Nim program</strong>
+                </br>
+                Our actual Nim program won't do much;
+                <ul>
+                    <li>it will just read from stdin</li>
+                    <li>create a response that has the event it got from the shim echoed back, the current time and a
+                        message containing Nim's version</li>
+                    <li>it will convert that response to json and write it to stdout.</li>
+                </ul>
+                NB: the previous caveats about eliminating deadlocks also apply to the Nim program(or whichever
+                programming language you are using.)</br>
+                The nim program, <i>main.nim</i>;
+                <pre><code class="nim">
+# main.nim
+import json
+import times
+import  system
+
+# read from stdin
+var request: string = readLine(stdin)
+let jsonReq = parseJson(request)
+
+# for this example, we only use event; in real life you may also want to use context as well.
+let event = jsonReq["event"]
+
+var response =  %*
+    {
+    "EchoEvent": event,
+    "Message": "hello fom Nim version: " & system.NimVersion,
+    "CurrentTime":  format(times.now(), "d MMMM yyyy HH:mm")
+
+    }
+
+# write to stdout
+echo response
+                </code></pre>
+                You can execute the Nim program locally on your machine:
+                <pre><code class="bash">
+echo '{"event": "myLambdaEventName", "context": "myLambdaContext"}' | nim compile --run main.nim
+
+Hint: operation successful (34568 lines compiled; 0.703 sec total; 59.941MiB peakmem; Debug Build) [SuccessX]
+
+{"EchoEvent":"myLambdaEventName","Message":"hello fom Nim version: 0.19.0","CurrentTime":"1 October 2018 13:55"}
+                </code></pre>
+
+                </br></br>
+                <strong>Tie it up together</strong>
+                </br>
+                We have created the python shim and the Nim program, to tie it all together we need to:
+                <ul>
+                    <li>compile the Nim program into an executable(statically linked, ideally)</li>
+                    <li>create a zip file containing the Nim executable and the python program</li>
+                    <li>upload that zip file to AWS lambda</li>
+                </ul>
+
+                To create the Nim executable, run;
+                <pre><code class="bash">
+nim c -d:release main.nim
+                </code></pre>
+                This creates an executable in the current directory, the executable is called <i>main</i></br>
+                The command, <i>nim c -d:release main.nim</i> should be ran from a Linux 64bit computer(since that is
+                the architecture of the AWS lamda
+                machines.) </br>
+                If your programming language supports cross compilation, you can cross-compile to linux 64bit(without
+                having to change machines). Nim <a target="_blank" rel="noopener" href="https://nim-lang.org/docs/nimc.html#cross-compilation">supports
+                    cross compilation</a> but as a newbie(this is my first Nim program ever) to Nim, I was not able to
+                cross-compile
+                so I had to compile using a 64bit machine running ubuntu.</br></br>
+
+                Next we create a zipfile
+                <pre><code class="bash">
+zip mylambda.zip main lambda.py
+                </code></pre>
+                This creates a zip file called <i>mylambda.zip</i> in the current directory.
+
+                </br></br>
+                <strong>Run in AWS lambda</strong>
+                </br>
+                Finally, let's open up the AWS lambda console and:</br></br>
+                1. create an AWS lambda function where we chose Python 3.6 as the runtime:</br></br>
+                <img src="./imgs/create-func.png" alt="create lambda function" style="max-height:220px;">
+                </br></br>
+                2. upload our zip file:</br></br>
+                <img src="./imgs/upload-func.png" alt="upload lambda zip file" style="max-height:220px;"></br>
+                make sure the runtime is Python 3.6 and Handler is <i>lambda.handle</i> ie our python file is called <i>lambda.py</i>
+                and the function inside it is <i>def handle(event, context)</i></br></br>
+
+                3. click save and you'll be taken to a page that shows the unzipped file contents:
+                </br></br>
+                <img src="./imgs/saved-func.png" alt="unzipped lambda contents" style="max-height:220px;"></br></br>
+
+                4. create a AWS lamda test:</br></br>
+                <img src="./imgs/create-lambda-test.png" alt="create lambda test" style="max-height:220px;"></br></br>
+
+                5. execute/run that lambda test:</br></br>
+                <img src="./imgs/execute-lambda-test.png" alt="execute lambda test" style="max-height:220px;"></br></br></br>
+
+                As you can see, the lambda function was executed/invoked and it ran calling our Nim binary which
+                returned results accordingly.
+
+                </br>
+                </br>
+                <strong>Conclusion</strong>
+                </br>
+                We have been able to use our language of choice(Nim) on AWS lambda even though lambda doesn't support
+                Nim as a programming language.</br>
+                Shims are a powerful way of connecting two seemingly incompatible systems.</br>
+                If you are interested in running your programs on AWS lambda without having to write your own shim, TJ
+                Holowaychuk has you covered with his <a target="_blank" rel="noopener" href="https://github.com/apex/up">up
+                    project</a> which I had written about in an <a target="_blank" rel="noopener" href="https://www.komu.engineer/blogs/python-lambda">earlier
+                    blog post </a></br>
+                This all begs the question; instead of AWS rolling out access to lambda one language at a time, why
+                cant they create a common interface/shim that all languages can target?</br></br>
+
+                All the code in this blogpost can be found at: <a target="_blank" rel="noopener" href="https://github.com/komuw/komu.engineer/tree/master/blogs/lambda-shim">https://github.com/komuw/komu.engineer/tree/master/blogs/lambda-shim</a></br>
 
             </p>
         </div>
