@@ -78,16 +78,16 @@
                 form that AWS lambda can understand.</br></br>
 
                 We will use python to create the shim(but you can use any of the other AWS lambda supported languages.)</br>
-                The python program/shim;
+                The workflow is;
                 <ol>
-                    <li>gets a request from AWS lambda.</li>
+                    <li>The python program/shim gets a request from AWS lambda.</li>
                     <li>it serializes that request into json.</li>
                     <li>it writes that json into stdin</li>
-                    <li>the Nim program reads from stdin</li>
+                    <li>The Nim program reads from stdin</li>
                     <li>it unmarshals what it has read from stdin and acts on it.</li>
                     <li>it creates a json marshaled response</li>
                     <li>it writes that json response to stdout</li>
-                    <li>the python program reads that response from stdout</li>
+                    <li>The python program/shim reads that response from stdout</li>
                     <li>it unmarshals what it read(the response)</li>
                     <li>it sends the response back to AWS lambda.</li>
                 </ol>
