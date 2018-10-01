@@ -220,7 +220,7 @@ Hint: operation successful (34568 lines compiled; 0.703 sec total; 59.941MiB pea
                 </code></pre>
 
                 </br></br>
-                <strong>Run in AWS lambda</strong>
+                <strong>Tie it up together</strong>
                 </br>
                 We have created the python shim and the Nim program, to tie it all together we need to:
                 <ul>
@@ -247,8 +247,12 @@ nim c -d:release main.nim
                 <pre><code class="bash">
 zip mylambda.zip main lambda.py
                 </code></pre>
-                This creates a zip file called <i>mylambda.zip</i> in the current directory.</br></br>
+                This creates a zip file called <i>mylambda.zip</i> in the current directory.
 
+                </br></br>
+                <strong>Run in AWS lambda</strong>
+                </br>
+                Finally, let's open up the AWS lambda console and:</br></br>
                 1. create an AWS lambda function where we chose Python 3.6 as the runtime:</br></br>
                 <img src="./imgs/create-func.png" alt="create lambda function" style="max-height:220px;">
                 </br></br>
