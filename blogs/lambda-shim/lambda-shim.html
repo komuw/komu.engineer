@@ -101,7 +101,7 @@
                 linked or built for the matching version of Amazon Linux) then you are good to go.
 
                 </br></br>
-                <strong>Show me</strong>
+                <strong>The Shim</strong>
                 </br>
                 Let's create our shim python program, <i>lambda.py</i>;
                 <pre><code class="python">
@@ -162,8 +162,8 @@ def handle(event, context):
                 </ul>
                 The part where you need to be careful in writing the shim is:
                 <ul>
-                    <li>you need to make sure that you terminate whatever you are writing with a newline</li>
-                    <li>you actually flush what you have written, <i>proc.stdin.flush()</i></li>
+                    <li>you need to make sure that you terminate whatever you are writing with a newline, <i>+"\n"</i></li>
+                    <li>you should actually flush what you have written, <i>proc.stdin.flush()</i></li>
                     <li>you should use readline() to read from Nim program's stdout as opposed to read()</li>
                 </ul>
                 These precautions are necessary to avoid deadlocks <a target="_blank" rel="noopener" href="https://eli.thegreenplace.net/2017/interacting-with-a-long-running-child-process-in-python">[1]</a>
