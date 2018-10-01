@@ -155,7 +155,7 @@ def handle(event, context):
                 The <i>os.environ["PATH"]</i> part is <a target="_blank" rel="noopener" href="https://aws.amazon.com/blogs/compute/running-executables-in-aws-lambda">necessary</a>
                 for you to be able to
                 reference(via relative path) any binaries that you upload.</br>
-                So, in the python shim; </br>
+                So, the python shim; </br>
                 <ul>
                     <li>receives request from AWS lambda(lambda calls the <i>handle</i> function for every invocation)</li>
                     <li>runs the binary Nim program(<i>./main</i>) via python's subprocess lib, converts the lamda
