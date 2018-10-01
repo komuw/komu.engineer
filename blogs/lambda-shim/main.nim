@@ -1,6 +1,6 @@
 import json
 import times
-import  system
+import system
 
 # run this as:
 # echo '{"event": "myLambdaEventName", "context": "myLambdaContext"}'| nim compile --run main.nim
