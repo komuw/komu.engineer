@@ -169,6 +169,104 @@ def handle(event, context):
                 These precautions are necessary to avoid deadlocks <a target="_blank" rel="noopener" href="https://eli.thegreenplace.net/2017/interacting-with-a-long-running-child-process-in-python">[1]</a>
                 <a target="_blank" rel="noopener" href="https://docs.python.org/3/library/subprocess.html">[2]</a>
 
+                </br></br>
+                <strong>The Nim program</strong>
+                </br>
+                Our actual Nim program won't do much;
+                <ul>
+                    <li>it will just read from stdin</li>
+                    <li>create a response that has the event it got from the shim echoed back, the current time and a
+                        message containing Nim's version</li>
+                    <li>it will convert that response to json and write it to stdout.</li>
+                </ul>
+                NB: the previous caveats about eliminating deadlocks also apply to the Nim program(or whichever
+                programming language you are using.</br>
+                The nim program, <i>main.nim</i>;
+                <pre><code class="nim">
+# main.nim
+import json
+import times
+import  system
+
+# read from stdin
+var request: string = readLine(stdin)
+let jsonReq = parseJson(request)
+
+# for this example, we only use event; in real life you may also want to use context as well.
+let event = jsonReq["event"]
+
+var response =  %*
+    {
+    "EchoEvent": event,
+    "Message": "hello fom Nim version: " & system.NimVersion,
+    "CurrentTime":  format(times.now(), "d MMMM yyyy HH:mm")
+
+    }
+
+# write to stdout
+echo response
+                </code></pre>
+                You can execute the Nim program locally on your machine:
+                <pre><code class="bash">
+echo '{"event": "myLambdaEventName", "context": "myLambdaContext"}' | nim compile --run main.nim
+
+Hint: operation successful (34568 lines compiled; 0.703 sec total; 59.941MiB peakmem; Debug Build) [SuccessX]
+
+{"EchoEvent":"myLambdaEventName","Message":"hello fom Nim version: 0.19.0","CurrentTime":"1 October 2018 13:55"}
+                </code></pre>
+
+                </br></br>
+                <strong>Run in AWS lambda</strong>
+                </br>
+                We have created the python shim and the Nim program, to tie it all together we need to:
+                <ul>
+                    <li>compile the Nim program into an executable(statically linked, ideally)</li>
+                    <li>create a zip file containing the Nim executable and the python program</li>
+                    <li>upload that zip file to AWS lambda</li>
+                </ul>
+
+                To create the Nim executable, run;
+                <pre><code class="bash">
+nim c -d:release main.nim
+                </code></pre>
+                This creates an executable in the current directory, the executable is called <i>main</i></br>
+                The command, <i>nim c -d:release main.nim</i> should be ran from a Linux 64bit computer(since that is
+                the architecture of the AWS lamda
+                machines.) </br>
+                If your programming language supports cross compilation, you can cross-compile to linux 64bit(without
+                having to change machines). Nim <a target="_blank" rel="noopener" href="https://nim-lang.org/docs/nimc.html#cross-compilation">supports
+                    cross compilation</a> but as a newbie(this is my first Nim program ever) to Nim, I was not able to
+                cross-compile
+                so I had to compile using a 64bit machine running ubuntu.</br></br>
+
+                Next we create a zipfile
+                <pre><code class="bash">
+zip mylambda.zip main lambda.py
+                </code></pre>
+                This creates a zip file called <i>mylambda.zip</i> in the current directory.</br></br>
+
+                1. create an AWS lambda function where we chose Python 3.6 as the runtime:</br></br>
+                <img src="./imgs/create-func.png" alt="create lambda function">
+                </br></br>
+                2. upload our zip file:</br></br>
+                <img src="./imgs/upload-func.png" alt="upload lambda zip file"></br>
+                make sure the runtime is Python 3.6 and Handler is <i>lambda.handle</i> ie our python file is called <i>lambda.py</i>
+                and the function inside it is <i>def handle(event, context)</i></br></br>
+
+                3. click save and you'll be taken to a page that shows the unzipped file contents:
+                </br></br>
+                <img src="./imgs/saved-func.png" alt="unzipped lambda contents"></br></br>
+
+                4. create a AWS lamda test:
+                <img src="./imgs/create-lambda-test.png" alt="create lambda test"></br></br>
+
+
+
+
+
+
+
+
             </p>
         </div>
     </div>
