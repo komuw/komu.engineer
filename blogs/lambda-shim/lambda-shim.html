@@ -49,12 +49,49 @@
 
                 <strong>Intro</strong>
                 </br>
-                AWS lambda is ...</br>
-                Sometimes you may have a usecase for AWS lambda(serverless) but the language that you are using is not
-                currently supported.</br>
+                <a target="_blank" rel="noopener" href="https://aws.amazon.com/lambda">AWS lambda</a> is a service that
+                lets you run code without provisioning or managing servers.</br>
+                At the time of writing this blogpost, AWS lambda natively supports <strong>only</strong> the following
+                programming
+                languages/runtimes; <i>Node.js, Java, Python, .NET
+                    Core</i> and <i>Go</i></br>
+                Sometimes you may have a usecase for AWS lambda(serverless) but the programming language that you are
+                using is not natively supported by AWS lambda.</br>
+
                 If that is the case, worry not; you can still use your favorite programming language with AWS lambda
                 even if AWS lambda does not natively support that language. </br>
                 In this article, we explore how to do exactly that.
+
+                </br></br>
+                <strong>What up now</strong>
+                </br>
+                Let's say that our favorite programming language is <a target="_blank" rel="noopener" href="https://nim-lang.org">Nim</a>
+                and we want to run our program written with Nim on AWS lambda.</br>
+                The way to do that(at least the one we will explore in this blog) is by creating a <a target="_blank"
+                    rel="noopener" href="https://en.wikipedia.org/wiki/Shim_(computing)">shim</a> using a programming
+                language that is already supported on AWS lambda.</br>
+                The shim will accept lambda requests, it will then pass those requests to our Nim program and finally
+                it will accept/listen for responses from our Nim program and marshal them into a
+                form that AWS lambda can understand.</br></br>
+
+                We will use python to create the shim(but you can use any of the other AWS lambda supported languages.)</br>
+                The python program/shim;
+                <ol>
+                    <li>gets a request from AWS lambda.</li>
+                    <li>it serializes that request into json.</li>
+                    <li>it writes that json into stdin</li>
+                    <li>the Nim program reads from stdin</li>
+                    <li>it unmarshals what it has read from stdin and acts on it.</li>
+                    <li>it creates a json marshaled response</li>
+                    <li>it writes that json response to stdout</li>
+                    <li>the python program reads that response from stdout</li>
+                    <li>it unmarshals what it read(the response)</li>
+                    <li>it sends the response back to AWS lambda.</li>
+                </ol>
+
+                So the python program and the Nim program communicate using JSON over stdin/stdout. </br>
+                <strong>NB:</strong> You do not have to use those if you do not want; you could use some rpc, unix
+                sockets etc.
 
 
             </p>
