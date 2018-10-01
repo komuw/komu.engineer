@@ -91,8 +91,62 @@
 
                 So the python program and the Nim program communicate using JSON over stdin/stdout. </br>
                 <strong>NB:</strong> You do not have to use those if you do not want; you could use some rpc, unix
-                sockets etc.
+                sockets etc.</br>
+                We have talked about python talking to Nim program, but how will python talk to the Nim program if we
+                can't run Nim on AWS lambda?</br>
+                The answer lies with the fact that AWS supports <a target="_blank" rel="noopener" href="https://aws.amazon.com/blogs/compute/running-executables-in-aws-lambda">running
+                    arbitrary executables</a></br>
+                So, as long as you are using a programming language that can compile binaries(that are either
+                statically
+                linked or built for the matching version of Amazon Linux) then you are good to go.
 
+                </br></br>
+                <strong>Show me</strong>
+                </br>
+                Let's create our shim python program, <i>lambda.py</i>;
+                <pre><code class="python">
+# lambda.py
+import os
+import sys
+import json
+import shutil
+import traceback
+import subprocess
+
+os.environ["PATH"] = (
+    os.environ["PATH"] + ":" + os.environ.get("LAMBDA_TASK_ROOT", "LAMBDA_TASK_ROOT")
+)
+
+def handle(event, context):
+    try:
+        proc = subprocess.Popen(
+            ["./main"],
+            stdin=subprocess.PIPE,
+            stdout=subprocess.PIPE,
+            universal_newlines=True
+        )
+
+        # write to binary program
+        write_data = json.dumps({"event": event}) + "\n"
+        proc.stdin.write(write_data)
+        proc.stdin.flush()
+
+        # read from binary program
+        line = proc.stdout.readline()
+
+        event = json.loads(line)
+
+        proc.stdin.close()
+        proc.stdout.close()
+
+        proc.terminate()
+        proc.wait(timeout=1.2)
+    except Exception as e:
+        exc_type, exc_value, exc_traceback = sys.exc_info()
+        traceback.print_exception(exc_type, exc_value, exc_traceback, limit=2, file=sys.stdout)
+        return {"error": repr(e)}
+    return event
+                </code></pre>
 
             </p>
         </div>
