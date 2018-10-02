@@ -1,5 +1,6 @@
-import json
-import times
+import  std/json
+import  std/times
+# system you should not import this directly: https://nim-lang.org/docs/lib.html
 import system
 
 # run this as:
