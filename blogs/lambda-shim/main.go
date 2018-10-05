@@ -58,7 +58,7 @@ type Response struct {
 func main() {
 	/*
 		We should remember to send a newline, so as to avoid deadlocks on the parent(python) process.
-		That's why we use fmt.Println instead of fmt.Printl
+		That's why we use fmt.Println instead of fmt.Printf
 	*/
 	req := Request{}
 	err := json.NewDecoder(os.Stdin).Decode(&req)
