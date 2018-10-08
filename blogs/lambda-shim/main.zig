@@ -65,4 +65,5 @@ pub fn main() !void {
 
 }
 
+// gdb ./main
 // gdb ./main -ex run
