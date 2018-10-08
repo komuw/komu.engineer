@@ -23,6 +23,8 @@ pub fn main() !void {
             used_buf += 1;
         } 
     }
+
+    // 1. deserialize from json
     var p = json.Parser.init(std.debug.global_allocator, false);
     defer p.deinit();
     var tree = try p.parse( line_buf[0..used_buf]);
@@ -30,6 +32,7 @@ pub fn main() !void {
     var root = tree.root;
     var event = root.Object.get("event").?.value;
 
+    // 2. serialize to json(I could not find a way to do this)
     const s1 =
           \\{
         ;
@@ -55,14 +58,17 @@ pub fn main() !void {
           \\}
         ;
 
-    var required_buf_length = 1 + s1.len + s2.len + s3.len + event.String.len;
-
+    var required_buf_length = 1 + s1.len + s2.len + s3.len + s4.len + s5.len + s6.len + s7.len + event.String.len;
+    // I wanted to do;
+    // var all_together: [required_buf_length]u8 = undefined;
+    // but it does not work. I feel like it should
     var all_together: [1000  + s1.len + s2.len + s3.len + s4.len]u8 = undefined;
     const all_together_slice = all_together[0..];
+
+    // this string concatenation is painful
     const response = try fmt.bufPrint(all_together_slice, "{} {} \"{}\" {} {} {} {} {} {}", s1, s2, event.String, s3, s4, currentTime, s5, s6, s7);
 
     try stdout.print("{}", response);
-
 }
 
 // gdb ./main
