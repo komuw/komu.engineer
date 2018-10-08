@@ -4,16 +4,16 @@ const std = @import("std");
 const io = std.io;
 const warn = std.debug.warn;
 const json = std.json;
-const fmt = @import("std").fmt;
+const fmt = std.fmt;
+const time = std.os.time;
 
 // run this program as:
 // echo '{"event": "myLambdaEventName", "context": "myLambdaContext"}' | /usr/local/zig/zig run main.zig
 
 pub fn main() !void {
-    var stdout_file = try io.getStdOut();
+    var currentTime  = time.milliTimestamp();
     var line_buf: [200]u8 = undefined;
     const line = io.readLine(line_buf[0..]);
-    warn("read: {}", line_buf);
 
     var used_buf: usize = 0;
     for (line_buf) |value| {
@@ -27,7 +27,6 @@ pub fn main() !void {
     defer tree.deinit();
     var root = tree.root;
     var event = root.Object.get("event").?.value;
-    warn("event: {}", event.String);
 
     const s1 =
           \\{
@@ -35,20 +34,23 @@ pub fn main() !void {
     const s2 =
           \\"EchoEvent": 
         ;
-    const s3 =
+    const s3 = 
+         \\,
+         ;
+    const s4 = 
+        \\ "CurrentTime":
+        ;
+    const s5 =
           \\}
         ;
 
     var required_buf_length = 1 + s1.len + s2.len + s3.len + event.String.len;
-    warn("required_buf_length: {}", required_buf_length);
 
-
-    var all_together: [100]u8 = undefined;
-    // You can use slice syntax on an array to convert an array into a slice.
+    var all_together: [1000  + s1.len + s2.len + s3.len + s4.len]u8 = undefined;
     const all_together_slice = all_together[0..];
-    // String concatenation example.
-    const response = try fmt.bufPrint(all_together_slice, "{} {} \"{}\" {}", s1, s2, event.String, s3 );
-    warn("\n\n response {}", response );
+    const response = try fmt.bufPrint(all_together_slice, "{} {} \"{}\" {} {} {} {}", s1, s2, event.String, s3, s4, currentTime, s5);
+    warn("{}", response );
+
 }
 
 // gdb ./main -ex run
