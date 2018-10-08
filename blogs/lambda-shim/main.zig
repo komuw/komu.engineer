@@ -36,7 +36,6 @@ pub fn main() !void {
 
 //   }
 
-   warn("ss" "{}" event.String);
 
 }
 
