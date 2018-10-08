@@ -3,6 +3,6 @@ This is the demo code for my blogpost: [How to use any programming language on A
 
 
 
-![alt text](/imgs/execute-lambda-test.png "Nim code execution in AWS lambda")    
+![alt text](https://raw.githubusercontent.com/komuw/komu.engineer/master/blogs/lambda-shim/imgs/execute-lambda-test.png "Nim code execution in AWS lambda")    
 
-![alt text](/imgs/execute-zig-lambda-test.png.png "zig code execution in AWS lambda")
+![alt text](https://raw.githubusercontent.com/komuw/komu.engineer/master/blogs/lambda-shim/imgs/execute-zig-lambda-test.png.png "zig code execution in AWS lambda")
