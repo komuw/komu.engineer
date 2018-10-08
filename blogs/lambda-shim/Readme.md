@@ -1,2 +1,8 @@
 # what
-This is the demo code for my blogpost: [How to use any programming language on AWS lambda](https://www.komu.engineer/blogs/lambda-shim/lambda-shim)
+This is the demo code for my blogpost: [How to use any programming language on AWS lambda](https://www.komu.engineer/blogs/lambda-shim/lambda-shim)   
+
+
+
+![alt text](/imgs/execute-lambda-test.png "Nim code execution in AWS lambda")    
+
+![alt text](/imgs/execute-zig-lambda-test.png.png "zig code execution in AWS lambda")
