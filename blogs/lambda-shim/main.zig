@@ -14,6 +14,8 @@ pub fn main() !void {
     var currentTime  = time.milliTimestamp();
     var line_buf: [200]u8 = undefined;
     const line = io.readLine(line_buf[0..]);
+    var stdout_file = try io.getStdOut();
+    const stdout = &stdout_file.outStream().stream;
 
     var used_buf: usize = 0;
     for (line_buf) |value| {
@@ -49,7 +51,8 @@ pub fn main() !void {
     var all_together: [1000  + s1.len + s2.len + s3.len + s4.len]u8 = undefined;
     const all_together_slice = all_together[0..];
     const response = try fmt.bufPrint(all_together_slice, "{} {} \"{}\" {} {} {} {}", s1, s2, event.String, s3, s4, currentTime, s5);
-    warn("{}", response );
+
+    try stdout.print("{}", response);
 
 }
 
