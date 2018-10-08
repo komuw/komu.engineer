@@ -42,7 +42,16 @@ pub fn main() !void {
     const s4 = 
         \\ "CurrentTime":
         ;
-    const s5 =
+    
+    const s5 = 
+         \\,
+         ;
+
+    const s6 =
+          \\"Message": "hello from Zig"
+        ;
+
+    const s7 =
           \\}
         ;
 
@@ -50,7 +59,7 @@ pub fn main() !void {
 
     var all_together: [1000  + s1.len + s2.len + s3.len + s4.len]u8 = undefined;
     const all_together_slice = all_together[0..];
-    const response = try fmt.bufPrint(all_together_slice, "{} {} \"{}\" {} {} {} {}", s1, s2, event.String, s3, s4, currentTime, s5);
+    const response = try fmt.bufPrint(all_together_slice, "{} {} \"{}\" {} {} {} {} {} {}", s1, s2, event.String, s3, s4, currentTime, s5, s6, s7);
 
     try stdout.print("{}", response);
 
