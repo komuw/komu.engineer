@@ -32,7 +32,7 @@ pub fn main() !void {
     var root = tree.root;
     var event = root.Object.get("event").?.value;
 
-    // 2. serialize to json(I could not find a way to do this)
+    // 2. serialize to json(I could not find a better way to do this)
     const s1 =
           \\{
         ;
