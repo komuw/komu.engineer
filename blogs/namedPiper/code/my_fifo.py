@@ -22,8 +22,7 @@ shows the value that acts as a ceiling on the default capacity of a new pipe[3]
 TODO: 
 A. load test.
 B. unit tests
-C. test on python2 and python3
-D. use async operations on the python3 side(the metrics emitter has to be python2 but collector can be python3)  
+C. use async operations on the python3 side(the metrics emitter has to be python2 but collector can be python3)  
    I would expect python3 async to perform really well.
 
 1. http://www.pixelbeat.org/programming/stdio_buffering/
@@ -35,12 +34,16 @@ D. use async operations on the python3 side(the metrics emitter has to be python
 def makeFifo(fifo_directory="/tmp/namedPipes", fifo_file="komusNamedPipe"):
     fifo_file = os.path.join(fifo_directory, fifo_file)
     try:
-        os.mkdir(fifo_directory, mode=0o777)
-    except FileExistsError:
-        pass
+        os.mkdir(fifo_directory, 0777)
+    except OSError as e:
+        if e.errno == 17:
+            # File exists
+            pass
+        else:
+            raise e
 
     try:
-        os.mkfifo(fifo_file, mode=0o777)
+        os.mkfifo(fifo_file, 0777)
     except OSError as e:
         if e.errno != errno.EEXIST:
             raise e

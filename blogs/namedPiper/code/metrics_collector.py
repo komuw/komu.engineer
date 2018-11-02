@@ -31,8 +31,7 @@ shows the value that acts as a ceiling on the default capacity of a new pipe[3]
 TODO: 
 A. load test.
 B. unit tests
-C. test on python2 and python3
-D. use async operations on the python3 side(the metrics emitter has to be python2 but collector can be python3)  
+C. use async operations on the python3 side(the metrics emitter has to be python2 but collector can be python3)  
    I would expect python3 async to perform really well.
 
 1. http://www.pixelbeat.org/programming/stdio_buffering/

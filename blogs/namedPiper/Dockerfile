@@ -1,4 +1,5 @@
-FROM python:3.7
+ARG IMAGE_VERSION='NonExistentPythonImageTag'
+FROM python:${IMAGE_VERSION}
 
 
 WORKDIR /usr/src/app

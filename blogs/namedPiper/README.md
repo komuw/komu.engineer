@@ -15,7 +15,11 @@ docker-compose up
 then watch as collector collects metrics, ie:  
 ```sh
 docker-compose logs -f metrics_collector
-```   
+```    
+
+The `metrics_emitter` container runs on a python2.7 container whereas     
+the `metrics_collector` container runs on a python3.7 container    
+
 
 ##### Linux named pipe/FIFO:   
 The linux pipe buffers are implemnted as circular buffers[1].    
@@ -42,6 +46,5 @@ shows the value that acts as a ceiling on the default capacity of a new pipe[3]
 ##### TODO:   
 A. load test.    
 B. unit tests     
-C. test on python2 and python3     
-D. use async operations on the python3 side(the metrics emitter has to be python2 but collector can be python3)     
+C. use async operations on the python3 side(the metrics emitter has to be python2 but collector can be python3)     
    I would expect python3 async to perform really well.

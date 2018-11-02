@@ -3,6 +3,8 @@ services:
   metrics_emitter:
     build:
       context: .
+      args:
+        - IMAGE_VERSION=${IMAGE_VERSION:-2.7}
     volumes:
       - named-pipe-volume:/tmp/namedPipes
       - ./code:/usr/src/app/code
@@ -13,6 +15,8 @@ services:
   metrics_collector:
     build:
       context: .
+      args:
+        - IMAGE_VERSION=${IMAGE_VERSION:-3.7}
     volumes:
       - named-pipe-volume:/tmp/namedPipes
       - ./code:/usr/src/app/code
