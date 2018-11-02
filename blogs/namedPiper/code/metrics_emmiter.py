@@ -38,7 +38,6 @@ def emmit_metrics():
             write_data = json.dumps({"event": "myLogEvent", "myMessage": msg}) + "\n"
             write_data = write_data.encode()
             os.write(pipe, write_data)
-        # os.fsync(pipe)  # Force write of file with filedescriptor, pipe to disk
         os.close(pipe)
     except OSError as e:
         logger.debug("{}".format({"event": "metrics_emitter_error", "error": str(e)}))
