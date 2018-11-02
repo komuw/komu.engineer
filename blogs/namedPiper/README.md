@@ -17,7 +17,7 @@ then watch as collector collects metrics, ie:
 docker-compose logs -f metrics_collector
 ```   
 
-##### Linux named pipe:   
+##### Linux named pipe/FIFO:   
 The linux pipe buffers are implemnted as circular buffers[1].    
 A consequence of the circular buffer is that when it is full and a subsequent write is performed:      
   (a) then it starts overwriting the oldest data[2].         
