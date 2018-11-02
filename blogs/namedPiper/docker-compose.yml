@@ -1,0 +1,18 @@
+version: '3'
+services:
+  metrics_emitter:
+    build:
+      context: .
+    volumes:
+      - namedPipeVolume:/tmp/namedPipes
+    command: python /usr/src/app/code/metrics_emmiter.py
+
+  metrics_collector:
+    build:
+      context: .
+    volumes:
+      - namedPipeVolume:/tmp/namedPipes
+    command: python /usr/src/app/code/metrics_collector.py
+
+volumes:
+  namedPipeVolume:
