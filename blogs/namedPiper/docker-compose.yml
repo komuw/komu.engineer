@@ -4,18 +4,19 @@ services:
     build:
       context: .
     volumes:
-      - namedPipeVolume:/tmp/namedPipes
+      - named-pipe-volume:/tmp/namedPipes
       - ./code:/usr/src/app/code
     command: python /usr/src/app/code/metrics_emmiter.py
 
+  # connect the metrics_emitter container's /tmp/namedPipes dir
+  # into metrics_collector container's /tmp/cooler dir
   metrics_collector:
     build:
       context: .
     volumes:
-      - namedPipeVolume:/tmp/namedPipes
+      - named-pipe-volume:/tmp/namedPipes
       - ./code:/usr/src/app/code
-
     command: python /usr/src/app/code/metrics_collector.py
 
 volumes:
-  namedPipeVolume:
+  named-pipe-volume:

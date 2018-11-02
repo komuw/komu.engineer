@@ -1,7 +1,6 @@
 import os
 import time
 
-from my_fifo import makeFifo
 
 """
 run this as:
@@ -25,8 +24,22 @@ TODO: use async operations; eg reading the pipe, writing to pipe etc
 2. https://en.wikipedia.org/wiki/Circular_buffer
 """
 
+import logging
 
-fifo_file = makeFifo()
+logger = logging.getLogger("metrics.collector")
+handler = logging.StreamHandler()
+formatter = logging.Formatter("%(message)s")
+handler.setFormatter(formatter)
+if not logger.handlers:
+    logger.addHandler(handler)
+logger.setLevel("DEBUG")
+
+logger.info("{}".format({"event": "metrics_collector_start"}))
+
+# NB: collector should not try to create named pipe
+# instead it should use the named pipe that was attached
+# to it by the metrics_emitter container
+fifo_file = "/tmp/namedPipes/komusNamedPipe"
 
 
 def collect_metrics():
@@ -34,7 +47,7 @@ def collect_metrics():
         pipe = os.open(
             fifo_file, os.O_RDONLY | os.O_NONBLOCK
         )  # os.O_NONBLOCK is not available in Windows
-        print("Reading metrics::")
+        logger.info("{}".format({"event": "metrics_collector_read"}))
         while True:
             # TODO figure out how to read exactly oneline
             read_at_most = 2048  # with 2048 we are trying to read more than is sent
@@ -45,10 +58,10 @@ def collect_metrics():
                 # End of the file
                 time.sleep(3)
                 continue
-            print(data)
+            logger.info("{}".format({"event": "metrics_collector_print_data", "data": data}))
         os.close(pipe)
     except OSError as e:
-        print("exception occured. error={}".format(e))
+        logger.debug("{}".format({"event": "metrics_collector_error", "error": str(e)}))
         if e.errno == 6:
             pass
         else:
@@ -56,4 +69,5 @@ def collect_metrics():
 
 
 collect_metrics()
-print("end")
+
+logger.info("{}".format({"event": "metrics_collector_end"}))

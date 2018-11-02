@@ -1,4 +1,5 @@
 import os
+import time
 import errno
 import logging
 
@@ -14,6 +15,18 @@ run this as:
 TODO: use async operations; eg reading the pipe, writing to pipe etc
 """
 
+import logging
+
+logger = logging.getLogger("metrics.emitter")
+handler = logging.StreamHandler()
+formatter = logging.Formatter("%(message)s")
+handler.setFormatter(formatter)
+if not logger.handlers:
+    logger.addHandler(handler)
+logger.setLevel("DEBUG")
+logger.info("{}".format({"event": "metrics_emitter_start"}))
+
+
 fifo_file = makeFifo()
 
 
@@ -28,7 +41,7 @@ def emmit_metrics():
         # os.fsync(pipe)  # Force write of file with filedescriptor, pipe to disk
         os.close(pipe)
     except OSError as e:
-        print("exception occured. error={}".format(e))
+        logger.debug("{}".format({"event": "metrics_emitter_error", "error": str(e)}))
         if e.errno == 6:
             # device not configured
             # raised when emmiter is called but collector aint there
@@ -37,7 +50,9 @@ def emmit_metrics():
             raise e
 
 
-for i in range(0, 25):
+while True:
     emmit_metrics()
+    time.sleep(3)
 
-print("end")
+
+logger.info("{}".format({"event": "metrics_emitter_end"}))
