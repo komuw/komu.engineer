@@ -36,10 +36,7 @@ The command:
   1048576 == 1MB
 ```
 shows the value that acts as a ceiling on the default capacity of a new pipe[3]     
-
-1. http://www.pixelbeat.org/programming/stdio_buffering/    
-2. https://en.wikipedia.org/wiki/Circular_buffer   
-3. http://man7.org/linux/man-pages/man7/pipe.7.html       
+ 
 
 
 
@@ -48,3 +45,19 @@ A. load test.
 B. unit tests     
 C. use async operations on the python3 side(the metrics emitter has to be python2 but collector can be python3)     
    I would expect python3 async to perform really well.
+
+
+##### NOTES:
+- you cant make one write which is bigger than `PIPE_BUF`[3]     
+on linux the size of `PIPE_BUF` is about `4096`    
+ie this code is likely to fail    
+```python
+write_data = write_data.encode() * 4098
+os.write(pipe, write_data)
+```
+
+
+##### References:
+1. http://www.pixelbeat.org/programming/stdio_buffering/    
+2. https://en.wikipedia.org/wiki/Circular_buffer   
+3. http://man7.org/linux/man-pages/man7/pipe.7.html      

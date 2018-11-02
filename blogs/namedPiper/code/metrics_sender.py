@@ -1,4 +1,4 @@
-import urllib.request, json
+import asyncio, json, aiohttp
 
 import logging
 
@@ -15,16 +15,18 @@ logger.info("{}".format({"event": "metrics_sender_start"}))
 
 # TODO: we should use an async http client in here
 # eg: https://aiohttp.readthedocs.io/en/stable/
-def send_metrics_to_remote_storage(data):
+async def send_metrics_to_remote_storage(data):
     try:
-        url = "https://httpbin.org/post"
-        req = urllib.request.Request(url=url, data=data, method="POST")
-        req.add_header("accept", "application/json")
-
-        response = urllib.request.urlopen(req, timeout=1.1)
-        response_data = response.read()
-        response_data = json.loads(response_data.decode())
-        logger.info("{}".format({"event": "metrics_sender_end", "response_data": response_data}))
+        timeout = aiohttp.ClientTimeout(total=1.1)
+        async with aiohttp.ClientSession(
+            headers={"accept": "application/json"}, timeout=timeout
+        ) as session:
+            url = "https://httpbin.org/post"
+            async with session.post(url, data=data) as response:
+                response_data = await response.json()
+                logger.info(
+                    "{}".format({"event": "metrics_sender_end", "response_data": response_data})
+                )
 
     except Exception as e:
         logger.debug("{}".format({"event": "metrics_sender_send_data", "error": str(e)}))

@@ -5,6 +5,7 @@ services:
       context: .
       args:
         - IMAGE_VERSION=${IMAGE_VERSION:-2.7}
+        - INSTALL_ASYNC=no
     volumes:
       - named-pipe-volume:/tmp/namedPipes
       - ./code:/usr/src/app/code
@@ -17,6 +18,7 @@ services:
       context: .
       args:
         - IMAGE_VERSION=${IMAGE_VERSION:-3.7}
+        - INSTALL_ASYNC=yes
     volumes:
       - named-pipe-volume:/tmp/namedPipes
       - ./code:/usr/src/app/code

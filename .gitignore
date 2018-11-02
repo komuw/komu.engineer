@@ -9,3 +9,4 @@ debug
 *.DS_Store
 
 .venv
+.venv3
