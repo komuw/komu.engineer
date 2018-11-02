@@ -25,10 +25,10 @@ def emmit_metrics():
             write_data = json.dumps({"event": "myLogEvent", "myMessage": msg}) + "\n"
             write_data = write_data.encode()
             os.write(pipe, write_data)
-        os.fsync(pipe)  # Force write of file with filedescriptor, pipe to disk
+        # os.fsync(pipe)  # Force write of file with filedescriptor, pipe to disk
         os.close(pipe)
     except OSError as e:
-        print("exection={}".format(e))
+        print("exception occured. error={}".format(e))
         if e.errno == 6:  # device not configured
             pass
         else:
