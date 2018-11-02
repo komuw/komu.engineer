@@ -32,7 +32,7 @@ fifo_file = makeFifo()
 
 def emmit_metrics():
     try:
-        pipe = os.open(fifo_file, os.O_WRONLY | os.O_NONBLOCK)
+        pipe = os.open(fifo_file, os.O_WRONLY | os.O_NONBLOCK | os.O_ASYNC)
         for i in range(0, 5):
             msg = "DirectWriting-{}".format(i)
             write_data = json.dumps({"event": "myLogEvent", "myMessage": msg}) + "\n"
@@ -51,7 +51,7 @@ def emmit_metrics():
 
 while True:
     emmit_metrics()
-    time.sleep(3)
+    time.sleep(1)
 
 
 logger.info("{}".format({"event": "metrics_emitter_end"}))
