@@ -1,6 +1,7 @@
 import os
 import time
 
+from metrics_sender import send_metrics_to_remote_storage
 
 """
 run this as:
@@ -28,7 +29,7 @@ import logging
 
 logger = logging.getLogger("metrics.collector")
 handler = logging.StreamHandler()
-formatter = logging.Formatter("%(message)s")
+formatter = logging.Formatter("%(message)s\n\n")
 handler.setFormatter(formatter)
 if not logger.handlers:
     logger.addHandler(handler)
@@ -59,6 +60,7 @@ def collect_metrics():
                 time.sleep(3)
                 continue
             logger.info("{}".format({"event": "metrics_collector_print_data", "data": data}))
+            send_metrics_to_remote_storage(data=data)
         os.close(pipe)
     except OSError as e:
         logger.debug("{}".format({"event": "metrics_collector_error", "error": str(e)}))
