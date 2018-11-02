@@ -5,6 +5,7 @@ services:
       context: .
     volumes:
       - namedPipeVolume:/tmp/namedPipes
+      - ./code:/usr/src/app/code
     command: python /usr/src/app/code/metrics_emmiter.py
 
   metrics_collector:
@@ -12,6 +13,8 @@ services:
       context: .
     volumes:
       - namedPipeVolume:/tmp/namedPipes
+      - ./code:/usr/src/app/code
+
     command: python /usr/src/app/code/metrics_collector.py
 
 volumes:
