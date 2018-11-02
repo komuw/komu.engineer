@@ -43,8 +43,6 @@ shows the value that acts as a ceiling on the default capacity of a new pipe[3]
 ##### TODO:   
 A. load test.    
 B. unit tests     
-C. use async operations on the python3 side(the metrics emitter has to be python2 but collector can be python3)     
-   I would expect python3 async to perform really well.
 
 
 ##### NOTES:

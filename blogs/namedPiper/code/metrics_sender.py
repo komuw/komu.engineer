@@ -13,11 +13,9 @@ logger.setLevel("DEBUG")
 logger.info("{}".format({"event": "metrics_sender_start"}))
 
 
-# TODO: we should use an async http client in here
-# eg: https://aiohttp.readthedocs.io/en/stable/
 async def send_metrics_to_remote_storage(data):
     try:
-        timeout = aiohttp.ClientTimeout(total=1.1)
+        timeout = aiohttp.ClientTimeout(total=5.0) # 5.0 seconds
         async with aiohttp.ClientSession(
             headers={"accept": "application/json"}, timeout=timeout
         ) as session:

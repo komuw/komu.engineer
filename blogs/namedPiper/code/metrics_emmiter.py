@@ -8,15 +8,6 @@ import json
 from my_fifo import makeFifo
 
 
-"""
-run this as:
-> python code/metrics_emmiter.py
-
-TODO: use async operations; eg reading the pipe, writing to pipe etc
-"""
-
-import logging
-
 logger = logging.getLogger("metrics.emitter")
 handler = logging.StreamHandler()
 formatter = logging.Formatter("%(message)s")

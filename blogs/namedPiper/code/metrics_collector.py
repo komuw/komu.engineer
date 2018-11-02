@@ -31,7 +31,7 @@ async def collect_metrics():
         logger.info("{}".format({"event": "metrics_collector_read"}))
         while True:
             # TODO figure out how to read exactly oneline
-            read_at_most = 64000  # with 2048 we are trying to read more than is sent
+            read_at_most = 4096  # with 4096 we are trying to read more than is sent
 
             # TODO: we should readline
             data = os.read(pipe, read_at_most)
