@@ -49,7 +49,7 @@ def collect_metrics():
         os.close(pipe)
     except OSError as e:
         print("exception occured. error={}".format(e))
-        if e.errno == 6:  # device not configured
+        if e.errno == 6:
             pass
         else:
             raise e

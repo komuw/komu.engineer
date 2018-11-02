@@ -29,7 +29,9 @@ def emmit_metrics():
         os.close(pipe)
     except OSError as e:
         print("exception occured. error={}".format(e))
-        if e.errno == 6:  # device not configured
+        if e.errno == 6:
+            # device not configured
+            # raised when emmiter is called but collector aint there
             pass
         else:
             raise e

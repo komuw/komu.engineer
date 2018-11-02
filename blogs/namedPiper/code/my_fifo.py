@@ -14,10 +14,8 @@ Whether or not data is overwritten is up to the semantics of the buffer routines
 2. https://en.wikipedia.org/wiki/Circular_buffer
 """
 
-fifo_directory = "/tmp/namedPipes"
 
-
-def makeFifo(fifo_file="komusNamedPipe"):
+def makeFifo(fifo_directory="/tmp/namedPipes", fifo_file="komusNamedPipe"):
     fifo_file = os.path.join(fifo_directory, fifo_file)
     try:
         os.mkdir(fifo_directory, mode=0o777)
