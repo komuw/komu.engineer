@@ -27,4 +27,4 @@ def send_metrics_to_remote_storage(data):
         logger.info("{}".format({"event": "metrics_sender_end", "response_data": response_data}))
 
     except Exception as e:
-        logger.exception("{}".format({"event": "metrics_sender_send_data", "error": str(e)}))
+        logger.debug("{}".format({"event": "metrics_sender_send_data", "error": str(e)}))
