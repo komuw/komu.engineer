@@ -1,11 +1,11 @@
 In one terminal run:    
 ```bash
-python code/metrics_collector.py
+python code/log_collector.py
 ```     
 
 In another terminal run:    
 ```bash
-python code/metrics_emmiter.py
+python code/log_emmiter.py
 ```    
 
 or just:
@@ -14,11 +14,11 @@ docker-compose up
 ```    
 then watch as collector collects metrics, ie:  
 ```sh
-docker-compose logs -f metrics_collector
+docker-compose logs -f log_collector
 ```    
 
-The `metrics_emitter` container runs on a python2.7 container whereas     
-the `metrics_collector` container runs on a python3.7 container    
+The `log_emitter` container runs on a python2.7 container whereas     
+the `log_collector` container runs on a python3.7 container    
 
 
 ##### Linux named pipe/FIFO:   
