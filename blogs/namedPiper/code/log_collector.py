@@ -22,6 +22,7 @@ fifo_file = "/tmp/namedPipes/komusNamedPipe"
 async def collect_logs():
     while True:
         try:
+            # TODO: just open once and read forever and only close when done
             pipe = os.open(
                 fifo_file, os.O_RDONLY | os.O_NONBLOCK | os.O_ASYNC
             )  # os.O_NONBLOCK is not available in Windows
