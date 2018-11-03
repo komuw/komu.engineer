@@ -64,10 +64,16 @@ connect to db:
 ```sh
 export PGPASSFILE=.pgpass && psql --host=localhost --port=5432 --username=myuser --dbname=mydb
 ```
-RUN export PGPASSFILE=/usr/src/app/.pgpass && \
-    psql \
-    --host=localhost \
-    --port=5432 \
-    --username=myuser \
-    --dbname=mydb \
-    -c "CREATE EXTENSION IF NOT EXISTS timescaledb CASCADE;"
+
+Our logs will have this structure:
+```sh
+time                TIMESTAMPTZ       NOT NULL,
+application_name    TEXT              NOT NULL,
+environment_name    TEXT              NOT NULL,
+log_event           TEXT              NOT NULL,
+trace_id            TEXT              NOT NULL,
+file_path           TEXT              NOT NULL,
+host_ip             TEXT              NOT NULL,
+data                JSONB             NULL
+```
+
