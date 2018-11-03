@@ -28,7 +28,7 @@ async def send_log_to_remote_storage(logs):
             command_timeout=8.0,
         )
 
-        # TODO: implement batch the inserts
+        # TODO: implement batch inserts
         for i in logs:
             time = datetime.datetime.strptime(i["time"], "%Y-%m-%d %H:%M:%S.%f%z")
             application_name = i["application_name"]
