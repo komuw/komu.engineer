@@ -60,6 +60,22 @@ async def emmit_logs():
 
 asyncio.set_event_loop_policy(uvloop.EventLoopPolicy())
 loop = asyncio.get_event_loop()
-loop.run_until_complete(emmit_logs())
+
+
+tasks = asyncio.gather(
+    emmit_logs(),
+    emmit_logs(),
+    emmit_logs(),
+    emmit_logs(),
+    emmit_logs(),
+    emmit_logs(),
+    emmit_logs(),
+    emmit_logs(),
+    emmit_logs(),
+    loop=loop,
+)
+loop.run_until_complete(tasks)
+
+
 loop.close()
 logger.info("{}".format({"event": "log_emitter_end"}))
