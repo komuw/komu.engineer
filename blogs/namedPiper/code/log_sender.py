@@ -28,7 +28,7 @@ async def send_log_to_remote_storage(logs):
             command_timeout=8.0,
         )
 
-        # TODO: implement batch inserts
+        all_logs = []
         for i in logs:
             time = datetime.datetime.strptime(i["time"], "%Y-%m-%d %H:%M:%S.%f%z")
             application_name = i["application_name"]
@@ -41,20 +41,27 @@ async def send_log_to_remote_storage(logs):
             if data:
                 data = json.dumps(data)
 
-            await conn.execute(
-                """
-                INSERT INTO logs(time, application_name, environment_name, log_event, trace_id, file_path, host_ip, data) VALUES($1, $2, $3, $4, $5, $6, $7, $8)
-                """,
-                time,
-                application_name,
-                environment_name,
-                log_event,
-                trace_id,
-                file_path,
-                host_ip,
-                data,
-                timeout=8.0,
+            all_logs.append(
+                (
+                    time,
+                    application_name,
+                    environment_name,
+                    log_event,
+                    trace_id,
+                    file_path,
+                    host_ip,
+                    data,
+                )
             )
+
+        # batch insert
+        await conn.executemany(
+            """
+            INSERT INTO logs(time, application_name, environment_name, log_event, trace_id, file_path, host_ip, data) VALUES($1, $2, $3, $4, $5, $6, $7, $8)
+            """,
+            all_logs,
+            timeout=8.0,
+        )
 
         await conn.close()
     except Exception as e:
