@@ -53,7 +53,6 @@ async def emmit_logs():
             else:
                 logger.exception("{}".format({"event": "log_emitter_error", "error": str(e)}))
                 pass
-        await asyncio.sleep(1)
 
 
 asyncio.set_event_loop_policy(uvloop.EventLoopPolicy())
