@@ -53,11 +53,29 @@ async def emmit_logs():
             else:
                 logger.exception("{}".format({"event": "log_emitter_error", "error": str(e)}))
                 pass
-        await asyncio.sleep(1)
+        finally:
+            # this sleep is important
+            await asyncio.sleep(1)
 
 
 asyncio.set_event_loop_policy(uvloop.EventLoopPolicy())
 loop = asyncio.get_event_loop()
-loop.run_until_complete(emmit_logs())
+
+
+tasks = asyncio.gather(
+    emmit_logs(),
+    emmit_logs(),
+    emmit_logs(),
+    emmit_logs(),
+    emmit_logs(),
+    emmit_logs(),
+    emmit_logs(),
+    emmit_logs(),
+    emmit_logs(),
+    loop=loop,
+)
+loop.run_until_complete(tasks)
+
+
 loop.close()
 logger.info("{}".format({"event": "log_emitter_end"}))
