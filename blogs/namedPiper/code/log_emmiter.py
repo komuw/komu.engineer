@@ -36,15 +36,14 @@ async def emmit_logs():
     while True:
         try:
             pipe = os.open(fifo_file, os.O_WRONLY | os.O_NONBLOCK | os.O_ASYNC)
-            for i in range(0, 5):
-                log = log_structure(
-                    log_event="login",
-                    data={"user": "Shawn Corey Carter", "age": 48, "email": "someemail@email.com"},
-                )
-                # we use newline to demarcate where one log event ends.
-                write_data = json.dumps(log) + "\n"
-                write_data = write_data.encode()
-                os.write(pipe, write_data)
+            log = log_structure(
+                log_event="login",
+                data={"user": "Shawn Corey Carter", "age": 48, "email": "someemail@email.com"},
+            )
+            # we use newline to demarcate where one log event ends.
+            write_data = json.dumps(log) + "\n"
+            write_data = write_data.encode()
+            os.write(pipe, write_data)
             os.close(pipe)
         except OSError as e:
             if e.errno == 6:
@@ -53,7 +52,7 @@ async def emmit_logs():
                 pass
             else:
                 logger.exception("{}".format({"event": "log_emitter_error", "error": str(e)}))
-                raise e
+                pass
         await asyncio.sleep(1)
 
 

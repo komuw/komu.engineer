@@ -1,6 +1,5 @@
 import os
 import json
-import uvloop
 import asyncio
 
 
@@ -21,12 +20,13 @@ fifo_file = "/tmp/namedPipes/komusNamedPipe"
 
 
 async def collect_logs():
-    try:
-        pipe = os.open(
-            fifo_file, os.O_RDONLY | os.O_NONBLOCK | os.O_ASYNC
-        )  # os.O_NONBLOCK is not available in Windows
-        logger.info("{}".format({"event": "log_collector_read"}))
-        while True:
+    while True:
+        try:
+            pipe = os.open(
+                fifo_file, os.O_RDONLY | os.O_NONBLOCK | os.O_ASYNC
+            )  # os.O_NONBLOCK is not available in Windows
+            logger.info("{}".format({"event": "log_collector_read"}))
+
             # TODO figure out how to read exactly oneline
             read_at_most = 4096  # with 4096 we are trying to read more than is sent
 
@@ -47,13 +47,13 @@ async def collect_logs():
             # 'got Future attached to a different loop' errors
             async with batchedLogs.lock:
                 batchedLogs.batch_logs = batchedLogs.batch_logs + logs
-        os.close(pipe)
-    except OSError as e:
-        if e.errno == 6:
-            pass
-        else:
-            logger.exception("{}".format({"event": "log_collector_error", "error": str(e)}))
-            raise e
+            os.close(pipe)
+        except OSError as e:
+            if e.errno == 6:
+                pass
+            else:
+                logger.exception("{}".format({"event": "log_collector_error", "error": str(e)}))
+                pass
 
 
 async def handle_logs(log_events):
