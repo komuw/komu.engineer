@@ -57,8 +57,7 @@ async def handle_logs(log_events):
         try:
             log_event = json.loads(i)
             logs.append(log_event)
-        except json.decoder.JSONDecodeError as e:
-            logger.debug("{}".format({"event": "handle_logs", "error": str(e)}))
+        except json.decoder.JSONDecodeError:
             pass
     return logs
 
