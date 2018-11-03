@@ -166,7 +166,9 @@ if [ "$1" = 'postgres' ]; then
 fi
 
 create_extension() {
-    printf "\n\n create_extension START \n\n"
+    printf "\n\n ###########\n
+    create_extension START \n
+    #############\n\n"
     export PGPASSFILE=/usr/src/app/.pgpass && \
                                             psql \
                                             --host=localhost \
