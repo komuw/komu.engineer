@@ -76,4 +76,20 @@ file_path           TEXT              NOT NULL,
 host_ip             TEXT              NOT NULL,
 data                JSONB             NULL
 ```
-
+connect to db and insert sample data:
+```sql
+INSERT INTO logs(time, application_name, environment_name, log_event, trace_id, file_path, host_ip, data)
+  VALUES
+    (NOW(), 'WebApp', 'production', 'login', '0ad94512-df55-11e8-9805-5b8e82d370a6', '/usr/src/app/login.py', '127.0.0.1', '{"user": "Shawn Corey Carter", "age": 48, "email": "someemail@email.com"}');
+```
+you can also do bulk inserts, they perform better:
+```sql
+INSERT INTO logs(time, application_name, environment_name, log_event, trace_id, file_path, host_ip, data)
+  VALUES
+    (NOW(), 'LoadBalancer', 'production', 'access', 'cc47066c-df5f-11e8-93a0-03a5cafa053b', '/usr/src/app/haproxy', '127.0.0.1', NULL),
+    (NOW(), 'WebApp', 'production', 'login', '0ad94512-df55-11e8-9805-5b8e82d370a6', '/usr/src/app/login.py', '127.0.0.1', '{"user": "Shawn Corey Carter", "age": 48, "email": "someemail@email.com"}');
+```
+then you can query:
+```sql
+SELECT * FROM logs ORDER BY time DESC;
+```

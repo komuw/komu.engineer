@@ -37,3 +37,20 @@ create_table() {
     printf "\n\n create_table END \n\n"    
 }
 create_table
+
+
+create_hypertable() {
+    printf "\n\n ###########\n
+    create_hypertable START \n
+    #############\n\n"
+
+    # we wont add space partition
+    # see:
+    # 1. https://docs.timescale.com/v1.0/getting-started/creating-hypertables
+    # 2. https://docs.timescale.com/v1.0/using-timescaledb/hypertables#best-practices
+    psql -U "${POSTGRES_USER}" "${POSTGRES_DB}" -c "SELECT create_hypertable('logs', 'time');"
+
+    printf "\n\n create_hypertable END \n\n" 
+
+}
+create_hypertable

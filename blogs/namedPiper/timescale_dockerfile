@@ -1,4 +1,4 @@
 FROM timescale/timescaledb:latest-pg10
 
 # inspiration from https://github.com/timescale/timescaledb-docker
-COPY timescaledb-entrypoint.sh /docker-entrypoint-initdb.d/
+COPY timescaledb-init.sh /docker-entrypoint-initdb.d/
