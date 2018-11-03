@@ -5,7 +5,7 @@ services:
       context: .
     volumes:
       - named-pipe-volume:/tmp/namedPipes
-      - ./code:/usr/src/app/code
+      - ./:/usr/src/app
     command: python /usr/src/app/code/log_emmiter.py
 
   # connect the log_emitter container's /tmp/namedPipes dir
@@ -15,8 +15,10 @@ services:
       context: .
     volumes:
       - named-pipe-volume:/tmp/namedPipes
-      - ./code:/usr/src/app/code
+      - ./:/usr/src/app
     command: python /usr/src/app/code/log_collector.py
+    links:
+      - timescale_db:timescale_db
 
   timescale_db:
     build: 
