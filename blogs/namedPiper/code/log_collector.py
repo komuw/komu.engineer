@@ -1,15 +1,11 @@
 import os
-import time
-
-from log_sender import send_log_to_remote_storage
-
-
-import logging
-import asyncio
 import uvloop
+import asyncio
 
 
 from logger import getLogger
+from log_sender import send_log_to_remote_storage
+
 
 logger = getLogger(name="metrics.collector")
 
@@ -49,7 +45,7 @@ async def collect_metrics():
             raise e
 
 
-uvloop.install()
+asyncio.set_event_loop_policy(uvloop.EventLoopPolicy())
 loop = asyncio.get_event_loop()
 loop.run_until_complete(collect_metrics())
 loop.close()

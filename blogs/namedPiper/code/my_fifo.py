@@ -2,7 +2,6 @@ import os
 import errno
 
 
-
 def makeFifo(fifo_directory="/tmp/namedPipes", fifo_file="komusNamedPipe"):
     fifo_file = os.path.join(fifo_directory, fifo_file)
     try:

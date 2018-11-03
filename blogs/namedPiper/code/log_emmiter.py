@@ -1,6 +1,5 @@
 import os
-import time
-import errno
+import asyncio
 
 import json
 import uvloop
@@ -36,7 +35,7 @@ async def emmit_metrics():
         await asyncio.sleep(1)
 
 
-uvloop.install()
+asyncio.set_event_loop_policy(uvloop.EventLoopPolicy())
 loop = asyncio.get_event_loop()
 loop.run_until_complete(emmit_metrics())
 loop.close()

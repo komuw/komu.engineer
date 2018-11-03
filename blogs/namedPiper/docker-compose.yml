@@ -18,5 +18,13 @@ services:
       - ./code:/usr/src/app/code
     command: python /usr/src/app/code/log_collector.py
 
+  timescale_db:
+    image: timescale/timescaledb:latest-pg10
+    environment:
+      POSTGRES_USER: myuser
+      POSTGRES_PASSWORD: hey_NSA
+    ports:
+      - 5432:5432
+
 volumes:
   named-pipe-volume:

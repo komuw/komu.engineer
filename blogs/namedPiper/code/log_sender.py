@@ -1,4 +1,4 @@
-import asyncio, json, aiohttp
+import aiohttp
 
 
 from logger import getLogger

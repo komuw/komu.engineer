@@ -1,8 +1,7 @@
-
 import logging
 
 
-async def getLogger(name):
+def getLogger(name):
     logger = logging.getLogger(name)
     handler = logging.StreamHandler()
     formatter = logging.Formatter("%(message)s")
@@ -10,5 +9,5 @@ async def getLogger(name):
     if not logger.handlers:
         logger.addHandler(handler)
     logger.setLevel("DEBUG")
-    
+
     return logger
