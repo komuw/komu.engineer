@@ -36,11 +36,22 @@ create_table() {
     data                JSONB             NULL
     );"
 
+    printf "\n\n create_table END \n\n"    
+}
+
+create_table_indices() {
+     printf "\n\n ###########\n
+    create_table_indices START \n
+    #############\n\n"
+
     # you may want to index the json field
     # see: https://docs.timescale.com/v1.0/using-timescaledb/schema-management#indexing-all-json
     psql -U "${POSTGRES_USER}" "${POSTGRES_DB}" -c "CREATE INDEX idxgin ON logs USING GIN (data);"
 
-    printf "\n\n create_table END \n\n"    
+    # An index allows the database server to find and retrieve specific rows much faster than it could do without an index
+    psql -U "${POSTGRES_USER}" "${POSTGRES_DB}" -c "CREATE INDEX ON logs (time DESC, log_event, trace_id) WHERE log_event IS NOT NULL AND trace_id IS NOT NULL;"
+
+    printf "\n\n create_table_indices END \n\n"   
 }
 
 create_hypertable() {
@@ -63,4 +74,5 @@ create_hypertable() {
 # 3. create  hypertable
 create_extension
 create_table
+create_table_indices
 create_hypertable
