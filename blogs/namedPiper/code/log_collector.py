@@ -7,7 +7,7 @@ from logger import getLogger
 from log_sender import send_log_to_remote_storage
 
 
-logger = getLogger(name="metrics.collector")
+logger = getLogger(name="logs.collector")
 
 
 logger.info("{}".format({"event": "log_collector_start"}))
@@ -18,7 +18,7 @@ logger.info("{}".format({"event": "log_collector_start"}))
 fifo_file = "/tmp/namedPipes/komusNamedPipe"
 
 
-async def collect_metrics():
+async def collect_logs():
     try:
         pipe = os.open(
             fifo_file, os.O_RDONLY | os.O_NONBLOCK | os.O_ASYNC
@@ -47,6 +47,6 @@ async def collect_metrics():
 
 asyncio.set_event_loop_policy(uvloop.EventLoopPolicy())
 loop = asyncio.get_event_loop()
-loop.run_until_complete(collect_metrics())
+loop.run_until_complete(collect_logs())
 loop.close()
 logger.info("{}".format({"event": "log_collector_end"}))

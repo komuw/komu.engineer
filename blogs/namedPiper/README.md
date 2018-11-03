@@ -12,7 +12,7 @@ or just:
 ```sh
 docker-compose up
 ```    
-then watch as collector collects metrics, ie:  
+then watch as collector collects logs, ie:  
 ```sh
 docker-compose logs -f log_collector
 ```    

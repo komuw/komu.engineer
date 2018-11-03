@@ -3,7 +3,7 @@ import aiohttp
 
 from logger import getLogger
 
-logger = getLogger(name="metrics.sender")
+logger = getLogger(name="logs.sender")
 
 logger.info("{}".format({"event": "log_sender_start"}))
 

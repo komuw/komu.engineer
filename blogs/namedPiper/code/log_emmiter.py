@@ -8,13 +8,13 @@ import uvloop
 from my_fifo import makeFifo
 from logger import getLogger
 
-logger = getLogger(name="metrics.emitter")
+logger = getLogger(name="logs.emitter")
 logger.info("{}".format({"event": "log_emitter_start"}))
 
 fifo_file = makeFifo()
 
 
-async def emmit_metrics():
+async def emmit_logs():
     while True:
         try:
             pipe = os.open(fifo_file, os.O_WRONLY | os.O_NONBLOCK | os.O_ASYNC)
@@ -37,6 +37,6 @@ async def emmit_metrics():
 
 asyncio.set_event_loop_policy(uvloop.EventLoopPolicy())
 loop = asyncio.get_event_loop()
-loop.run_until_complete(emmit_metrics())
+loop.run_until_complete(emmit_logs())
 loop.close()
 logger.info("{}".format({"event": "log_emitter_end"}))
