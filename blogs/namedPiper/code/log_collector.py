@@ -30,6 +30,7 @@ async def collect_logs():
             read_at_most = 4096  # with 4096 we are trying to read more than is sent
 
             # TODO: we should readline
+            # TODO: try and port/add a readline implementation
             data = os.read(pipe, read_at_most)
             if len(data) == 0:
                 # End of the file
@@ -52,6 +53,9 @@ async def collect_logs():
 
 
 async def handle_logs(log_events):
+    # note: we will loose some logs since not all
+    # are valid json because collect_logs() does a read of at most 4096 bytes
+    # instead of reading one line
     logs = []
     for i in log_events:
         try:
