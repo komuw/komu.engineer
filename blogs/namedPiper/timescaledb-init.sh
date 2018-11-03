@@ -33,7 +33,8 @@ create_table() {
     trace_id            TEXT              NOT NULL,
     file_path           TEXT              NOT NULL,
     host_ip             TEXT              NOT NULL,
-    data                JSONB             NULL
+    data                JSONB             NULL,
+    PRIMARY KEY(time, trace_id)
     );"
 
     printf "\n\n create_table END \n\n"    
@@ -48,8 +49,11 @@ create_table_indices() {
     # see: https://docs.timescale.com/v1.0/using-timescaledb/schema-management#indexing-all-json
     psql -U "${POSTGRES_USER}" "${POSTGRES_DB}" -c "CREATE INDEX idxgin ON logs USING GIN (data);"
 
-    # An index allows the database server to find and retrieve specific rows much faster than it could do without an index
-    psql -U "${POSTGRES_USER}" "${POSTGRES_DB}" -c "CREATE INDEX ON logs (time DESC, log_event, trace_id) WHERE log_event IS NOT NULL AND trace_id IS NOT NULL;"
+    # An index allows the database server to find and retrieve specific rows much faster than it could do without an index.
+    # For indexing columns with discrete (limited-cardinality) values; ie those that u are likely to query using "equals" or "not equals" comparator
+    # as opposed to using "less than" or "greater than" comparator. For those create index with time last
+    # see: https://docs.timescale.com/v1.0/using-timescaledb/schema-management#indexing-best-practices
+    psql -U "${POSTGRES_USER}" "${POSTGRES_DB}" -c "CREATE INDEX ON logs (log_event, trace_id, time DESC) WHERE log_event IS NOT NULL AND trace_id IS NOT NULL;"
 
     printf "\n\n create_table_indices END \n\n"   
 }
