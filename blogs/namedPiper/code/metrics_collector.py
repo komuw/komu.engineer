@@ -49,7 +49,7 @@ async def collect_metrics():
         else:
             raise e
 
-
+# TODO: use uvloop if extra perfomance is required
 loop = asyncio.get_event_loop()
 loop.run_until_complete(collect_metrics())
 loop.close()
