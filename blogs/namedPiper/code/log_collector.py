@@ -5,8 +5,9 @@ import asyncio
 
 
 from logger import getLogger
-from log_sender import send_log_to_remote_storage
-
+from batched_logs import batchedLogs
+from log_sender import schedule_log_sending
+from log_collector_loop import loop
 
 logger = getLogger(name="logs.collector")
 
@@ -42,13 +43,16 @@ async def collect_logs():
             log_events = data.split("\n")
             logs = await handle_logs(log_events=log_events)
 
-            await send_log_to_remote_storage(logs=logs)
+            # TODO: disable locks/batched log sending if we get
+            # 'got Future attached to a different loop' errors
+            async with batchedLogs.lock:
+                batchedLogs.batch_logs = batchedLogs.batch_logs + logs
         os.close(pipe)
     except OSError as e:
-        logger.debug("{}".format({"event": "log_collector_error", "error": str(e)}))
         if e.errno == 6:
             pass
         else:
+            logger.exception("{}".format({"event": "log_collector_error", "error": str(e)}))
             raise e
 
 
@@ -66,8 +70,8 @@ async def handle_logs(log_events):
     return logs
 
 
-asyncio.set_event_loop_policy(uvloop.EventLoopPolicy())
-loop = asyncio.get_event_loop()
-loop.run_until_complete(collect_logs())
+tasks = asyncio.gather(collect_logs(), schedule_log_sending(), loop=loop)
+loop.run_until_complete(tasks)
+
 loop.close()
 logger.info("{}".format({"event": "log_collector_end"}))

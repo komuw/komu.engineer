@@ -1,9 +1,13 @@
 import os
 import json
+import asyncio
 import asyncpg
 import datetime
 
+
 from logger import getLogger
+from batched_logs import batchedLogs
+
 
 logger = getLogger(name="logs.sender")
 
@@ -64,5 +68,17 @@ async def send_log_to_remote_storage(logs):
         )
 
         await conn.close()
+        logger.info("{}".format({"event": "log_sender_insert_end"}))
     except Exception as e:
         logger.exception("{}".format({"event": "send_log_to_remote_storage", "error": str(e)}))
+
+
+async def schedule_log_sending():
+    while True:
+        async with batchedLogs.lock:
+            batch_logs = batchedLogs.batch_logs
+            if len(batch_logs) > 0:
+                await send_log_to_remote_storage(logs=batch_logs)
+                batchedLogs.batch_logs = []
+
+        await asyncio.sleep(batchedLogs.send_logs_every)

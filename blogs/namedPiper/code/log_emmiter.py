@@ -47,12 +47,12 @@ async def emmit_logs():
                 os.write(pipe, write_data)
             os.close(pipe)
         except OSError as e:
-            logger.debug("{}".format({"event": "log_emitter_error", "error": str(e)}))
             if e.errno == 6:
                 # device not configured
                 # raised when emmiter is called but collector aint there
                 pass
             else:
+                logger.exception("{}".format({"event": "log_emitter_error", "error": str(e)}))
                 raise e
         await asyncio.sleep(1)
 
