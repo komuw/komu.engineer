@@ -21,7 +21,7 @@ fifo_file = makeFifo()
 def log_structure(log_event, data):
     now = datetime.datetime.now(datetime.timezone.utc)
     return {
-        "time": str(now),  # datetime.datetime.strptime(str(now), "%Y-%m-%d %H:%M:%S.%f%z")
+        "time": str(now),
         "application_name": "WebApp",
         "environment_name": "production",
         "log_event": log_event,
