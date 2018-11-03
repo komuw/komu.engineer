@@ -1,5 +1,13 @@
 #!/usr/bin/env bash
-set -eo pipefail
+if test "$BASH" = "" || "$BASH" -uc "a=();true \"\${a[@]}\"" 2>/dev/null; then
+    # Bash 4.4, Zsh
+    set -euo pipefail
+else
+    # Bash 4.3 and older chokes on empty arrays with set -u.
+    set -eo pipefail
+fi
+shopt -s nullglob globstar
+
 
 
 create_extension() {
@@ -11,8 +19,6 @@ create_extension() {
 
     printf "\n\n create_extension END \n\n"      
 }
-create_extension
-
 
 create_table() {
     printf "\n\n ###########\n
@@ -36,8 +42,6 @@ create_table() {
 
     printf "\n\n create_table END \n\n"    
 }
-create_table
-
 
 create_hypertable() {
     printf "\n\n ###########\n
@@ -53,4 +57,10 @@ create_hypertable() {
     printf "\n\n create_hypertable END \n\n" 
 
 }
+
+# 1. create timescaledb extension
+# 2. create database table
+# 3. create  hypertable
+create_extension
+create_table
 create_hypertable
