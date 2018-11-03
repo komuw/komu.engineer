@@ -1,4 +1,5 @@
 import os
+import json
 import uvloop
 import asyncio
 
@@ -34,8 +35,13 @@ async def collect_logs():
                 # End of the file
                 await asyncio.sleep(1)
                 continue
+
             logger.info("{}".format({"event": "log_collector_print_data", "data": data}))
-            await send_log_to_remote_storage(data=data)
+            data = data.decode()
+            log_events = data.split("\n")
+            logs = await handle_logs(log_events=log_events)
+
+            await send_log_to_remote_storage(logs=logs)
         os.close(pipe)
     except OSError as e:
         logger.debug("{}".format({"event": "log_collector_error", "error": str(e)}))
@@ -43,6 +49,18 @@ async def collect_logs():
             pass
         else:
             raise e
+
+
+async def handle_logs(log_events):
+    logs = []
+    for i in log_events:
+        try:
+            log_event = json.loads(i)
+            logs.append(log_event)
+        except json.decoder.JSONDecodeError as e:
+            logger.debug("{}".format({"event": "handle_logs", "error": str(e)}))
+            pass
+    return logs
 
 
 asyncio.set_event_loop_policy(uvloop.EventLoopPolicy())

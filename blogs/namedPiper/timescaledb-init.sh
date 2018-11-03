@@ -20,6 +20,11 @@ create_extension() {
     printf "\n\n create_extension END \n\n"      
 }
 
+# PostgreSQL stores TIMESTAMPTZ in UTC value.
+# When you insert a value into a TIMESTAMPTZ column, PostgreSQL converts the TIMESTAMPTZ value into a UTC value and stores the UTC value in the table.
+# When you query timestamptz from the database, PostgreSQL converts the UTC value back to the time value of the timezone set by the database server, the user, or the current database connection.
+
+
 create_table() {
     printf "\n\n ###########\n
     create_table START \n

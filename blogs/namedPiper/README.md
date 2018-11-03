@@ -92,4 +92,5 @@ INSERT INTO logs(time, application_name, environment_name, log_event, trace_id, 
 then you can query:
 ```sql
 SELECT * FROM logs ORDER BY time DESC;
+SELECT * FROM logs WHERE logs.trace_id = 'bfb95991-ae1b-4f7b-bc11-024dc53b964f';
 ```
