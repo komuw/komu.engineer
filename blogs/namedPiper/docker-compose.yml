@@ -19,12 +19,23 @@ services:
     command: python /usr/src/app/code/log_collector.py
 
   timescale_db:
-    image: timescale/timescaledb:latest-pg10
+    build: 
+      context: .
+      dockerfile: timescale_dockerfile
     environment:
+      POSTGRES_DB: mydb
       POSTGRES_USER: myuser
       POSTGRES_PASSWORD: hey_NSA
     ports:
       - 5432:5432
+    ulimits:
+      nproc: 65535
+      nofile:
+        soft: 20000
+        hard: 40000
+    volumes:
+      - ./:/usr/src/app
 
 volumes:
   named-pipe-volume:
+

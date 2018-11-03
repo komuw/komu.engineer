@@ -1,0 +1,5 @@
+FROM timescale/timescaledb:latest-pg10
+
+COPY timescaledb-entrypoint.sh /usr/local/bin/
+
+ENTRYPOINT ["timescaledb-entrypoint.sh"]

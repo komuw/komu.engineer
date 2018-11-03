@@ -59,3 +59,15 @@ os.write(pipe, write_data)
 1. http://www.pixelbeat.org/programming/stdio_buffering/    
 2. https://en.wikipedia.org/wiki/Circular_buffer   
 3. http://man7.org/linux/man-pages/man7/pipe.7.html      
+
+connect to db:
+```sh
+export PGPASSFILE=.pgpass && psql --host=localhost --port=5432 --username=myuser --dbname=mydb
+```
+RUN export PGPASSFILE=/usr/src/app/.pgpass && \
+    psql \
+    --host=localhost \
+    --port=5432 \
+    --username=myuser \
+    --dbname=mydb \
+    -c "CREATE EXTENSION IF NOT EXISTS timescaledb CASCADE;"
