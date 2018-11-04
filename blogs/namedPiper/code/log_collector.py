@@ -19,42 +19,60 @@ logger.info("{}".format({"event": "log_collector_start"}))
 fifo_file = "/tmp/namedPipes/komusNamedPipe"
 
 
+class PIPE:
+    pipe = None
+
+    def __enter__(self):
+        pipe = os.open(fifo_file, os.O_RDONLY | os.O_NONBLOCK | os.O_ASYNC)
+        self.pipe = pipe
+        return self.pipe
+
+    def __exit__(self, type, value, traceback):
+        if self.pipe:
+            os.close(self.pipe)
+
+    async def __aenter__(self):
+        pipe = os.open(fifo_file, os.O_RDONLY | os.O_NONBLOCK | os.O_ASYNC)
+        self.pipe = pipe
+        return await asyncio.sleep(-1, result=self.pipe)
+
+    async def __aexit__(self, exc_type, exc, tb):
+        if self.pipe:
+            await asyncio.sleep(-1, result=os.close(self.pipe))
+
+
 async def collect_logs():
-    while True:
-        try:
-            # TODO: just open once and read forever and only close when done
-            pipe = os.open(
-                fifo_file, os.O_RDONLY | os.O_NONBLOCK | os.O_ASYNC
-            )  # os.O_NONBLOCK is not available in Windows
-            logger.info("{}".format({"event": "log_collector_read"}))
+    async with PIPE() as pipe:
+        while True:
+            try:
+                logger.info("{}".format({"event": "log_collector_read"}))
 
-            # TODO figure out how to read exactly oneline
-            read_at_most = 4096  # with 4096 we are trying to read more than is sent
+                # TODO figure out how to read exactly oneline
+                read_at_most = 4096  # with 4096 we are trying to read more than is sent
 
-            # TODO: we should readline
-            # TODO: try and port/add a readline implementation
-            data = os.read(pipe, read_at_most)
-            if len(data) == 0:
-                # End of the file
-                await asyncio.sleep(1)
-                continue
+                # TODO: we should readline
+                # TODO: try and port/add a readline implementation
+                data = os.read(pipe, read_at_most)
+                if len(data) == 0:
+                    # End of the file
+                    await asyncio.sleep(1)
+                    continue
 
-            logger.info("{}".format({"event": "log_collector_print_data", "data": data}))
-            data = data.decode()
-            log_events = data.split("\n")
-            logs = await handle_logs(log_events=log_events)
+                logger.info("{}".format({"event": "log_collector_print_data", "data": data}))
+                data = data.decode()
+                log_events = data.split("\n")
+                logs = await handle_logs(log_events=log_events)
 
-            # TODO: disable locks/batched log sending if we get
-            # 'got Future attached to a different loop' errors
-            async with batchedLogs.lock:
-                batchedLogs.batch_logs = batchedLogs.batch_logs + logs
-            os.close(pipe)
-        except OSError as e:
-            if e.errno == 6:
-                pass
-            else:
-                logger.exception("{}".format({"event": "log_collector_error", "error": str(e)}))
-                pass
+                # TODO: disable locks/batched log sending if we get
+                # 'got Future attached to a different loop' errors
+                async with batchedLogs.lock:
+                    batchedLogs.batch_logs = batchedLogs.batch_logs + logs
+            except OSError as e:
+                if e.errno == 6:
+                    pass
+                else:
+                    logger.exception("{}".format({"event": "log_collector_error", "error": str(e)}))
+                    pass
 
 
 async def handle_logs(log_events):
