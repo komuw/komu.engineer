@@ -98,4 +98,14 @@ SELECT * FROM logs WHERE logs.trace_id = 'bfb95991-ae1b-4f7b-bc11-024dc53b964f';
 SELECT * FROM logs WHERE logs.host_ip = '172.18.0.3';
 SELECT data,file_path FROM logs WHERE logs.log_event ='login_error' ORDER BY time DESC LIMIT 5;
 SELECT log_event,data FROM logs WHERE data->>'traceback' IS NOT NULL;
+
+/* see all the events for one log trace_id */
+SELECT * 
+FROM   logs 
+WHERE  logs.trace_id = (SELECT trace_id 
+                        FROM   logs 
+                        WHERE  logs.log_event = 'video_process_step3' 
+                        ORDER  BY time DESC 
+                        LIMIT  1) 
+ORDER  BY time DESC; 
 ```

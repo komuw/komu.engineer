@@ -18,21 +18,26 @@ logger.info("{}".format({"event": "log_emitter_start"}))
 fifo_file = makeFifo()
 
 
-def log_structure(log_event, application_name, file_path, data, environment_name="production"):
+def log_structure(
+    log_event, application_name, file_path, data, environment_name="production", trace_id=None
+):
+    if not trace_id:
+        trace_id = str(uuid.uuid4())
+
     now = datetime.datetime.now(datetime.timezone.utc)
     return {
         "time": str(now),
         "application_name": application_name,
         "environment_name": environment_name,
         "log_event": log_event,
-        "trace_id": str(uuid.uuid4()),
+        "trace_id": trace_id,
         "file_path": file_path,
         "host_ip": host_ip_address,
         "data": data,
     }
 
 
-async def emmit_logs(log_event, application_name, file_path, log_event_data):
+async def emmit_logs(log_event, application_name, file_path, log_event_data, trace_id=None):
     try:
         pipe = os.open(fifo_file, os.O_WRONLY | os.O_NONBLOCK | os.O_ASYNC)
         log = log_structure(
@@ -40,6 +45,7 @@ async def emmit_logs(log_event, application_name, file_path, log_event_data):
             application_name=application_name,
             file_path=file_path,
             data=log_event_data,
+            trace_id=trace_id,
         )
         # we use newline to demarcate where one log event ends.
         write_data = json.dumps(log) + "\n"
@@ -93,12 +99,37 @@ async def worker():
 
 
 async def etl():
-    await emmit_logs(
-        log_event="video_process",
-        application_name="ETL_app",
-        file_path=os.path.realpath(__file__),
-        log_event_data={"etl_id": str(uuid.uuid4()), "jobType": "batch"},
-    )
+    async def step1(trace_id):
+        await emmit_logs(
+            log_event="video_process_step1",
+            application_name="ETL_app",
+            file_path=os.path.realpath(__file__),
+            log_event_data={"etl_id": str(uuid.uuid4()), "jobType": "batch"},
+            trace_id=trace_id,
+        )
+
+    async def step2(trace_id):
+        await emmit_logs(
+            log_event="video_process_step2",
+            application_name="ETL_app",
+            file_path=os.path.realpath(__file__),
+            log_event_data={"etl_id": str(uuid.uuid4()), "jobType": "batch"},
+            trace_id=trace_id,
+        )
+
+    async def step3(trace_id):
+        await emmit_logs(
+            log_event="video_process_step3",
+            application_name="ETL_app",
+            file_path=os.path.realpath(__file__),
+            log_event_data={"etl_id": str(uuid.uuid4()), "jobType": "batch"},
+            trace_id=trace_id,
+        )
+
+    trace_id = str(uuid.uuid4())
+    await step1(trace_id)
+    await step2(trace_id)
+    await step3(trace_id)
 
 
 async def run():
