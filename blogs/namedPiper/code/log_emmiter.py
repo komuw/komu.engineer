@@ -60,12 +60,27 @@ async def emmit_logs(log_event, application_name, file_path, log_event_data):
 
 
 async def web_app():
+    import sys
+    import traceback
+
     await emmit_logs(
         log_event="login",
         application_name="WebApp",
         file_path=os.path.realpath(__file__),
         log_event_data={"user": "Shawn Corey Carter", "age": 48, "email": "someemail@email.com"},
     )
+    try:
+        my_list = []
+        my_list[4]
+    except Exception:
+        exc_type, exc_value, exc_traceback = sys.exc_info()
+        our_traceback = traceback.format_exception(exc_type, exc_value, exc_traceback)
+        await emmit_logs(
+            log_event="login_error",
+            application_name="WebApp",
+            file_path=os.path.realpath(__file__),
+            log_event_data={"error": "login_failed", "traceback": our_traceback},
+        )
 
 
 async def worker():
