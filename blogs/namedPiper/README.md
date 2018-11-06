@@ -50,7 +50,7 @@ B. unit tests
 on linux the size of `PIPE_BUF` is about `4096`    
 ie this code is likely to fail    
 ```python
-write_data = b'a'
+write_data = 'a'
 write_data = write_data.encode() * 4098
 os.write(pipe, write_data)
 ```
