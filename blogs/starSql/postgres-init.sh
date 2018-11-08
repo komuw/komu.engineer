@@ -149,7 +149,8 @@ insert_into_executions_db() {
 
 check_insertion_worked() {
     printf "\n\n ###########\n
-    check_insertion_worked START: \n"
+    check_insertion_worked START:
+    SELECT last_name,first_name,ex_date FROM executions LIMIT 3; \n\n"
 
     psql -U "${POSTGRES_USER}" "${POSTGRES_DB}" -c 'SELECT last_name,first_name,ex_date FROM executions LIMIT 3;'
 
