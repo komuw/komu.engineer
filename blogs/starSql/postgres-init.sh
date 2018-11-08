@@ -41,8 +41,7 @@ create_tables() {
     create_table START \n
     #############\n\n"
 
-    psql -U "${POSTGRES_USER}" "${POSTGRES_DB}" -c "
-
+    psql -U "${POSTGRES_USER}" "${POSTGRES_DB}" -c '
     CREATE TABLE IF NOT EXISTS myTableName (
         /* constraint names appear in error msgs. */
         time TIMESTAMPTZ CONSTRAINT "constraintName time cant be null" NOT NULL,
@@ -51,26 +50,29 @@ create_tables() {
         /* The CHECK clause specifies an expression producing a Boolean result. */
         age integer CHECK (age > 0),
         PRIMARY KEY (time, trace_id)
-    );
+    );'
 
 
+    psql -U "${POSTGRES_USER}" "${POSTGRES_DB}" -c '
     CREATE TABLE IF NOT EXISTS alasTable (
         /* PRIMARY KEY says that a column/s can contain ONLY unique (non-duplicate), non-NULL values */
         trace_id varchar(40) PRIMARY KEY
-    );
+    );'
 
+    psql -U "${POSTGRES_USER}" "${POSTGRES_DB}" -c '
     CREATE TABLE IF NOT EXISTS okayTable (
             my_id varchar(40),
             /*
             Foreign key is a field/s in a table that uniquely identifies a row in another table.
             What happens to rows in okayTable if a row in alasTable is deleted?
             ON DELETE CASCADE deletes rows in okayTable if corresponding ones in alasTable are deleted.
-            there's also an `ON UPDATE action` for what to do to rows on update.
-            Note that `my_id` and `trace_id` need to have the same data type
+            theres also an "ON UPDATE action" for what to do to rows on update.
+            Note that "my_id" and "trace_id" need to have the same data type
             */
             FOREIGN KEY (my_id) REFERENCES alasTable (trace_id) ON DELETE CASCADE
-    );
+    );'
 
+    psql -U "${POSTGRES_USER}" "${POSTGRES_DB}" -c '
     CREATE TABLE logs (
         time TIMESTAMPTZ NOT NULL,
         application_name TEXT NOT NULL,
@@ -81,8 +83,7 @@ create_tables() {
         host_ip TEXT NOT NULL,
         data JSONB NULL,
         PRIMARY KEY (time, trace_id)
-    );
-   "
+    );'
 
     printf "\n\n create_table END \n\n"    
 }
@@ -92,7 +93,7 @@ create_table_indices() {
     create_table_indices START \n
     #############\n\n"
 
-    psql -U "${POSTGRES_USER}" "${POSTGRES_DB}" -c "
+    psql -U "${POSTGRES_USER}" "${POSTGRES_DB}" -c '
     /* we use DESC so that the most recent appear first.
     You can create different kind of indices: btree, hash, gist, spgist, gin, and brin 
     The default one is btree, gin index may be good for JSONB data 
@@ -101,13 +102,13 @@ create_table_indices() {
     */
     CREATE INDEX CONCURRENTLY IF NOT EXISTS myTimeIdexName ON logs (time DESC)
     WHERE
-        log_event IS NOT NULL AND time IS NOT NULL;
+        log_event IS NOT NULL AND time IS NOT NULL;'
 
+    psql -U "${POSTGRES_USER}" "${POSTGRES_DB}" -c '
     CREATE INDEX CONCURRENTLY IF NOT EXISTS myJsonDataIndexName ON logs
         USING GIN (data)
     WHERE
-        data IS NOT NULL;
-    "
+        data IS NOT NULL;'
 
     printf "\n\n create_table_indices END \n\n"   
 }
@@ -116,6 +117,6 @@ create_table_indices() {
 
 # call the functions
 create_db
-create_extension
+# create_extension
 create_tables
 create_table_indices

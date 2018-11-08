@@ -3,6 +3,11 @@
 This are my notes taken while mostly doing; https://selectstarsql.com/frontmatter.html   
 and also; https://sqlbolt.com/
 
+connect to the db like;   
+```sh
+export PGPASSFILE=.pgpass && psql --host=localhost --port=5432 --username=myuser --dbname=myDBname
+```
+
 Note:
 1. the commands in here can be ran via psql 
 ```sql
@@ -28,43 +33,43 @@ CREATE EXTENSION IF NOT EXISTS timescaledb CASCADE;
 3. create table
 ```sql
 CREATE TABLE IF NOT EXISTS myTableName (
-        /* constraint names appear in error msgs. */
-        time TIMESTAMPTZ CONSTRAINT "constraintName time cant be null" NOT NULL,
-        trace_id varchar(40) UNIQUE NOT NULL,
-        data JSONB NULL,
-        /* The CHECK clause specifies an expression producing a Boolean result. */
-        age integer CHECK (age > 0),
-        PRIMARY KEY (time, trace_id)
+    /* constraint names appear in error msgs. */
+    time TIMESTAMPTZ CONSTRAINT "constraintName time cant be null" NOT NULL,
+    trace_id varchar(40) UNIQUE NOT NULL,
+    data JSONB NULL,
+    /* The CHECK clause specifies an expression producing a Boolean result. */
+    age integer CHECK (age > 0),
+    PRIMARY KEY (time, trace_id)
 );
 
 CREATE TABLE IF NOT EXISTS alasTable (
-        /* PRIMARY KEY says that a column/s can contain ONLY unique (non-duplicate), non-NULL values */
-        trace_id varchar(40) PRIMARY KEY
+    /* PRIMARY KEY says that a column/s can contain ONLY unique (non-duplicate), non-NULL values */
+    trace_id varchar(40) PRIMARY KEY
 );
 
 CREATE TABLE IF NOT EXISTS okayTable (
         my_id varchar(40),
         /*
-         Foreign key is a field/s in a table that uniquely identifies a row in another table.
-         What happens to rows in okayTable if a row in alasTable is deleted?
-         ON DELETE CASCADE deletes rows in okayTable if corresponding ones in alasTable are deleted.
-         there's also an `ON UPDATE action` for what to do to rows on update.
-         Note that `my_id` and `trace_id` need to have the same data type
-         */
+        Foreign key is a field/s in a table that uniquely identifies a row in another table.
+        What happens to rows in okayTable if a row in alasTable is deleted?
+        ON DELETE CASCADE deletes rows in okayTable if corresponding ones in alasTable are deleted.
+        theres also an "ON UPDATE action" for what to do to rows on update.
+        Note that "my_id" and "trace_id" need to have the same data type
+        */
         FOREIGN KEY (my_id) REFERENCES alasTable (trace_id) ON DELETE CASCADE
 );
 
 CREATE TABLE logs (
-      time TIMESTAMPTZ NOT NULL,
-      application_name TEXT NOT NULL,
-      environment_name TEXT NOT NULL,
-      log_event TEXT NOT NULL,
-      trace_id TEXT NOT NULL,
-      file_path TEXT NOT NULL,
-      host_ip TEXT NOT NULL,
-      data JSONB NULL,
-      PRIMARY KEY (time, trace_id)
-  );
+    time TIMESTAMPTZ NOT NULL,
+    application_name TEXT NOT NULL,
+    environment_name TEXT NOT NULL,
+    log_event TEXT NOT NULL,
+    trace_id TEXT NOT NULL,
+    file_path TEXT NOT NULL,
+    host_ip TEXT NOT NULL,
+    data JSONB NULL,
+    PRIMARY KEY (time, trace_id)
+);
 ```
 The list of postgres data types is at: https://www.postgresql.org/docs/11/datatype.html
 
