@@ -103,5 +103,9 @@ WHERE
 ```
 
 ```sql
-COPY executions (ex_number,last_name,first_name,ex_age,ex_date,county,last_statement) FROM '/usr/src/app/tx_deathrow_full.csv' WITH (FORMAT csv);
+/*
+if your csv has a HEADER line, it is important to add WITH (HEADER)
+otherwise you'll get errors lik; invalid input syntax for integer
+*/
+COPY executions (ex_number,last_name,first_name,ex_age,ex_date,county,last_statement) FROM '/usr/src/app/tx_deathrow_full.csv' WITH (FORMAT csv, HEADER);
 ```
