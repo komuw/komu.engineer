@@ -136,9 +136,33 @@ run_sanity_check() {
     printf "\n\n run_sanity_check END \n\n"   
 }
 
+
+insert_into_executions_db() {
+    printf "\n\n ###########\n
+    insert_into_executions_db START: \n"
+
+    psql -U "${POSTGRES_USER}" "${POSTGRES_DB}" -c "
+    COPY executions (ex_number,last_name,first_name,ex_age,ex_date,county,last_statement) FROM '/usr/src/app/tx_deathrow_full.csv' WITH (FORMAT csv, HEADER);"
+
+    printf "\n\n insert_into_executions_db END \n\n"   
+}
+
+check_insertion_worked() {
+    printf "\n\n ###########\n
+    check_insertion_worked START: \n"
+
+    psql -U "${POSTGRES_USER}" "${POSTGRES_DB}" -c 'SELECT last_name,first_name,ex_date FROM executions LIMIT 3;'
+
+    printf "\n\n check_insertion_worked END \n\n"   
+}
+
+
+
 # call the functions
 create_db
 # create_extension
 create_tables
 create_table_indices
 run_sanity_check
+insert_into_executions_db
+check_insertion_worked
