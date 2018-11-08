@@ -73,7 +73,7 @@ create_tables() {
     );'
 
     psql -U "${POSTGRES_USER}" "${POSTGRES_DB}" -c '
-    CREATE TABLE logs (
+    CREATE TABLE IF NOT EXISTS logs (
         time TIMESTAMPTZ NOT NULL,
         application_name TEXT NOT NULL,
         environment_name TEXT NOT NULL,
@@ -83,6 +83,17 @@ create_tables() {
         host_ip TEXT NOT NULL,
         data JSONB NULL,
         PRIMARY KEY (time, trace_id)
+    );'
+
+    psql -U "${POSTGRES_USER}" "${POSTGRES_DB}" -c '
+    CREATE TABLE IF NOT EXISTS executions (
+            first_name varchar(140),
+            last_name varchar(140),
+            ex_number smallint,
+            ex_age smallint,
+            ex_date date,
+            county varchar(80),
+            last_statement text
     );'
 
     printf "\n\n create_table END \n\n"    
@@ -115,8 +126,19 @@ create_table_indices() {
 
 
 
+run_sanity_check() {
+    printf "\n\n ###########\n
+    run_sanity_check START: \n
+    SELECT * FROM executions;\n\n"
+
+    psql -U "${POSTGRES_USER}" "${POSTGRES_DB}" -c 'SELECT * FROM executions;'
+
+    printf "\n\n run_sanity_check END \n\n"   
+}
+
 # call the functions
 create_db
 # create_extension
 create_tables
 create_table_indices
+run_sanity_check

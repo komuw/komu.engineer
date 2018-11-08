@@ -59,7 +59,7 @@ CREATE TABLE IF NOT EXISTS okayTable (
         FOREIGN KEY (my_id) REFERENCES alasTable (trace_id) ON DELETE CASCADE
 );
 
-CREATE TABLE logs (
+CREATE TABLE IF NOT EXISTS logs (
     time TIMESTAMPTZ NOT NULL,
     application_name TEXT NOT NULL,
     environment_name TEXT NOT NULL,
@@ -69,6 +69,17 @@ CREATE TABLE logs (
     host_ip TEXT NOT NULL,
     data JSONB NULL,
     PRIMARY KEY (time, trace_id)
+);
+
+
+CREATE TABLE IF NOT EXISTS executions (
+     first_name	varchar(140),
+     last_name	varchar(140),
+     ex_number	smallint,
+     ex_age	smallint,
+     ex_date	date,
+     county	varchar(80),
+     last_statement text
 );
 ```
 The list of postgres data types is at: https://www.postgresql.org/docs/11/datatype.html
@@ -89,4 +100,8 @@ CREATE INDEX CONCURRENTLY IF NOT EXISTS myJsonDataIndexName ON logs
     USING GIN (data)
 WHERE
     data IS NOT NULL;
+```
+
+```sql
+COPY executions (ex_number,last_name,first_name,ex_age,ex_date,county,last_statement) FROM '/usr/src/app/tx_deathrow_full.csv' WITH (FORMAT csv);
 ```
