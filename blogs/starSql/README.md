@@ -109,3 +109,77 @@ otherwise you'll get errors lik; invalid input syntax for integer
 */
 COPY executions (ex_number,last_name,first_name,ex_age,ex_date,county,last_statement) FROM '/usr/src/app/tx_deathrow_full.csv' WITH (FORMAT csv, HEADER);
 ```
+
+
+## chapter 1: Beazley last statement
+The way select works is like;
+```sql
+/* comment */
+SELECT * FROM executions LIMIT 3;
+```
+```sql
+SELECT <column>, <column>, ....
+```
+```sql
+SELECT 50 /2, 51 / 2.0;
+/*
+SQL does integer division by default. Unless one of the numbers is a float.
+returns:
+?column? |      ?column?
+----------+---------------------
+       25 | 25.5000000000000000
+*/
+```
+
+```sql
+/* 
+the synatx of the WHERE block is;
+  WHERE <clause>
+wherein <clause> refers to a Boolean statement
+that the computer can evaluate to be true or false 
+*/
+select first_name, last_name 
+from executions
+where ex_age <= 25;
+/*
+in this example we found all inmates who were age 25 or younger
+at the time of their execution.
+NB: it is <= but not =<
+*/
+```
+
+```sql
+/*
+there is also a LIKE <clause>. This allows us to use 
+wildcards such as % and _ to match characters. 
+
+'%roy' will return true for rows with first names ‘roy’, ‘Troy’, and ‘Deroy’ but not ‘royman’.
+the `_` wildcard on the other hand matches only a single character.
+*/
+SELECT first_name, last_name, ex_number
+FROM executions
+WHERE first_name LIKE '_ay____';
+/*
+returns:
+ first_name |  last_name  | ex_number
+------------+-------------+-----------
+ Gayland    | Bradford    |       468
+ Raymond    | Landry, Sr. |        29
+ Raymond    | Jones       |       186
+ Raymond    | Kinnamon    |        85
+
+ie; first_names that start with ANY character followed by `ay` followed by any OTHER four characters.
+*/
+```
+
+```sql
+/*
+complex <clauses> can be made out of simple ones using Boolean operators like NOT, AND and OR.
+SQL gives most precedence to NOT and then AND and finally OR. 
+You can use parantheses to clarify the order that u want.
+*/
+SELECT last_statement
+FROM executions
+WHERE first_name = 'Napoleon'
+AND last_name = 'Beazley';
+```
