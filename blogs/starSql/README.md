@@ -114,7 +114,10 @@ COPY executions (ex_number,last_name,first_name,ex_age,ex_date,county,last_state
 ## chapter 1: Beazley last statement(selecting)
 The way select works is like;
 ```sql
-/* comment */
+/* 
+multi-line comment
+*/
+-- single-line comment.
 SELECT * FROM executions LIMIT 3;
 ```
 ```sql
@@ -371,6 +374,7 @@ select
             end
         ) * 1.0 
 
+        -- division
         /
 
         count(
