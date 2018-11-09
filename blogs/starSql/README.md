@@ -303,6 +303,7 @@ innocent
 /*
 Find a count of all inmates
 and also a count of inmates who claim to have been innocent.
+We are multiplying by 1.0 so that we can be able to do float division later on.
 */
 select
    sum(
@@ -316,6 +317,12 @@ select
    ) * 1.0 as all_inmates
 FROM
     executions;
+/*
+returns:
+ innocent | all_inmates
+----------+-------------
+       31 |       553.0
+*/
 ```
 
 
@@ -335,6 +342,7 @@ select
    ) * 1.0 as all_inmates
 FROM
     executions;
+
 ```
 
 select count(*)
