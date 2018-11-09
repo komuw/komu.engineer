@@ -301,6 +301,26 @@ innocent
 
 ```sql
 /*
+Find a count of all inmates
+and also a count of inmates who claim to have been innocent.
+*/
+select
+   sum(
+       case when last_statement like '%innocent%' then
+           1
+       else
+           0
+        end) as innocent,
+   count(
+   *
+   ) * 1.0 as all_inmates
+FROM
+    executions;
+```
+
+
+```sql
+/*
 Find the proportion of inmates with claims of innocence in their last statements.
 */
 select
@@ -310,9 +330,9 @@ select
        else
            0
         end) as innocent,
-   sum(
-
-   ) as guilty
+   count(
+   *
+   ) * 1.0 as all_inmates
 FROM
     executions;
 ```
