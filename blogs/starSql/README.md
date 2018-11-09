@@ -111,7 +111,7 @@ COPY executions (ex_number,last_name,first_name,ex_age,ex_date,county,last_state
 ```
 
 
-## chapter 1: Beazley last statement
+## chapter 1: Beazley last statement(selecting)
 The way select works is like;
 ```sql
 /* comment */
@@ -182,4 +182,151 @@ SELECT last_statement
 FROM executions
 WHERE first_name = 'Napoleon'
 AND last_name = 'Beazley';
+/*
+that query returns Beazley's last statement
+*/
 ```
+
+## chapter 2: claims of innocennce(aggregate funcs)
+```sql
+/*
+to find the count of inmates who didnt provide a last_statement
+*/
+select count(*)
+from executions
+where last_statement is not null;
+/*
+you do not use equality operators(=,<) for null.
+instead u use is null, or is not null
+*/
+```
+
+```sql
+SELECT COUNT(*) FROM executions;
+/*
+this finds the total number of executions
+*/
+```
+
+```sql
+/* min, max, avg age of exuctions*/
+SELECT MIN(ex_age), MAX(ex_age), AVG(ex_age)
+FROM executions;
+```
+
+```sql
+/*
+99th percentile age of execution
+*/
+SELECT percentile_disc(0.99) 
+WITHIN GROUP (ORDER BY ex_age) 
+FROM executions;
+```
+
+```sql
+/*
+list all counties without dupliation
+*/
+SELECT DISTINCT county 
+FROM executions;
+```
+
+```sql
+CASE 
+      WHEN condition_1  THEN result_1
+     WHEN condition_2  THEN result_2
+     [WHEN ...]
+     [ELSE result_n]
+END
+/*
+A CASE block is like an IF/THEN/ELSE clause in other programming languages.
+each condition(condition_1, condition_2 etc) is an expression that returns a boolean value, either true or false.
+If the condition evaluates to true, it returns the result which follows the condition, and all other CASE branches do not process at all.
+
+If all conditions evaluate to false, the CASE expression will return the result in the ELSE(ie result_n) part. 
+If you omit the ELSE clause, the CASE expression will return null.
+*/
+```
+
+```sql
+/*
+find the number of inmates who were age 25 or lower at time of execution
+and also the number of inmates who were age 25 or higher at time of execution
+*/
+SELECT
+    SUM(
+        CASE WHEN ex_age <= 25 THEN
+            1
+        ELSE
+            0
+        END) AS "young",
+    SUM(
+        CASE WHEN ex_age > 25 THEN
+            1
+        ELSE
+            0
+        END) AS "old"
+FROM
+    executions;
+/*
+returns;
+ young | old
+-------+-----
+     6 | 547
+*/
+```
+
+
+```sql
+/*
+find number of people who claimed to have been innocent in their last_statements
+*/
+select
+   sum(
+       case when last_statement like '%innocent%' then
+           1
+       else
+           0
+        end) as innocent
+FROM
+    executions;
+/*
+returns:
+innocent
+----------
+       31
+*/
+```
+
+
+```sql
+/*
+Find the proportion of inmates with claims of innocence in their last statements.
+*/
+select
+   sum(
+       case when last_statement like '%innocent%' then
+           1
+       else
+           0
+        end) as innocent,
+   sum(
+
+   ) as guilty
+FROM
+    executions;
+```
+
+select count(*)
+from executions
+where last_statement like '%innocent%';
+
+select
+   sum(
+       case when last_statement like '%innocent%' then
+           1
+       else
+           0
+        end) as innocent
+FROM
+    executions;
