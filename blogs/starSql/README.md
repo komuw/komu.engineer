@@ -329,6 +329,10 @@ returns:
 ```sql
 /*
 Find the proportion of inmates with claims of innocence in their last statements.
+NB:
+- we multiply by 1.0 so that we can be able to do float division later on.
+- it is easier to do the division if the multipliation
+is in the first part as opposed to been in the second part as in the prev sql query.
 */
 select
    sum(
@@ -336,25 +340,49 @@ select
            1
        else
            0
-        end) as innocent,
-   count(
-   *
-   ) * 1.0 as all_inmates
+        end) * 1.0 
+    /
+    count(
+        *
+     ) as proportion_innocent
 FROM
     executions;
-
+/*
+returns:
+  proportion_innocent
+------------------------
+ 0.05605786618444846293
+*/
 ```
 
-select count(*)
-from executions
-where last_statement like '%innocent%';
 
+
+```sql
+/*
+percentage of inmates who claimed to be innocent in their last_statements.
+*/
 select
-   sum(
-       case when last_statement like '%innocent%' then
-           1
-       else
-           0
-        end) as innocent
+   (
+       sum(
+            case when last_statement like '%innocent%' then
+                1
+            else
+                0
+            end
+        ) * 1.0 
+
+        /
+
+        count(
+            *
+        )
+    ) *100 as percent_innocent
 FROM
     executions;
+/*
+returns:
+    percent_innocent
+------------------------
+ 5.60578661844484629300
+*/
+```
