@@ -390,3 +390,142 @@ returns:
  5.60578661844484629300
 */
 ```
+
+
+
+## chapter 3: the long tail.
+**GROUP BY** allows us to split up the dataset and apply aggregate functions within each group, resulting in one row per group.  
+It comes after the **WHERE** block.   
+```sql
+/*
+execution counts by/per county
+
+In the SELECT block, <expression> AS <alias> 
+provides an alias that can be referred to later in the query. 
+*/
+SELECT
+    county,
+    COUNT(*) AS county_executions
+FROM
+    executions
+GROUP BY
+    county;
+/*
+returns:
+    county    | county_executions 
+--------------+-------------------
+ Hamilton     |                 1
+ Bowie        |                 5
+*/
+```
+
+```sql
+/*
+number of executions(that did not have a last statement) from each county.
+*/
+SELECT
+    county,
+    last_statement IS NOT NULL AS has_last_statement,
+    COUNT(*)
+FROM
+    executions
+GROUP BY
+    county,
+    has_last_statement;
+/*
+returns:
+county    | has_last_statement | count 
+--------------+--------------------+-------
+ Houston      | t                  |     1
+ Bee          | t                  |     2
+ Crockett     | t                  |     1
+ Lubbock      | t                  |    12
+*/
+```
+
+
+```sql
+/*
+Count the number of inmates aged 50 or older that were executed in each county.
+*/
+SELECT
+    ex_age,
+    ex_age >= 50 AS BooleanIsOlderThanFifty,
+    count(*)
+FROM
+    executions
+WHERE
+    BooleanIsOlderThanFifty = true
+GROUP BY
+    county,
+    BooleanIsOlderThanFifty;
+/*
+DOES NOT WORK.
+you would think that the above will work, but it does not.
+This is because the WHERE block is EVALUATED BEFORE the SELECT block.
+So you cannot use things that are returned from select block in where block
+*/
+```
+
+```sql
+/*
+CORRECT:
+Count the number of inmates aged 50 or older that were executed in each county.
+*/
+SELECT
+    county,
+    COUNT(*)
+FROM
+    executions
+WHERE
+    ex_age >= 50
+GROUP BY
+    county;
+```
+
+
+
+```sql
+SELECT
+    column_name (s)
+FROM
+    table_name
+WHERE
+    condition
+GROUP BY
+    column_name (s)
+HAVING
+    condition
+ORDER BY
+    column_name (s);
+```
+
+```sql
+/*
+List the counties in which more than 2 inmates aged 50 or older have been executed.
+*/
+SELECT
+    county,
+    count(*) AS num_executions
+FROM
+    executions
+WHERE
+    ex_age >= 50
+GROUP BY
+    county
+HAVING
+    -- we cant use num_executions here
+    count(*) > 2;
+/*
+returns:
+   county   | num_executions 
+------------+----------------
+ Harris     |             21
+ Tarrant    |              4
+
+note we cant use num_executions in the having block,
+we are force to repeat  count(*)
+*/
+```
+
+
