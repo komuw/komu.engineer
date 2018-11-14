@@ -565,3 +565,38 @@ WHERE
         FROM
             executions);
 ```
+
+
+
+```sql
+/*
+Query to find the percentage of executions from each county.
+*/
+SELECT
+    county,
+    -- we want decimal percentages
+    100.0 * COUNT(*)
+        / 
+        (
+            SELECT
+                count(*)
+            FROM
+                executions
+        ) AS percentage
+FROM
+    executions
+GROUP BY
+    county
+ORDER BY
+    percentage DESC;
+/*
+returns:
+    county    |       percentage       
+--------------+------------------------
+ Harris       |    23.1464737793851718
+ Dallas       |    10.4882459312839060
+ Bexar        |     8.3182640144665461
+ Tarrant      |     7.4141048824593128
+*/
+```
+
