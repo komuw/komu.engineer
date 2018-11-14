@@ -463,7 +463,8 @@ GROUP BY
 DOES NOT WORK.
 you would think that the above will work, but it does not.
 This is because the WHERE block is EVALUATED BEFORE the SELECT block.
-So you cannot use things that are returned from select block in where block
+So you cannot use things that are returned from select block in where block,
+But YOU CAN use things returned from SELECT block in GROUP BY block.
 */
 ```
 
@@ -486,6 +487,9 @@ GROUP BY
 
 
 ```sql
+/*
+anantomy of an SQL query.
+*/
 SELECT
     column_name (s)
 FROM
@@ -527,5 +531,3 @@ note we cant use num_executions in the having block,
 we are force to repeat  count(*)
 */
 ```
-
-
