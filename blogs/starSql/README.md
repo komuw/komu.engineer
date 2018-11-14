@@ -531,3 +531,37 @@ note we cant use num_executions in the having block,
 we are force to repeat  count(*)
 */
 ```
+
+
+```sql
+/*
+This query finds the number of inmates from each county and 10 year age range.
+*/
+SELECT
+    county,
+    ex_age / 10 AS decade_age,
+    COUNT(*)
+FROM
+    executions
+GROUP BY
+    -- u can use decade_age from select in group by
+    county, decade_age;
+```
+
+##### Nested queries
+```sql
+/*
+Find the names of the inmate who had the longest last_statement.
+*/
+SELECT
+    first_name,
+    last_name
+FROM
+    executions
+WHERE
+    LENGTH(last_statement) = (
+        SELECT
+            MAX(LENGTH(last_statement))
+        FROM
+            executions);
+```
