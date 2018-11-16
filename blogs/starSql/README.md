@@ -400,6 +400,7 @@ returns:
 ## chapter 3: the long tail.
 **GROUP BY** allows us to split up the dataset and apply aggregate functions within each group, resulting in one row per group.  
 It comes after the **WHERE** block.   
+Implicitly, you should only need to use this when you have aggregate functions in your query.    
 ```sql
 /*
 execution counts by/per county
@@ -486,49 +487,6 @@ WHERE
     ex_age >= 50
 GROUP BY
     county;
-```
-
-
-
-```sql
-/*
-anantomy of an SQL query.
-*/
-SELECT
-    column_name (s)
-FROM
-    table_name
-WHERE
-    condition
-GROUP BY
-    column_name (s)
-HAVING
-    condition
-ORDER BY
-    column_name (s);
-```
-
-
-alternatively
-```sql
-/*
-anantomy of an SQL query.
-*/
-SELECT
-    column_name (s), AGG_FUNC(column_or_expression),
-FROM
-    table_name1
-  INNER JOIN table_name2
-    ON condition
-WHERE
-    condition
-GROUP BY
-    column_name (s)
-HAVING
-    condition
-ORDER BY
-    column_name (s) ASC/DESC
-LIMIT X OFFSET Y;
 ```
 
 
@@ -789,3 +747,66 @@ returns:
 The big idea behind `JOINs` has been to create an augmented table because the original didn’t contain the information we needed.    
 This is a powerful concept because it frees us from the limitations of a single table and allows us to combine multiple tables in potentially complex ways.   
 
+
+## chapter 5: Anatomy and order of execution
+```sql
+/*
+anantomy of an SQL query.
+*/
+SELECT
+    column_name (s)
+FROM
+    table_name
+WHERE
+    condition
+GROUP BY
+    column_name (s)
+HAVING
+    condition
+ORDER BY
+    column_name (s);
+```
+
+
+alternatively
+```sql
+/*
+anantomy of an SQL query.
+*/
+SELECT
+    column_name (s), AGG_FUNC(column_or_expression),
+FROM
+    table_name1
+  INNER JOIN table_name2
+    ON condition
+WHERE
+    condition
+GROUP BY
+    column_name (s)
+HAVING
+    condition
+ORDER BY
+    column_name (s) ASC/DESC
+LIMIT X OFFSET Y;
+```
+
+The order of SQL query execution is: https://sqlbolt.com/lesson/select_queries_order_of_execution,  
+
+1. `FROM and JOINs`  
+they are executed first to determine the total working set of data.   
+2. `WHERE`  
+WHERE constraints are applied to the individual rows.  
+Aliases in the SELECT part of the query are not accessible.  
+3. `GROUP BY`   
+Implicitly, you should only need to use this when you have aggregate functions in your query.  
+4. `HAVING`   
+Like the `WHERE` clause, aliases are also not accessible from this.     
+5. `SELECT`  
+Any expressions in the SELECT part of the query are finally computed.    
+6. `DISTINCT`    
+Of the remaining rows, rows with duplicate values in the column marked as DISTINCT will be discarded.    
+7. `ORDER BY`  
+If an order is specified by the ORDER BY clause, the rows are then sorted by the specified data in either ascending or descending order.    
+Since all the expressions in the SELECT part of the query have been computed, you **CAN** reference **aliases** in this clause.   
+8. `LIMIT / OFFSET`   
+Finally, the rows that fall outside the range specified by the LIMIT and OFFSET are discarded, leaving the final set of rows to be returned from the query.    
