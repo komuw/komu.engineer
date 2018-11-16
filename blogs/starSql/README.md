@@ -672,3 +672,28 @@ ON table1.column = table2.column;
 5. self join   
 This is not really a new join type on it's own, rather it is an application of JOIN on the same table.   
 You can apply any of the above 4 join types to one table.
+```sql
+SELECT column/s
+FROM myTableName table1
+INNER JOIN myTableName table2 
+ON table1.columnName = table2.otherColumn;
+```
+As an example, (the example is nonsensical but it works);
+```sql
+SELECT
+    table1.first_name,
+    table1.ex_number,
+    table2.ex_age
+FROM
+    executions table1
+INNER JOIN executions table2
+ON table1.ex_number = table2.ex_age;
+/*
+returns:
+ first_name | ex_number | ex_age 
+------------+-----------+--------
+ Jerome     |        34 |     34
+ Ruben      |        66 |     66
+ Mikel      |        37 |     37
+*/
+```
