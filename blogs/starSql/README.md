@@ -609,6 +609,9 @@ There have been several extended periods when no executions took place.
 Our goal is to figure out exactly when they were and research their causes.   
 
 Let's take a detour:   
+The big idea behind `JOINs` is to create an augmented table because the original doesn't contain the information we need.    
+This is a powerful concept because it frees us from the limitations of a single table and allows us to combine multiple tables in potentially complex ways.   
+
 PostgreSQL JOINS are used to retrieve data from multiple tables. - https://www.techonthenet.com/postgresql/joins.php    
 The 4types of joins we will look at are: 
 - INNER JOIN (or sometimes called simple join)    
@@ -756,4 +759,8 @@ returns:
          28 |          27 | 1988-11-03  | 1988-01-07   |            301
         406 |         405 | 2008-06-11  | 2007-09-25   |            260
 */
-```
+```    
+
+The big idea behind `JOINs` has been to create an augmented table because the original didn’t contain the information we needed.    
+This is a powerful concept because it frees us from the limitations of a single table and allows us to combine multiple tables in potentially complex ways.   
+
