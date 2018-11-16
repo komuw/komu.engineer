@@ -515,7 +515,7 @@ alternatively
 anantomy of an SQL query.
 */
 SELECT
-    column_name (s)
+    column_name (s), AGG_FUNC(column_or_expression),
 FROM
     table_name1
   INNER JOIN table_name2
