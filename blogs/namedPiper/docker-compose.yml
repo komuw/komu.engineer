@@ -51,6 +51,15 @@ services:
         hard: 40000
     volumes:
       - ./:/usr/src/app
+  
+  grafana:
+    image: grafana/grafana:latest
+    ports:
+      - 3000:3000
+    volumes:
+      - ./:/usr/src/app
+    links:
+      - timescale_db:timescale_db
 
 volumes:
   named-pipe-volume:
