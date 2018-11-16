@@ -713,8 +713,9 @@ SELECT
     table1.ex_date - table2.ex_date AS day_difference
 FROM
     executions table1
-INNER JOIN executions table2
-ON table1.ex_number = table2.ex_number+1 
-ORDER BY day_difference DESC
-LIMIT 5;
+INNER JOIN executions table2 
+ON table1.ex_number = table2.ex_number + 1
+ORDER BY
+    day_difference DESC
+LIMIT 12;
 ```
