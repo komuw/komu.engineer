@@ -528,7 +528,7 @@ HAVING
     condition
 ORDER BY
     column_name (s) ASC/DESC
-LIMIT X;
+LIMIT X OFFSET Y;
 ```
 
 
