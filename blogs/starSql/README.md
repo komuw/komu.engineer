@@ -508,6 +508,31 @@ ORDER BY
     column_name (s);
 ```
 
+
+alternatively
+```sql
+/*
+anantomy of an SQL query.
+*/
+SELECT
+    column_name (s)
+FROM
+    table_name1
+  INNER JOIN table_name2
+    ON condition
+WHERE
+    condition
+GROUP BY
+    column_name (s)
+HAVING
+    condition
+ORDER BY
+    column_name (s)
+LIMIT X;
+```
+
+
+
 ```sql
 /*
 List the counties in which more than 2 inmates aged 50 or older have been executed.
