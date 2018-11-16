@@ -607,14 +607,15 @@ returns:
 ## chapter 4: Execution Hiatuses(JOINS)  
 There have been several extended periods when no executions took place.   
 Our goal is to figure out exactly when they were and research their causes.  
-PostgreSQL JOINS are used to retrieve data from multiple tables. - https://www.techonthenet.com/postgresql/joins.php  
+PostgreSQL JOINS are used to retrieve data from multiple tables. - https://www.techonthenet.com/postgresql/joins.php    
 The 4types of joins we will look at are: 
-1. INNER JOIN (or sometimes called simple join)    
-2. LEFT OUTER JOIN (or sometimes called LEFT JOIN)   
-3. RIGHT OUTER JOIN (or sometimes called RIGHT JOIN)   
-4. FULL OUTER JOIN (or sometimes called FULL JOIN)    
+- INNER JOIN (or sometimes called simple join)    
+- LEFT OUTER JOIN (or sometimes called LEFT JOIN)   
+- RIGHT OUTER JOIN (or sometimes called RIGHT JOIN)   
+- FULL OUTER JOIN (or sometimes called FULL JOIN)     
 
-1. Inner Join
+
+1. inner join  
 ```sql
 /*
 inner join return all rows from multiple tables where the join condition is met
@@ -628,7 +629,7 @@ ON table1.column = table2.column;
 ![inner join image](imgs/inner_join.gif)    
 
 
-2. left outer join 
+2. left outer join    
 ```sql
 /*
 inner join returns the all records from table1 and only those records from table2 that intersect with table1 (ie join condition is met). 
@@ -642,7 +643,7 @@ ON <condition>;
 ![left outer join image](imgs/left_outer_join.gif)  
 
 
-3. right outer join
+3. right outer join    
 ```sql
 /*
 it returns null for the columns in table1 where condition is not met.
@@ -655,7 +656,7 @@ ON table1.column = table2.column;
 ![right outer join image](imgs/right_outer_join.gif)   
 
 
-4. full outer join
+4. full outer join   
 ```sql
 /*
 full outer join returns all rows from the LEFT-hand table and RIGHT-hand table with nulls in place where the join condition is not met.
@@ -665,6 +666,9 @@ FROM table1
 FULL OUTER JOIN table2
 ON table1.column = table2.column;
 ```
-![full outer join image](imgs/full_outer_join.gif)   
+![full outer join image](imgs/full_outer_join.gif)     
 
 
+5. self join   
+This is not really a new join type on it's own, rather it is an application of JOIN on the same table.   
+You can apply any of the above 4 join types to one table.
