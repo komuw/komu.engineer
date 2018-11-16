@@ -703,6 +703,9 @@ End of detour.
 
 
 ```sql
+/*
+find the gaps(hiatuses) in executions.
+*/
 SELECT
     table1.first_name AS t1_fname,
     table2.first_name AS t2_fname,
@@ -718,4 +721,39 @@ ON table1.ex_number = table2.ex_number + 1
 ORDER BY
     day_difference DESC
 LIMIT 12;
+/*
+returns:
+ t1_fname |   t2_fname   | t1_ex_num | t2_ex_num | t1_ex_date | t2_ex_date | day_difference 
+----------+--------------+-----------+-----------+------------+------------+----------------
+ James    | Charlie      |         2 |         1 | 1984-03-14 | 1982-12-07 |            463
+ Donald   | Robert       |        28 |        27 | 1988-11-03 | 1988-01-07 |            301
+*/
+```
+
+Alternatively; 
+```sql
+/*
+find the gaps(hiatuses) in executions.
+*/
+SELECT
+    current.ex_number AS cur_ex_num,
+    previous.ex_number AS prev_ex_num,
+    current.ex_date AS cur_ex_date,
+    previous.ex_date AS prev_ex_date,
+    current.ex_date - previous.ex_date AS day_difference
+FROM
+    executions current
+INNER JOIN executions previous 
+ON current.ex_number = previous.ex_number + 1
+ORDER BY
+    day_difference DESC
+LIMIT 12;
+/*
+returns:
+ cur_ex_num | prev_ex_num | cur_ex_date | prev_ex_date | day_difference 
+------------+-------------+-------------+--------------+----------------
+          2 |           1 | 1984-03-14  | 1982-12-07   |            463
+         28 |          27 | 1988-11-03  | 1988-01-07   |            301
+        406 |         405 | 2008-06-11  | 2007-09-25   |            260
+*/
 ```
