@@ -1,7 +1,9 @@
 #### About  
 
-This are my notes taken while mostly doing; https://selectstarsql.com/frontmatter.html   
-and also; https://sqlbolt.com/
+This are my notes taken while mostly doing;  
+1. https://selectstarsql.com/  and also;   
+2. https://sqlbolt.com/   
+
 
 connect to the db like;   
 ```sh
