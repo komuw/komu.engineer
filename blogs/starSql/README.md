@@ -527,7 +527,7 @@ GROUP BY
 HAVING
     condition
 ORDER BY
-    column_name (s)
+    column_name (s) ASC/DESC
 LIMIT X;
 ```
 
