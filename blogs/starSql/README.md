@@ -2,7 +2,9 @@
 
 This are my notes taken while mostly doing;  
 1. https://selectstarsql.com/  and also;   
-2. https://sqlbolt.com/   
+2. https://sqlbolt.com/    
+3. https://www.techonthenet.com/postgresql/joins.php  
+
 
 
 connect to the db like;   
@@ -601,4 +603,68 @@ returns:
  Tarrant      |     7.4141048824593128
 */
 ```
+
+## chapter 4: Execution Hiatuses(JOINS)  
+There have been several extended periods when no executions took place.   
+Our goal is to figure out exactly when they were and research their causes.  
+PostgreSQL JOINS are used to retrieve data from multiple tables. - https://www.techonthenet.com/postgresql/joins.php  
+The 4types of joins we will look at are: 
+1. INNER JOIN (or sometimes called simple join)    
+2. LEFT OUTER JOIN (or sometimes called LEFT JOIN)   
+3. RIGHT OUTER JOIN (or sometimes called RIGHT JOIN)   
+4. FULL OUTER JOIN (or sometimes called FULL JOIN)    
+
+1. Inner Join
+```sql
+/*
+inner join return all rows from multiple tables where the join condition is met
+*/
+SELECT columns
+FROM table1 
+INNER JOIN table2
+-- ON <condition> where condition is any statement that can evaluate to true/false
+ON table1.column = table2.column;
+```
+![inner join image](imgs/inner_join.gif)    
+
+
+2. left outer join 
+```sql
+/*
+inner join returns the all records from table1 and only those records from table2 that intersect with table1 (ie join condition is met). 
+it returns null for the columns in table2 where condition is not met.
+*/
+SELECT columns
+FROM table1
+LEFT OUTER JOIN table2
+ON <condition>;
+```
+![left outer join image](imgs/left_outer_join.gif)  
+
+
+3. right outer join
+```sql
+/*
+it returns null for the columns in table1 where condition is not met.
+*/
+SELECT columns
+FROM table1
+RIGHT OUTER JOIN table2
+ON table1.column = table2.column;
+```
+![right outer join image](imgs/right_outer_join.gif)   
+
+
+4. full outer join
+```sql
+/*
+full outer join returns all rows from the LEFT-hand table and RIGHT-hand table with nulls in place where the join condition is not met.
+*/
+SELECT columns
+FROM table1
+FULL OUTER JOIN table2
+ON table1.column = table2.column;
+```
+![full outer join image](imgs/full_outer_join.gif)   
+
 
