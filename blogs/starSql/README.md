@@ -3,8 +3,8 @@
 This are my notes taken while mostly doing;  
 1. https://selectstarsql.com/  and also;   
 2. https://sqlbolt.com/    
-3. https://www.techonthenet.com/postgresql/joins.php  
-
+3. https://www.techonthenet.com/postgresql/joins.php    
+4. http://sqlfiddle.com   
 
 
 connect to the db like;   
@@ -606,7 +606,9 @@ returns:
 
 ## chapter 4: Execution Hiatuses(JOINS)  
 There have been several extended periods when no executions took place.   
-Our goal is to figure out exactly when they were and research their causes.  
+Our goal is to figure out exactly when they were and research their causes.   
+
+Let's take a detour:   
 PostgreSQL JOINS are used to retrieve data from multiple tables. - https://www.techonthenet.com/postgresql/joins.php    
 The 4types of joins we will look at are: 
 - INNER JOIN (or sometimes called simple join)    
@@ -696,4 +698,23 @@ returns:
  Ruben      |        66 |     66
  Mikel      |        37 |     37
 */
+```   
+End of detour.    
+
+
+```sql
+SELECT
+    table1.first_name AS t1_fname,
+    table2.first_name AS t2_fname,
+    table1.ex_number AS t1_ex_num,
+    table2.ex_number AS t2_ex_num,
+    table1.ex_date AS t1_ex_date,
+    table2.ex_date AS t2_ex_date,
+    table1.ex_date - table2.ex_date AS day_difference
+FROM
+    executions table1
+INNER JOIN executions table2
+ON table1.ex_number = table2.ex_number+1 
+ORDER BY day_difference DESC
+LIMIT 5;
 ```
