@@ -34,12 +34,14 @@ def log_structure(log_event, trace_id, application_name, environment_name, file_
     }
 
 
-async def emmit_logs(log_event, application_name, environment_name, file_path, log_event_data):
+async def emmit_logs(
+    log_event, trace_id, application_name, environment_name, file_path, log_event_data
+):
     try:
         pipe = os.open(fifo_file, os.O_WRONLY | os.O_NONBLOCK | os.O_ASYNC)
         log = log_structure(
             log_event=log_event,
-            trace_id=str(uuid.uuid4()),
+            trace_id=trace_id,
             application_name=application_name,
             environment_name=environment_name,
             file_path=file_path,
@@ -66,6 +68,7 @@ async def emmit_logs(log_event, application_name, environment_name, file_path, l
 async def web_app():
     await emmit_logs(
         log_event="login",
+        trace_id=str(uuid.uuid4()),
         application_name="WebApp",
         environment_name="production",
         file_path=os.path.realpath(__file__),
@@ -76,6 +79,7 @@ async def web_app():
 async def worker():
     await emmit_logs(
         log_event="process_work",
+        trace_id=str(uuid.uuid4()),
         application_name="WorkerApp",
         environment_name="production",
         file_path=os.path.realpath(__file__),
@@ -84,31 +88,34 @@ async def worker():
 
 
 async def etl():
-    async def job1(etl_id):
+    async def job1(trace_id):
         await emmit_logs(
-            log_event="video_process",
+            log_event="video_process_job1",
+            trace_id=trace_id,
             application_name="ETL_app",
             environment_name="production",
             file_path=os.path.realpath(__file__),
-            log_event_data={"etl_id": etl_id, "jobType": "batch", "job_id": str(uuid.uuid4())},
+            log_event_data={"jobType": "batch", "job_id": str(uuid.uuid4())},
         )
 
-    async def job2(etl_id):
+    async def job2(trace_id):
         await emmit_logs(
-            log_event="video_process",
+            log_event="video_process_job2",
+            trace_id=trace_id,
             application_name="ETL_app",
             environment_name="production",
             file_path=os.path.realpath(__file__),
-            log_event_data={"etl_id": etl_id, "jobType": "batch", "job_id": str(uuid.uuid4())},
+            log_event_data={"jobType": "batch", "job_id": str(uuid.uuid4())},
         )
 
-    async def job3(etl_id):
+    async def job3(trace_id):
         await emmit_logs(
-            log_event="video_process",
+            log_event="video_process_job3",
+            trace_id=trace_id,
             application_name="ETL_app",
             environment_name="production",
             file_path=os.path.realpath(__file__),
-            log_event_data={"etl_id": etl_id, "jobType": "batch", "job_id": str(uuid.uuid4())},
+            log_event_data={"jobType": "batch", "job_id": str(uuid.uuid4())},
         )
         try:
             ourJobs = []
@@ -119,22 +126,22 @@ async def etl():
                 traceback.format_exception(exc_type, exc_value, exc_traceback)
             )
             await emmit_logs(
-                log_event="video_process",
+                log_event="video_process_job3",
+                trace_id=trace_id,
                 application_name="ETL_app",
                 environment_name="production",
                 file_path=os.path.realpath(__file__),
                 log_event_data={
-                    "etl_id": etl_id,
                     "jobType": "batch",
                     "job_id": str(uuid.uuid4()),
                     "error": traceback_string,
                 },
             )
 
-    etl_id = str(uuid.uuid4())
-    await job1(etl_id)
-    await job2(etl_id)
-    await job3(etl_id)
+    trace_id = str(uuid.uuid4())
+    await job1(trace_id)
+    await job2(trace_id)
+    await job3(trace_id)
 
 
 async def run():

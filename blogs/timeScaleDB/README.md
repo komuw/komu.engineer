@@ -126,6 +126,8 @@ SELECT
 FROM
     logs
 WHERE
+    logs.environment_name = 'production'
+    AND
     logs.trace_id = (
         SELECT
             trace_id
