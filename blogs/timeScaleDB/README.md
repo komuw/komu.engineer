@@ -113,3 +113,27 @@ ORDER BY
     time DESC
 LIMIT 5;
 ```
+
+```sql
+/*
+find the path/trace taken by the last request which resulted in an exception occuring.
+*/
+SELECT
+    log_event,
+    trace_id,
+    file_path,
+    data -> 'error' AS error
+FROM
+    logs
+WHERE
+    logs.trace_id = (
+        SELECT
+            trace_id
+        FROM
+            logs
+        WHERE
+            data -> 'error' IS NOT NULL
+        ORDER BY
+            time DESC
+        LIMIT 1);
+```
