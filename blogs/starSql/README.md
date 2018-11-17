@@ -1,10 +1,12 @@
 #### About  
 
 This are my notes taken while mostly doing;  
-1. https://selectstarsql.com/  and also;   
-2. https://sqlbolt.com/    
+1. https://selectstarsql.com  and also;   
+2. https://sqlbolt.com    
 3. https://www.techonthenet.com/postgresql/joins.php    
 4. http://sqlfiddle.com   
+5. https://github.com/darold/pgFormatter     
+6. http://sqlformat.darold.net       
 
 
 connect to the db like;   
