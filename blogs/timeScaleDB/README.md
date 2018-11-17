@@ -96,3 +96,20 @@ SELECT * FROM logs WHERE logs.trace_id = 'bfb95991-ae1b-4f7b-bc11-024dc53b964f';
 SELECT * FROM logs WHERE logs.host_ip = '172.18.0.3';
 /* where 172.18.0.3 is the containers IP. (see: docker network inspect namedpiper_default) */
 ```
+
+```sql
+/*
+find the latest five events where an exception has been raised
+*/
+SELECT
+    log_event,
+    trace_id,
+    data -> 'error' AS error
+FROM
+    logs
+WHERE
+    data -> 'error' IS NOT NULL
+ORDER BY
+    time DESC
+LIMIT 5;
+```
