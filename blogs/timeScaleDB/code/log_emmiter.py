@@ -1,8 +1,10 @@
 import os
+import sys
 import json
 import uuid
 import asyncio
 import datetime
+import traceback
 
 
 import uvloop
@@ -82,13 +84,57 @@ async def worker():
 
 
 async def etl():
-    await emmit_logs(
-        log_event="video_process",
-        application_name="ETL_app",
-        environment_name="production",
-        file_path=os.path.realpath(__file__),
-        log_event_data={"etl_id": str(uuid.uuid4()), "jobType": "batch"},
-    )
+    async def job1(etl_id):
+        await emmit_logs(
+            log_event="video_process",
+            application_name="ETL_app",
+            environment_name="production",
+            file_path=os.path.realpath(__file__),
+            log_event_data={"etl_id": etl_id, "jobType": "batch", "job_id": str(uuid.uuid4())},
+        )
+
+    async def job2(etl_id):
+        await emmit_logs(
+            log_event="video_process",
+            application_name="ETL_app",
+            environment_name="production",
+            file_path=os.path.realpath(__file__),
+            log_event_data={"etl_id": etl_id, "jobType": "batch", "job_id": str(uuid.uuid4())},
+        )
+
+    async def job3(etl_id):
+        await emmit_logs(
+            log_event="video_process",
+            application_name="ETL_app",
+            environment_name="production",
+            file_path=os.path.realpath(__file__),
+            log_event_data={"etl_id": etl_id, "jobType": "batch", "job_id": str(uuid.uuid4())},
+        )
+        try:
+            ourJobs = []
+            oneJob = ourJobs[5]
+        except Exception as e:
+            exc_type, exc_value, exc_traceback = sys.exc_info()
+            traceback_string = "".join(
+                traceback.format_exception(exc_type, exc_value, exc_traceback)
+            )
+            await emmit_logs(
+                log_event="video_process",
+                application_name="ETL_app",
+                environment_name="production",
+                file_path=os.path.realpath(__file__),
+                log_event_data={
+                    "etl_id": etl_id,
+                    "jobType": "batch",
+                    "job_id": str(uuid.uuid4()),
+                    "error": traceback_string,
+                },
+            )
+
+    etl_id = str(uuid.uuid4())
+    await job1(etl_id)
+    await job2(etl_id)
+    await job3(etl_id)
 
 
 async def run():
