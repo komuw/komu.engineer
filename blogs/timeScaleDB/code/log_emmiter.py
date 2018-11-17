@@ -2,6 +2,7 @@ import os
 import sys
 import json
 import uuid
+import random
 import asyncio
 import datetime
 import traceback
@@ -72,7 +73,13 @@ async def web_app():
         application_name="WebApp",
         environment_name="production",
         file_path=os.path.realpath(__file__),
-        log_event_data={"user": "Shawn Corey Carter", "age": 48, "email": "someemail@email.com"},
+        log_event_data={
+            "user": "Shawn Corey Carter",
+            "age": 48,
+            "email": "someemail@email.com",
+            "status_code": random.choice([200, 202, 307, 400, 404, 500, 504]),
+            "response_time": random.randint(1, 110),
+        },
     )
 
 

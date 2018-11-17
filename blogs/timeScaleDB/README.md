@@ -139,3 +139,50 @@ WHERE
             time DESC
         LIMIT 1);
 ```
+
+
+
+```sql
+/*
+select all instances in which the web application has returned a http 5XX
+*/
+SELECT
+    log_event,
+    trace_id,
+    data -> 'status_code' AS status_code
+FROM
+    logs
+WHERE
+    logs.environment_name = 'production'
+    AND
+    logs.application_name = 'WebApp'
+    AND
+    data -> 'status_code' IN ('500', '504');
+```
+
+
+```sql
+/*
+find average, 75th and 99th percentile response time(in milliseconds) of the web application
+*/
+SELECT
+    percentile_disc(0.5) WITHIN GROUP (ORDER BY data -> 'response_time') AS average,
+    percentile_disc(0.75) WITHIN GROUP (ORDER BY data -> 'response_time') AS seven_five_percentile,
+    percentile_disc(0.99) WITHIN GROUP (ORDER BY data -> 'response_time') AS nine_nine_percentile
+FROM
+    logs
+WHERE
+    logs.environment_name = 'production'
+    AND
+    logs.application_name = 'WebApp'
+    AND
+    data -> 'status_code' IS NOT NULL
+    AND
+    data -> 'response_time' IS NOT NULL;
+/*
+returns:
+ average | seven_five_percentile | nine_nine_percentile
+---------+-----------------------+----------------------
+ 56      | 82                    | 110
+*/
+```
