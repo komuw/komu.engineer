@@ -225,7 +225,96 @@ create_hypertable
                 timescaleDB.
 
 
+                <pre><code class="python">
+import os
+import json
+import uuid
+import errno
+import random
+import asyncio
+import datetime
 
+import get_ip
+
+
+def makeFifo(fifo_directory="/tmp/namedPipes", fifo_file="komusNamedPipe"):
+    fifo_file = os.path.join(fifo_directory, fifo_file)
+    try:
+        os.mkdir(fifo_directory, mode=0o777)
+    except OSError as e:
+        if e.errno == 17:
+            pass
+        else:
+            raise e
+    try:
+        os.mkfifo(fifo_file, mode=0o777)
+    except OSError as e:
+        if e.errno != errno.EEXIST:
+            raise e
+    return fifo_file
+
+
+def log_structure(log_event, trace_id, application_name, environment_name, file_path, data):
+    now = datetime.datetime.now(datetime.timezone.utc)
+    return {
+        "log_event": log_event,
+        "trace_id": trace_id,
+        "application_name": application_name,
+        "environment_name": environment_name,
+        "file_path": file_path,
+        "data": data,
+        "time": str(now),
+        "host_ip": get_ip(),
+    }
+
+
+async def emmit_logs(
+    log_event, trace_id, application_name, environment_name, file_path, log_event_data
+):
+    try:
+        pipe = os.open(makeFifo(), os.O_WRONLY | os.O_NONBLOCK | os.O_ASYNC)
+        log = log_structure(
+            log_event=log_event,
+            trace_id=trace_id,
+            application_name=application_name,
+            environment_name=environment_name,
+            file_path=file_path,
+            data=log_event_data,
+        )
+        # we use newline to demarcate where one log event ends.
+        write_data = json.dumps(log) + "\n"
+        write_data = write_data.encode()
+        os.write(pipe, write_data)
+        os.close(pipe)
+    except OSError as e:
+        if e.errno == 6:
+            pass
+        else:
+            pass
+    finally:
+        await asyncio.sleep(1)
+
+async def web_app(app_name):
+    while True:
+        await emmit_logs(
+            log_event="login",
+            trace_id=str(uuid.uuid4()),
+            application_name=app_name,
+            environment_name="production",
+            file_path=os.path.realpath(__file__),
+            log_event_data={
+                "user": "Shawn Corey Carter",
+                "age": 48,
+                "email": "someemail@email.com",
+                "status_code": random.choice([200, 202, 307, 400, 404, 500, 504]),
+                "response_time": random.randint(1, 110),
+            },
+        )
+
+loop = asyncio.get_event_loop()
+loop.run_until_complete(web_app(app_name="web_app"))
+loop.close()
+            </code></pre>
 
 
 
