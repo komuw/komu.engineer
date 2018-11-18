@@ -126,8 +126,8 @@ async def etl():
         )
         try:
             ourJobs = []
-            oneJob = ourJobs[5]
-        except Exception as e:
+            ourJobs[5]
+        except Exception:
             exc_type, exc_value, exc_traceback = sys.exc_info()
             traceback_string = "".join(
                 traceback.format_exception(exc_type, exc_value, exc_traceback)
