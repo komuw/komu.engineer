@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Komu W - How to store application logs in timescaleDB/postgres.</title>
+    <meta name="description" content="How to store application logs in timescaleDB/postgres." />
+    <meta property="og:url" content="https://www.komu.engineer/blog" />
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ADD FAVICON -->
+
+    <link rel="stylesheet" href="../../site.css">
+
+    <!-- Get highlightjs by going to https://highlightjs.org/download/, select the languages you want and download. -->
+    <link rel="stylesheet" href="../../highlightjs/styles/default.css">
+    <script src="../../highlightjs/highlight.pack.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <a href="https://www.komu.engineer">Home</a>&nbsp;&nbsp;
+            <a href="https://www.komu.engineer/about">About Me</a>&nbsp;&nbsp;
+            <a href="https://www.komu.engineer/blog">Blog</a>&nbsp;&nbsp;
+        </div>
+        <div class="left-sidebar">
+            .
+        </div>
+        <div class="right-sidebar">
+            .
+        </div>
+
+        <div class="main">
+            <p>
+                <strong>How to store application logs in timescaleDB/postgres.(TODO: add publication date)</strong>
+                </br>
+                </br>
+
+                <strong>Intro</strong>
+                </br>
+                If the title alone has already turned you off, I understand. It's almost unheard of to store
+                application logs in a structured datastore.</br>
+                Whenever people talk about logs and their logging pipeline, it usually involves <a target="_blank" rel="noopener"
+                    href="https://www.elastic.co/elk-stack">ELK(Elasticsearch)</a>, MongoDB or such other NoSQL
+                databases.</br></br>
+
+                And no such talk is complete without a tale of how people have to stay up at night feeding their
+                Elasticsearch monstrous JVM with the blood of unblemished year-old sheep(or whatever JVM's feed on).</br></br>
+
+                And it does make a lot of sense to store logs in an unstructured database, because after all, logs are
+                unstructured by nature. Are they?
+
+
+                </br></br>
+                <strong>Opinion</strong>
+                </br>
+                I hold a differing opinion, I think if you look at logs hard enough; a structure starts to emerge.</br>
+                In this section, I'll lay out my opinion about logs and logging in general.</br>
+                This are my opinions and I hold no brief for anybody. I'm not going to try and convince you to adopt my
+                worldview, but atleast to consider it.</br></br>
+
+                <strong>opinion 1:</strong> logs are actually structured.</br>
+                If you look at an <a target="_blank" rel="noopener" href="https://cdn.haproxy.com/wp-content/uploads/2017/07/aloha_load_balancer_memo_log.pdf ">example
+                    HTTP log</a> for the popular haproxy tcp/http load balancer:
+
+                <pre><code class="bash">
+Mar 9 15:08:05 LB1 local0.info haproxy[21843]: 10.0.0.1:1028 [09/Mar/2012:15:08:05.179] FT BK/SRV 0/0/1/8/9 304 12 - - --VN 4/4/0/1/0 0/0 ”GET / HTTP/1.1”
+                </code></pre>
+                You can see a lot of structure in it, there's; <i>timestamp</i>, <i>client IP address</i>, <i>backend
+                    name</i>, <i>response time</i>, <i>status code</i> etc</br>
+                And all this things will be available in every log event, that's a lot of structure.</br></br>
+
+
+                <strong>opinion 2:</strong>You should annotate your logs with more structured information to make them
+                much more useful</br>
+                Take the haproxy log above, it would be much more useful if we added things like;
+                <ul>
+                    <li>the environment the application is running in(production/test/dev/staging etc)</li>
+                    <li>the IP address of the server that the app is running in</li>
+                    <li>the name of the service</li>
+                    <li>etc</li>
+                </ul>
+
+                <strong>opinion 3:</strong>logs should be primarily used to help debug issues in production.</br>
+
+                <strong>opinion 4:</strong>logs should only be persisted for a short period of time(~7days).</br>
+                This is a corollary of opinion 3 above. If we buy the argument that logs are for debugging purposes,
+                then we can also argue that if an issue occurs in production, you ought to debug it asap. Which means,
+                you only need to store logs
+                for a max of 7days.</br>
+                What you do with the logs after 7days(7 is just a rough estimate) is upto you; you can send them to
+                /dev/null, or AWS s3 or some
+                other cold storage but they should not be lying around in your
+                primary log store.
+
+
+
+
+            </p>
+
+        </div>
+    </div>
+</body>
