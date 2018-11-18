@@ -144,7 +144,7 @@ time                          | application_name | environment_name |     log_ev
                     <li>your average SQL database is relatively easy to operate</li>
                 </ul>
 
-                </br></br>
+                </br>
                 <strong>timescaleDB/postgres</strong>
                 </br>
                 PostgreSQL is a popular SQL datatabse whereas TimescaleDB, despite the name, is actually an open-source
@@ -196,9 +196,22 @@ create_table_indices
 create_hypertable
                 </code></pre>
 
+                That creates the timescaleDB exension in postgres, creates a table, indices and a timescaledb <a target="_blank"
+                    rel="noopener" href="https://www.timescale.com/how-it-works"> hypertable </a>
 
-
-
+                </br></br>
+                <strong>Our application</strong>
+                </br>
+                In our application, we want our log events to have a few mandatory items; <i>time</i>, <i>application_name</i>,
+                <i>environment_name</i>, <i>log_event</i>, <i>trace_id</i>, <i>host_ip</i> etc</br>
+                This will allow our queries to be more meaningful, we can ask questions like;
+                <ul>
+                    <li>from which server are the majority of errors emanating?</li>
+                    <li>what was the path/trace of execution for the request with <i>trace_id</i> XYZ?</li>
+                    <li>in which module are the errors been raised from?</li>
+                    <li>is this an issue that only affects our canary servers or does it also affect production?</li>
+                    <li>etc</li>
+                </ul>
 
 
             </p>
