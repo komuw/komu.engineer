@@ -71,18 +71,18 @@
                 worldview, but atleast to consider it.</br></br>
 
                 <i>opinion 1:</i> logs are actually structured.</br>
-                If you look at an <a target="_blank" rel="noopener" href="https://cdn.haproxy.com/wp-content/uploads/2017/07/aloha_load_balancer_memo_log.pdf ">example
+                If you look at an <a target="_blank" rel="noopener" href="https://cdn.haproxy.com/wp-content/uploads/2017/07/aloha_load_balancer_memo_log.pdf">example
                     HTTP log</a> for the popular haproxy tcp/http load balancer:
 
                 <pre><code class="bash">
-Mar 9 15:08:05 LB1 local0.info haproxy[21843]: 10.0.0.1:1028 [09/Mar/2012:15:08:05.179] FT BK/SRV 0/0/1/8/9 304 12 - - --VN 4/4/0/1/0 0/0 ”GET / HTTP/1.1”
+Mar 9 15:08:05 LB1 local0.info haproxy[21843]: 10.0.0.1:1028 [09/Mar/2012:15:08:05.179] FT BK/SRV 0/0/1/8/9 304 12 - - ”GET / HTTP/1.1”
                 </code></pre>
                 You can see a lot of structure in it, there's; <i>timestamp</i>, <i>client IP address</i>, <i>backend
                     name</i>, <i>response time</i>, <i>status code</i> etc</br>
                 And all this things will be available in every log event, that's a lot of structure.</br></br>
 
 
-                <i>opinion 2:</i>You should annotate your logs with more structured information to make them
+                <i>opinion 2:</i> You should annotate your logs with more structured information to make them
                 much more useful</br>
                 Take the haproxy log above, it would be much more useful if we added things like;
                 <ul>
@@ -92,9 +92,9 @@ Mar 9 15:08:05 LB1 local0.info haproxy[21843]: 10.0.0.1:1028 [09/Mar/2012:15:08:
                     <li>etc</li>
                 </ul>
 
-                <i>opinion 3:</i>logs should be primarily used to help debug issues in production.</br></br>
+                <i>opinion 3:</i> logs should be primarily used to help debug issues in production.</br></br>
 
-                <i>opinion 4:</i>logs should only be persisted for a short period of time(~7days).</br>
+                <i>opinion 4:</i> logs should only be persisted for a short period of time(~7days).</br>
                 This is a corollary of opinion 3 above. If we buy the argument that logs are for debugging purposes,
                 then we can also argue that if an issue occurs in production, you ought to debug it asap. Which means,
                 you only need to store logs
@@ -103,6 +103,8 @@ Mar 9 15:08:05 LB1 local0.info haproxy[21843]: 10.0.0.1:1028 [09/Mar/2012:15:08:
                 /dev/null, or AWS s3 or some
                 other cold storage but they should not be lying around in your
                 primary log store.</br></br>
+
+                <i>opinion 5:</i> you should not lose logs, but it should not be a big deal if you do.</br></br>
 
                 When we consider all that, we see that an SQL database is not that bad of an idea as a medium for
                 storing logs.</br>
@@ -114,9 +116,16 @@ Mar 9 15:08:05 LB1 local0.info haproxy[21843]: 10.0.0.1:1028 [09/Mar/2012:15:08:
                     </li>
                     <li>access to all the domain knowledge in your SQL database ecosystem(stackoverflow/google etc)</li>
                     <li>access to all the tools/extensions in your SQL database ecosystem</li>
+                    <li>your average SQL database is relatively easy to operate</li>
                 </ul>
 
-
+                </br></br>
+                <strong>timescaleDB/postgres</strong>
+                </br>
+                PostgreSQL is a popular SQL datatabse whereas TimescaleDB, despite the name, is actually an open-source
+                postgres extension that <a target="_blank" rel="noopener" href="https://blog.timescale.com/timescaledb-vs-6a696248104e">enhances</a>
+                postgres for time-series data.</br></br>
+                And whereas logs are not time-series data, if you squint hard enough
 
 
             </p>
