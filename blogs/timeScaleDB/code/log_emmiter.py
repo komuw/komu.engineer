@@ -66,11 +66,11 @@ async def emmit_logs(
         await asyncio.sleep(1)
 
 
-async def web_app():
+async def web_app(app_name):
     await emmit_logs(
         log_event="login",
         trace_id=str(uuid.uuid4()),
-        application_name="WebApp",
+        application_name=app_name,
         environment_name="production",
         file_path=os.path.realpath(__file__),
         log_event_data={
@@ -83,23 +83,23 @@ async def web_app():
     )
 
 
-async def worker():
+async def worker(app_name):
     await emmit_logs(
         log_event="process_work",
         trace_id=str(uuid.uuid4()),
-        application_name="WorkerApp",
+        application_name=app_name,
         environment_name="production",
         file_path=os.path.realpath(__file__),
         log_event_data={"worker_id": str(uuid.uuid4()), "datacenter": "us-west"},
     )
 
 
-async def etl():
+async def etl(app_name):
     async def job1(trace_id):
         await emmit_logs(
             log_event="video_process_job1",
             trace_id=trace_id,
-            application_name="ETL_app",
+            application_name=app_name,
             environment_name="production",
             file_path=os.path.realpath(__file__),
             log_event_data={"jobType": "batch", "job_id": str(uuid.uuid4())},
@@ -109,7 +109,7 @@ async def etl():
         await emmit_logs(
             log_event="video_process_job2",
             trace_id=trace_id,
-            application_name="ETL_app",
+            application_name=app_name,
             environment_name="production",
             file_path=os.path.realpath(__file__),
             log_event_data={"jobType": "batch", "job_id": str(uuid.uuid4())},
@@ -119,7 +119,7 @@ async def etl():
         await emmit_logs(
             log_event="video_process_job3",
             trace_id=trace_id,
-            application_name="ETL_app",
+            application_name=app_name,
             environment_name="production",
             file_path=os.path.realpath(__file__),
             log_event_data={"jobType": "batch", "job_id": str(uuid.uuid4())},
@@ -135,7 +135,7 @@ async def etl():
             await emmit_logs(
                 log_event="video_process_job3",
                 trace_id=trace_id,
-                application_name="ETL_app",
+                application_name=app_name,
                 environment_name="production",
                 file_path=os.path.realpath(__file__),
                 log_event_data={
@@ -152,17 +152,23 @@ async def etl():
 
 
 async def run():
+    app_name = os.environ['app_name']
     while True:
-        await web_app()
-        await worker()
-        await etl()
+        if app_name == "web_app":
+            await web_app(app_name)
+        elif app_name=="worker_app":
+            await worker(app_name)
+        elif app_name=="etl_app":
+            await etl(app_name)
+        else:
+            raise ValueError("app_name: {0} is not recognised".format(app_name))
 
 
 asyncio.set_event_loop_policy(uvloop.EventLoopPolicy())
 loop = asyncio.get_event_loop()
 
 
-tasks = asyncio.gather(run(), run(), run(), run(), loop=loop)
+tasks = asyncio.gather(run(), loop=loop)
 loop.run_until_complete(tasks)
 
 

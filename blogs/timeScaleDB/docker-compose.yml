@@ -1,6 +1,6 @@
 version: '3'
 services:
-  log_emitter:
+  web_app:
     build:
       context: .
     volumes:
@@ -9,8 +9,9 @@ services:
     command: python /usr/src/app/code/log_emmiter.py
     environment:
       IN_DOCKER: yep
+      app_name: web_app
 
-  log_emitter_two:
+  worker_app:
     build:
       context: .
     volumes:
@@ -19,6 +20,18 @@ services:
     command: python /usr/src/app/code/log_emmiter.py
     environment:
       IN_DOCKER: yep
+      app_name: worker_app
+  
+  etl_app:
+    build:
+      context: .
+    volumes:
+      - named-pipe-volume:/tmp/namedPipes
+      - ./:/usr/src/app
+    command: python /usr/src/app/code/log_emmiter.py
+    environment:
+      IN_DOCKER: yep
+      app_name: etl_app
 
   # connect the log_emitter container's /tmp/namedPipes dir
   # into log_collector container's /tmp/cooler dir
