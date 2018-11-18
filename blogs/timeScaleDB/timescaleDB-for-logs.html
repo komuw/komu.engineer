@@ -149,7 +149,50 @@ time                          | application_name | environment_name |     log_ev
                 postgres extension that enhances postgres for time-series data.</br>
                 TimescaleDB <a target="_blank" rel="noopener" href="https://blog.timescale.com/timescaledb-vs-6a696248104e">optimizes
                     postgres for working with time-series data.</a></br>
-                In this blogpost, we are going to use timescaleDB extension for storing logs.
+                In this blogpost, we are going to use timescaleDB extension for storing logs.</br></br>
+
+                You can go through the <a target="_blank" rel="noopener" href="https://docs.timescale.com">TimescaleDB
+                    documentation to learn how to set it up.</a></br>
+                But assuming you already have PostgreSQL installed, the following bash script should set you up;
+                <pre><code class="bash">
+#!/usr/bin/env bash
+
+create_extension() {
+    psql -U "${POSTGRES_USER}" "${POSTGRES_DB}" -c "CREATE EXTENSION IF NOT EXISTS timescaledb CASCADE;"   
+}
+
+create_table() {
+    psql -U "${POSTGRES_USER}" "${POSTGRES_DB}" -c "CREATE TABLE logs (
+    time                TIMESTAMPTZ       NOT NULL,
+    application_name    TEXT              NOT NULL,
+    environment_name    TEXT              NOT NULL,
+    log_event           TEXT              NOT NULL,
+    trace_id            TEXT              NOT NULL,
+    file_path           TEXT              NOT NULL,
+    host_ip             TEXT              NOT NULL,
+    data                JSONB             NULL,
+    PRIMARY KEY(time, trace_id)
+    );" 
+}
+
+create_table_indices() {
+    psql -U "${POSTGRES_USER}" "${POSTGRES_DB}" -c "CREATE INDEX idxgin ON logs USING GIN (data);"
+    psql -U "${POSTGRES_USER}" "${POSTGRES_DB}" -c "CREATE INDEX ON logs (log_event, trace_id, time DESC) WHERE log_event IS NOT NULL AND trace_id IS NOT NULL;"
+}
+
+create_hypertable() {
+    psql -U "${POSTGRES_USER}" "${POSTGRES_DB}" -c "SELECT create_hypertable('logs', 'time');"
+}
+
+# 1. create timescaledb extension
+# 2. create database table
+# 3. create indices
+# 4. create  hypertable
+create_extension
+create_table
+create_table_indices
+create_hypertable
+                </code></pre>
 
 
 
