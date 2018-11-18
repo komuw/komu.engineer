@@ -145,7 +145,7 @@ FROM
 WHERE
     logs.environment_name = 'production'
     AND
-    logs.application_name = 'WebApp'
+    logs.application_name = 'web_app'
     AND
     data -> 'status_code' IN ('500', '504');
 ```
@@ -164,7 +164,7 @@ FROM
 WHERE
     logs.environment_name = 'production'
     AND
-    logs.application_name = 'WebApp'
+    logs.application_name = 'web_app'
     AND
     data -> 'status_code' IS NOT NULL
     AND
