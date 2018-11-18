@@ -81,4 +81,4 @@ async def schedule_log_sending():
                 await send_log_to_remote_storage(logs=batch_logs)
                 batchedLogs.batch_logs = []
 
-        await asyncio.sleep(batchedLogs.send_logs_every)
+        await asyncio.sleep(batchedLogs.send_logs_every())
