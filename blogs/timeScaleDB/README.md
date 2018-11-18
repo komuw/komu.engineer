@@ -1,14 +1,4 @@
-In one terminal run:    
-```bash
-python code/log_collector.py
-```     
-
-In another terminal run:    
-```bash
-python code/log_emmiter.py
-```    
-
-or just:
+run:
 ```sh
 docker-compose up
 ```    
@@ -17,8 +7,8 @@ then watch as collector collects logs, ie:
 docker-compose logs -f log_collector
 ```    
 
-The `log_emitter` container runs on a python2.7 container whereas     
-the `log_collector` container runs on a python3.7 container    
+The `log_emitter` container is your application that writes/emits logs to a named linux Pipe.         
+the `log_collector` is an agent that reads logs from the said named linux pipe and sends them to a `timescaleDB/postgres` container     
 
 
 ##### Linux named pipe/FIFO:   
