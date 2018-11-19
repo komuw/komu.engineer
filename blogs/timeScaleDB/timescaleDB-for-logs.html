@@ -474,7 +474,7 @@ async def schedule_log_sending():
                 await send_log_to_remote_storage(logs=bufferedLogs.buf)
                 bufferedLogs.buf = []
         await asyncio.sleep(bufferedLogs.send_logs_every())    
-                </code></pre></br>
+                </code></pre>
 
 
                 </br></br>
