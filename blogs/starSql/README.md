@@ -6,7 +6,8 @@ This are my notes taken while mostly doing;
 3. https://www.techonthenet.com/postgresql/joins.php    
 4. http://sqlfiddle.com   
 5. https://github.com/darold/pgFormatter     
-6. http://sqlformat.darold.net       
+6. http://sqlformat.darold.net     
+7. https://modern-sql.com/video     
 
 
 connect to the db like;   
@@ -812,3 +813,246 @@ If an order is specified by the ORDER BY clause, the rows are then sorted by the
 Since all the expressions in the SELECT part of the query have been computed, you **CAN** reference **aliases** in this clause.   
 8. `LIMIT / OFFSET`   
 Finally, the rows that fall outside the range specified by the LIMIT and OFFSET are discarded, leaving the final set of rows to be returned from the query.    
+
+
+
+## chapter 6: WITH BLOCK(common table expression/CTE)    
+It solves(among others) the problem of nested queries - https://modern-sql.com/video(starting at the 3:30 mark)    
+Lets say we wanted to answer the question:     
+`Find all counties that have executed people who are older than 60yrs AND
+the name of the county ends in 'on'`      
+
+The first half of the query can be answered by the query:   
+```sql
+/*
+select all counties which have had
+executions of people older than 60
+*/
+SELECT DISTINCT
+    county
+FROM
+    executions
+WHERE
+    ex_age >60;
+/*
+returns 9 counties
+   county
+-------------
+ Harris
+ Lee
+ Tarrant
+*/
+```
+
+However to answe the full question, we may have to use nested queries in the FROM block:     
+```sql
+/*
+select all counties which have had executions
+of people older than 60 and their names ends in 'on'
+*/
+SELECT
+    *
+FROM (
+    SELECT DISTINCT
+        county
+    FROM
+        executions
+    WHERE
+        ex_age > 60
+    ) AS counties_killing_seniors
+WHERE
+    county LIKE '%on';
+/*
+returns 2 counties
+  county
+-----------
+ Grayson
+ Henderson
+*/
+```     
+
+
+This can also be solved using `WITH` clause;    
+```sql
+WITH query_name (column_name1, ...) AS
+     (SELECT ...),
+     another_query_name (some_column, ...) AS
+     (SELECT ...)
+     
+SELECT ...
+```
+This query (and subqueries it contains) can refer to the just defined query name in their FROM clause. - https://modern-sql.com/feature/with      
+ie we can refer to `query_name` inside the FROM of the main SELECT or inside the subqueries themselves.    
+**NB:** WITH queries are **ONLY** visible in the SELECT they precede.     
+
+
+So, our previous query re-implemented using `WITH`:   
+```sql
+/*
+select all counties which have had executions
+of people older than 60 and their names ends in 'on'
+*/
+WITH counties_killing_seniors AS 
+(
+    SELECT DISTINCT
+        county
+    FROM
+        executions
+    WHERE
+        ex_age > 60
+)
+SELECT
+    *
+FROM
+    counties_killing_seniors
+WHERE
+    county LIKE '%on';
+/*
+returns:
+  county
+-----------
+ Grayson
+ Henderson
+(2 rows)
+*/
+```
+
+So, which of the two is faster?    
+Let's benchmark:   
+```sql
+SET statement_timeout TO '10s';
+
+DO $$
+DECLARE
+  v_ts TIMESTAMP;
+  v_repeat CONSTANT INT := 10000;
+  rec RECORD;
+BEGIN
+ 
+  -- Repeat the whole benchmark several times to avoid warmup penalty
+  FOR i IN 1..5 LOOP
+    v_ts := clock_timestamp();
+ 
+    FOR i IN 1..v_repeat LOOP
+      FOR rec IN (
+        SELECT
+            *
+        FROM (
+            SELECT DISTINCT
+                county
+            FROM
+                executions
+            WHERE
+                ex_age > 60
+            ) AS counties_killing_seniors
+        WHERE
+            county LIKE '%on'
+      ) LOOP
+        NULL;
+      END LOOP;
+    END LOOP;
+ 
+    RAISE INFO 'Run %, subquery statement: %', i, (clock_timestamp() - v_ts); 
+    v_ts := clock_timestamp();
+ 
+    FOR i IN 1..v_repeat LOOP
+      FOR rec IN (
+        WITH counties_killing_seniors AS 
+        (
+            SELECT DISTINCT
+                county
+            FROM
+                executions
+            WHERE
+                ex_age > 60
+        )
+        SELECT
+            *
+        FROM
+            counties_killing_seniors
+        WHERE
+            county LIKE '%on'
+      ) LOOP
+        NULL;
+      END LOOP;
+    END LOOP;
+ 
+    RAISE INFO 'Run %, with clause statement: %', i, (clock_timestamp() - v_ts); 
+  END LOOP;
+END$$;
+/*
+returns:
+INFO:  Run 1, subquery statement: 00:00:00.569954
+INFO:  Run 1, with clause statement: 00:00:00.555335
+INFO:  Run 2, subquery statement: 00:00:00.560441
+INFO:  Run 2, with clause statement: 00:00:00.545877
+INFO:  Run 3, subquery statement: 00:00:00.55699
+INFO:  Run 3, with clause statement: 00:00:00.585253
+INFO:  Run 4, subquery statement: 00:00:00.608103
+INFO:  Run 4, with clause statement: 00:00:00.568079
+INFO:  Run 5, subquery statement: 00:00:00.555735
+INFO:  Run 5, with clause statement: 00:00:00.557055
+*/
+```
+Both of them are on par.    
+You should benchmark to see if one is slower than another by a huge margin.    
+It has been suggested that in some versions of postgres, `WITH`/CTE might be slow; see: https://blog.2ndquadrant.com/postgresql-ctes-are-optimization-fences/    
+benchmark!    
+
+## chapter 7: postgres tidbits   
+1. You should set an application_name for your queries.    
+By explicitly marking each connection you open with `application_name`, you’ll be able to track what your application is doing at a glance:   
+```sql
+SET application_name TO 'web.production';
+```
+```sql
+SELECT application_name, COUNT(*) FROM pg_stat_activity GROUP BY application_name;
+/*
+returns:
+ application_name | count
+------------------+-------
+                  |     5
+ web.production   |     1
+*/
+```    
+
+2. You should set a statement timeout.   
+Long running queries can have an impact on your database performance because they may hold locks or over-consume resources.    
+Postgres allows you to set a timeout per connection that will abort any queries exceeding the specified value.   
+```sql
+SET statement_timeout TO '10s';
+```
+
+3. You should track the sources of your queries.    
+Being able to determine which part of your code is executing a query makes optimization easier, and easier to track down.      
+
+**NB:** The `pg_stat_statements` extension needs to be installed first.     
+You can check if it is installed via(the `installed_version` column should not be null if installed):  
+```sql
+SELECT * 
+FROM
+    pg_available_extensions 
+WHERE 
+    name LIKE 'pg%';
+```
+
+Then,  
+```sql
+SELECT first_name, county FROM executions; -- /usr/app/views.py:47
+```
+and checking stats:
+```sql
+SELECT
+    (total_time/sum(total_time) OVER()) * 100 AS exec_time, calls, query
+FROM
+    pg_stat_statements
+ORDER BY
+    total_time DESC LIMIT 10;
+/*
+returns:
+exec_time | 12.2119460729825
+calls     | 7257
+query     | SELECT first_name, county FROM executions; -- /usr/app/views.py:47
+*/
+```
+
