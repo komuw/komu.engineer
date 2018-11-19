@@ -176,3 +176,39 @@ returns:
  56      | 82                    | 110
 */
 ```
+
+```sql
+/*
+execution counts by/per county
+
+In the SELECT block, <expression> AS <alias> 
+provides an alias that can be referred to later in the query. 
+*/
+SELECT
+    application_version,
+    COUNT(data -> 'error') AS error_count
+FROM
+    logs
+WHERE
+    data -> 'error' IS NOT NULL
+GROUP BY
+    application_version
+ORDER BY
+    error_count DESC;
+    
+```
+
+
+```sql
+SELECT
+    log_event,
+    trace_id,
+    host_ip,
+    data -> 'status_code' AS status_code
+FROM
+    logs
+WHERE
+    logs.environment_name = 'production'
+    AND logs.application_name = 'web_app'
+    AND data -> 'status_code' IN ('500', '504');
+```

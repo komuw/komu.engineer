@@ -543,6 +543,7 @@ video_process_job3 | f552320e | /usr/src/app/code/log_emmiter.py | "Traceback (m
 SELECT
     log_event,
     trace_id,
+    host_ip,
     data -> 'status_code' AS status_code
 FROM
     logs
@@ -553,15 +554,19 @@ WHERE
                 </code></pre>
 
                 <pre><code class="bash">
-log_event |               trace_id               | status_code
-----------+--------------------------------------+-------------
-login     | e45c19b7-8af3-4bcc-a7f1-dbd374631d04 | 500
-login     | 3fa2f0c1-983c-4034-aa5e-ffadb93fe0e0 | 504
-login     | 407c3b57-47c1-47af-bdca-07edec6c68f0 | 500
-login     | 1efeca8b-2a73-4364-9eaf-0fb675180313 | 500
-login     | ad4c0a61-5d0e-4c29-881c-6266fd422d8b | 500
+log_event | trace_id |  host_ip   | status_code
+----------+----------+------------+-------------
+login     | aa9951dc | 172.24.0.4 | 504
+login     | 63898b0d | 172.24.0.4 | 500
+login     | 6154aa3e | 172.24.0.4 | 504
+login     | 053a9820 | 172.24.0.4 | 504
+login     | 29e6644c | 172.24.0.4 | 504
                 </code></pre>
-                All those instances were login events, maybe we should go and have a look at our login code.</br></br>
+                All those instances were login events, maybe we should go and have a look at our login code.</br>
+                But why are all of them emanating from the same server with IP adress <i>172.24.0.4</i>? Maybe the bug
+                is a combination of the login code and
+                that paricular server and not necessarily a fault of the login code alone.
+                </br></br>
 
 
                 4. <i>find the average, 75th and 99th percentile response time(in milliseconds) of the web application
@@ -593,11 +598,30 @@ average | seven_five_percentile | nine_nine_percentile
                 </code></pre></br>
 
                 5. <i>which application version introduced the most errors/exceptions?</i>
+                <pre><code class="sql">
+SELECT
+    application_version,
+    COUNT(data -> 'error') AS error_count
+FROM
+    logs
+WHERE
+    data -> 'error' IS NOT NULL
+GROUP BY
+    application_version
+ORDER BY
+    error_count DESC;
+            </code></pre>
 
-
-
-
-
+                <pre><code class="bash">
+application_version | error_count
+--------------------+-------------
+v3.5.0              |           5
+v3.4.0              |           1
+v2.3.0              |           1
+v1.7.0              |           1
+            </code></pre>
+                Maybe we should roll-back the deployment of version v3.5.0 as we figure out why it has introduced so
+                many regressions.</br>
 
 
 
