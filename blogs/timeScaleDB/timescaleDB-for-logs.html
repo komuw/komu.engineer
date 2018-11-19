@@ -481,9 +481,9 @@ async def schedule_log_sending():
                 <strong>Querying</strong>
                 </br>
                 To badly misquote <a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=vE-d3-3hWVQ">The
-                    O'Jays</a>, <i>now that we have logs in our database, what are we going to do with it</i>?</br>
+                    O'Jays</a>, <i>now that we have logs in our database, what are we going to do with it</i>?</br></br>
                 Let's run some queries:</br>
-                1. <i>find the latest five events where an exception has been raised</i>
+                1. <i>find the latest five events where an exception has been raised?</i>
                 <pre><code class="sql">
 SELECT
     log_event,
@@ -506,7 +506,7 @@ video_process_job3 | "Traceback (most recent call last):\n  File \"/usr/src/app/
 video_process_job3 | "Traceback (most recent call last):\n  File \"/usr/src/app/code/log_emmiter.py\", line 133, in job3\n    ourJobs[5]\nIndexError: list index out of range\n"
                 </code></pre></br>
 
-                2. <i>find the path/trace taken by the last request which resulted in an exception occuring.</i>
+                2. <i>find the path/trace taken by the last request which resulted in an exception occuring?</i>
                 <pre><code class="sql">
 SELECT
     log_event,
@@ -538,7 +538,7 @@ video_process_job3 | f552320e | /usr/src/app/code/log_emmiter.py | "Traceback (m
                 </code></pre></br>
 
                 3. <i>select all instances in which the web application has returned a http 5XX status code in
-                    production</i>
+                    production?</i>
                 <pre><code class="sql">
 SELECT
     log_event,
@@ -567,7 +567,7 @@ login     | ad4c0a61-5d0e-4c29-881c-6266fd422d8b | 500
                 4. <i>find the average, 75th and 99th percentile response time(in milliseconds) of the web application
                     in
                     our
-                    canary servers</i>
+                    canary servers?</i>
                 <pre><code class="sql">
 
 SELECT
@@ -590,11 +590,19 @@ WHERE
 average | seven_five_percentile | nine_nine_percentile
 --------+-----------------------+----------------------
 43      | 86                    | 89
-                </code></pre>
+                </code></pre></br>
+
+                5. <i>which application version introduced the most errors/exceptions?</i>
+
+
+
+
+
+
+
+
 
             </p>
-
-
         </div>
     </div>
 </body>
