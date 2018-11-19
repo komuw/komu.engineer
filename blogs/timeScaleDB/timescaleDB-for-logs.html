@@ -152,9 +152,9 @@ time                          | application_name | environment_name |     log_ev
                 TimescaleDB <a target="_blank" rel="noopener" href="https://blog.timescale.com/timescaledb-vs-6a696248104e">optimizes
                     postgres for working with time-series data.</a></br>
                 Do note, that it is possible to use <a target="_blank" rel="noopener" href="https://medium.com/@neslinesli93/how-to-efficiently-store-and-query-time-series-data-90313ff0ec20">PostgreSQL
-                    to store time-series data</a> without having to install the timescaleDB extension.
+                    to store time-series data</a> without having to install the timescaleDB extension.</br></br>
 
-                In this blogpost, we are going to use timescaleDB extension for storing logs.</br></br>
+                In this blogpost, however, we are going to use timescaleDB extension for storing logs.</br></br>
 
                 You can go through the <a target="_blank" rel="noopener" href="https://docs.timescale.com">TimescaleDB
                     documentation to learn how to set it up.</a></br>
@@ -222,9 +222,9 @@ create_hypertable
                 Our app will write logs with the said structure to a <a target="_blank" rel="noopener" href="http://man7.org/linux/man-pages/man7/pipe.7.html">linux
                     named pipe</a>,
                 there will then be an agent running continuously that reads from the same pipe and sends the logs to
-                timescaleDB.
+                timescaleDB.</br></br>
 
-
+                So, the application code to write logs to a named pipe would like the following:
                 <pre><code class="python">
 import os
 import json
@@ -314,8 +314,167 @@ async def web_app(app_name):
 loop = asyncio.get_event_loop()
 loop.run_until_complete(web_app(app_name="web_app"))
 loop.close()
-            </code></pre>
+            </code></pre></br>
 
+                Now we need to write code for the agent that will read code from the named pipe and send it to
+                timescaleDB/postgres.</br>
+                This will be in two parts, one will read from the named pipe and buffer the logs in memory, the second
+                part will take whatever is buffered in memmory and send it to timescaleDB.</br>
+                In the following code, we read from named pipe and buffer log events in memory:
+                <pre><code class="python">
+import os
+import json
+import random
+import asyncio
+import asyncpg
+import datetime
+
+loop = asyncio.get_event_loop()
+
+class Buffer:
+    def __init__(self, loop, interval=6):
+        self.loop = loop
+        self.interval = interval
+        self.lock = asyncio.Semaphore(value=1, loop=self.loop)
+        self.buf = []
+
+    def send_logs_every(self):
+        jitter = random.randint(1, 9) * 0.1
+        return self.interval + jitter
+
+
+buffereddLogs = Buffer(loop=loop)
+
+
+async def send_log_to_remote_storage(logs):
+    # todo: to be implemented later
+    pass
+
+async def schedule_log_sending():
+    # todo: to be implemented later
+    pass
+
+
+class PIPE:
+    fifo_file = None
+
+    def __enter__(self):
+        self.fifo_file = open("/tmp/namedPipes/komusNamedPipe", mode="r")
+        os.set_blocking(self.fifo_file.fileno(), False)
+        return self.fifo_file
+
+    def __exit__(self, type, value, traceback):
+        if self.fifo_file:
+            self.fifo_file.close()
+
+    async def __aenter__(self):
+        self.fifo_file = open("/tmp/namedPipes/komusNamedPipe", mode="r")
+        os.set_blocking(self.fifo_file.fileno(), False)
+        return await asyncio.sleep(-1, result=self.fifo_file)
+
+    async def __aexit__(self, exc_type, exc, tb):
+        if self.fifo_file:
+            await asyncio.sleep(-1, result=self.fifo_file.close())
+
+async def collect_logs():
+    async with PIPE() as pipe:
+        while True:
+            try:
+                data = pipe.readline()
+                if len(data) == 0:
+                    await asyncio.sleep(1)
+                    continue
+                log = json.loads(data)
+                if log:
+                    # buffer log events in memory
+                    async with buffereddLogs.lock:
+                        buffereddLogs.buf.append(log)
+            except OSError as e:
+                if e.errno == 6:
+                    pass
+                else:
+                    pass
+
+tasks = asyncio.gather(collect_logs(), schedule_log_sending(), loop=loop)
+loop.run_until_complete(tasks)
+loop.close()         
+                </code></pre></br>
+
+                In the following code, we now take log events from the in memory buffer every X seconds and send them
+                to timescaleDB/postgres:
+                <pre><code class="python">
+async def send_log_to_remote_storage(logs):
+    IN_DOCKER = os.environ.get("IN_DOCKER")
+    try:
+        host = "localhost" # replace with your postgres server IP address
+        if IN_DOCKER:
+            host = "timescale_db"
+        conn = await asyncpg.connect(
+            host=host,
+            port=5432,
+            user="myuser",
+            password="hey_NSA",
+            database="mydb",
+            timeout=6.0,
+            command_timeout=8.0,
+        )
+
+        all_logs = []
+        for i in logs:
+            time = datetime.datetime.strptime(i["time"], "%Y-%m-%d %H:%M:%S.%f%z")
+            application_name = i["application_name"]
+            environment_name = i["environment_name"]
+            log_event = i["log_event"]
+            trace_id = i["trace_id"]
+            file_path = i["file_path"]
+            host_ip = i["host_ip"]
+            data = i.get("data")
+            if data:
+                data = json.dumps(data)
+
+            all_logs.append(
+                (
+                    time,
+                    application_name,
+                    environment_name,
+                    log_event,
+                    trace_id,
+                    file_path,
+                    host_ip,
+                    data,
+                )
+            )
+
+        # batch insert
+        await conn.executemany(
+            """
+            INSERT INTO logs(time, application_name, environment_name, log_event, trace_id, file_path, host_ip, data) VALUES($1, $2, $3, $4, $5, $6, $7, $8)
+            """,
+            all_logs,
+            timeout=8.0,
+        )
+        print("sent")
+        await conn.close()
+    except Exception:
+        pass
+
+
+async def schedule_log_sending():
+    while True:
+        async with buffereddLogs.lock:
+            if len(buffereddLogs.buf) > 0:
+                await send_log_to_remote_storage(logs=buffereddLogs.buf)
+                buffereddLogs.buf = []
+        await asyncio.sleep(buffereddLogs.send_logs_every())    
+                </code></pre></br>
+
+
+                </br></br>
+                <strong>Querying</strong>
+                </br>
+                To badly misquote <a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=vE-d3-3hWVQ">The
+                    O'Jays</a>, <i>now that we have logs in our database, what are we going to do with it</i>?</br>
+                Let's run some queries:
 
 
             </p>

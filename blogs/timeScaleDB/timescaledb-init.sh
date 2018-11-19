@@ -17,6 +17,8 @@ create_extension() {
 
     psql -U "${POSTGRES_USER}" "${POSTGRES_DB}" -c "CREATE EXTENSION IF NOT EXISTS timescaledb CASCADE;"
 
+    psql -U "${POSTGRES_USER}" "${POSTGRES_DB}" -c "CREATE EXTENSION IF NOT EXISTS pg_stat_statements CASCADE;"
+
     printf "\n\n create_extension END \n\n"      
 }
 
