@@ -916,3 +916,83 @@ returns:
 (2 rows)
 */
 ```
+
+So, which of the two is faster?    
+Let's benchmark:   
+```sql
+SET statement_timeout TO '10s';
+
+DO $$
+DECLARE
+  v_ts TIMESTAMP;
+  v_repeat CONSTANT INT := 10000;
+  rec RECORD;
+BEGIN
+ 
+  -- Repeat the whole benchmark several times to avoid warmup penalty
+  FOR i IN 1..5 LOOP
+    v_ts := clock_timestamp();
+ 
+    FOR i IN 1..v_repeat LOOP
+      FOR rec IN (
+        SELECT
+            *
+        FROM (
+            SELECT DISTINCT
+                county
+            FROM
+                executions
+            WHERE
+                ex_age > 60
+            ) AS counties_killing_seniors
+        WHERE
+            county LIKE '%on'
+      ) LOOP
+        NULL;
+      END LOOP;
+    END LOOP;
+ 
+    RAISE INFO 'Run %, subquery statement: %', i, (clock_timestamp() - v_ts); 
+    v_ts := clock_timestamp();
+ 
+    FOR i IN 1..v_repeat LOOP
+      FOR rec IN (
+        WITH counties_killing_seniors AS 
+        (
+            SELECT DISTINCT
+                county
+            FROM
+                executions
+            WHERE
+                ex_age > 60
+        )
+        SELECT
+            *
+        FROM
+            counties_killing_seniors
+        WHERE
+            county LIKE '%on'
+      ) LOOP
+        NULL;
+      END LOOP;
+    END LOOP;
+ 
+    RAISE INFO 'Run %, with clause statement: %', i, (clock_timestamp() - v_ts); 
+  END LOOP;
+END$$;
+/*
+returns:
+INFO:  Run 1, subquery statement: 00:00:00.569954
+INFO:  Run 1, with clause statement: 00:00:00.555335
+INFO:  Run 2, subquery statement: 00:00:00.560441
+INFO:  Run 2, with clause statement: 00:00:00.545877
+INFO:  Run 3, subquery statement: 00:00:00.55699
+INFO:  Run 3, with clause statement: 00:00:00.585253
+INFO:  Run 4, subquery statement: 00:00:00.608103
+INFO:  Run 4, with clause statement: 00:00:00.568079
+INFO:  Run 5, subquery statement: 00:00:00.555735
+INFO:  Run 5, with clause statement: 00:00:00.557055
+*/
+```
+Both of them are on par.    
+
