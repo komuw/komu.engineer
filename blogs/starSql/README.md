@@ -6,7 +6,8 @@ This are my notes taken while mostly doing;
 3. https://www.techonthenet.com/postgresql/joins.php    
 4. http://sqlfiddle.com   
 5. https://github.com/darold/pgFormatter     
-6. http://sqlformat.darold.net       
+6. http://sqlformat.darold.net     
+7. https://modern-sql.com/video     
 
 
 connect to the db like;   
@@ -812,3 +813,106 @@ If an order is specified by the ORDER BY clause, the rows are then sorted by the
 Since all the expressions in the SELECT part of the query have been computed, you **CAN** reference **aliases** in this clause.   
 8. `LIMIT / OFFSET`   
 Finally, the rows that fall outside the range specified by the LIMIT and OFFSET are discarded, leaving the final set of rows to be returned from the query.    
+
+
+
+## chapter 6: WITH BLOCK(common table expression/CTE)    
+It solves(among others) the problem of nested queries - https://modern-sql.com/video(starting at the 3:30 mark)    
+Lets say we wanted to answer the question:     
+`Find all counties that have executed people who are older than 60yrs AND
+the name of the county ends in 'on'`      
+
+The first half of the query can be answered by the query:   
+```sql
+/*
+select all counties which have had
+executions of people older than 60
+*/
+SELECT DISTINCT
+    county
+FROM
+    executions
+WHERE
+    ex_age >60;
+/*
+returns 9 counties
+   county
+-------------
+ Harris
+ Lee
+ Tarrant
+*/
+```
+
+However to answe the full question, we may have to use nested queries in the FROM block:     
+```sql
+/*
+select all counties which have had executions
+of people older than 60 and their names ends in 'on'
+*/
+SELECT
+    *
+FROM (
+    SELECT DISTINCT
+        county
+    FROM
+        executions
+    WHERE
+        ex_age > 60
+    ) AS counties_killing_seniors
+WHERE
+    county LIKE '%on';
+/*
+returns 2 counties
+  county
+-----------
+ Grayson
+ Henderson
+*/
+```     
+
+
+This can also be solved using `WITH` clause;    
+```sql
+WITH query_name (column_name1, ...) AS
+     (SELECT ...),
+     another_query_name (some_column, ...) AS
+     (SELECT ...)
+     
+SELECT ...
+/*
+This query (and subqueries it contains) can refer to the just defined query name in their FROM clause. - https://modern-sql.com/feature/with
+ie we can refer to `query_name` inside the FROM of the main SELECT or inside the subqueries themselves.
+*/
+```
+
+So, our previous query re-implemented using `WITH`:   
+```sql
+/*
+select all counties which have had executions
+of people older than 60 and their names ends in 'on'
+*/
+WITH counties_killing_seniors AS 
+(
+    SELECT DISTINCT
+        county
+    FROM
+        executions
+    WHERE
+        ex_age > 60
+)
+SELECT
+    *
+FROM
+    counties_killing_seniors
+WHERE
+    county LIKE '%on';
+/*
+returns:
+  county
+-----------
+ Grayson
+ Henderson
+(2 rows)
+*/
+```
