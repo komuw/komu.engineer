@@ -455,7 +455,7 @@ async def send_log_to_remote_storage(logs):
         await conn.executemany(
             """
             INSERT INTO logs(time, application_name, application_version, environment_name, log_event, trace_id, file_path, host_ip, data)
-                        VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9)
+                      VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9)
             """,
             all_logs,
             timeout=8.0,
