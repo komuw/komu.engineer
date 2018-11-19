@@ -162,7 +162,7 @@ SELECT
 FROM
     logs
 WHERE
-    logs.environment_name = 'production'
+    logs.environment_name = 'canary'
     AND
     logs.application_name = 'web_app'
     AND

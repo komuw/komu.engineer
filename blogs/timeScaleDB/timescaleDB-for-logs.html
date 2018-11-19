@@ -305,7 +305,7 @@ async def web_app(app_name):
             log_event="login",
             trace_id=str(uuid.uuid4()),
             application_name=app_name,
-            environment_name="production",
+            environment_name=random.choice(["production", "canary", "staging"]),
             file_path=os.path.realpath(__file__),
             log_event_data={
                 "user": "Shawn Corey Carter",
@@ -482,10 +482,114 @@ async def schedule_log_sending():
                 </br>
                 To badly misquote <a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=vE-d3-3hWVQ">The
                     O'Jays</a>, <i>now that we have logs in our database, what are we going to do with it</i>?</br>
-                Let's run some queries:
+                Let's run some queries:</br>
+                1. <i>find the latest five events where an exception has been raised</i>
+                <pre><code class="sql">
+SELECT
+    log_event,
+    data -> 'error' AS error
+FROM
+    logs
+WHERE
+    data -> 'error' IS NOT NULL
+ORDER BY
+    time DESC
+LIMIT 5;
+                </code></pre>
+                <pre><code class="bash">
+log_event          |                                                                            error
+-------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------
+video_process_job3 | "Traceback (most recent call last):\n  File \"/usr/src/app/code/log_emmiter.py\", line 133, in job3\n    ourJobs[5]\nIndexError: list index out of range\n"
+video_process_job3 | "Traceback (most recent call last):\n  File \"/usr/src/app/code/log_emmiter.py\", line 133, in job3\n    ourJobs[5]\nIndexError: list index out of range\n"
+video_process_job3 | "Traceback (most recent call last):\n  File \"/usr/src/app/code/log_emmiter.py\", line 133, in job3\n    ourJobs[5]\nIndexError: list index out of range\n"
+video_process_job3 | "Traceback (most recent call last):\n  File \"/usr/src/app/code/log_emmiter.py\", line 133, in job3\n    ourJobs[5]\nIndexError: list index out of range\n"
+video_process_job3 | "Traceback (most recent call last):\n  File \"/usr/src/app/code/log_emmiter.py\", line 133, in job3\n    ourJobs[5]\nIndexError: list index out of range\n"
+                </code></pre></br>
+
+                2. <i>find the path/trace taken by the last request which resulted in an exception occuring.</i>
+                <pre><code class="sql">
+SELECT
+    log_event,
+    trace_id,
+    file_path,
+    data -> 'error' AS error
+FROM
+    logs
+WHERE
+    logs.environment_name = 'production'
+    AND logs.trace_id = (
+        SELECT
+            trace_id
+        FROM
+            logs
+        WHERE
+            data -> 'error' IS NOT NULL
+        ORDER BY
+            time DESC
+        LIMIT 1);
+                </code></pre>
+                <pre><code class="bash">
+log_event          | trace_id |            file_path             |                                                                            error
+-------------------+----------+----------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------
+video_process_job1 | f552320e | /usr/src/app/code/log_emmiter.py |
+video_process_job2 | f552320e | /usr/src/app/code/log_emmiter.py |
+video_process_job3 | f552320e | /usr/src/app/code/log_emmiter.py |
+video_process_job3 | f552320e | /usr/src/app/code/log_emmiter.py | "Traceback (most recent call last):\n  File \"/usr/src/app/code/log_emmiter.py\", line 133, in job3\n    ourJobs[5]\nIndexError: list index out of range\n"
+                </code></pre></br>
+
+                3. <i>select all instances in which the web application has returned a http 5XX status code in
+                    production</i>
+                <pre><code class="sql">
+SELECT
+    log_event,
+    trace_id,
+    data -> 'status_code' AS status_code
+FROM
+    logs
+WHERE
+    logs.environment_name = 'production'
+    AND logs.application_name = 'web_app'
+    AND data -> 'status_code' IN ('500', '504');
+                </code></pre>
+
+                <pre><code class="bash">
+log_event |               trace_id               | status_code
+----------+--------------------------------------+-------------
+login     | e45c19b7-8af3-4bcc-a7f1-dbd374631d04 | 500
+login     | 3fa2f0c1-983c-4034-aa5e-ffadb93fe0e0 | 504
+login     | 407c3b57-47c1-47af-bdca-07edec6c68f0 | 500
+login     | 1efeca8b-2a73-4364-9eaf-0fb675180313 | 500
+login     | ad4c0a61-5d0e-4c29-881c-6266fd422d8b | 500
+                </code></pre>
+                All those instances were login events, maybe we should go and have a look at our login code.</br></br>
+
+
+                4. <i>find the average, 75th and 99th percentile response time(in milliseconds) of the web application
+                    in
+                    our
+                    canary servers</i>
+                <pre><code class="sql">
+
+SELECT
+    percentile_disc(0.5)
+    WITHIN GROUP (ORDER BY data -> 'response_time') AS average,
+    percentile_disc(0.75)
+    WITHIN GROUP (ORDER BY data -> 'response_time') AS seven_five_percentile,
+    percentile_disc(0.99)
+    WITHIN GROUP (ORDER BY data -> 'response_time') AS nine_nine_percentile
+FROM
+    logs
+WHERE
+    logs.environment_name = 'canary'
+    AND logs.application_name = 'web_app'
+    AND data -> 'status_code' IS NOT NULL
+    AND data -> 'response_time' IS NOT NULL;
+                </code></pre>
+
 
 
             </p>
+
 
         </div>
     </div>

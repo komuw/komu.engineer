@@ -22,7 +22,8 @@ fifo_file = makeFifo()
 
 
 def generate_application_version():
-    return 'v'+ str(random.randint(0,9)) + '.' + str(random.randint(0,5)) + '.0'
+    return "v" + str(random.randint(0, 9)) + "." + str(random.randint(0, 5)) + ".0"
+
 
 def log_structure(log_event, trace_id, application_name, environment_name, file_path, data):
     now = datetime.datetime.now(datetime.timezone.utc)
@@ -75,7 +76,7 @@ async def web_app(app_name):
         log_event="login",
         trace_id=str(uuid.uuid4()),
         application_name=app_name,
-        environment_name="production",
+        environment_name=random.choice(["production", "canary", "staging"]),
         file_path=os.path.realpath(__file__),
         log_event_data={
             "user": "Shawn Corey Carter",
@@ -104,7 +105,7 @@ async def etl(app_name):
             log_event="video_process_job1",
             trace_id=trace_id,
             application_name=app_name,
-            environment_name="production",
+            environment_name=random.choice(["production", "canary", "staging"]),
             file_path=os.path.realpath(__file__),
             log_event_data={"jobType": "batch", "job_id": str(uuid.uuid4())},
         )
@@ -156,13 +157,13 @@ async def etl(app_name):
 
 
 async def run():
-    app_name = os.environ['app_name']
+    app_name = os.environ["app_name"]
     while True:
         if app_name == "web_app":
             await web_app(app_name)
-        elif app_name=="worker_app":
+        elif app_name == "worker_app":
             await worker(app_name)
-        elif app_name=="etl_app":
+        elif app_name == "etl_app":
             await etl(app_name)
         else:
             raise ValueError("app_name: {0} is not recognised".format(app_name))
