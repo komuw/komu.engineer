@@ -880,11 +880,11 @@ WITH query_name (column_name1, ...) AS
      (SELECT ...)
      
 SELECT ...
-/*
-This query (and subqueries it contains) can refer to the just defined query name in their FROM clause. - https://modern-sql.com/feature/with
-ie we can refer to `query_name` inside the FROM of the main SELECT or inside the subqueries themselves.
-*/
 ```
+This query (and subqueries it contains) can refer to the just defined query name in their FROM clause. - https://modern-sql.com/feature/with      
+ie we can refer to `query_name` inside the FROM of the main SELECT or inside the subqueries themselves.    
+**NB:** WITH queries are **ONLY** visible in the SELECT they precede.     
+
 
 So, our previous query re-implemented using `WITH`:   
 ```sql
