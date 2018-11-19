@@ -36,6 +36,7 @@ async def send_log_to_remote_storage(logs):
         for i in logs:
             time = datetime.datetime.strptime(i["time"], "%Y-%m-%d %H:%M:%S.%f%z")
             application_name = i["application_name"]
+            application_version = i["application_version"]
             environment_name = i["environment_name"]
             log_event = i["log_event"]
             trace_id = i["trace_id"]
@@ -49,6 +50,7 @@ async def send_log_to_remote_storage(logs):
                 (
                     time,
                     application_name,
+                    application_version,
                     environment_name,
                     log_event,
                     trace_id,
@@ -61,8 +63,8 @@ async def send_log_to_remote_storage(logs):
         # batch insert
         await conn.executemany(
             """
-            INSERT INTO logs(time, application_name, environment_name, log_event, trace_id, file_path, host_ip, data)
-                      VALUES($1, $2, $3, $4, $5, $6, $7, $8)
+            INSERT INTO logs(time, application_name, application_version, environment_name, log_event, trace_id, file_path, host_ip, data)
+                      VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9)
             """,
             all_logs,
             timeout=8.0,

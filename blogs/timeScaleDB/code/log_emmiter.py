@@ -21,12 +21,16 @@ logger.info("{}".format({"event": "log_emitter_start"}))
 fifo_file = makeFifo()
 
 
+def generate_application_version():
+    return 'v'+ str(random.randint(0,9)) + '.' + str(random.randint(0,5)) + '.0'
+
 def log_structure(log_event, trace_id, application_name, environment_name, file_path, data):
     now = datetime.datetime.now(datetime.timezone.utc)
     return {
         "log_event": log_event,
         "trace_id": trace_id,
         "application_name": application_name,
+        "application_version": generate_application_version(),
         "environment_name": environment_name,
         "file_path": file_path,
         "data": data,

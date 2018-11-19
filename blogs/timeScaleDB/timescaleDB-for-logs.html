@@ -120,14 +120,14 @@ Mar 9 15:08:05 LB1 local0.info haproxy[21843]: 10.0.0.1:1028 [09/Mar/2012:15:08:
 
                 <pre><code class="bash">
 
-time                          | application_name | environment_name |     log_event      | trace_id |            file_path        |  host_ip   |      data
-------------------------------+------------------+------------------+--------------------+----------+-----------------------------+------------+------------------------------------------------------------------------
-2018-11-18 14:07:18.936522+00 | ETL_app          | production       | video_process_job3 | caf72697 | /usr/src/app/code/etl.py    | 172.23.0.2 | {"job_id": "658d31dd85fd", "jobType": "batch"}
-2018-11-18 14:14:58.223893+00 | ETL_app          | canary           | video_process_job3 | 17603a0  | /usr/src/app/code/etl.py    | 172.23.0.3 | {"error": "Traceback (most recent call last):\n  File \"/usr/src/app/code/etl.py\", line 129, in job3\n    ourJobs[5]\nIndexError: list index out of range\n", "job_id": "c1a164c2-86c5-43e6-a0e5-3ca2377abe95", "jobType": "batch"}
-2018-11-18 14:09:09.581655+00 | WebApp           | production       | login              | 45a7dc73 | /usr/src/app/code/web.py    | 172.23.0.2 | {"user": "Shawn Corey Carter", "email": "someemail@email.com", "status_code": 504, "response_time": 95}
-2018-11-18 14:09:09.580918+00 | WebApp           | production       | login              | 0f776af0 | /usr/src/app/code/web.py    | 172.23.0.2 | {"user": "Shawn Corey Carter", "email": "someemail@email.com", "status_code": 504, "response_time": 6}
-2018-11-18 14:09:10.552307+00 | WorkerApp        | staging          | process_work       | 6d07fb95 | /usr/src/app/code/worker.py | 172.23.0.2 | {"worker_id": "97b44537", "datacenter": "us-west"}
-2018-11-18 14:09:10.551532+00 | WorkerApp        | production       | process_work       | 8b2daa49 | /usr/src/app/code/woker.py  | 172.23.0.2 | {"worker_id": "a6035461, "datacenter": "us-west"}
+time                          | application_name |application_version | environment_name |     log_event      | trace_id |            file_path        |  host_ip   |      data
+------------------------------+------------------|--------------------+------------------+--------------------+----------+-----------------------------+------------+------------------------------------------------------------------------
+2018-11-18 14:07:18.936522+00 | ETL_app          | v0.5.0             | production       | video_process_job3 | caf72697 | /usr/src/app/code/etl.py    | 172.23.0.2 | {"job_id": "658d31dd85fd", "jobType": "batch"}
+2018-11-18 14:14:58.223893+00 | ETL_app          | v0.6.0             | canary           | video_process_job3 | 17603a0  | /usr/src/app/code/etl.py    | 172.23.0.3 | {"error": "Traceback (most recent call last):\n  File \"/usr/src/app/code/etl.py\", line 129, in job3\n    ourJobs[5]\nIndexError: list index out of range\n", "job_id": "c1a164c2-86c5-43e6-a0e5-3ca2377abe95", "jobType": "batch"}
+2018-11-18 14:09:09.581655+00 | WebApp           | v0.5.0             | production       | login              | 45a7dc73 | /usr/src/app/code/web.py    | 172.23.0.2 | {"user": "Shawn Corey Carter", "email": "someemail@email.com", "status_code": 504, "response_time": 95}
+2018-11-18 14:09:09.580918+00 | WebApp           | v0.5.0             | production       | login              | 0f776af0 | /usr/src/app/code/web.py    | 172.23.0.2 | {"user": "Shawn Corey Carter", "email": "someemail@email.com", "status_code": 504, "response_time": 6}
+2018-11-18 14:09:10.552307+00 | WorkerApp        | v1.6.8             | staging          | process_work       | 6d07fb95 | /usr/src/app/code/worker.py | 172.23.0.2 | {"worker_id": "97b44537", "datacenter": "us-west"}
+2018-11-18 14:09:10.551532+00 | WorkerApp        | v0.5.6             | production       | process_work       | 8b2daa49 | /usr/src/app/code/woker.py  | 172.23.0.2 | {"worker_id": "a6035461, "datacenter": "us-west"}
                 </code></pre>
                 you can(and probably should) fashion your logs as time-series events.
                 </br></br>
@@ -207,6 +207,7 @@ create_hypertable
                 <strong>Our application</strong>
                 </br>
                 In our application, we want our log events to have a few mandatory items; <i>time</i>, <i>application_name</i>,
+                <i>application_version</i>,
                 <i>environment_name</i>, <i>log_event</i>, <i>trace_id</i>, <i>host_ip</i> etc</br>
                 This will allow our queries to be more meaningful, we can ask questions like;
                 <ul>
@@ -262,6 +263,7 @@ def log_structure(log_event, trace_id, application_name, environment_name, file_
         "log_event": log_event,
         "trace_id": trace_id,
         "application_name": application_name,
+        "application_version": "v2.1.0",
         "environment_name": environment_name,
         "file_path": file_path,
         "data": data,
@@ -425,6 +427,7 @@ async def send_log_to_remote_storage(logs):
         for i in logs:
             time = datetime.datetime.strptime(i["time"], "%Y-%m-%d %H:%M:%S.%f%z")
             application_name = i["application_name"]
+            application_version = i["application_version"]
             environment_name = i["environment_name"]
             log_event = i["log_event"]
             trace_id = i["trace_id"]
@@ -439,6 +442,7 @@ async def send_log_to_remote_storage(logs):
                     time,
                     application_name,
                     environment_name,
+                    application_version,
                     log_event,
                     trace_id,
                     file_path,
@@ -450,7 +454,8 @@ async def send_log_to_remote_storage(logs):
         # batch insert
         await conn.executemany(
             """
-            INSERT INTO logs(time, application_name, environment_name, log_event, trace_id, file_path, host_ip, data) VALUES($1, $2, $3, $4, $5, $6, $7, $8)
+            INSERT INTO logs(time, application_name, application_version, environment_name, log_event, trace_id, file_path, host_ip, data)
+                        VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9)
             """,
             all_logs,
             timeout=8.0,
