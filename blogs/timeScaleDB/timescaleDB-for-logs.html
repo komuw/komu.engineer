@@ -121,7 +121,7 @@ Mar 9 15:08:05 LB1 local0.info haproxy[21843]: 10.0.0.1:1028 [09/Mar/2012:15:08:
                 <pre><code class="bash">
 
 time                          | application_name |application_version | environment_name |     log_event      | trace_id |            file_path        |  host_ip   |      data
-------------------------------+------------------|--------------------+------------------+--------------------+----------+-----------------------------+------------+------------------------------------------------------------------------
+------------------------------+------------------+--------------------+------------------+--------------------+----------+-----------------------------+------------+------------------------------------------------------------------------
 2018-11-18 14:07:18.936522+00 | ETL_app          | v0.5.0             | production       | video_process_job3 | caf72697 | /usr/src/app/code/etl.py    | 172.23.0.2 | {"job_id": "658d31dd85fd", "jobType": "batch"}
 2018-11-18 14:14:58.223893+00 | ETL_app          | v0.6.0             | canary           | video_process_job3 | 17603a0  | /usr/src/app/code/etl.py    | 172.23.0.3 | {"error": "Traceback (most recent call last):\n  File \"/usr/src/app/code/etl.py\", line 129, in job3\n    ourJobs[5]\nIndexError: list index out of range\n", "job_id": "c1a164c2-86c5-43e6-a0e5-3ca2377abe95", "jobType": "batch"}
 2018-11-18 14:09:09.581655+00 | WebApp           | v0.5.0             | production       | login              | 45a7dc73 | /usr/src/app/code/web.py    | 172.23.0.2 | {"user": "Shawn Corey Carter", "email": "someemail@email.com", "status_code": 504, "response_time": 95}
