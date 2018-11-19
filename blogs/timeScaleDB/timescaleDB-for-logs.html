@@ -47,7 +47,7 @@
                 </br>
                 </br>
 
-                <strong>Intro</strong>
+                <strong id="Intro">Intro</strong>
                 </br>
                 If the title alone has already turned you off, I understand. It's almost unheard of to store
                 application logs in a structured datastore.</br>
@@ -63,7 +63,7 @@
 
 
                 </br></br>
-                <strong>Opinion</strong>
+                <strong id="Opinion">Opinion</strong>
                 </br>
                 I hold a differing opinion, I think if you look at logs hard enough; a structure starts to emerge.</br>
                 In this section, I'll lay out my opinion about logs and logging in general.</br>
@@ -146,7 +146,7 @@ time                          | application_name |application_version | environm
                 </ul>
 
                 </br>
-                <strong>timescaleDB/postgres</strong>
+                <strong id="timescaleDB">timescaleDB/postgres</strong>
                 </br>
                 PostgreSQL is a popular SQL datatabse whereas TimescaleDB, despite the name, is actually an open-source
                 postgres extension that enhances postgres for time-series data.</br>
@@ -205,7 +205,7 @@ create_hypertable
                     rel="noopener" href="https://www.timescale.com/how-it-works"> hypertable </a>
 
                 </br></br>
-                <strong>Our application</strong>
+                <strong id="Our application">Our application</strong>
                 </br>
                 In our application, we want our log events to have a few mandatory items; <i>time</i>, <i>application_name</i>,
                 <i>application_version</i>,
@@ -478,7 +478,7 @@ async def schedule_log_sending():
 
 
                 </br></br>
-                <strong>Querying</strong>
+                <strong id="Querying">Querying</strong>
                 </br>
                 To badly misquote <a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=vE-d3-3hWVQ">The
                     O'Jays</a>, <i>now that we have logs in our database, what are we going to do with it</i>?</br></br>
