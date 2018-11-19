@@ -343,7 +343,7 @@ class Buffer:
         return self.interval + jitter
 
 
-buffereddLogs = Buffer(loop=loop)
+bufferedLogs = Buffer(loop=loop)
 
 
 async def send_log_to_remote_storage(logs):
@@ -387,8 +387,8 @@ async def collect_logs():
                 log = json.loads(data)
                 if log:
                     # buffer log events in memory
-                    async with buffereddLogs.lock:
-                        buffereddLogs.buf.append(log)
+                    async with bufferedLogs.lock:
+                        bufferedLogs.buf.append(log)
             except OSError as e:
                 if e.errno == 6:
                     pass
@@ -461,11 +461,11 @@ async def send_log_to_remote_storage(logs):
 
 async def schedule_log_sending():
     while True:
-        async with buffereddLogs.lock:
-            if len(buffereddLogs.buf) > 0:
-                await send_log_to_remote_storage(logs=buffereddLogs.buf)
-                buffereddLogs.buf = []
-        await asyncio.sleep(buffereddLogs.send_logs_every())    
+        async with bufferedLogs.lock:
+            if len(bufferedLogs.buf) > 0:
+                await send_log_to_remote_storage(logs=bufferedLogs.buf)
+                bufferedLogs.buf = []
+        await asyncio.sleep(bufferedLogs.send_logs_every())    
                 </code></pre></br>
 
 

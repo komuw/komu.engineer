@@ -4,7 +4,7 @@ import asyncio
 
 
 from logger import getLogger
-from batched_logs import batchedLogs
+from batched_logs import bufferedLogs
 from log_sender import schedule_log_sending
 from log_collector_loop import loop
 
@@ -61,8 +61,8 @@ async def collect_logs():
                 if log:
                     # TODO: disable locks/batched log sending if we get
                     # 'got Future attached to a different loop' errors
-                    async with batchedLogs.lock:
-                        batchedLogs.batch_logs.append(log)
+                    async with bufferedLogs.lock:
+                        bufferedLogs.buf.append(log)
             except OSError as e:
                 if e.errno == 6:
                     pass

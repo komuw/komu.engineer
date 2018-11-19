@@ -6,7 +6,7 @@ import datetime
 
 
 from logger import getLogger
-from batched_logs import batchedLogs
+from batched_logs import bufferedLogs
 
 
 logger = getLogger(name="logs.sender")
@@ -61,7 +61,8 @@ async def send_log_to_remote_storage(logs):
         # batch insert
         await conn.executemany(
             """
-            INSERT INTO logs(time, application_name, environment_name, log_event, trace_id, file_path, host_ip, data) VALUES($1, $2, $3, $4, $5, $6, $7, $8)
+            INSERT INTO logs(time, application_name, environment_name, log_event, trace_id, file_path, host_ip, data)
+                      VALUES($1, $2, $3, $4, $5, $6, $7, $8)
             """,
             all_logs,
             timeout=8.0,
@@ -75,10 +76,10 @@ async def send_log_to_remote_storage(logs):
 
 async def schedule_log_sending():
     while True:
-        async with batchedLogs.lock:
-            batch_logs = batchedLogs.batch_logs
-            if len(batch_logs) > 0:
-                await send_log_to_remote_storage(logs=batch_logs)
-                batchedLogs.batch_logs = []
+        async with bufferedLogs.lock:
+            buf = bufferedLogs.buf
+            if len(buf) > 0:
+                await send_log_to_remote_storage(logs=buf)
+                bufferedLogs.buf = []
 
-        await asyncio.sleep(batchedLogs.send_logs_every())
+        await asyncio.sleep(bufferedLogs.send_logs_every())
