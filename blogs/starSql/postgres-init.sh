@@ -20,16 +20,25 @@ create_db() {
     printf "\n\n create_db END \n\n"      
 }
 
-create_extension() {
+create_timescaledb_extension() {
     printf "\n\n
-    create_extension START \n
+    create_timescaledb_extension START \n
     #############\n\n"
 
     psql -U "${POSTGRES_USER}" "${POSTGRES_DB}" -c "CREATE EXTENSION IF NOT EXISTS timescaledb CASCADE;"
 
-    printf "\n\n create_extension END \n\n"      
+    printf "\n\n create_timescaledb_extension END \n\n"      
 }
 
+create_pg_stat_statements_extension() {
+    printf "\n\n
+    create_pg_stat_statements_extension START \n
+    #############\n\n"
+
+    psql -U "${POSTGRES_USER}" "${POSTGRES_DB}" -c "CREATE EXTENSION IF NOT EXISTS pg_stat_statements CASCADE;"
+
+    printf "\n\n create_pg_stat_statements_extension END \n\n"      
+}
 
 # PostgreSQL stores TIMESTAMPTZ in UTC value.
 # When you insert a value into a TIMESTAMPTZ column, PostgreSQL converts the TIMESTAMPTZ value into a UTC value and stores the UTC value in the table.
@@ -161,7 +170,8 @@ check_insertion_worked() {
 
 # call the functions
 create_db
-# create_extension
+# create_timescaledb_extension
+create_pg_stat_statements_extension
 create_tables
 create_table_indices
 run_sanity_check
