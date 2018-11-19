@@ -88,7 +88,8 @@ Mar 9 15:08:05 LB1 local0.info haproxy[21843]: 10.0.0.1:1028 [09/Mar/2012:15:08:
                 <ul>
                     <li>the environment the application is running in(production/test/dev/staging etc)</li>
                     <li>the IP address of the server that the app is running in</li>
-                    <li>the name of the service</li>
+                    <li>the name of the service/app</li>
+                    <li>the service/app version number(this can be the last commit hash that was deployed)</li>
                     <li>etc</li>
                 </ul>
 
@@ -213,6 +214,7 @@ create_hypertable
                     <li>what was the path/trace of execution for the request with <i>trace_id</i> XYZ?</li>
                     <li>in which module are the errors been raised from?</li>
                     <li>is this an issue that only affects our canary servers or does it also affect production?</li>
+                    <li>is the perfomance of the current deployed application version similar to version2.4.7 ?</li>
                     <li>etc</li>
                 </ul>
                 That's why we created a database table with those fields in the bash script above. We also added a
