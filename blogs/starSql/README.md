@@ -995,4 +995,64 @@ INFO:  Run 5, with clause statement: 00:00:00.557055
 */
 ```
 Both of them are on par.    
+You should benchmark to see if one is slower than another by a huge margin.    
+It has been suggested that in some versions of postgres, `WITH`/CTE might be slow; see: https://blog.2ndquadrant.com/postgresql-ctes-are-optimization-fences/    
+benchmark!    
+
+## chapter 7: postgres tidbits   
+1. You should set an application_name for your queries.    
+By explicitly marking each connection you open with `application_name`, you’ll be able to track what your application is doing at a glance:   
+```sql
+SET application_name TO 'web.production';
+```
+```sql
+SELECT application_name, COUNT(*) FROM pg_stat_activity GROUP BY application_name;
+/*
+returns:
+ application_name | count
+------------------+-------
+                  |     5
+ web.production   |     1
+*/
+```    
+
+2. You should set a statement timeout.   
+Long running queries can have an impact on your database performance because they may hold locks or over-consume resources.    
+Postgres allows you to set a timeout per connection that will abort any queries exceeding the specified value.   
+```sql
+SET statement_timeout TO '10s';
+```
+
+3. You should track the sources of your queries.    
+Being able to determine which part of your code is executing a query makes optimization easier, and easier to track down.      
+
+**NB:** The `pg_stat_statements` extension needs to be installed first.     
+You can check if it is installed via(the `installed_version` column should not be null if installed):  
+```sql
+SELECT * 
+FROM
+    pg_available_extensions 
+WHERE 
+    name LIKE 'pg%';
+```
+
+Then,  
+```sql
+SELECT first_name, county FROM executions; -- /usr/app/views.py:47
+```
+and checking stats:
+```sql
+SELECT
+    (total_time/sum(total_time) OVER()) * 100 AS exec_time, calls, query
+FROM
+    pg_stat_statements
+ORDER BY
+    total_time DESC LIMIT 10;
+/*
+returns:
+exec_time | 12.2119460729825
+calls     | 7257
+query     | SELECT first_name, county FROM executions; -- /usr/app/views.py:47
+*/
+```
 
