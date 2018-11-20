@@ -1,54 +1,24 @@
-import os
 import json
 import asyncio
 
 
+import piper
 from logger import getLogger
+from log_collector_loop import loop
 from batched_logs import bufferedLogs
 from log_sender import schedule_log_sending
-from log_collector_loop import loop
+
 
 logger = getLogger(name="logs.collector")
-
-
 logger.info("{}".format({"event": "log_collector_start"}))
-
-# NB: collector should not try to create named pipe
-# instead it should use the named pipe that was attached
-# to it by the log_emitter container
-fifo_file = "/tmp/namedPipes/komusNamedPipe"
-
-
-class PIPE:
-    fifo_file = None
-
-    def __enter__(self):
-        self.fifo_file = open(fifo_file, mode="r")
-        os.set_blocking(self.fifo_file.fileno(), False)
-
-        return self.fifo_file
-
-    def __exit__(self, type, value, traceback):
-        if self.fifo_file:
-            self.fifo_file.close()
-
-    async def __aenter__(self):
-        self.fifo_file = open(fifo_file, mode="r")
-        os.set_blocking(self.fifo_file.fileno(), False)
-
-        return await asyncio.sleep(-1, result=self.fifo_file)
-
-    async def __aexit__(self, exc_type, exc, tb):
-        if self.fifo_file:
-            await asyncio.sleep(-1, result=self.fifo_file.close())
 
 
 async def collect_logs():
-    async with PIPE() as pipe:
+    async with piper.PIPE(mode="r") as f:
         while True:
             try:
                 logger.info("{}".format({"event": "log_collector_read"}))
-                data = pipe.readline()
+                data = f.readline()
                 if len(data) == 0:
                     # End of the file
                     await asyncio.sleep(1)

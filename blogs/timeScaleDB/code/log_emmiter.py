@@ -10,15 +10,13 @@ import traceback
 
 import uvloop
 
-
+import piper
 from my_fifo import makeFifo
 from logger import getLogger
 from get_ip import host_ip_address
 
 logger = getLogger(name="logs.emitter")
 logger.info("{}".format({"event": "log_emitter_start"}))
-
-fifo_file = makeFifo()
 
 
 def generate_application_version():
@@ -40,24 +38,28 @@ def log_structure(log_event, trace_id, application_name, environment_name, file_
     }
 
 
+fifo_file = makeFifo()
+
+
 async def emmit_logs(
     log_event, trace_id, application_name, environment_name, file_path, log_event_data
 ):
     try:
-        pipe = os.open(fifo_file, os.O_WRONLY | os.O_NONBLOCK | os.O_ASYNC)
-        log = log_structure(
-            log_event=log_event,
-            trace_id=trace_id,
-            application_name=application_name,
-            environment_name=environment_name,
-            file_path=file_path,
-            data=log_event_data,
-        )
-        # we use newline to demarcate where one log event ends.
-        write_data = json.dumps(log) + "\n"
-        write_data = write_data.encode()
-        os.write(pipe, write_data)
-        os.close(pipe)
+        async with piper.PIPE(mode="w", fifo_file_name=fifo_file) as f:
+            os.set_blocking(f.fileno(), False)
+
+            log = log_structure(
+                log_event=log_event,
+                trace_id=trace_id,
+                application_name=application_name,
+                environment_name=environment_name,
+                file_path=file_path,
+                data=log_event_data,
+            )
+            # we use newline to demarcate where one log event ends.
+            write_data = json.dumps(log) + "\n"
+            f.write(write_data)
+
     except OSError as e:
         if e.errno == 6:
             # device not configured
@@ -157,7 +159,7 @@ async def etl(app_name):
 
 
 async def run():
-    app_name = os.environ["app_name"]
+    app_name = os.environ.get("app_name", "web_app")
     while True:
         if app_name == "web_app":
             await web_app(app_name)
