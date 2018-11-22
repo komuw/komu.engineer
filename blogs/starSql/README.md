@@ -69,6 +69,7 @@ CREATE TABLE IF NOT EXISTS okayTable (
 CREATE TABLE IF NOT EXISTS logs (
     time TIMESTAMPTZ NOT NULL,
     application_name TEXT NOT NULL,
+    application_version    TEXT NOT NULL,
     environment_name TEXT NOT NULL,
     log_event TEXT NOT NULL,
     trace_id TEXT NOT NULL,
