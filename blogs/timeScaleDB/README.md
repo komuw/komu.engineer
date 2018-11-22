@@ -1,3 +1,6 @@
+This is the code for my blogpost : [Storing application logs in an SQL database.](https://www.komu.engineer/blogs/timescaledb/timescaledb-for-logs)    
+
+
 run:
 ```sh
 docker-compose up
