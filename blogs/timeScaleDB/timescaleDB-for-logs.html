@@ -221,7 +221,8 @@ create_hypertable
                 In our application, we want our log events to have a few mandatory items; <i>time</i>, <i>application_name</i>,
                 <i>application_version</i>,
                 <i>environment_name</i>, <i>log_event</i>, <i>trace_id</i>, <i>host_ip</i> etc</br>
-                This will allow our queries to be more meaningful, we can ask questions like;
+                This will allow us to be able to ask more meaningful questions when debugging our app/service, we can
+                ask questions like;
                 <ul>
                     <li>from which server are the majority of errors emanating?</li>
                     <li>what was the path/trace of execution for the request with <i>trace_id</i> XYZ?</li>
