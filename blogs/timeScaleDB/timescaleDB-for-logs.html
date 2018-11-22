@@ -235,7 +235,9 @@ create_hypertable
 
                 Our app will write logs with the said structure to a <a target="_blank" rel="noopener" href="http://man7.org/linux/man-pages/man7/pipe.7.html">linux
                     named pipe</a>,
-                there will then be an agent running continuously that reads from the same pipe and sends the logs to
+                then there will be another agent/daemon running continuously that reads from the same pipe and sends
+                the logs
+                to
                 timescaleDB.</br></br>
 
                 So, the application code to write logs to a named pipe would like the following:
