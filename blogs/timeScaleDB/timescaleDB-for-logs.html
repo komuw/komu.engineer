@@ -335,7 +335,8 @@ loop.close()
 
                 Now we need to write code for the agent that will read code from the named pipe and send it to
                 timescaleDB/postgres.</br>
-                This will be in two parts, one will read from the named pipe and buffer the logs in memory, the second
+                This will be in two parts, in part one we read from the named pipe and buffer the logs in memory, the
+                second
                 part will take whatever is buffered in memmory and send it to timescaleDB.</br>
                 In the following code, we read from named pipe and buffer log events in memory:
                 <pre><code class="python">
