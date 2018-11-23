@@ -215,3 +215,19 @@ WHERE
     AND logs.application_name = 'web_app'
     AND data -> 'status_code' IN ('500', '504');
 ```
+
+
+find all log events from the last 15seconds
+```sql
+/*
+find all log events from the last 15seconds
+*/
+SELECT
+    log_event,
+    trace_id,
+    time
+FROM
+    logs
+WHERE
+    time > NOW() - INTERVAL '15 second';
+```
