@@ -108,7 +108,16 @@ CREATE INDEX CONCURRENTLY IF NOT EXISTS myJsonDataIndexName ON logs
     USING GIN (data)
 WHERE
     data IS NOT NULL;
-```
+```     
+Great articles on indices/index:    
+1. https://blog.timescale.com/use-composite-indexes-to-speed-up-time-series-queries-sql-8ca2df6b3aaa          
+
+2. https://www.postgresql.org/docs/11/indexes.html       
+
+3. https://docs.timescale.com/v1.0/using-timescaledb/schema-management#indexing-best-practices      
+
+
+
 
 ```sql
 /*

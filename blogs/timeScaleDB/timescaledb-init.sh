@@ -60,7 +60,11 @@ create_table_indices() {
     # An index allows the database server to find and retrieve specific rows much faster than it could do without an index.
     # For indexing columns with discrete (limited-cardinality) values; ie those that u are likely to query using "equals" or "not equals" comparator
     # as opposed to using "less than" or "greater than" comparator. For those create index with time last
-    # see: https://docs.timescale.com/v1.0/using-timescaledb/schema-management#indexing-best-practices
+    # read:
+    # 1. https://www.postgresql.org/docs/11/indexes.html
+    # 2. https://blog.timescale.com/use-composite-indexes-to-speed-up-time-series-queries-sql-8ca2df6b3aaa
+    # 3. https://docs.timescale.com/v1.0/using-timescaledb/schema-management#indexing-best-practices
+
     psql -U "${POSTGRES_USER}" "${POSTGRES_DB}" -c "CREATE INDEX ON logs (log_event, trace_id, time DESC) WHERE log_event IS NOT NULL AND trace_id IS NOT NULL;"
 
     printf "\n\n create_table_indices END \n\n"   
