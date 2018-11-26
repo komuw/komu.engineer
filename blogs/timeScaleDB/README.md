@@ -238,3 +238,25 @@ Great article on indices/index:
 2. https://www.postgresql.org/docs/11/indexes.html       
 
 3. https://docs.timescale.com/v1.0/using-timescaledb/schema-management#indexing-best-practices
+
+From reading article 1(above) it seems like, rather than having this index;  
+```sql
+CREATE INDEX ON
+    logs (log_event, trace_id, time DESC)
+WHERE
+    log_event IS NOT NULL AND trace_id IS NOT NULL;
+```
+It would be much better to have this two indices instead;
+```sql
+CREATE INDEX ON
+    logs (log_event, time DESC)
+WHERE
+    log_event IS NOT NULL AND trace_id IS NOT NULL;
+
+-- and
+
+CREATE INDEX ON
+    logs (trace_id, time DESC)
+WHERE
+    log_event IS NOT NULL AND trace_id IS NOT NULL;
+```
