@@ -1087,3 +1087,13 @@ SELECT *, pg_size_pretty(total_bytes) AS total
 ) a;
 ```   
 
+5. automate index creation   
+It is hard to know ahead of time which indices are important to create.    
+What indices should we create that will speed up 99% of all our queries?   
+There are two ways we could do it;    
+- Use [hypopg](https://hypopg.readthedocs.io/en/latest/) which is a tool that can create hypothetical indices.   
+A hypothetical/virtual, index is one that doesn’t really exists, and thus doesn’t cost CPU, disk or any resource to create.   
+They’re useful to know if specific indexes can increase performance for problematic queries, since you can know if PostgreSQL will use these indexes or not without having to spend resources to create them.    
+- Index [all the things](https://www.citusdata.com/blog/2017/10/11/index-all-the-things-in-postgres/), measure which ones are actually used by your queries, the eliminate the ones that aren't used. See linked article.    
+Also see this talk, [how postgres could index itself](https://www.youtube.com/watch?v=Mni_1yTaNbE)   
+
