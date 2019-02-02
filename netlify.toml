@@ -1,5 +1,7 @@
 [Settings]
-# docs: https://www.netlify.com/docs/netlify-toml-reference/
+# docs:
+# 1. https://www.netlify.com/docs/netlify-toml-reference/
+# 2. https://www.netlify.com/docs/continuous-deployment/#common-configuration-directives
 # Specific branch context: all deploys from this specific branch will inherit
 # these settings.
 [context.naz] # 'naz' is a branch name
