@@ -46,6 +46,7 @@ ie this code is likely to fail
 write_data = write_data.encode() * 4098
 os.write(pipe, write_data)
 ```
+- You can also write /dev/kmsg: https://apenwarr.ca/log/20190216
 
 
 ##### References:
