@@ -64,6 +64,8 @@ create_table_indices() {
     # 1. https://www.postgresql.org/docs/11/indexes.html
     # 2. https://blog.timescale.com/use-composite-indexes-to-speed-up-time-series-queries-sql-8ca2df6b3aaa
     # 3. https://docs.timescale.com/v1.0/using-timescaledb/schema-management#indexing-best-practices
+    # 4. https://info.crunchydata.com/blog/postgresql-brin-indexes-big-data-performance-with-minimal-storage
+    #  ^-- Use BRIN indexes for performance and reduce index size
 
     psql -U "${POSTGRES_USER}" "${POSTGRES_DB}" -c "CREATE INDEX ON logs (log_event, trace_id, time DESC) WHERE log_event IS NOT NULL AND trace_id IS NOT NULL;"
 
