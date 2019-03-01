@@ -67,7 +67,7 @@ create_table_indices() {
     # 4. https://info.crunchydata.com/blog/postgresql-brin-indexes-big-data-performance-with-minimal-storage
     #  ^-- Use BRIN indexes for performance and reduce index size
 
-    psql -U "${POSTGRES_USER}" "${POSTGRES_DB}" -c "CREATE INDEX ON logs (log_event, trace_id, time DESC) WHERE log_event IS NOT NULL AND trace_id IS NOT NULL;"
+    psql -U "${POSTGRES_USER}" "${POSTGRES_DB}" -c "CREATE INDEX ON logs (log_event, trace_id, time DESC NULLS LAST) WHERE log_event IS NOT NULL AND trace_id IS NOT NULL;"
 
     printf "\n\n create_table_indices END \n\n"   
 }
