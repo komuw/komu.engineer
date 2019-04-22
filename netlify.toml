@@ -16,9 +16,9 @@
   # publish is the directory to publish (relative to the root of your repo).
 
 
-[context.janice-website] # 'janice-website' is a branch name
+[context.janice] # 'janice' is a branch name
   # Default build command.
-  command = "echo 'janice-website'"
+  command = "echo 'janice'"
 
-  publish = "blogs/janice-website/"
+  publish = "blogs/janice/"
   # publish is the directory to publish (relative to the root of your repo).
