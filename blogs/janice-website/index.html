@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Janice fashion - home.</title>
+    <meta name="description" content="Janice Fashion." />
+    <meta property="og:url" content="https://Janice" />
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ADD FAVICON -->
+
+    <link rel="stylesheet" href="./site.css">
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <h3>Janice Fashion</h3>
+        </div>
+        <div class="left-sidebar">
+            .
+        </div>
+        <div class="right-sidebar">
+            .
+        </div>
+
+        <div class="main">
+            <br />
+            Here are a sample of some of our work;
+            <div id="myIDx">
+            </div>
+
+            <br />
+            <div class="story">
+                <p>
+                    <strong>Janice fashion</strong>, is the premium fashion shop nestled in the heart of Lower
+                    Kabete, Nrb, Kenya.<br />
+                    With our professional experience in custom clothing, we are an expert in fashion & tailoring
+                    services.<br />
+                    Here at <i>Janice fashion</i>, we only use the best of fabrics and each item is made with
+                    a keen attention to detail.<br /><br />
+
+                    <strong>Call</strong> us today for all your fashion needs;<br />
+                    <a href="tel:+254796 437 744">+254 796 437 744</a>
+                </p>
+            </div>
+            <br />
+        </div>
+
+    </div>
+
+
+    <script>
+        // Load .png images
+        console.log("loading .png images");
+        for (i = 0; i <= 22; i++) {
+            console.log(i);
+            img = new Image(width = 800, height = 400);
+            img.className = "mySlides";
+            var imgSrcDir = "./imgs/aha/";
+            img.src = imgSrcDir.concat(i, ".png");
+
+            var mydiv = document.getElementById('myIDx');
+            mydiv.appendChild(img);
+        }
+    </script>
+
+    <script>
+        var slideIndex = 0;
+        carousel("mySlides", 4000); //4seconds
+        // carousel("mySlides2", 7000);
+
+        function carousel(slideClass, myInterval) {
+            var i;
+            // console.log("hello");
+            // console.log(slideClass);
+            var x = document.getElementsByClassName(slideClass);
+            for (i = 0; i < x.length; i++) {
+                x[i].style.display = "none";
+            }
+            slideIndex++;
+            if (slideIndex > x.length) { slideIndex = 1 }
+            x[slideIndex - 1].style.display = "block";
+            setTimeout(() => carousel(slideClass, myInterval), myInterval); // Change image every 1 seconds
+        }
+
+    </script>
+</body>

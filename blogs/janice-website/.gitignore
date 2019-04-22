@@ -1,0 +1,60 @@
+# Compiled Python modules
+*.pyo
+*.pyc
+__pycache__/*
+
+# SQLite
+*.db
+*.s3db
+*.sqlite3
+
+ # Vagrant private files
+.vagrant/*
+.vagrant*
+
+#logs
+*.log
+*.log.*
+
+#pids
+*.pid
+machineid
+
+#ppa public keys
+*.asc*
+
+# markdown preview
+README.html
+
+# vscode editor
+.vscode/*
+.vscode
+*.DS_Store
+debug
+
+#Coverage
+.coverage
+htmlcov/
+
+# Setuptools distribution folder.
+/dist/
+/build/
+
+# Python egg metadata, regenerated from source files by setuptools.
+/*.egg-info
+
+# virtualenv
+.venv
+.virtualenv
+
+# mypy
+*.mypy_cache/
+
+# go-pry debug stuff
+.main.gopry
+
+
+# Files and directories created by pub
+.dart_tool/
+.packages
+build/

@@ -14,3 +14,11 @@
   # been specified, include it in the publish directory path.
   publish = "blogs/naz/sphinx-build/"
   # publish is the directory to publish (relative to the root of your repo).
+
+
+[context.janice-website] # 'janice-website' is a branch name
+  # Default build command.
+  command = "echo 'janice-website'"
+
+  publish = "blogs/janice-website/"
+  # publish is the directory to publish (relative to the root of your repo).
