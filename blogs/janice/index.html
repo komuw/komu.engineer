@@ -20,6 +20,21 @@
     <!-- ADD FAVICON -->
 
     <link rel="stylesheet" href="./site.css">
+
+    <script>
+        // Load .png images
+        console.log("loading .png images");
+        for (i = 0; i <= 17; i++) {
+            console.log(i);
+            img = new Image(width = 800, height = 400);
+            img.className = "mySlides";
+            var imgSrcDir = "./imgs/aha/";
+            img.src = imgSrcDir.concat(i, ".png");
+
+            var mydiv = document.getElementById('myIDx');
+            mydiv.appendChild(img);
+        }
+    </script>
 </head>
 
 <body>
@@ -59,25 +74,9 @@
 
     </div>
 
-
-    <script>
-        // Load .png images
-        console.log("loading .png images");
-        for (i = 0; i <= 17; i++) {
-            console.log(i);
-            img = new Image(width = 800, height = 400);
-            img.className = "mySlides";
-            var imgSrcDir = "./imgs/aha/";
-            img.src = imgSrcDir.concat(i, ".png");
-
-            var mydiv = document.getElementById('myIDx');
-            mydiv.appendChild(img);
-        }
-    </script>
-
     <script>
         var slideIndex = 0;
-        carousel("mySlides", 4000); //4 seconds
+        carousel("mySlides", 6000); //6 seconds
         // carousel("mySlides2", 7000);
 
         function carousel(slideClass, myInterval) {
