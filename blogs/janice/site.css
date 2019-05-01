@@ -146,7 +146,7 @@ img {
 
 .w3-display-left{
     position:absolute;
-    top:50%;
+    /* top:95%; */
     left:25%;
     transform:translate(0%,-50%);
     -ms-transform:translate(-0%,-50%)
@@ -160,7 +160,7 @@ img {
 
 .w3-display-right{
     position:absolute;
-    top:50%;
+    /* top:95%; */
     right:25%;
     transform:translate(0%,-50%);
     -ms-transform:translate(0%,-50%)
