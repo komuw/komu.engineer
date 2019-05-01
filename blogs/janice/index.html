@@ -18,7 +18,6 @@
     <![endif]-->
 
     <!-- ADD FAVICON -->
-
     <link rel="stylesheet" href="./site.css">
 </head>
 
@@ -38,6 +37,28 @@
             <br />
             Here are a sample of some of our work;
             <div id="myIDx">
+                <img width="800" height="400" class="mySlides" src="./imgs/aha/0.png">
+                <img width="800" height="400" class="mySlides" src="./imgs/aha/1.png">
+                <img width="800" height="400" class="mySlides" src="./imgs/aha/2.png">
+                <img width="800" height="400" class="mySlides" src="./imgs/aha/3.png">
+                <img width="800" height="400" class="mySlides" src="./imgs/aha/4.png">
+                <img width="800" height="400" class="mySlides" src="./imgs/aha/5.png">
+                <img width="800" height="400" class="mySlides" src="./imgs/aha/6.png">
+                <img width="800" height="400" class="mySlides" src="./imgs/aha/7.png">
+                <img width="800" height="400" class="mySlides" src="./imgs/aha/8.png">
+                <img width="800" height="400" class="mySlides" src="./imgs/aha/9.png">
+                <img width="800" height="400" class="mySlides" src="./imgs/aha/10.png">
+                <img width="800" height="400" class="mySlides" src="./imgs/aha/11.png">
+                <img width="800" height="400" class="mySlides" src="./imgs/aha/12.png">
+                <img width="800" height="400" class="mySlides" src="./imgs/aha/13.png">
+                <img width="800" height="400" class="mySlides" src="./imgs/aha/14.png">
+                <img width="800" height="400" class="mySlides" src="./imgs/aha/15.png">
+                <img width="800" height="400" class="mySlides" src="./imgs/aha/16.png">
+                <img width="800" height="400" class="mySlides" src="./imgs/aha/17.png">
+
+                <button class="w3-button w3-display-left" onclick="plusDivs(-1)">&#10094;previous</button>
+                <button class="w3-button w3-display-right"
+                    onclick="plusDivs(+1)">&#10095;next&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</button>
             </div>
 
             <br />
@@ -59,38 +80,24 @@
 
     </div>
 
-    <script>
-        // Load .png images
-        console.log("loading .png images");
-        for (i = 0; i <= 17; i++) {
-            console.log(i);
-            img = new Image(width = 800, height = 400);
-            img.className = "mySlides";
-            var imgSrcDir = "./imgs/aha/";
-            img.src = imgSrcDir.concat(i, ".png");
 
-            var mydiv = document.getElementById('myIDx');
-            mydiv.appendChild(img);
+    <script>
+        var slideIndex = 1;
+        showDivs(slideIndex);
+
+        function plusDivs(n) {
+            showDivs(slideIndex += n);
         }
-    </script>
-    <script>
-        var slideIndex = 0;
-        carousel("mySlides", 6000); //6 seconds
-        // carousel("mySlides2", 7000);
 
-        function carousel(slideClass, myInterval) {
+        function showDivs(n) {
             var i;
-            // console.log("hello");
-            // console.log(slideClass);
-            var x = document.getElementsByClassName(slideClass);
+            var x = document.getElementsByClassName("mySlides");
+            if (n > x.length) { slideIndex = 1 }
+            if (n < 1) { slideIndex = x.length };
             for (i = 0; i < x.length; i++) {
                 x[i].style.display = "none";
             }
-            slideIndex++;
-            if (slideIndex > x.length) { slideIndex = 1 }
             x[slideIndex - 1].style.display = "block";
-            setTimeout(() => carousel(slideClass, myInterval), myInterval); // Change image every 1 seconds
         }
-
     </script>
 </body>

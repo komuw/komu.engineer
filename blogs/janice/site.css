@@ -142,3 +142,27 @@ img {
     width:800px;
     height:600px;
 }
+
+
+.w3-display-left{
+    position:absolute;
+    top:50%;
+    left:25%;
+    transform:translate(0%,-50%);
+    -ms-transform:translate(-0%,-50%)
+}
+.w3-button {
+    padding: 15px 16px;
+    color: black;
+    background-color: grey;
+    text-align: left;
+}
+
+.w3-display-right{
+    position:absolute;
+    top:50%;
+    right:25%;
+    transform:translate(0%,-50%);
+    -ms-transform:translate(0%,-50%)
+} 
+
