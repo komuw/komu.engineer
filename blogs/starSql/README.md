@@ -633,7 +633,7 @@ ON table1.column = table2.column;
 2. left outer join    
 ```sql
 /*
-inner join returns the all records from table1 and only those records from table2 that intersect with table1 (ie join condition is met). 
+left outer join returns the all records from table1 and only those records from table2 that intersect with table1 (ie join condition is met). 
 it returns null for the columns in table2 where condition is not met.
 */
 SELECT columns
