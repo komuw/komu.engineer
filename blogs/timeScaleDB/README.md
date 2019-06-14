@@ -1,5 +1,8 @@
 This is the code for my blogpost : [Storing application logs in an SQL database.](https://www.komu.engineer/blogs/timescaledb/timescaledb-for-logs)    
 
+also see: 
+`Dave Josephsen - Schema On Read and the New Logging Way`- https://vimeo.com/341142828
+
 
 run:
 ```sh
