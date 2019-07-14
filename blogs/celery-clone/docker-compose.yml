@@ -12,3 +12,10 @@ services:
     volumes:
       - ./:/app
     command: python /app/code/ecommerce_tasks.py
+
+  worker:
+    build:
+      context: .
+    volumes:
+      - ./:/app
+    command: python /app/code/ecommerce_worker.py
