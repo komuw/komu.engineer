@@ -48,7 +48,8 @@
                 </br>
                 <ol>
                     <li> <a href="#Intro">Intro</a> </li>
-                    <li> <a href="#How-they-work">How they work</a> </li>
+                    <li> <a href="#How-they-work">How they work</a></li>
+                    <li> <a href="#Implementation">Implementation</a></li>
                     <li> <a href="#Conclusion">Conclusion</a></li>
                 </ol>
 
@@ -67,14 +68,14 @@
                 Think of an e-commerce website, when someone makes an order(by clicking on the order submit button) on
                 the website; the e-commerce website needs
                 to;
-                <ol>
+                <ul>
                     <li>Show a confirmation message on the html page of the order</li>
                     <li>Persist that order to it's database</li>
                     <li>update the customers profile with the order</li>
                     <li>emit an order metric event</li>
                     <li>Send out a confirmation email to the customer </li>
                     <li>etc</li>
-                </ol>
+                </ul>
                 All the above actions can be carried out synchronously as the customer waits for the page to reload.
                 However, if any of the actions above has a potential to take a couple of a hundred milliseconds, then
                 you better perform them in the background.
@@ -85,19 +86,32 @@
                 Using a background task processor is one way(among others) to solve that problem
                 </br></br>
 
-
-                </br></br>
                 <strong id="How-they-work">How they work</strong>
+                </br>
                 Task processors may differ, but they mostly work this way;
                 <ol>
-                    <li>Show a confirmation message on the html page of the order</li>
-                    <li>Persist that order to it's database</li>
+                    <li>You have a function that contains some code that can take a long time to run, maybe because it
+                        will get blocked on IO</li>
+                    <li>You annotate that function with some functionality provided by the 'background job' library</li>
+                    <li>when you execute your function, instead of it running synchronously; the background job library
+                        will 'take' your function and serialize it to an object(eg string)</li>
+                    <li>the background job library then takes that serialized object and stores it someplace(eg in a
+                        database)</li>
+                    <li>then at a later time, workers(provided by the background job library) will take the serialized
+                        object from the store, convert/deserialize it to its original form </li>
+                    <li>then use that to execute your original function</li>
                 </ol>
+                </br></br>
+
+                <strong id="Implementation">Implementation</strong>
                 </br>
+                We are going to implement a background job library that will work in the manner laid out in the previous
+                section.
+
+                </br></br>
 
 
 
-                </br>
                 <strong id="Conclusion">Conclusion</strong>
                 </br>
 
