@@ -312,11 +312,20 @@ python ecommerce_worker.py
 
 
                 <strong id="Conclusion">Conclusion</strong>
+                </br>
+                That was a brief overview of how some(most?) background task processors work. The basic idea is very
+                simple; turn a tasks arguments to a string, store the string in a database of sorts, retrieve that
+                string from database later and feed those arguments to the actual task to run.</br>
+                Of course on top of that simple idea, this task processors go on and layer other useful features like;
+                retries, periodic tasks, chaining of tasks etc.</br></br>
+
 
                 All the code in this blogpost can be found at: <a target="_blank" rel="noopener"
                     href="https://github.com/komuw/komu.engineer/tree/master/blogs/celery-clone">
-                    https://github.com/komuw/komu.engineer/tree/master/blogs/celery-clone</a>
+                    https://github.com/komuw/komu.engineer/tree/master/blogs/celery-clone</a></br></br>
 
+                PS: Check out <a target="_blank" rel="noopener" href="https://github.com/komuw/wiji">wiji</a> which is
+                an experimental python3 asyncio distributed task processor.
                 </br>
 
             </p>
