@@ -23,17 +23,5 @@ class Task(abc.ABC):
             _task = {"task_id": task_id, "args": args, "kwargs": kwargs}
             serialized_task = json.dumps(_task)
             self.broker.enqueue(queue_name=self.task_name, item=serialized_task)
-        except Exception as e:
+        except Exception:
             raise Exception("Unable to publish task to the broker.")
-
-
-if __name__ == "__main__":
-
-    class PrinterTask(Task):
-        task_name = "PrinterTask"
-
-        def run(self, *args, **kwargs):
-            print("\nPrinterTask called.\n")
-
-    p = PrinterTask()
-    p.delay()

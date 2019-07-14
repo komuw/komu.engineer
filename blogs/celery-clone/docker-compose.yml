@@ -11,4 +11,4 @@ services:
       context: .
     volumes:
       - ./:/app
-    command: python /app/code/log_emmiter.py
+    command: python /app/code/ecommerce_tasks.py
