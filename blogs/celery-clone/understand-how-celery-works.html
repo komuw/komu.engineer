@@ -258,8 +258,12 @@ class Worker:
                 a task from the broker, json deserializes that task to get the task arguments, then uses those
                 argumensts to call the task. </br></br>
 
-                It is the work of celery workers to dequeue a task from the broker, deserializes(<i>json.loads()</i>)
-                its arguments/metadata and executes the original function with the arguments.
+                It is the work of celery workers to dequeue a task from the broker, <a target="_blank" rel="noopener"
+                    href="https://github.com/celery/celery/blob/8e016e667ae16958043b096e5cb89ac0f7dd7989/celery/app/trace.py#L519-L527">deserializes</a>
+                its arguments/metadata and executes the <a target="_blank" rel="noopener"
+                    href="https://github.com/celery/celery/blob/8e016e667ae16958043b096e5cb89ac0f7dd7989/celery/app/trace.py#L289-L292">original
+                    function</a> with those <a target="_blank" rel="noopener"
+                    href="https://github.com/celery/celery/blob/8e016e667ae16958043b096e5cb89ac0f7dd7989/celery/app/trace.py#L384-L386">arguments.</a>
                 </br></br>
 
 
