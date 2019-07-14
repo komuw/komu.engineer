@@ -2,27 +2,38 @@ import abc
 import json
 import uuid
 
-from . import broker
+from broker import Broker
 
 
 class Task(abc.ABC):
     task_name = None
 
     def __init__(self):
-        self.broker = broker.Broker()
-        self.task_name = self.task_name
+        if not self.task_name:
+            raise ValueError("task_name should be set")
+        self.broker = Broker()
 
     @abc.abstractmethod
     def run(self, *args, **kwargs):
         raise NotImplementedError("Task `run` method must be implemented.")
 
     def delay(self, *args, **kwargs):
-        """
-        Parameters:
-            args: The positional arguments to pass on to the task.
-            kwargs: The keyword arguments to pass on to the task.
-        """
-        task_id = str(uuid.uuid4())
-        _task = {"task_id": task_id, "args": args, "kwargs": kwargs}
-        serialized_task = json.dumps(_task)
-        self.broker.enqueue(queue_name=self.task_name, item=serialized_task)
+        try:
+            task_id = str(uuid.uuid4())
+            _task = {"task_id": task_id, "args": args, "kwargs": kwargs}
+            serialized_task = json.dumps(_task)
+            self.broker.enqueue(queue_name=self.task_name, item=serialized_task)
+        except Exception as e:
+            raise Exception("Unable to publish task to the broker.")
+
+
+if __name__ == "__main__":
+
+    class PrinterTask(Task):
+        task_name = "PrinterTask"
+
+        def run(self, *args, **kwargs):
+            print("\nPrinterTask called.\n")
+
+    p = PrinterTask()
+    p.delay()
