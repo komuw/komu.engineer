@@ -45,7 +45,6 @@
             <p>
                 <strong>Understand how celery works by building a clone.(15 July 2019)</strong>
                 </br>
-                </br>
                 <ol>
                     <li><a href="#Intro">Intro</a></li>
                     <li> <a href="#How-they-work">How they work</a></li>
@@ -107,7 +106,6 @@
                         object from the store, convert/deserialize it to its original form </li>
                     <li>then use that to execute your original function</li>
                 </ol>
-                </br></br>
 
                 <strong id="Implementation">Implementation</strong>
                 </br>
@@ -301,7 +299,7 @@ python ecommerce_tasks.py
                 </code></pre></br>
                 In a third terminal run the workers;
                 <pre><code class="bash">
-python code/ecommerce_worker.py
+python ecommerce_worker.py
     running task: 4ed63e42-f614-4093-a654-46211d5de8cf
     https://httpbin.org/24dkq40/example@example.org
     succesful run of task: 4ed63e42-f614-4093-a654-46211d5de8cf
@@ -309,6 +307,11 @@ python code/ecommerce_worker.py
 
 
                 <strong id="Conclusion">Conclusion</strong>
+
+                All the code in this blogpost can be found at: <a target="_blank" rel="noopener"
+                    href="https://github.com/komuw/komu.engineer/tree/master/blogs/celery-clone">
+                    https://github.com/komuw/komu.engineer/tree/master/blogs/celery-clone</a>
+
                 </br>
 
             </p>
