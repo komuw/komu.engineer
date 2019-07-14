@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Komu W - Understand how celery works by building a clone.</title>
+    <meta name="description" content="Understand how celery works by building a clone." />
+    <meta property="og:url" content="https://www.komu.engineer/blog" />
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ADD FAVICON -->
+
+    <link rel="stylesheet" href="../../site.css">
+
+    <!-- Get highlightjs by going to https://highlightjs.org/download/, select the languages you want and download. -->
+    <link rel="stylesheet" href="../../highlightjs/styles/default.css">
+    <script src="../../highlightjs/highlight.pack.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <a href="https://www.komu.engineer">Home</a>&nbsp;&nbsp;
+            <a href="https://www.komu.engineer/about">About Me</a>&nbsp;&nbsp;
+            <a href="https://www.komu.engineer/blog">Blog</a>&nbsp;&nbsp;
+        </div>
+        <div class="left-sidebar">
+            .
+        </div>
+        <div class="right-sidebar">
+            .
+        </div>
+
+        <div class="main">
+            <p>
+                <strong>Understand how celery works by building a clone.(TODO )</strong>
+                </br>
+                </br>
+                <ol>
+                    <li> <a href="#Intro">Intro</a> </li>
+                    <li> <a href="#How-they-work">How they work</a> </li>
+                    <li> <a href="#Conclusion">Conclusion</a></li>
+                </ol>
+
+                <strong id="Intro">Intro</strong>
+                </br>
+                A delayed job processor(also called a background processor, asynchronous task queue etc) is a system
+                that can run code at a later time.</br>
+                Examples of such systems/software include;
+                <a target="_blank" rel="noopener" href="https://github.com/celery/celery">Celery</a>,
+                <a target="_blank" rel="noopener" href="https://github.com/resque/resque">Resque</a>,
+                <a target="_blank" rel="noopener" href="https://sidekiq.org/">Sidekiq</a>, among others.</br>
+                In this blogpost we will try and understand how this things work by building a clone/replica of such
+                software.</br></br>
+
+                When do we need to use a background task processor?</br>
+                Think of an e-commerce website, when someone makes an order(by clicking on the order submit button) on
+                the website; the e-commerce website needs
+                to;
+                <ol>
+                    <li>Show a confirmation message on the html page of the order</li>
+                    <li>Persist that order to it's database</li>
+                    <li>update the customers profile with the order</li>
+                    <li>emit an order metric event</li>
+                    <li>Send out a confirmation email to the customer </li>
+                    <li>etc</li>
+                </ol>
+                All the above actions can be carried out synchronously as the customer waits for the page to reload.
+                However, if any of the actions above has a potential to take a couple of a hundred milliseconds, then
+                you better perform them in the background.
+                Apparently, a latency of 1 second costs <a target="_blank" rel="noopener"
+                    href="https://www.fastcompany.com/1825005/how-one-second-could-cost-amazon-16-billion-sales">Amazon
+                    $1.6 Billion In Sales</a>, and Google found a <a target="_blank" rel="noopener"
+                    href="http://glinden.blogspot.com/2006/11/marissa-mayer-at-web-20.html">similar phenomenon </a></br>
+                Using a background task processor is one way(among others) to solve that problem
+                </br></br>
+
+
+                </br></br>
+                <strong id="How-they-work">How they work</strong>
+                Task processors may differ, but they mostly work this way;
+                <ol>
+                    <li>Show a confirmation message on the html page of the order</li>
+                    <li>Persist that order to it's database</li>
+                </ol>
+                </br>
+
+
+
+                </br>
+                <strong id="Conclusion">Conclusion</strong>
+                </br>
+
+            </p>
+        </div>
+    </div>
+</body>
