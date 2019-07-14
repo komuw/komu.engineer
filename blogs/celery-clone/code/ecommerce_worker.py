@@ -6,5 +6,5 @@ if __name__ == "__main__":
     email_task = EmailTask()
 
     # run workers
-    _worker = Worker(task=email_task)
-    _worker.start()
+    worker = Worker(task=email_task)
+    worker.start()

@@ -7,6 +7,18 @@ from .broker import Broker
 
 
 class BaseTask(abc.ABC):
+    """
+    Example Usage:
+        class AdderTask(BaseTask):
+            task_name = "AdderTask"
+            def run(self, a, b):
+                result = a + b
+                return result
+
+        adder = AdderTask()
+        adder.delay(9, 34)
+    """
+
     task_name = None
 
     def __init__(self):
