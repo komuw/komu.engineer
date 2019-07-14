@@ -99,7 +99,9 @@
                 <ol>
                     <li>You have a function that contains some code that can take a long time to run, maybe because it
                         will get blocked on IO</li>
-                    <li>You annotate that function with some functionality provided by the 'background job' library</li>
+                    <li>You <a target="_blank" rel="noopener"
+                            href=" https://github.com/celery/celery/blob/8e016e667ae16958043b096e5cb89ac0f7dd7989/examples/django/demoapp/tasks.py#L8-L10">annotate</a>
+                        that function with some functionality provided by the 'background job' library</li>
                     <li>when you execute your function, instead of it running synchronously; the background job library
                         will 'take' your function and serialize it to an object(eg string)</li>
                     <li>the background job library then takes that serialized object and stores it someplace(eg in a
@@ -210,10 +212,9 @@ class Broker:
 
                 This is how celery is able to <a target="_blank" rel="noopener"
                     href="http://docs.celeryproject.org/en/latest/getting-started/brokers/">support different brokers.
-                </a> When you do <i>task.delay(3,5)</i> Celery serializes all the task arguments to <a target="_blank"
-                    rel="noopener"
-                    href="https://github.com/celery/celery/blob/8e016e667ae16958043b096e5cb89ac0f7dd7989/celery/app/task.py#L555-L563">json</a>
-                and <a target="_blank" rel="noopener"
+                </a> When you do <i>task.delay(3,5)</i> Celery <a target="_blank" rel="noopener"
+                    href="https://github.com/celery/celery/blob/8e016e667ae16958043b096e5cb89ac0f7dd7989/celery/app/task.py#L555-L563">serializes</a>
+                all the task arguments to json and <a target="_blank" rel="noopener"
                     href="https://github.com/celery/celery/blob/8e016e667ae16958043b096e5cb89ac0f7dd7989/celery/app/amqp.py#L549-L558">sends</a>
                 them
                 to a broker for storage.
@@ -280,7 +281,7 @@ class Worker:
 # ecommerce_tasks.py
 from backie.task import BaseTask
 
-# pip install redis requests
+# pip install requests
 import requests
 
 class EmailTask(BaseTask):
@@ -319,11 +320,11 @@ if __name__ == "__main__":
     worker.start()
                 </code></pre></br>
 
-                Putting it all together, lets run a redis server(using docker);
+                Putting it all together, lets run a redis server(using docker) in one terminal;
                 <pre><code class="bash"> 
 docker run -p 6379:6379 redis:5.0-alpine
                </code></pre></br>
-                And in one terminal we run the tasks;
+                And in another terminal we run the tasks;
                 <pre><code class="bash"> 
 python ecommerce_tasks.py
     task: 4ed63e42-f614-4093-a654-46211d5de8cf succesfully queued
@@ -344,7 +345,7 @@ python ecommerce_worker.py
                 in a database of sorts, retrieve that string from the database at a later datetime and feed those
                 arguments
                 to the actual task to run.</br>
-                Of course on top of that simple idea, this task processors go on and layer other useful features like;
+                Of course on top of that simple idea, these task processors go on and layer other useful features like;
                 retries, periodic tasks, chaining of tasks etc.</br></br>
 
 
