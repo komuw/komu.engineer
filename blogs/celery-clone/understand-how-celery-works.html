@@ -56,6 +56,7 @@
                             <li><a href="#Worker">(c) Worker</a></li>
                         </ul>
                     </li>
+                    <li> <a href="#Usage">Usage</a></li>
                     <li> <a href="#Conclusion">Conclusion</a></li>
                 </ol>
 
@@ -77,7 +78,6 @@
                 <ul>
                     <li>Show a confirmation message on the html page of the order</li>
                     <li>Persist that order to it's database</li>
-                    <li>update the customers profile with the order</li>
                     <li>emit an order metric event</li>
                     <li>Send out a confirmation email to the customer </li>
                     <li>etc</li>
@@ -145,6 +145,7 @@ class BaseTask(abc.ABC):
             _task = {"task_id": task_id, "args": args, "kwargs": kwargs}
             serialized_task = json.dumps(_task)
             self.broker.enqueue(queue_name=self.task_name, item=serialized_task)
+            print("task: {0} succesfully queued".format(task_id))
         except Exception:
             raise Exception("Unable to publish task to the broker.")           
                 </code></pre></br>
@@ -152,31 +153,8 @@ class BaseTask(abc.ABC):
                 <i>backie</i> and create a subclass of it where you provide an implementation of the <i>run</i>
                 method.</br>
                 To run your task, you call the <i>delay</i> method with arguments that you want. The BaseTask will in
-                the background serialize those arguments to json and store them in a broker/store.</br>
-                ie, you use would use this as:
-                <pre><code class="python">
-from backie.task import BaseTask
-
-import requests
-
-class EmailTask(BaseTask):
-    """
-    task to send email to customer after they have ordered.
-    """
-
-    task_name = "EmailTask"
-
-    def run(self, order_id, email_address):
-        # lets pretend httpbin.org is an email service provider
-        url = "https://httpbin.org/{0}/{1}".format(order_id, email_address)
-        print(url)
-        response = requests.get(url, timeout=5.0)
-        print("response:: ", response)
-
-
-email_task = EmailTask()
-email_task.delay(order_id="24dkq40", email_address="example@example.org")                 
-                </code></pre></br></br>
+                the background serialize those arguments to json and store them in a broker/store.
+                </br></br>
 
                 <strong id="Broker">(b) Broker</strong>
                 </br>
@@ -254,8 +232,80 @@ class Worker:
                 print("Unable to execute task.")
                 continue       
                 </code></pre></br>
-                </br>
+                The worker takes a task instance as an argument, then in a loop(in the <i>start method</i>), dequeues a
+                task from the broker, json deserializes that task to get the task arguments, then uses those argumensts
+                to call the task.
+                </br></br>
 
+
+                <strong id="Usage">Usage</strong>
+                </br>
+                We have implemented the background task processor(<i>backie</i>) that is similar to celery, so now lets
+                use it. Going to our previous example of an e-commerce site, lets use <i>backie</i> to implement the
+                various tasks/jobs that need to be ran.</br>
+                We will need a task to; Persist that order to it's database, another to emit an order metric event and
+                lastly another that sends out a confirmation email to the customer.</br>
+                For the sake of brevity, we will only look at one such task the one that sends out emails after
+                ordering.
+                <pre><code class="python"> 
+# ecommerce_tasks.py
+from backie.task import BaseTask
+
+# pip install redis requests
+import requests
+
+class EmailTask(BaseTask):
+    """
+    task to send email to customer after they have ordered.
+    """
+
+    task_name = "EmailTask"
+
+    def run(self, order_id, email_address):
+        # lets pretend httpbin.org is an email service provider
+        url = "https://httpbin.org/{0}/{1}".format(order_id, email_address)
+        print(url)
+        response = requests.get(url, timeout=5.0)
+        print("response:: ", response)
+
+
+if __name__ == "__main__":
+    order_id = "24dkq40"
+    email_address = "example@example.org"
+    email_task = EmailTask()
+    email_task.delay(order_id, email_address)
+                </code></pre></br>
+                And then we also need to implement the workers;
+                <pre><code class="python"> 
+# ecommerce_worker.py
+from ecommerce_tasks import EmailTask
+
+from backie.worker import Worker
+
+if __name__ == "__main__":
+    email_task = EmailTask()
+
+    # run workers
+    _worker = Worker(task=email_task)
+    _worker.start()
+                </code></pre></br>
+
+                Putting it all together, lets run a redis broker(using docker);
+                <pre><code class="bash"> 
+docker run -p 6379:6379 redis:5.0-alpine
+               </code></pre></br>
+                And in one terminal we run the tasks;
+                <pre><code class="bash"> 
+python ecommerce_tasks.py
+    task: 4ed63e42-f614-4093-a654-46211d5de8cf succesfully queued
+                </code></pre></br>
+                In a third terminal run the workers;
+                <pre><code class="bash">
+python code/ecommerce_worker.py
+    running task: 4ed63e42-f614-4093-a654-46211d5de8cf
+    https://httpbin.org/24dkq40/example@example.org
+    succesful run of task: 4ed63e42-f614-4093-a654-46211d5de8cf
+                </code></pre></br>
 
 
                 <strong id="Conclusion">Conclusion</strong>
