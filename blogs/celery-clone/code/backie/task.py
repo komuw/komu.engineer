@@ -2,7 +2,8 @@ import abc
 import json
 import uuid
 
-from broker import Broker
+
+from .broker import Broker
 
 
 class Task(abc.ABC):

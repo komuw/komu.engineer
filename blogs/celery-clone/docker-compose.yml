@@ -5,17 +5,3 @@ services:
     image: 'redis:5.0-alpine'
     ports:
       - "6379:6379"
-
-  app:
-    build:
-      context: .
-    volumes:
-      - ./:/app
-    command: python /app/code/ecommerce_tasks.py
-
-  worker:
-    build:
-      context: .
-    volumes:
-      - ./:/app
-    command: python /app/code/ecommerce_worker.py

@@ -1,6 +1,6 @@
-from task import Task
+from backie.task import Task
 
-
+# pip install redis requests
 import requests
 
 
