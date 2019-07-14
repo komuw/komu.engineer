@@ -6,7 +6,7 @@ import uuid
 from .broker import Broker
 
 
-class Task(abc.ABC):
+class BaseTask(abc.ABC):
     task_name = None
 
     def __init__(self):

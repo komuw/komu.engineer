@@ -1,10 +1,10 @@
-from backie.task import Task
+from backie.task import BaseTask
 
 # pip install redis requests
 import requests
 
 
-class EmailTask(Task):
+class EmailTask(BaseTask):
     """
     task to send email to customer after they have ordered.
     """
