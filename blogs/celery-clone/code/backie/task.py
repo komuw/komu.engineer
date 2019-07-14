@@ -16,6 +16,7 @@ class BaseTask(abc.ABC):
 
     @abc.abstractmethod
     def run(self, *args, **kwargs):
+        # put your business logic here
         raise NotImplementedError("Task `run` method must be implemented.")
 
     def delay(self, *args, **kwargs):

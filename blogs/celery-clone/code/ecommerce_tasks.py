@@ -19,7 +19,7 @@ class EmailTask(BaseTask):
 
 
 if __name__ == "__main__":
-    email_task = EmailTask()
     order_id = "24dkq40"
-    address = "example@example.org"
-    email_task.delay(order_id, address)
+    email_address = "example@example.org"
+    email_task = EmailTask()
+    email_task.delay(order_id, email_address)

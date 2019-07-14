@@ -47,9 +47,15 @@
                 </br>
                 </br>
                 <ol>
-                    <li> <a href="#Intro">Intro</a> </li>
+                    <li><a href="#Intro">Intro</a></li>
                     <li> <a href="#How-they-work">How they work</a></li>
-                    <li> <a href="#Implementation">Implementation</a></li>
+                    <li><a href="#Implementation">Implementation</a>
+                        <ul>
+                            <li><a href="#Base-Task">(a) Base-Task</a></li>
+                            <li><a href="#Broker">(b) Broker</a></li>
+                            <li><a href="#Worker">(c) Worker</a></li>
+                        </ul>
+                    </li>
                     <li> <a href="#Conclusion">Conclusion</a></li>
                 </ol>
 
@@ -61,7 +67,7 @@
                 <a target="_blank" rel="noopener" href="https://github.com/celery/celery">Celery</a>,
                 <a target="_blank" rel="noopener" href="https://github.com/resque/resque">Resque</a>,
                 <a target="_blank" rel="noopener" href="https://sidekiq.org/">Sidekiq</a>, among others.</br>
-                In this blogpost we will try and understand how this things work by building a clone/replica of such
+                In this blogpost we will try and understand how these things work by building a clone/replica of such
                 software.</br></br>
 
                 When do we need to use a background task processor?</br>
@@ -106,10 +112,14 @@
                 <strong id="Implementation">Implementation</strong>
                 </br>
                 We are going to implement a background job library(we will name it <i>backie</i>, short for background
-                processor) that will work in the manner laid out in the previous section.<br>
+                processor) that will work in the manner laid out in the previous section.<br></br>
+
+                <strong id="Base-Task">(a) Base-Task</strong>
+                </br>
                 We will create a base task/job class that all users of <i>backie</i> will have to subclass in order to
                 create tasks that can be ran in the background.
                 <pre><code class="python">
+# backie/task.py
 import abc
 import json
 import uuid
@@ -126,6 +136,7 @@ class BaseTask(abc.ABC):
 
     @abc.abstractmethod
     def run(self, *args, **kwargs):
+        # put your business logic here
         raise NotImplementedError("Task `run` method must be implemented.")
 
     def delay(self, *args, **kwargs):
@@ -137,8 +148,113 @@ class BaseTask(abc.ABC):
         except Exception:
             raise Exception("Unable to publish task to the broker.")           
                 </code></pre></br>
+                So, if you want to create a task that will be processed in the background, you import the BaseTask from
+                <i>backie</i> and create a subclass of it where you provide an implementation of the <i>run</i>
+                method.</br>
+                To run your task, you call the <i>delay</i> method with arguments that you want. The BaseTask will in
+                the background serialize those arguments to json and store them in a broker/store.</br>
+                ie, you use would use this as:
+                <pre><code class="python">
+from backie.task import BaseTask
 
+import requests
+
+class EmailTask(BaseTask):
+    """
+    task to send email to customer after they have ordered.
+    """
+
+    task_name = "EmailTask"
+
+    def run(self, order_id, email_address):
+        # lets pretend httpbin.org is an email service provider
+        url = "https://httpbin.org/{0}/{1}".format(order_id, email_address)
+        print(url)
+        response = requests.get(url, timeout=5.0)
+        print("response:: ", response)
+
+
+email_task = EmailTask()
+email_task.delay(order_id="24dkq40", email_address="example@example.org")                 
+                </code></pre></br></br>
+
+                <strong id="Broker">(b) Broker</strong>
+                </br>
+                Our BaseTask refers to a broker that is been used to store the tasks. Lets implement that broker.
+                <pre><code class="python">
+# backie/broker.py
+import redis # pip install redis
+
+class Broker:
+    """
+    use redis as our broker.
+    This implements a basic FIFO queue using redis.
+    """
+    def __init__(self):
+        host = "localhost"
+        port = 6379
+        password = None
+        self.redis_instance = redis.StrictRedis(
+            host=host, port=port, password=password, db=0, socket_timeout=8.0
+        )
+
+    def enqueue(self, item, queue_name):
+        self.redis_instance.lpush(queue_name, item)
+
+    def dequeue(self, queue_name):
+        dequed_item = self.redis_instance.brpop(queue_name, timeout=3)
+        if not dequed_item:
+            return None
+        dequed_item = dequed_item[1]
+        return dequed_item      
+                </code></pre></br>
+                In this case we are using redis as our broker. But you can use any other store to do that. You could
+                store the tasks in memory, in a database, in the filesystem, you could even store them in a blockchain
+                if you want to stay current with the hype.</br>
+                What you use as the backing store does not matter, as you can see, the <i>BaseTask</i> is serializing
+                the task arguments to a json string and that is what is stored. Find yourself a place that can store
+                json strings and you are good to go.</br>
+
+                This is how celery is able to <a target="_blank" rel="noopener"
+                    href="http://docs.celeryproject.org/en/latest/getting-started/brokers/">support different brokers.
+                </a> When you do <i>task.delay(3,5)</i> Celery serializes all the task arguments to json and sends them
+                to a broker for storage. Celery workers(at a later time) dequeues those arguments from the broker,
+                deserializes(<i>json.loads()</i>) and executes the original function with the arguments.
                 </br></br>
+
+                <strong id="Worker">(c) Worker</strong>
+                </br>
+                Now that the task arguments(and any other metadata like task_id) have been stored in the broker, we now
+                need to actually run those tasks.</br>
+                We do that via a worker, lets implement one;
+                <pre><code class="python">
+# backie/worker.py
+import json
+
+class Worker:
+    def __init__(self, task) -> None:
+        self.task = task
+
+    def run_task(self, *task_args, **task_kwargs):
+        self.task.run(*task_args, **task_kwargs)
+
+    def start(self,):
+        while True:
+            try:
+                _dequeued_item = self.task.broker.dequeue(queue_name=self.task.task_name)
+                dequeued_item = json.loads(_dequeued_item)
+                task_id = dequeued_item["task_id"]
+                task_args = dequeued_item["args"]
+                task_kwargs = dequeued_item["kwargs"]
+
+                print("running task: {0}".format(task_id))
+                self.run_task(*task_args, **task_kwargs)
+                print("succesful run of task: {0}".format(task_id))
+            except Exception:
+                print("Unable to execute task.")
+                continue       
+                </code></pre></br>
+                </br>
 
 
 
