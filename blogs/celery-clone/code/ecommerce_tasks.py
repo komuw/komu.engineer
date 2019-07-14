@@ -4,7 +4,6 @@ from backie.task import BaseTask
 import requests
 
 
-
 class EmailTask(BaseTask):
     """
     task to send email to customer after they have ordered.
