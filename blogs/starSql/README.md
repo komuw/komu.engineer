@@ -1102,5 +1102,5 @@ https://info.crunchydata.com/blog/postgresql-brin-indexes-big-data-performance-w
 
 
 6. tune Autovacuum     
-1. https://www.2ndquadrant.com/en/blog/autovacuum-tuning-basics/     
-2. https://gist.github.com/oguya/57e6bcbacc27e96eaddb6b5f95ebfe31 - cool autovacuum notes by @oguya
+- https://www.2ndquadrant.com/en/blog/autovacuum-tuning-basics/     
+- https://gist.github.com/oguya/57e6bcbacc27e96eaddb6b5f95ebfe31 - cool autovacuum notes by @oguya
