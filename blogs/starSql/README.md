@@ -1098,5 +1098,9 @@ They’re useful to know if specific indexes can increase performance for proble
 Also see this talk, [how postgres could index itself](https://www.youtube.com/watch?v=Mni_1yTaNbE)      
 
 - You could use BRIN indices for performance and also reduced index sizes.    
-https://info.crunchydata.com/blog/postgresql-brin-indexes-big-data-performance-with-minimal-storage
+https://info.crunchydata.com/blog/postgresql-brin-indexes-big-data-performance-with-minimal-storage      
 
+
+6. tune Autovacuum     
+1. https://www.2ndquadrant.com/en/blog/autovacuum-tuning-basics/     
+2. https://gist.github.com/oguya/57e6bcbacc27e96eaddb6b5f95ebfe31 - cool autovacuum notes by @oguya
