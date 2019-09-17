@@ -1113,6 +1113,7 @@ SELECT
     relname,
     n_live_tup,
     n_dead_tup,
+    last_autoanalyze,
     last_autovacuum
 FROM
     pg_stat_all_tables
