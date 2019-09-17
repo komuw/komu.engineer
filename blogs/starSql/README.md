@@ -1104,3 +1104,25 @@ https://info.crunchydata.com/blog/postgresql-brin-indexes-big-data-performance-w
 6. tune Autovacuum     
 - https://www.2ndquadrant.com/en/blog/autovacuum-tuning-basics/     
 - https://gist.github.com/oguya/57e6bcbacc27e96eaddb6b5f95ebfe31 - cool autovacuum notes by @oguya
+
+
+7. find number of dead tuples/rows and last time autovacuum ran on tables
+```sql
+SELECT
+    schemaname,
+    relname,
+    n_live_tup,
+    n_dead_tup,
+    last_autovacuum
+FROM
+    pg_stat_all_tables
+ORDER BY
+    n_dead_tup / (n_live_tup * current_setting('autovacuum_vacuum_scale_factor')::float8 + current_setting('autovacuum_vacuum_threshold')::float8)
+    DESC
+LIMIT 10;
+```
+```sh
+schemaname |     relname     | n_live_tup | n_dead_tup |        last_autovacuum
+------------+-----------------+------------+------------+-------------------------------
+ public     | mine_cool      |        172 |       2094 | 2019-09-17 05:36:29.139304+00
+ ```
