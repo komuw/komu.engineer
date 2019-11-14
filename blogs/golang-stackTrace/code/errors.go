@@ -1,16 +1,24 @@
-package main
+// Package errors provides ability to annotate you regular Go errors with stack traces.
+//
+// To use this package, you could replace this code;
+//
+//     if err != nil {
+//         return err
+//     }
+//
+// with;
+//
+//     if err != nil {
+//         return errors.Wrap(err)
+//     }
+//
+package errors
 
 import (
-	"errors"
 	"fmt"
 	"runtime"
-	"strconv"
 	"strings"
 )
-
-/*
-API for an errors package that provides stack traces.
-*/
 
 const maxStackLength = 50
 
@@ -27,7 +35,6 @@ func (m Error) Error() string {
 
 // Wrap annotates the given error with a stack trace
 func Wrap(err error) Error {
-
 	return Error{StackTrace: getStackTrace(), Err: err}
 }
 
@@ -48,28 +55,4 @@ func getStackTrace() string {
 		}
 	}
 	return trace
-}
-
-/*
-how to use that API
-*/
-func error1() (int, error) {
-	i, err := strconv.Atoi("f42")
-	if err != nil {
-		return 0, Wrap(err)
-	}
-	return i, nil
-
-}
-
-func main() {
-	_, err := error1()
-	if err != nil {
-		fmt.Println(err)
-	}
-
-	e := errors.New("something bad happened")
-	fmt.Println()
-	fmt.Println(Wrap(e))
-
 }
