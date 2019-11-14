@@ -11,10 +11,13 @@ import (
 API for an errors package that provides stack traces.
 */
 
+const maxStackLength = 50
+
+// Error is the type that implements the error interface.
+// It contains the underlying err and the stacktrace of the error site..
 type Error struct {
-	Stack      []uintptr
-	StackTrace string
 	Err        error
+	StackTrace string
 }
 
 func (m Error) Error() string {
@@ -22,11 +25,11 @@ func (m Error) Error() string {
 }
 
 func newError(err error) Error {
-	stack := make([]uintptr, 50)
+	stack := make([]uintptr, maxStackLength)
 	length := runtime.Callers(2, stack[:])
 	mStack := stack[:length]
-	myt := Error{Stack: mStack, StackTrace: getStackTrace(mStack), Err: err}
-	return myt
+	e := Error{StackTrace: getStackTrace(mStack), Err: err}
+	return e
 }
 
 func getStackTrace(stack []uintptr) string {
