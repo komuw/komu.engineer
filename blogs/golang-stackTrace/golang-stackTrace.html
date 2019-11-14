@@ -48,7 +48,20 @@
                 </br></br>
 
                 In Go, errors are values. This is different from languages like Java or Python that have exceptions.</br>
-                Errors are represented with the <a target="_blank" rel="noopener" href="https://golang.org/pkg/builtin/#error">error built-in interface</a>
+                Errors are represented with the <a target="_blank" rel="noopener" href="https://golang.org/pkg/builtin/#error">error built-in interface</a></br>
+                The way I like thinking about this is; errors are not side effects of your application, instead, they are part and parcel of the application.</br>
+                If you have an application that reads files from disk, the app's inability to read a file(maybe because the file does not exist) is an integral part of that 
+                applications domain. And therefore, the errors(and error messages) that emanate from that failure should be considered as part of that app's design. These are errors.</br> 
+
+                If, on the other hand, the app was unable to read a file because at that particular point in time the computer it was running in got hit by a cosmic ray from outer space, then 
+                that is an exception(the english meaning of the word.) In Go, we reserve <a target="_blank" rel="noopener" href="https://golang.org/pkg/builtin/#panic">panic</a> for those kind of situations.</br> </br> 
+
+                The only data that is available in a Go error produced using the stdlib <i>errors</i> package is the error message, which is a string.</br>
+                Sometimes you may want more than that, like the file and line number where the error was emitted. The stdlib error will not give you that.</br></br>
+
+                This article will not go into the details of whether stacktraces are necessary or not, there are plenty of articles out there that will try to convince you one way or the other. You should go read them.</br>
+                This article assumes that you have come to the conclusion that you need stacktraces with your errors.</br> We are going to figure out how to get stacktraces out of any errors, including the ones created by the stdlib errors packages.
+
                </br></br>
 
                 <strong id="How-they-work">How they work</strong>
