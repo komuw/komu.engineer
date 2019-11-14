@@ -25,14 +25,6 @@ func (m Error) Error() string {
 	return m.Err.Error() + m.StackTrace
 }
 
-// New returns an error that contains an underlying that formats as the given text.
-func New(text string) error {
-	stack := make([]uintptr, maxStackLength)
-	length := runtime.Callers(2, stack[:])
-	mStack := stack[:length]
-	return Error{StackTrace: getStackTrace(mStack), Err: errors.New(text)}
-}
-
 // Wrap annotates the given error with a stack trace
 func Wrap(err error) Error {
 	stack := make([]uintptr, maxStackLength)
@@ -74,8 +66,8 @@ func main() {
 		fmt.Println(err)
 	}
 
-	e := New("something bad happened")
+	e := errors.New("something bad happened")
 	fmt.Println()
-	fmt.Println(e)
+	fmt.Println(Wrap(e))
 
 }
