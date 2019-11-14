@@ -74,4 +74,8 @@ func main() {
 		fmt.Println(err)
 	}
 
+	e := New("something bad happened")
+	fmt.Println()
+	fmt.Println(e)
+
 }
