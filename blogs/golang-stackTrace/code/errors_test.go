@@ -1,5 +1,8 @@
 package errors
 
+//
+// This shows how to use the custom errors package
+//
 import (
 	"strconv"
 
