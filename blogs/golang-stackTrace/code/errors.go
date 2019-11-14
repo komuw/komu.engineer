@@ -1,6 +1,7 @@
 package main
 
 import (
+	"errors"
 	"fmt"
 	"runtime"
 	"strconv"
@@ -24,12 +25,20 @@ func (m Error) Error() string {
 	return m.Err.Error() + m.StackTrace
 }
 
-func newError(err error) Error {
+// New returns an error that contains an underlying that formats as the given text.
+func New(text string) error {
 	stack := make([]uintptr, maxStackLength)
 	length := runtime.Callers(2, stack[:])
 	mStack := stack[:length]
-	e := Error{StackTrace: getStackTrace(mStack), Err: err}
-	return e
+	return Error{StackTrace: getStackTrace(mStack), Err: errors.New(text)}
+}
+
+// Wrap annotates the given error with a stack trace
+func Wrap(err error) Error {
+	stack := make([]uintptr, maxStackLength)
+	length := runtime.Callers(2, stack[:])
+	mStack := stack[:length]
+	return Error{StackTrace: getStackTrace(mStack), Err: err}
 }
 
 func getStackTrace(stack []uintptr) string {
@@ -53,7 +62,7 @@ how to use that API
 func error1() (int, error) {
 	i, err := strconv.Atoi("f42")
 	if err != nil {
-		return 0, newError(err)
+		return 0, Wrap(err)
 	}
 	return i, nil
 
