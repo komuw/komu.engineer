@@ -27,13 +27,15 @@ func (m Error) Error() string {
 
 // Wrap annotates the given error with a stack trace
 func Wrap(err error) Error {
-	stack := make([]uintptr, maxStackLength)
-	length := runtime.Callers(2, stack[:])
-	mStack := stack[:length]
-	return Error{StackTrace: getStackTrace(mStack), Err: err}
+
+	return Error{StackTrace: getStackTrace(), Err: err}
 }
 
-func getStackTrace(stack []uintptr) string {
+func getStackTrace() string {
+	stackBuf := make([]uintptr, maxStackLength)
+	length := runtime.Callers(3, stackBuf[:])
+	stack := stackBuf[:length]
+
 	trace := ""
 	frames := runtime.CallersFrames(stack)
 	for {
