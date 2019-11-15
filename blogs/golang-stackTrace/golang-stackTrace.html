@@ -204,9 +204,18 @@ strconv.Atoi: parsing "f42": invalid syntax
                 </code></pre>       
 
                 </br>
-               
-
                 <strong id="Conclusion">Conclusion</strong>
+                </br>
+                If you need stacktraces to accompany your errors, that's the way to do it; or at least one of the ways.</br>
+                Of course you do not have to implement the package yourself, there <a target="_blank" rel="noopener" href="https://pkg.go.dev/errors?tab=doc">already</a> 
+                <a target="_blank" rel="noopener" href="https://pkg.go.dev/github.com/palantir/stacktrace?tab=doc">exists</a> a  
+                <a target="_blank" rel="noopener" href="https://pkg.go.dev/go.elastic.co/apm/stacktrace?tab=overview">number</a> of 
+                <a target="_blank" rel="noopener" href="https://pkg.go.dev/github.com/rollbar/rollbar-go?tab=overview">such</a> packages built by the Go open source community.</br>
+                But getting to know how they work might be important to you.</br></br>
+
+                All the code in this blogpost can be found at: <a target="_blank" rel="noopener"
+                href="https://github.com/komuw/komu.engineer/tree/master/blogs/golang-stackTrace">
+                https://github.com/komuw/komu.engineer/tree/master/blogs/golang-stackTrace</a>
                 </br>
                 </br>
 
