@@ -97,7 +97,7 @@ func getStackTrace() string {
     frames := runtime.CallersFrames(stack)
     for {
         frame, more := frames.Next()
-        trace = trace + fmt.Sprintf("\n\tFile: %s, Line: %d. Function: %s.", frame.File, frame.Line, frame.Function)
+        trace = trace + fmt.Sprintf("\n\tFile: %s, Line: %d. Function: %s", frame.File, frame.Line, frame.Function)
         if !more {
             break
         }
@@ -155,7 +155,7 @@ func getStackTrace() string {
     for {
         frame, more := frames.Next()
         if !strings.Contains(frame.File, "runtime/") {
-            trace = trace + fmt.Sprintf("\n\tFile: %s, Line: %d. Function: %s.", frame.File, frame.Line, frame.Function)
+            trace = trace + fmt.Sprintf("\n\tFile: %s, Line: %d. Function: %s", frame.File, frame.Line, frame.Function)
         }
         if !more {
             break
@@ -199,8 +199,8 @@ func main() {
                 Running that code produces:
                 <pre><code class="bash">
 strconv.Atoi: parsing "f42": invalid syntax
-    File: /tmp/code/main.go, Line: 50. Function: main.atoi.
-    File: /tmp/code/main.go, Line: 57. Function: main.main.
+    File: /tmp/code/main.go, Line: 50. Function: main.atoi
+    File: /tmp/code/main.go, Line: 57. Function: main.main
                 </code></pre>       
 
                 </br>
