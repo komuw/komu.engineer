@@ -107,7 +107,7 @@ func getStackTrace() string {
                 </code></pre>
                 <a target="_blank" rel="noopener" href="https://pkg.go.dev/runtime?tab=doc#Callers">runtime.Callers</a> takes a slice and fills it up with the return <i>program counters</i> of function invocations on the calling goroutine's stack.</br>
                 We then use <a target="_blank" rel="noopener" href="https://pkg.go.dev/runtime?tab=doc#CallersFrames">runtime.CallersFrames</a> to convert the <i>program counters</i> into <i>Frames</i>, which is a struct that contains a slice to <i>Frame</i> struct.</br>
-                It is this <a target="_blank" rel="noopener" href="https://github.com/golang/go/blob/3f995c3f3b43033013013e6c7ccc93a9b1411ca9/src/runtime/symtab.go#L25">Frame</a> struct that contains the data that we are interested in. It contains, the name of the calling function, the file name and line location among other useful data.</br>
+                It is this <a target="_blank" rel="noopener" href="https://github.com/golang/go/blob/3f995c3f3b43033013013e6c7ccc93a9b1411ca9/src/runtime/symtab.go#L24-L25">Frame</a> struct that contains the data that we are interested in. It contains, the name of the calling function, the file name and line location among other useful data.</br>
                 Now that we have the data we want, we just have to make it available for use in our errors.
                 <pre><code class="go">
 func (m Error) Error() string {
