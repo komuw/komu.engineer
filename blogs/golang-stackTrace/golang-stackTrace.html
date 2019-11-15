@@ -47,27 +47,43 @@
                 <strong>Create Go errors that have stack traces. (18 November 2019)</strong>
                 </br></br>
 
-                In Go, errors are values. This is different from languages like Java or Python that have exceptions.</br>
-                Errors are represented with the <a target="_blank" rel="noopener" href="https://pkg.go.dev/builtin/?tab=doc#error">error built-in interface</a></br>
-                The way I like thinking about this is; errors are not side effects of your application, instead, they are part and parcel of the application.</br>
-                If you have an application that reads files from disk, the app's inability to read a file(maybe because the file does not exist) is an integral part of that 
-                applications domain. And therefore, the errors that emanate from that failure should be considered to be part of that app's design space.</br> 
+                In Go, errors are values. This is different from languages like Java or Python that have
+                exceptions.</br>
+                Errors are represented with the <a target="_blank" rel="noopener"
+                    href="https://pkg.go.dev/builtin/?tab=doc#error">error built-in interface</a></br>
+                The way I like thinking about this is; errors are not side effects of your application, instead, they
+                are part and parcel of the application.</br>
+                If you have an application that reads files from disk, the app's inability to read a file(maybe because
+                the file does not exist) is an integral part of that
+                applications domain. And therefore, the errors that emanate from that failure should be considered to be
+                part of that app's design space.</br>
 
-                If, on the other hand, the app was unable to read a file because at that particular point in time the computer it was running in got hit by a cosmic ray from outer space, then 
-                that is an exception(the english meaning of the word.) In Go, we usually use <a target="_blank" rel="noopener" href="https://pkg.go.dev/builtin/?tab=doc#panic">panic</a> for those kind of situations.</br> </br> 
+                If, on the other hand, the app was unable to read a file because at that particular point in time the
+                computer it was running in got hit by a cosmic ray from outer space, then
+                that is an exception(the english meaning of the word.) In Go, we usually use <a target="_blank"
+                    rel="noopener" href="https://pkg.go.dev/builtin/?tab=doc#panic">panic</a> for those kind of
+                situations.</br> </br>
 
-                The only data that is available in a Go error produced using the stdlib <a target="_blank" rel="noopener" href="https://pkg.go.dev/errors?tab=doc">errors</a> package is the error message, which is a string.</br>
-                Sometimes you may want more than that, like the file and line number where the error was emitted. The stdlib error will not give you that.</br></br>
+                The only data that is available in a Go error produced using the stdlib <a target="_blank"
+                    rel="noopener" href="https://pkg.go.dev/errors?tab=doc">errors</a> package is the error message,
+                which is a string.</br>
+                Sometimes you may want more than that, like the file and line number where the error was emitted. The
+                stdlib error will not give you that.</br></br>
 
-                This article will not go into the question of whether stacktraces are necessary or not, there are plenty of articles out there that will try to convince you one way or the other. You should go read them.</br>
-                This article assumes that you have come to the conclusion that you need stacktraces in your errors.</br> We are going to figure out how to get stacktraces out of any errors, including the ones created by the stdlib <i>errors</i> package.</br>
-                We will do this by implementing a Go package that when given an error as an input, will return another error annotated with a stacktrace.
+                This article will not go into the question of whether stacktraces are necessary or not, there are plenty
+                of articles out there that will try to convince you one way or the other. You should go read them.</br>
+                This article assumes that you have come to the conclusion that you need stacktraces in your errors.</br>
+                We are going to figure out how to get stacktraces out of any errors, including the ones created by the
+                stdlib <i>errors</i> package.</br>
+                We will do this by implementing a Go package that when given an error as an input, will return another
+                error annotated with a stacktrace.
 
-               </br></br>
+                </br></br>
 
-                <strong id="Implementation">Implementation</strong>
+                <strong id="Implementation">Implementation:</strong>
                 </br>
-                We are going to start with a custom error type, which is just about any type that implements the <a target="_blank" rel="noopener" href="https://pkg.go.dev/builtin/?tab=doc#error">error interface</a>
+                We are going to start with a custom error type, which is just about any type that implements the <a
+                    target="_blank" rel="noopener" href="https://pkg.go.dev/builtin/?tab=doc#error">error interface</a>
                 <pre><code class="go">
 // Error is the type that implements the error interface.
 // It contains the underlying err and its stacktrace.
@@ -85,7 +101,9 @@ func Wrap(err error) Error {
 }
                 </code></pre>
 
-                We have the <i>getStackTrace()</i> function which will contain the bulk of our custom errors package implementation. What we want is a list of function calls that led up to the point where an error occured.</br>
+                We have the <i>getStackTrace()</i> function which will contain the bulk of our custom errors package
+                implementation. What we want is a list of function calls that led up to the point where an error
+                occured.</br>
                 The Go runtime package has just the functions for that kind of thing,
                 <pre><code class="go">
 func getStackTrace() string {
@@ -105,16 +123,25 @@ func getStackTrace() string {
     return trace
 }
                 </code></pre>
-                <a target="_blank" rel="noopener" href="https://pkg.go.dev/runtime?tab=doc#Callers">runtime.Callers</a> takes a slice and fills it up with the return <i>program counters</i> of function invocations on the calling goroutine's stack.</br>
-                We then use <a target="_blank" rel="noopener" href="https://pkg.go.dev/runtime?tab=doc#CallersFrames">runtime.CallersFrames</a> to convert the <i>program counters</i> into <i>Frames</i>, which is a struct that contains a slice to <i>Frame</i> struct.</br>
-                It is this <a target="_blank" rel="noopener" href="https://github.com/golang/go/blob/3f995c3f3b43033013013e6c7ccc93a9b1411ca9/src/runtime/symtab.go#L24-L25">Frame</a> struct that contains the data that we are interested in. It contains, the name of the calling function, the file name and line location among other useful data.</br>
+                <a target="_blank" rel="noopener" href="https://pkg.go.dev/runtime?tab=doc#Callers">runtime.Callers</a>
+                takes a slice and fills it up with the return <i>program counters</i> of function invocations on the
+                calling goroutine's stack.</br>
+                We then use <a target="_blank" rel="noopener"
+                    href="https://pkg.go.dev/runtime?tab=doc#CallersFrames">runtime.CallersFrames</a> to convert the
+                <i>program counters</i> into <i>Frames</i>, which is a struct that contains a slice to <i>Frame</i>
+                struct.</br>
+                It is this <a target="_blank" rel="noopener"
+                    href="https://github.com/golang/go/blob/3f995c3f3b43033013013e6c7ccc93a9b1411ca9/src/runtime/symtab.go#L24-L25">Frame</a>
+                struct that contains the data that we are interested in. It contains, the name of the calling function,
+                the file name and line location among other useful data.</br>
                 Now that we have the data we want, we just have to make it available for use in our errors.
                 <pre><code class="go">
 func (m Error) Error() string {
     return m.Err.Error() + m.StackTrace
 }
                 </code></pre>
-                We choose to append the stacktrace to the error message itself; but you could decide to avail that trace in some other way.</br></br>
+                We choose to append the stacktrace to the error message itself; but you could decide to avail that trace
+                in some other way.</br></br>
 
                 Finally, here's the full source code to our custom error package.
                 <pre><code class="go">
@@ -164,10 +191,10 @@ func getStackTrace() string {
     return trace
 }
                 </code></pre>
-                
+
 
                 </br>
-                <strong id="Usage">Usage</strong>
+                <strong id="Usage">Usage:</strong>
                 </br>
                 We have the package, so how do we use it? Simple;
                 <pre><code class="go">
@@ -201,21 +228,27 @@ func main() {
 strconv.Atoi: parsing "f42": invalid syntax
     File: /tmp/code/main.go, Line: 50. Function: main.atoi
     File: /tmp/code/main.go, Line: 57. Function: main.main
-                </code></pre>       
+                </code></pre>
 
                 </br>
-                <strong id="Conclusion">Conclusion</strong>
+                <strong id="Conclusion">Conclusion:</strong>
                 </br>
-                If you need stacktraces to accompany your errors, that's the way to do it; or at least one of the ways.</br>
-                Of course you do not have to implement the package yourself, there <a target="_blank" rel="noopener" href="https://pkg.go.dev/errors?tab=doc">already</a> 
-                <a target="_blank" rel="noopener" href="https://pkg.go.dev/github.com/palantir/stacktrace?tab=doc">exists</a> a  
-                <a target="_blank" rel="noopener" href="https://pkg.go.dev/go.elastic.co/apm/stacktrace?tab=overview">number</a> of 
-                <a target="_blank" rel="noopener" href="https://pkg.go.dev/github.com/rollbar/rollbar-go?tab=overview">such</a> packages built by the Go open source community.</br>
+                If you need stacktraces to accompany your errors, that's the way to do it; or at least one of the
+                ways.</br>
+                Of course you do not have to implement the package yourself, there <a target="_blank" rel="noopener"
+                    href="https://pkg.go.dev/errors?tab=doc">already</a>
+                <a target="_blank" rel="noopener"
+                    href="https://pkg.go.dev/github.com/palantir/stacktrace?tab=doc">exists</a> a
+                <a target="_blank" rel="noopener"
+                    href="https://pkg.go.dev/go.elastic.co/apm/stacktrace?tab=overview">number</a> of
+                <a target="_blank" rel="noopener"
+                    href="https://pkg.go.dev/github.com/rollbar/rollbar-go?tab=overview">such</a> packages built by the
+                Go open source community.</br>
                 But getting to know how they work might be important to you.</br></br>
 
                 All the code in this blogpost can be found at: <a target="_blank" rel="noopener"
-                href="https://github.com/komuw/komu.engineer/tree/master/blogs/golang-stackTrace">
-                https://github.com/komuw/komu.engineer/tree/master/blogs/golang-stackTrace</a>
+                    href="https://github.com/komuw/komu.engineer/tree/master/blogs/golang-stackTrace">
+                    https://github.com/komuw/komu.engineer/tree/master/blogs/golang-stackTrace</a>
                 </br>
                 </br>
 
