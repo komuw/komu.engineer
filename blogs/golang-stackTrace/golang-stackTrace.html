@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Komu W - Build a Go package that annotates errors with stack traces.</title>
+    <meta name="description" content="Build a Go package that annotates errors with stack traces." />
+    <meta property="og:url" content="https://www.komu.engineer/blog" />
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ADD FAVICON -->
+
+    <link rel="stylesheet" href="../../site.css">
+
+    <!-- Get highlightjs by going to https://highlightjs.org/download/, select the languages you want and download. -->
+    <link rel="stylesheet" href="../../highlightjs/styles/default.css">
+    <script src="../../highlightjs/highlight.pack.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <a href="https://www.komu.engineer">Home</a>&nbsp;&nbsp;
+            <a href="https://www.komu.engineer/about">About Me</a>&nbsp;&nbsp;
+            <a href="https://www.komu.engineer/blog">Blog</a>&nbsp;&nbsp;
+        </div>
+        <div class="left-sidebar">
+            .
+        </div>
+        <div class="right-sidebar">
+            .
+        </div>
+
+        <div class="main">
+            <p>
+                </br>
+                <strong>Build a Go package that annotates errors with stack traces. (18 November 2019)</strong>
+                </br></br>
+
+                In Go, errors are values. This is different from languages like Java or Python that have
+                exceptions.</br>
+                The way I like thinking about this is; errors are not side effects of your application, instead, they
+                are part and parcel of the application.</br>
+                If you have an application that reads files from disk, the app's inability to read a file(maybe because
+                the file does not exist) is an integral part of that
+                applications' domain. And therefore, the errors that emanate from that failure should be considered part of that app's design space.</br>
+
+                If, on the other hand, the app was unable to read a file because at that particular point in time the
+                computer it was running in got hit by a cosmic ray from outer space, then
+                that is an exception(the english meaning of the word.) In Go, we usually use <a target="_blank"
+                    rel="noopener" href="https://pkg.go.dev/builtin/?tab=doc#panic">panic</a> for those kind of
+                situations.</br> </br>
+
+                The only data that is available in a Go error produced using the stdlib <a target="_blank"
+                    rel="noopener" href="https://pkg.go.dev/errors?tab=doc">errors</a> package is the error message,
+                which is a string.</br>
+                Sometimes you may want more than that, like the file and line number where the error was emitted. The
+                stdlib error will not "usually" give you that.</br></br>
+
+                This article will not go into the question of whether stacktraces are necessary or not, there are plenty
+                of articles out there that will try to convince you one way or the other. You should go read them.</br>
+                This article assumes that you have come to the conclusion that you need stacktraces in your errors.</br>
+                We are going to figure out how to get stacktraces out of any errors, including the ones created by the
+                stdlib <i>errors</i> package.</br>
+                We will do this by implementing a Go package that when given an error as an input, will return another
+                error annotated with a stacktrace.
+
+                </br></br>
+
+                <strong id="Implementation">Implementation:</strong>
+                </br>
+                We are going to start with a custom error type, which is just about any type that implements the <a
+                    target="_blank" rel="noopener" href="https://pkg.go.dev/builtin/?tab=doc#error">error interface</a>
+                <pre><code class="go">
+// Error is the type that implements the error interface.
+// It contains the underlying err and its stacktrace.
+type Error struct {
+    Err        error
+    StackTrace string
+}
+                </code></pre>
+
+                Then we need a function that takes in an error and returns an error annotated with a stacktrace.
+                <pre><code class="go">
+// Wrap annotates the given error with a stack trace
+func Wrap(err error) Error {
+	return Error{Err: err, StackTrace: getStackTrace()}
+}
+                </code></pre>
+
+                We have the <i>getStackTrace()</i> function which will contain the bulk of our custom errors package
+                implementation. What we want is a list of function calls that led up to the point where an error
+                occured.</br>
+                The Go runtime package has just the functions for that kind of thing,
+                <pre><code class="go">
+func getStackTrace() string {
+    stackBuf := make([]uintptr, 50)
+    length := runtime.Callers(3, stackBuf[:])
+    stack := stackBuf[:length]
+
+    trace := ""
+    frames := runtime.CallersFrames(stack)
+    for {
+        frame, more := frames.Next()
+        trace = trace + fmt.Sprintf("\n\tFile: %s, Line: %d. Function: %s", frame.File, frame.Line, frame.Function)
+        if !more {
+            break
+        }
+    }
+    return trace
+}
+                </code></pre>
+                <a target="_blank" rel="noopener" href="https://pkg.go.dev/runtime?tab=doc#Callers">runtime.Callers</a>
+                takes a slice and fills it up with the return <i>program counters</i> of function invocations on the
+                calling goroutine's stack.</br>
+                We then use <a target="_blank" rel="noopener"
+                    href="https://pkg.go.dev/runtime?tab=doc#CallersFrames">runtime.CallersFrames</a> to convert the
+                <i>program counters</i> into <i>Frames</i>, which is a struct that contains a slice to <i>Frame</i>
+                struct.</br>
+                It is this <a target="_blank" rel="noopener"
+                    href="https://github.com/golang/go/blob/3f995c3f3b43033013013e6c7ccc93a9b1411ca9/src/runtime/symtab.go#L24-L25">Frame</a>
+                struct that contains the data that we are interested in. It contains, the name of the calling function,
+                the file name and line location among other useful data.</br>
+                Now that we have the data we want, we just have to make it available for use in our errors.
+                <pre><code class="go">
+func (m Error) Error() string {
+    return m.Err.Error() + m.StackTrace
+}
+                </code></pre>
+                We choose to append the stacktrace to the error message itself; but you could decide to avail that trace
+                in some other way.</br></br>
+
+                Finally, here's the full source code to our custom error package.
+                <pre><code class="go">
+// Package errors provides ability to annotate you regular Go errors with stack traces.
+package errors
+
+import (
+    "fmt"
+    "runtime"
+    "strings"
+)
+
+const maxStackLength = 50
+
+// Error is the type that implements the error interface.
+// It contains the underlying err and its stacktrace.
+type Error struct {
+    Err        error
+    StackTrace string
+}
+
+func (m Error) Error() string {
+    return m.Err.Error() + m.StackTrace
+}
+
+// Wrap annotates the given error with a stack trace
+func Wrap(err error) Error {
+    return Error{Err: err, StackTrace: getStackTrace()}
+}
+
+func getStackTrace() string {
+    stackBuf := make([]uintptr, maxStackLength)
+    length := runtime.Callers(3, stackBuf[:])
+    stack := stackBuf[:length]
+
+    trace := ""
+    frames := runtime.CallersFrames(stack)
+    for {
+        frame, more := frames.Next()
+        if !strings.Contains(frame.File, "runtime/") {
+            trace = trace + fmt.Sprintf("\n\tFile: %s, Line: %d. Function: %s", frame.File, frame.Line, frame.Function)
+        }
+        if !more {
+            break
+        }
+    }
+    return trace
+}
+                </code></pre>
+
+
+                </br>
+                <strong id="Usage">Usage:</strong>
+                </br>
+                We have the package, so how do we use it? Simple;
+                <pre><code class="go">
+package main
+
+import (
+    "fmt"
+    "strconv"
+    "our.custom/errors" // import our custom errors package
+)
+
+func atoi() (int, error) {
+	i, err := strconv.Atoi("f42")
+	if err != nil {
+		return 0, errors.Wrap(err) // annotate errors with stacktrace
+	}
+	return i, nil
+
+}
+
+func main() {
+	_, err := atoi()
+	if err != nil {
+		fmt.Println(err)
+
+	}
+}
+                </code></pre>
+                Running that code produces:
+                <pre><code class="bash">
+strconv.Atoi: parsing "f42": invalid syntax
+    File: /tmp/code/main.go, Line: 50. Function: main.atoi
+    File: /tmp/code/main.go, Line: 57. Function: main.main
+                </code></pre>
+
+                </br>
+                <strong id="Conclusion">Conclusion:</strong>
+                </br>
+                If you need stacktraces to accompany your errors, that's the way to do it; or at least one of the
+                ways.</br>
+                Of course you do not have to implement the package yourself, there <a target="_blank" rel="noopener"
+                    href="https://pkg.go.dev/errors?tab=doc">already</a>
+                <a target="_blank" rel="noopener"
+                    href="https://pkg.go.dev/github.com/palantir/stacktrace?tab=doc">exists</a> a
+                <a target="_blank" rel="noopener"
+                    href="https://pkg.go.dev/go.elastic.co/apm/stacktrace?tab=overview">number</a> of
+                <a target="_blank" rel="noopener"
+                    href="https://pkg.go.dev/github.com/rollbar/rollbar-go?tab=overview">such</a> packages built by the
+                Go open source community.</br>
+                But getting to know how they work might be important to you.</br></br>
+
+                All the code in this blogpost can be found at: <a target="_blank" rel="noopener"
+                    href="https://github.com/komuw/komu.engineer/tree/master/blogs/golang-stackTrace">
+                    https://github.com/komuw/komu.engineer/tree/master/blogs/golang-stackTrace</a></br></br>
+
+                You can comment on this article <a target="_blank" rel="noopener"
+                href="https://github.com/komuw/komu.engineer/issues/14">by clicking here.</a>
+                </br>
+                </br>
+
+            </p>
+        </div>
+    </div>
+</body>
