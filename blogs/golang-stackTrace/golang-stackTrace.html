@@ -49,14 +49,11 @@
 
                 In Go, errors are values. This is different from languages like Java or Python that have
                 exceptions.</br>
-                Errors are represented with the <a target="_blank" rel="noopener"
-                    href="https://pkg.go.dev/builtin/?tab=doc#error">error built-in interface</a></br>
                 The way I like thinking about this is; errors are not side effects of your application, instead, they
                 are part and parcel of the application.</br>
                 If you have an application that reads files from disk, the app's inability to read a file(maybe because
                 the file does not exist) is an integral part of that
-                applications domain. And therefore, the errors that emanate from that failure should be considered to be
-                part of that app's design space.</br>
+                applications' domain. And therefore, the errors that emanate from that failure should be considered part of that app's design space.</br>
 
                 If, on the other hand, the app was unable to read a file because at that particular point in time the
                 computer it was running in got hit by a cosmic ray from outer space, then
@@ -68,7 +65,7 @@
                     rel="noopener" href="https://pkg.go.dev/errors?tab=doc">errors</a> package is the error message,
                 which is a string.</br>
                 Sometimes you may want more than that, like the file and line number where the error was emitted. The
-                stdlib error will not give you that.</br></br>
+                stdlib error will not "usually" give you that.</br></br>
 
                 This article will not go into the question of whether stacktraces are necessary or not, there are plenty
                 of articles out there that will try to convince you one way or the other. You should go read them.</br>
