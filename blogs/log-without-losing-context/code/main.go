@@ -15,8 +15,11 @@ run as:
 
 // TODO: docs
 type hook struct {
-	Writer      io.Writer
-	entrybuffer [][]byte
+	Writer io.Writer
+
+	// Note: in production, lineBuffer should use a circular buffer instead of a slice.
+	// we are just using a slice of []bytes here for brevity and blogging purposes.
+	lineBuffer [][]byte
 }
 
 // TODO: docs
@@ -25,34 +28,42 @@ func (h *hook) Fire(entry *logrus.Entry) error {
 	if err1 != nil {
 		return err1
 	}
-	h.entrybuffer = append(h.entrybuffer, line)
+	h.lineBuffer = append(h.lineBuffer, line)
 
 	if entry.Level <= logrus.ErrorLevel {
 		var err2 error
-		for _, line := range h.entrybuffer {
+		for _, line := range h.lineBuffer {
 			_, err2 = h.Writer.Write(line)
 		}
-		h.entrybuffer = nil //clear the slice
+		h.lineBuffer = nil // clear the slice
 		return err2
 	}
 
-	return nil //TODO: remove this
+	return nil
 }
 
-// Levels define on which log levels this hook would trigger
+// TODO: docs
 func (h *hook) Levels() []logrus.Level {
 	return logrus.AllLevels
 }
 
 func main() {
-	logrus.SetOutput(ioutil.Discard) // Send all logs to nowhere by default
+	// send logs to nowhere by default
+	logrus.SetOutput(ioutil.Discard)
 	logrus.SetFormatter(&logrus.JSONFormatter{})
 
-	logrus.AddHook(&hook{ // Send logs with level higher than warning to stderr
-		Writer: os.Stderr,
-	})
+	// use stderr for logs
+	logrus.AddHook(
+		&hook{
+			Writer: os.Stderr,
+		},
+	)
 
 	logrus.Info("Info message 1.")
 	logrus.Warn("Warn message 1.")
 	logrus.Error("Error message 1.")
+
+	logrus.Error("Error message 2.")
+	logrus.Info("Info message 2.")
+
 }
