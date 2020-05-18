@@ -35,7 +35,7 @@ func (h *hook) Fire(entry *logrus.Entry) error {
 		for _, line := range h.lineBuffer {
 			_, err2 = h.writer.Write(line)
 		}
-		h.lineBuffer = nil // clear the slice
+		h.lineBuffer = nil // clear the buffer
 		return err2
 	}
 
