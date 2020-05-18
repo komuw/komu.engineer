@@ -53,12 +53,13 @@ func main() {
 	logrus.SetFormatter(&logrus.JSONFormatter{})
 	// use stderr for logs
 	logrus.AddHook(&hook{writer: os.Stderr})
+	logger := logrus.WithFields(logrus.Fields{"log_id": "sa225Hqk"})
 
-	logrus.Info("Info message 1.")
-	logrus.Warn("Warn message 1.")
-	logrus.Error("Error message 1.")
+	logger.Info("Info message 1.")
+	logger.Warn("Warn message 1.")
+	logger.Error("Error message 1.")
 
-	logrus.Error("Error message 2.")
-	logrus.Info("Info message 2.")
+	logger.Error("Error message 2.")
+	logger.Info("Info message 2.")
 
 }
