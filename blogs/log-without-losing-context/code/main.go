@@ -26,11 +26,13 @@ func updateSocial(msg string) {
 
 func tweet(msg string, logger *logrus.Entry) {
 	logger.Info("tweet send start")
+	// code to call twitter API goes here
 	logger.Info("tweet send end.")
 }
 
 func facebook(msg string, logger *logrus.Entry) {
 	logger.Info("facebook send start")
+	// code to call facebook API goes here
 	logger.Info("facebook send end.")
 }
 
@@ -45,6 +47,8 @@ func linkedin(msg string, logger *logrus.Entry) {
 }
 
 func linkedinAPI(msg string) error {
+	// fake code to call linkedin API
+
 	r := rand.New(rand.NewSource(time.Now().UnixNano()))
 	if r.Intn(10) > 6 {
 		// simulate an error occuring
@@ -60,5 +64,5 @@ func main() {
 	// use stderr for logs
 	logrus.AddHook(&hook{writer: os.Stderr})
 
-	updateSocial("Sending out my first social media message")
+	updateSocial("Sending out my first social media status message")
 }
