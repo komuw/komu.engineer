@@ -1,9 +1,11 @@
 package main
 
 import (
-	"io"
+	"errors"
 	"io/ioutil"
+	"math/rand"
 	"os"
+	"time"
 
 	"github.com/sirupsen/logrus"
 )
@@ -13,38 +15,42 @@ run as:
   go run -race .
 */
 
-// TODO: docs
-type hook struct {
-	writer io.Writer
+func updateSocial(msg string) {
+	traceID := "sa225Hqk" //should be randomly generated
+	logger := logrus.WithFields(logrus.Fields{"traceID": traceID})
 
-	// Note: in production, lineBuffer should use a circular buffer instead of a slice.
-	// we are just using a slice of []bytes here for brevity and blogging purposes.
-	lineBuffer [][]byte
+	tweet(msg, logger)
+	facebook(msg, logger)
+	linkedin(msg, logger)
 }
 
-// TODO: docs
-func (h *hook) Fire(entry *logrus.Entry) error {
-	line, err1 := entry.Bytes()
-	if err1 != nil {
-		return err1
-	}
-	h.lineBuffer = append(h.lineBuffer, line)
+func tweet(msg string, logger *logrus.Entry) {
+	logger.Info("tweet send start")
+	logger.Info("tweet send end.")
+}
 
-	if entry.Level <= logrus.ErrorLevel {
-		var err2 error
-		for _, line := range h.lineBuffer {
-			_, err2 = h.writer.Write(line)
-		}
-		h.lineBuffer = nil // clear the buffer
-		return err2
+func facebook(msg string, logger *logrus.Entry) {
+	logger.Info("facebook send start")
+	logger.Info("facebook send end.")
+}
+
+func linkedin(msg string, logger *logrus.Entry) {
+	logger.Info("linkedin send start")
+	err := linkedinAPI(msg)
+	if err != nil {
+		logger.Errorf("linkedin send failed. error=%s", err)
 	}
 
+	logger.Info("linkedin send end.")
+}
+
+func linkedinAPI(msg string) error {
+	r := rand.New(rand.NewSource(time.Now().UnixNano()))
+	if r.Intn(10) > 6 {
+		// simulate an error occuring
+		return errors.New("http 500")
+	}
 	return nil
-}
-
-// TODO: docs
-func (h *hook) Levels() []logrus.Level {
-	return logrus.AllLevels
 }
 
 func main() {
@@ -53,13 +59,6 @@ func main() {
 	logrus.SetFormatter(&logrus.JSONFormatter{})
 	// use stderr for logs
 	logrus.AddHook(&hook{writer: os.Stderr})
-	logger := logrus.WithFields(logrus.Fields{"log_id": "sa225Hqk"})
 
-	logger.Info("Info message 1.")
-	logger.Warn("Warn message 1.")
-	logger.Error("Error message 1.")
-
-	logger.Error("Error message 2.")
-	logger.Info("Info message 2.")
-
+	updateSocial("Sending out my first social media message")
 }
