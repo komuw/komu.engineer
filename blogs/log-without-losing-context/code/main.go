@@ -32,7 +32,7 @@ func (h *hook) Fire(entry *logrus.Entry) error {
 		for _, line := range h.entrybuffer {
 			_, err2 = h.Writer.Write(line)
 		}
-		h.entrybuffer = [][]byte{}
+		h.entrybuffer = nil //clear the slice
 		return err2
 	}
 
