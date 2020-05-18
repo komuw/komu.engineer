@@ -61,9 +61,40 @@
                     <li>Filtering logs by severity and only sending logs above a certain severity to the logging provider.</li>
                     <li>Sampling logs so that you only send a certain percentage to the logging provider.</li>
                 </ol>
-                But these two solutions pose a problem; you loose context.</br></br>
-
+                But these two solutions pose a problem; loss of context.</br>
                 Consider an application that updates multiple social media platforms with a status message.
+                <pre><code class="go">
+func main() {
+    updateSocialMedia("Sending out my first social media status message")
+}
+
+func updateSocialMedia(msg string) {
+    traceID := "sa225Hqk" // should be randomly generated per call
+    logger := logrus.WithFields(logrus.Fields{"traceID": traceID})
+
+    tweet(msg, logger)
+    facebook(msg, logger)
+    linkedin(msg, logger)
+}
+
+func tweet(msg string, logger *logrus.Entry) {
+    logger.Info("tweet send start")
+    // code to call twitter API goes here
+    logger.Info("tweet send end.")
+}
+
+func facebook(msg string, logger *logrus.Entry) {
+    logger.Info("facebook send start")
+    // code to call facebook API goes here
+    logger.Info("facebook send end.")
+}
+
+func linkedin(msg string, logger *logrus.Entry) {
+    logger.Info("linkedin send start")
+    // code to call linkedin API goes here
+    logger.Info("linkedin send end.")
+}
+                </code></pre>
 
                 
                 

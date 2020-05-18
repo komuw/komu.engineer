@@ -15,8 +15,18 @@ run as:
   go run -race .
 */
 
-func updateSocial(msg string) {
-	traceID := "sa225Hqk" //should be randomly generated
+func main() {
+	// send logs to nowhere by default
+	logrus.SetOutput(ioutil.Discard)
+	logrus.SetFormatter(&logrus.JSONFormatter{})
+	// use stderr for logs
+	logrus.AddHook(&hook{writer: os.Stderr})
+
+	updateSocialMedia("Sending out my first social media status message")
+}
+
+func updateSocialMedia(msg string) {
+	traceID := "sa225Hqk" //should be randomly generated per call
 	logger := logrus.WithFields(logrus.Fields{"traceID": traceID})
 
 	tweet(msg, logger)
@@ -55,14 +65,4 @@ func linkedinAPI(msg string) error {
 		return errors.New("http 500")
 	}
 	return nil
-}
-
-func main() {
-	// send logs to nowhere by default
-	logrus.SetOutput(ioutil.Discard)
-	logrus.SetFormatter(&logrus.JSONFormatter{})
-	// use stderr for logs
-	logrus.AddHook(&hook{writer: os.Stderr})
-
-	updateSocial("Sending out my first social media status message")
 }
