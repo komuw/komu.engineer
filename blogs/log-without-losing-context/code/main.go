@@ -52,8 +52,7 @@ func main() {
 		Writer: os.Stderr,
 	})
 
-	logrus.Info("This will go to stdout")
-	logrus.Warn("This will go to stderr")
-
-	logrus.Error("this is an error message")
+	logrus.Info("Info message 1.")
+	logrus.Warn("Warn message 1.")
+	logrus.Error("Error message 1.")
 }
