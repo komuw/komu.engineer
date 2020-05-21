@@ -105,7 +105,11 @@ func linkedin(msg string, logger *logrus.Entry) {
                 In the same way, if we were sampling logs; the chronology leading upto the error would be missing a few INFO log statements since they would have been sampled out.</br></br>
 
                 What we want is;</br>
-                If there are no errors, no logs gets sent to our logging provider(INFO or otherwise.) However, if there are any errors; all the logs leading to that error irrespective of their severity/level are sent to the logging service.
+                If there are no errors, no logs gets sent to our logging provider(INFO or otherwise.) However, if there are any errors; all the logs leading to that error irrespective of their severity/level are sent to the logging service.</br></br>
+
+                I think we should be able to implement such a logging scheme. The basic idea is; whenever your application emits log events, all the logs go into a circular buffer of size X. 
+                Whenever an error occurs and is logged at the right severity, the whole circular buffer is flushed and all its contents are sent to the logging provider.</br>
+                The circular buffer can be in memory or on disk/whatever and the size is configurable.
                 
                 
 
