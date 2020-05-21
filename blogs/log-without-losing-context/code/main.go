@@ -42,23 +42,21 @@ func tweet(msg string, logger *logrus.Entry) {
 
 func facebook(msg string, logger *logrus.Entry) {
 	logger.Info("facebook send start")
-	// code to call facebook API goes here
+	err := facebookAPI(msg)
+	if err != nil {
+		logger.Errorf("facebook send failed. error=%s", err)
+	}
 	logger.Info("facebook send end.")
 }
 
 func linkedin(msg string, logger *logrus.Entry) {
 	logger.Info("linkedin send start")
-	err := linkedinAPI(msg)
-	if err != nil {
-		logger.Errorf("linkedin send failed. error=%s", err)
-	}
-
+	// code to call linkedin API goes here
 	logger.Info("linkedin send end.")
 }
 
-func linkedinAPI(msg string) error {
-	// fake code to call linkedin API
-
+func facebookAPI(msg string) error {
+	// fake code to call facebook API
 	r := rand.New(rand.NewSource(time.Now().UnixNano()))
 	if r.Intn(10) > 6 {
 		// simulate an error occuring
