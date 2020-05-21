@@ -109,7 +109,125 @@ func linkedin(msg string, logger *logrus.Entry) {
 
                 I think we should be able to implement such a logging scheme. The basic idea is; whenever your application emits log events, all the logs go into a circular buffer of size X. 
                 Whenever an error occurs and is logged at the right severity, the whole circular buffer is flushed and all its contents are sent to the logging provider.</br>
-                The circular buffer can be in memory or on disk/whatever and the size is configurable.
+                The circular buffer can be in memory or on disk/whatever and the size is configurable.</br>
+                I took a stub at implementing this using <a target="_blank" rel="noopener" href="https://github.com/sirupsen/logrus">sirupsen/logrus</a> which is a popular logging library for the Go programming language, but the implementation
+                should be transferable across libraries/languages.
+                <pre><code class="go">
+package main
+
+import (
+    "io"
+
+    "github.com/sirupsen/logrus"
+)
+
+// hook to buffer logs and only send at right severity.
+type hook struct {
+    writer io.Writer
+
+    // Note: in production, lineBuffer should use a circular buffer instead of a slice.
+    // otherwise you may have unbounded memory growth.
+    // we are just using a slice of []bytes here for brevity and blogging purposes.
+    lineBuffer [][]byte
+}
+
+// Fire will append all logs to a circular buffer and only 'flush'
+// them when a log of sufficient severity(ERROR) is emitted.
+func (h *hook) Fire(entry *logrus.Entry) error {
+    line, err1 := entry.Bytes()
+    if err1 != nil {
+        return err1
+    }
+    h.lineBuffer = append(h.lineBuffer, line)
+
+    if entry.Level <= logrus.ErrorLevel {
+        var err2 error
+        for _, line := range h.lineBuffer {
+            _, err2 = h.writer.Write(line)
+        }
+        h.lineBuffer = nil // clear the buffer
+        return err2
+    }
+
+    return nil
+}
+
+// Levels define on which log levels this hook would trigger
+func (h *hook) Levels() []logrus.Level {
+    return logrus.AllLevels
+}
+                    </code></pre>
+
+                    And the way to use it in your application is;
+                    <pre><code class="go">
+package main
+
+import (
+    "errors"
+    "io/ioutil"
+    "math/rand"
+    "os"
+    "time"
+
+    "github.com/sirupsen/logrus"
+)
+
+func main() {
+    // send logs to nowhere by default
+    logrus.SetOutput(ioutil.Discard)
+    logrus.SetFormatter(&logrus.JSONFormatter{})
+    // use stderr for logs
+    logrus.AddHook(&hook{writer: os.Stderr})
+
+    updateSocialMedia("Sending out my first social media status message")
+}
+
+func updateSocialMedia(msg string) {
+    traceID := "sa225Hqk" //should be randomly generated per call
+    logger := logrus.WithFields(logrus.Fields{"traceID": traceID})
+
+    tweet(msg, logger)
+    facebook(msg, logger)
+    linkedin(msg, logger)
+}
+
+func tweet(msg string, logger *logrus.Entry) {
+    logger.Info("tweet send start")
+    // code to call twitter API goes here
+    logger.Info("tweet send end.")
+}
+
+func facebook(msg string, logger *logrus.Entry) {
+    logger.Info("facebook send start")
+    err := facebookAPI(msg)
+    if err != nil {
+        logger.Errorf("facebook send failed. error=%s", err)
+    }
+    logger.Info("facebook send end.")
+}
+
+func linkedin(msg string, logger *logrus.Entry) {
+    logger.Info("linkedin send start")
+    // code to call linkedin API goes here
+    logger.Info("linkedin send end.")
+}
+
+func facebookAPI(msg string) error {
+    // fake code to call facebook API
+    r := rand.New(rand.NewSource(time.Now().UnixNano()))
+    if r.Intn(10) > 6 {
+        // simulate an error occuring
+        return errors.New("http 500")
+    }
+    return nil
+}
+                    </code></pre>
+
+                
+                Now, if any error occurs all the logs and chronology leading upto the error are available and if there are no errors been emitted by your application then
+                no logs are sent to your logging provider.</br>
+                So you do not end up spending tons of money and you also do not lose context when errors occur.
+
                 
                 
 
