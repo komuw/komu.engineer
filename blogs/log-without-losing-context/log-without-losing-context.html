@@ -59,7 +59,7 @@
                 for the fact that you are using a logging as a service provider and <a target="_blank" rel="noopener" href="https://www.datadoghq.com/pricing/">they</a> all
                  <a target="_blank" rel="noopener" href="https://www.loggly.com/plans-and-pricing/">charge</a> an <a target="_blank" rel="noopener" href="https://www.honeycomb.io/pricing/">arm</a> and
                   a <a target="_blank" rel="noopener" href="https://www.sumologic.com/pricing/">leg</a> for every log event.</br>
-                Some of the pricing models are so inscrutable, that the logging providers offer calculators
+                Some of the pricing models are so inscrutable, that the logging service providers offer calculators
                 ( <a target="_blank" rel="noopener" href="https://calculator.aws/">here</a>,
                 <a target="_blank" rel="noopener" href="https://cloud.google.com/products/calculator">here</a>,
                 <a target="_blank" rel="noopener" href="https://azure.microsoft.com/en-us/pricing/calculator/">etc</a>) 
@@ -68,11 +68,11 @@
                 So it seems like for you to have your cake and eat it too, you have to part with large sums of money every month(and due to elastic pricing you can't even tell in advance how much that will be.)</br>
                 There are two main ways that people try and solve this problem(usually at the 
                 <a target="_blank" rel="noopener" href="https://docs.datadoghq.com/logs/indexes/#examples-of-exclusion-filters">suggestion</a> of the 
-                <a target="_blank" rel="noopener" href="https://docs.honeycomb.io/working-with-your-data/best-practices/sampling/">said</a> logging providers);
+                <a target="_blank" rel="noopener" href="https://docs.honeycomb.io/working-with-your-data/best-practices/sampling/">said</a> logging service providers);
                 <ol>
-                    <li>Filtering logs by severity and only sending logs above a certain severity to the logging provider.</li>
+                    <li>Filtering logs by severity and only sending logs above a certain severity to the logging service provider.</li>
                       and/or</br>
-                    <li>Sampling logs so that you only send a certain percentage to the logging provider.</li>
+                    <li>Sampling logs so that you only send a certain percentage to the logging service provider.</li>
                 </ol>
                 But these two solutions pose a problem; loss of context.</br>
                 Consider an application that updates multiple social media platforms with a status message.
@@ -112,19 +112,19 @@ func linkedin(msg string, logger *logrus.Entry) {
 }
                 </code></pre>
 
-                If we were filtering logs and only sending logs of ERROR level to our logging provider, then we would lose context on how the <i>facebook send failed</i> error came to be. I had previosuly written 
+                If we were filtering logs and only sending logs of ERROR level to our logging service provider, then we would lose context on how the <i>facebook send failed</i> error came to be. I had previosuly written 
                 that logs are primarily used to <a target="_blank" rel="noopener" href="https://www.komu.engineer/blogs/timescaledb/timescaledb-for-logs#Opinion">help debug issues in production;</a> thus, 
                 context and chronology of events that led to a particular issue are of importance. You do not want to investigate a murder mystery where half the clues have been deliberately wiped out by your earlier self.</br>
                 In the same way, if we were sampling logs; the chronology leading upto the error would be missing a few INFO log statements since those would have been sampled out.</br></br>
 
                 What we want is;</br>
-                If the application has not emitted any errors, no logs gets sent to our logging provider(INFO or otherwise.) However, if there are any errors emitted; all the logs leading to that error irrespective of their severity/level are sent to the logging service.
+                If the application has not emitted any errors, no logs gets sent to our logging service provider(INFO or otherwise.) However, if there are any errors emitted; all the logs leading to that error irrespective of their severity/level are sent to the logging service.
                 </br></br>
 
                 <strong id="Solution">Proposed Solution</strong>
                 </br>
                 I think we should be able to implement such a logging scheme. The basic idea is; whenever your application emits log events, all the logs go into a circular buffer of size X. 
-                Whenever an error log is emitted, the whole circular buffer is flushed and all its contents are sent to the logging provider.</br>
+                Whenever an error log is emitted, the whole circular buffer is flushed and all its contents are sent to the logging service provider.</br>
                 The circular buffer can be in memory or on disk/whatever and the size is configurable.</br></br>
 
                 I took a stub at implementing this using <a target="_blank" rel="noopener" href="https://github.com/sirupsen/logrus">sirupsen/logrus</a> which is a popular logging library for the Go programming language, but the implementation
@@ -204,8 +204,8 @@ func main() {
         </code></pre>
 
             
-        Now, if any error occurs; all the logs and chronology leading upto the error are available and are sent to the logging provider. Conversely, if there are no errors been emitted by your application then
-        no logs are sent to your logging provider.</br>
+        Now, if any error occurs; all the logs and chronology leading upto the error are available and are sent to the logging service provider. Conversely, if there are no errors been emitted by your application then
+        no logs are sent to your logging service provider.</br>
         So you do not end up spending tons of money and you also do not lose context when errors occur.
         </br></br>
 
@@ -213,7 +213,7 @@ func main() {
         </br>
         You can implement a logging strategy that loses you neither money nor context.</br>
         A downside of the presented solution is that it can be hard to tell if there are no logs because the application has not emitted any errors or because the logging pipeline itself has a bug. 
-        However this can be solved by emitting a heartbeat log event every Y minutes and letting this heartbeat propagate upto the logging provider.</br></br>
+        However this can be solved by emitting a heartbeat log event every Y minutes and letting this heartbeat propagate upto the logging service provider.</br></br>
 
         All the code in this blogpost, including the full source code, can be found at: <a target="_blank" rel="noopener"
             href="https://github.com/komuw/komu.engineer/tree/master/blogs/log-without-losing-context">
