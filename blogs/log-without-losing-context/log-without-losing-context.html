@@ -124,7 +124,7 @@ func linkedin(msg string, logger *logrus.Entry) {
                 <strong id="Solution">Proposed Solution</strong>
                 </br>
                 I think we should be able to implement such a logging scheme. The basic idea is; whenever your application emits log events, all the logs go into a circular buffer of size X. 
-                Whenever an error occurs, the whole circular buffer is flushed and all its contents are sent to the logging provider.</br>
+                Whenever an error log is emitted, the whole circular buffer is flushed and all its contents are sent to the logging provider.</br>
                 The circular buffer can be in memory or on disk/whatever and the size is configurable.</br></br>
 
                 I took a stub at implementing this using <a target="_blank" rel="noopener" href="https://github.com/sirupsen/logrus">sirupsen/logrus</a> which is a popular logging library for the Go programming language, but the implementation
