@@ -44,6 +44,7 @@ B. unit tests
 on linux the size of `PIPE_BUF` is about `4096`    
 ie this code is likely to fail    
 ```python
+write_data = 'a'
 write_data = write_data.encode() * 4098
 os.write(pipe, write_data)
 ```
@@ -53,7 +54,7 @@ os.write(pipe, write_data)
 ##### References:
 1. http://www.pixelbeat.org/programming/stdio_buffering/    
 2. https://en.wikipedia.org/wiki/Circular_buffer   
-3. http://man7.org/linux/man-pages/man7/pipe.7.html      
+3. http://man7.org/linux/man-pages/man7/pipe.7.html         
 
 connect to db:
 ```sh
