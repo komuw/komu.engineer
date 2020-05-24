@@ -109,7 +109,7 @@ func linkedin(msg string, logger *logrus.Entry) {
                 If we were filtering logs and only sending logs of ERROR level to our logging provider, then we would lose context on how the <i>facebook send failed</i> error came to be. I had previosuly written 
                 that logs are primarily used to <a target="_blank" rel="noopener" href="https://www.komu.engineer/blogs/timescaledb/timescaledb-for-logs#Opinion">help debug issues in production;</a> thus, 
                 context and chronology of events that led to a particular issue are of importance. You do not want to investigate a murder mystery where half the clues have been deliberately wiped out by your earlier self.</br>
-                In the same way, if we were sampling logs; the chronology leading upto the error would be missing a few INFO log statements since they would have been sampled out.</br></br>
+                In the same way, if we were sampling logs; the chronology leading upto the error would be missing a few INFO log statements since those would have been sampled out.</br></br>
 
                 What we want is;</br>
                 If the application has not emitted any errors, no logs gets sent to our logging provider(INFO or otherwise.) However, if there are any errors emitted; all the logs leading to that error irrespective of their severity/level are sent to the logging service.
