@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Komu W - Understand how celery works by building a clone.</title>
+    <meta name="description" content="Understand how celery works by building a clone." />
+    <meta property="og:url" content="https://www.komu.engineer/blog" />
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ADD FAVICON -->
+
+    <link rel="stylesheet" href="../../site.css">
+
+    <!-- Get highlightjs by going to https://highlightjs.org/download/, select the languages you want and download. -->
+    <link rel="stylesheet" href="../../highlightjs/styles/default.css">
+    <script src="../../highlightjs/highlight.pack.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <a href="https://www.komu.engineer">Home</a>&nbsp;&nbsp;
+            <a href="https://www.komu.engineer/about">About Me</a>&nbsp;&nbsp;
+            <a href="https://www.komu.engineer/blog">Blog</a>&nbsp;&nbsp;
+        </div>
+        <div class="left-sidebar">
+            .
+        </div>
+        <div class="right-sidebar">
+            .
+        </div>
+
+        <div class="main">
+            <p>
+                <strong>Understand how celery works by building a clone.(15 July 2019)</strong>
+                </br>
+                <ol>
+                    <li><a href="#Intro">Intro</a></li>
+                    <li> <a href="#How-they-work">How they work</a></li>
+                    <li><a href="#Implementation">Implementation</a>
+                        <ul>
+                            <li><a href="#Base-Task">(a) Base-Task</a></li>
+                            <li><a href="#Broker">(b) Broker</a></li>
+                            <li><a href="#Worker">(c) Worker</a></li>
+                        </ul>
+                    </li>
+                    <li> <a href="#Usage">Usage</a></li>
+                    <li> <a href="#Conclusion">Conclusion</a></li>
+                </ol>
+
+                <strong id="Intro">Intro</strong>
+                </br>
+                A delayed job processor(also called a background processor, asynchronous task queue etc) is a software
+                system
+                that can run code at a later time.</br>
+                Examples of such software includes;
+                <a target="_blank" rel="noopener" href="https://github.com/celery/celery">Celery</a>,
+                <a target="_blank" rel="noopener" href="https://github.com/resque/resque">Resque</a>,
+                <a target="_blank" rel="noopener" href="https://sidekiq.org/">Sidekiq</a>, among others.</br>
+                In this blogpost we will try and understand how these things work by building a clone/replica of such
+                software.</br></br>
+
+                When do we need to use a background task processor?</br>
+                Take the example of an e-commerce website, when someone makes an order(by clicking on the order submit
+                button); the e-commerce website needs
+                to;
+                <ul>
+                    <li>Show a confirmation message of the order</li>
+                    <li>Persist that order to a database</li>
+                    <li>Emit an order metric event</li>
+                    <li>Send out a confirmation email to the customer </li>
+                    <li>etc</li>
+                </ul>
+                All the above actions can be carried out synchronously as the customer waits for the page to reload.
+                However, if any of them has potential to take a couple of a hundred milliseconds, then you better figure
+                out ways not to keep the customer waiting.
+                Apparently, a latency of even 1 second can cost <a target="_blank" rel="noopener"
+                    href="https://www.fastcompany.com/1825005/how-one-second-could-cost-amazon-16-billion-sales">Amazon
+                    $1.6 Billion In Sales</a>, and Google found a <a target="_blank" rel="noopener"
+                    href="http://glinden.blogspot.com/2006/11/marissa-mayer-at-web-20.html">similar phenomenon</a> in
+                their traffic numbers.</br>
+                Using a background task processor is one way(among others) to solve this problem.
+                </br></br>
+
+                <strong id="How-they-work">How they work</strong>
+                </br>
+                Task processors may differ, but they mostly work this way;
+                <ol>
+                    <li>You have a function that contains some code that can take a long time to run, maybe because it
+                        will get blocked on IO</li>
+                    <li>You <a target="_blank" rel="noopener"
+                            href=" https://github.com/celery/celery/blob/8e016e667ae16958043b096e5cb89ac0f7dd7989/examples/django/demoapp/tasks.py#L8-L10">annotate</a>
+                        that function with some functionality provided by the 'background job' library</li>
+                    <li>when you execute your function, instead of it running synchronously; the background job library
+                        will 'take' your function and serialize it to an object(eg string)</li>
+                    <li>the background job library then takes that serialized object and stores it someplace(eg in a
+                        database)</li>
+                    <li>then at a later time, workers(provided by the background job library) will take the serialized
+                        object from the store, convert/deserialize it to its original form </li>
+                    <li>then use that to execute your original function</li>
+                </ol>
+
+                <strong id="Implementation">Implementation</strong>
+                </br>
+                We are going to implement a background job library named <i>backie</i>(short for background
+                processor) that will work in the manner laid out in the previous section.<br></br>
+
+                <strong id="Base-Task">(a) Base-Task</strong>
+                </br>
+                We will create a base task/job class that all users of <i>backie</i> will have to subclass in order to
+                create tasks that can be ran in the background.
+                <pre><code class="python">
+# backie/task.py
+import abc
+import json
+import uuid
+
+from .broker import Broker
+
+class BaseTask(abc.ABC):
+    """
+    Example Usage:
+        class AdderTask(BaseTask):
+            task_name = "AdderTask"
+            def run(self, a, b):
+                result = a + b
+                return result
+
+        adder = AdderTask()
+        adder.delay(9, 34)
+    """
+    task_name = None
+
+    def __init__(self):
+        if not self.task_name:
+            raise ValueError("task_name should be set")
+        self.broker = Broker()
+
+    @abc.abstractmethod
+    def run(self, *args, **kwargs):
+        # put your business logic here
+        raise NotImplementedError("Task `run` method must be implemented.")
+
+    def delay(self, *args, **kwargs):
+        try:
+            task_id = str(uuid.uuid4())
+            _task = {"task_id": task_id, "args": args, "kwargs": kwargs}
+            serialized_task = json.dumps(_task)
+            self.broker.enqueue(queue_name=self.task_name, item=serialized_task)
+            print("task: {0} succesfully queued".format(task_id))
+        except Exception:
+            raise Exception("Unable to publish task to the broker.")           
+                </code></pre></br>
+                So, if you want to create a task that will be processed in the background; you import the
+                <i>BaseTask</i> from
+                <i>backie</i>, create a subclass of it and also provide an implementation of the <i>run</i>
+                method.</br>
+                To call your task, you use the <i>delay</i> method with appropriate arguments. And when you do that, the
+                <i>BaseTask</i>
+                will serialize those arguments to json and store them in the provided
+                broker/store(<i>BaseTask.broker</i>).
+                </br></br>
+
+                <strong id="Broker">(b) Broker</strong>
+                </br>
+                Our BaseTask refers to a broker that is been used to store the tasks. Lets implement that broker.
+                <pre><code class="python">
+# backie/broker.py
+import redis # pip install redis
+
+class Broker:
+    """
+    use redis as our broker.
+    This implements a basic FIFO queue using redis.
+    """
+    def __init__(self):
+        host = "localhost"
+        port = 6379
+        password = None
+        self.redis_instance = redis.StrictRedis(
+            host=host, port=port, password=password, db=0, socket_timeout=8.0
+        )
+
+    def enqueue(self, item, queue_name):
+        self.redis_instance.lpush(queue_name, item)
+
+    def dequeue(self, queue_name):
+        dequed_item = self.redis_instance.brpop(queue_name, timeout=3)
+        if not dequed_item:
+            return None
+        dequed_item = dequed_item[1]
+        return dequed_item      
+                </code></pre></br>
+                In this case we are using redis as our backing broker/store. But you can use any other store to do that.
+                You could
+                store the tasks in memory, in a database, in the filesystem, you could even store them in a blockchain
+                if you want to stay current with the hype.</br>
+                What you use as the backing store does not matter; as you can see, the <i>BaseTask</i> is serializing
+                the task arguments to a json string and that is what is stored. Find yourself a place that can store
+                json strings and you are good to go.</br></br>
+
+                This is how celery is able to <a target="_blank" rel="noopener"
+                    href="http://docs.celeryproject.org/en/latest/getting-started/brokers/">support different brokers.
+                </a> When you do <i>task.delay(3,5)</i> Celery <a target="_blank" rel="noopener"
+                    href="https://github.com/celery/celery/blob/8e016e667ae16958043b096e5cb89ac0f7dd7989/celery/app/task.py#L555-L563">serializes</a>
+                all the task arguments to json and <a target="_blank" rel="noopener"
+                    href="https://github.com/celery/celery/blob/8e016e667ae16958043b096e5cb89ac0f7dd7989/celery/app/amqp.py#L549-L558">sends</a>
+                them
+                to a broker for storage.
+                </br></br>
+
+                <strong id="Worker">(c) Worker</strong>
+                </br>
+                Now that the task arguments(and any other metadata like task_id) have been stored in the broker, we now
+                need to actually run those tasks.</br>
+                We do that via a worker, lets implement one;
+                <pre><code class="python">
+# backie/worker.py
+import json
+
+class Worker:
+    """
+    Example Usage:
+        task = AdderTask()
+        worker = Worker(task=task)
+        worker.start()
+    """
+    def __init__(self, task) -> None:
+        self.task = task
+
+    def start(self,):
+        while True:
+            try:
+                _dequeued_item = self.task.broker.dequeue(queue_name=self.task.task_name)
+                dequeued_item = json.loads(_dequeued_item)
+                task_id = dequeued_item["task_id"]
+                task_args = dequeued_item["args"]
+                task_kwargs = dequeued_item["kwargs"]
+
+                print("running task: {0}".format(task_id))
+                self.task.run(*task_args, **task_kwargs)
+                print("succesful run of task: {0}".format(task_id))
+            except Exception:
+                print("Unable to execute task.")
+                continue       
+                </code></pre></br>
+                The worker takes a task instance as an argument. Then in a loop(in the <i>start method</i>), it dequeues
+                a task from the broker, json deserializes that task to get the task arguments, then uses those
+                argumensts to call the task. </br></br>
+
+                It is the work of celery workers to dequeue a task from the broker, <a target="_blank" rel="noopener"
+                    href="https://github.com/celery/celery/blob/8e016e667ae16958043b096e5cb89ac0f7dd7989/celery/app/trace.py#L519-L527">deserializes</a>
+                its arguments/metadata and executes the <a target="_blank" rel="noopener"
+                    href="https://github.com/celery/celery/blob/8e016e667ae16958043b096e5cb89ac0f7dd7989/celery/app/trace.py#L289-L292">original
+                    function</a> with those <a target="_blank" rel="noopener"
+                    href="https://github.com/celery/celery/blob/8e016e667ae16958043b096e5cb89ac0f7dd7989/celery/app/trace.py#L384-L386">arguments.</a>
+                </br></br>
+
+
+                <strong id="Usage">Usage</strong>
+                </br>
+                We have implemented the background task processor(<i>backie</i>) that is similar to celery, so how do we
+                use it?</br>
+                Going to our previous example of an e-commerce site, lets use <i>backie</i> to implement the
+                various tasks/jobs that need to be ran.</br>
+                We will need a task to; Persist that order to it's database, another to emit an order metric event and
+                lastly one that sends out a confirmation email to the customer.</br>
+                For the sake of brevity, we will only look at the task that sends out emails after ordering.
+                <pre><code class="python"> 
+# ecommerce_tasks.py
+from backie.task import BaseTask
+
+# pip install requests
+import requests
+
+class EmailTask(BaseTask):
+    """
+    task to send email to customer after they have ordered.
+    """
+
+    task_name = "EmailTask"
+
+    def run(self, order_id, email_address):
+        # lets pretend httpbin.org is an email service provider
+        url = "https://httpbin.org/{0}/{1}".format(order_id, email_address)
+        print(url)
+        response = requests.get(url, timeout=5.0)
+        print("response:: ", response)
+
+
+if __name__ == "__main__":
+    order_id = "24dkq40"
+    email_address = "example@example.org"
+    email_task = EmailTask()
+    email_task.delay(order_id, email_address)
+                </code></pre></br>
+                And then we also need to implement the workers;
+                <pre><code class="python"> 
+# ecommerce_worker.py
+from ecommerce_tasks import EmailTask
+
+from backie.worker import Worker
+
+if __name__ == "__main__":
+    email_task = EmailTask()
+
+    # run workers
+    worker = Worker(task=email_task)
+    worker.start()
+                </code></pre></br>
+
+                Putting it all together, lets run a redis server(using docker) in one terminal;
+                <pre><code class="bash"> 
+docker run -p 6379:6379 redis:5.0-alpine
+               </code></pre></br>
+                And in another terminal we run the tasks;
+                <pre><code class="bash"> 
+python ecommerce_tasks.py
+    task: 4ed63e42-f614-4093-a654-46211d5de8cf succesfully queued
+                </code></pre></br>
+                In a third terminal run the workers;
+                <pre><code class="bash">
+python ecommerce_worker.py
+    running task: 4ed63e42-f614-4093-a654-46211d5de8cf
+    https://httpbin.org/24dkq40/example@example.org
+    succesful run of task: 4ed63e42-f614-4093-a654-46211d5de8cf
+                </code></pre></br>
+
+
+                <strong id="Conclusion">Conclusion</strong>
+                </br>
+                That was a brief overview of how some(most?) background task processors work. </br>
+                The principle behind how they work is very simple; turn a tasks arguments to a string, store the string
+                in a database of sorts, retrieve that string from the database at a later datetime and feed those
+                arguments
+                to the actual task to run.</br>
+                Of course on top of that simple idea, these task processors go on and layer other useful features like;
+                retries, periodic tasks, chaining of tasks etc.</br></br>
+
+
+                All the code in this blogpost can be found at: <a target="_blank" rel="noopener"
+                    href="https://github.com/komuw/komu.engineer/tree/master/blogs/celery-clone">
+                    https://github.com/komuw/komu.engineer/tree/master/blogs/celery-clone</a></br></br>
+
+                PS: Check out <a target="_blank" rel="noopener" href="https://github.com/komuw/wiji">wiji</a> which is
+                an experimental python3 asyncio distributed task processor.</br></br>
+
+                You can comment on this article <a target="_blank" rel="noopener"
+                href="https://github.com/komuw/komu.engineer/issues/15">by clicking here.</a>
+            </br>
+
+            </p>
+        </div>
+    </div>
+</body>

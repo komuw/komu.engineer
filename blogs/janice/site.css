@@ -1,0 +1,168 @@
+/*
+    styled using css-grid:
+    1. https://css-tricks.com/snippets/css/complete-guide-grid/
+    2. https://www.w3.org/TR/css-align-3/#overview
+    3. https://developer.mozilla.org/en-US/docs/Web/CSS/Reference
+    4. https://codepen.io/komuw/pen/rvbPdw
+    */
+
+@media (max-width: 720px) {
+    /* applies if your viewport width is equal to or less than 720px */
+    .container {
+        grid-template-columns: [column1-start] minmax(0, 0fr) [column1-end] minmax(0, 12fr) [column2-end] minmax(0, 0fr) [column3-end];
+    }
+}
+
+
+@media (min-width: 721px) {
+    .container {
+        grid-template-columns: [column1-start] minmax(0, 2fr) [column1-end] minmax(0, 8fr) [column2-end] minmax(0, 2fr) [column3-end];
+    }
+}
+
+.container {
+    /* grid | inline-grid | subgrid; */
+    display: grid;
+
+    grid-template-rows: [row1-start] auto [row1-end] auto [row2-end] auto [row3-end];
+    grid-template-areas: "header header header" "left-sidebar main right-sidebar" ". . .";
+
+    /* this two may not be needed */
+    grid-column-gap: 1px;
+    grid-row-gap: 1px;
+
+    /* start | end | center | stretch; */
+    /* align, content inside a grid item, along horizontal ie to the left or right */
+    justify-items: center;
+
+    /* start | end | center | stretch; */
+    /* align, content inside a grid item, top or bottom */
+    align-items: center;
+
+    /* start | end | center | stretch | space-around | space-between | space-evenly; */
+    /* sets the alignment of the grid within the grid container. left or right.
+        esp if ua grid is less than the size of its grid container*/
+
+    /* aligns the contents of the box as a whole within the box itself. left or right.
+    it effectively adjusts padding. - https://www.w3.org/TR/css-align-3/#overview
+    */
+    justify-content: stretch;
+
+    /* start | end | center | stretch | space-around | space-between | space-evenly; */
+    /* sets the alignment of the grid within the grid container. top or bottom.
+        esp if ua grid is less than the size of its grid container*/
+
+    /* aligns the contents of the box as a whole within the box itself. top or bottom.
+    it effectively adjusts padding. - https://www.w3.org/TR/css-align-3/#overview
+    */
+    align-content: stretch;
+
+
+    /*
+    1. The justify-content property controls the alignment of grid tracks (columns or rows). 
+    It is set on the grid container. 
+    It does not apply to or control the alignment of grid items.
+    
+    2. The justify-items property controls the alignment of grid items. 
+    It is set on the grid container.
+
+    3. The justify-self property controls the alignment of grid items.
+    It is set on grid items. 
+    Basically, justify-self overrides the justify-items command (coming from the parent) on individual items.
+
+    4. align-content, align-items and align-self
+    These properties do the same as their justify-* counterparts, but in the perpendicular direction. 
+
+    - https://stackoverflow.com/a/48571889/2768067
+    */
+
+
+    /*Force use of mobile site*/
+    max-width: 700px;
+    overflow: auto;
+    margin: 0 auto;
+}
+
+.header {
+    grid-area: header;
+
+    grid-column-start: column1-start;
+    grid-column-end: column3-end;
+    grid-row-start: row1-start;
+    grid-row-end: row1-end;
+}
+
+.left-sidebar {
+    grid-area: left-sidebar;
+
+    grid-column-start: column1-start;
+    grid-column-end: column1-end;
+    grid-row-start: row1-end;
+    grid-row-end: auto;
+
+    justify-self: center;
+}
+
+.main {
+    grid-area: main;
+
+    grid-column-start: column1-end;
+    grid-column-end: column2-end;
+    grid-row-start: row1-end;
+    grid-row-end: auto;
+
+    /* start | end | center | stretch; */
+    /* Aligns the content inside a grid item left to right */
+    justify-self: center;
+    /* start | end | center | stretch; */
+    /* aligns top bottom */
+    align-self: start;
+
+    /* https://developer.mozilla.org/en-US/docs/Web/CSS/overflow */
+    max-width: 100%;
+    overflow: auto;
+}
+
+.right-sidebar {
+    grid-area: right-sidebar;
+
+    grid-column-start: column2-end;
+    grid-column-end: column3-end;
+    grid-row-start: row1-end;
+    grid-row-end: auto;
+
+    justify-self: center;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+    max-height: 100%;
+
+    width:auto;
+    /* height:600px; */
+}
+
+
+.w3-display-left{
+    position:absolute;
+    /* top:95%; */
+    left:25%;
+    transform:translate(0%,-50%);
+    -ms-transform:translate(-0%,-50%)
+}
+.w3-button {
+    padding: 15px 16px;
+    color: black;
+    background-color: grey;
+    text-align: left;
+}
+
+.w3-display-right{
+    position:absolute;
+    /* top:95%; */
+    right:25%;
+    transform:translate(0%,-50%);
+    -ms-transform:translate(0%,-50%)
+} 
+
