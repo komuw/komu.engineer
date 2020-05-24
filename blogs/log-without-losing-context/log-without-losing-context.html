@@ -211,7 +211,7 @@ func main() {
 
         <strong id="Conclusion">Conclusion:</strong>
         </br>
-        You can implement a logging strategy that loses you neither context nor money.</br>
+        You can implement a logging strategy that loses you neither money nor context.</br>
         A downside of the presented solution is that it can be hard to tell if there are no logs because the application has not emitted any errors or whether the logging pipeline itself has a bug. 
         However this can be solved by emitting a heartbeat log event every Y minutes and letting this heartbeat propagate upto the logging provider.</br></br>
 
