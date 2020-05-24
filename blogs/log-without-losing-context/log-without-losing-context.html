@@ -45,8 +45,15 @@
             <p>
                 </br>
                 <strong>Logging without losing context or money. (26 May 2020)</strong>
-                </br></br>
+                </br>
+                <ol>
+                    <li><a href="#Problem">Problem</a></li>
+                    <li> <a href="#Solution">Proposed Solution</a></li>
+                    <li> <a href="#Conclusion">Conclusion</a></li>
+                </ol>
 
+                <strong id="Problem">Problem</strong>
+                </br>
                 In your application, you want all flows of execution to be covered with log statements. That way, if something were to go wrong you can be able to trace at which point the flow broke at.</br>
                 However, this presents a problem; if your application has lots of traffic, then the amount of logs it generates are going to be gigantic. This in itself is not a problem, were it not 
                 for the fact that you are using a logging as a service provider and <a target="_blank" rel="noopener" href="https://www.datadoghq.com/pricing/">they</a> all
@@ -105,8 +112,11 @@ func linkedin(msg string, logger *logrus.Entry) {
                 In the same way, if we were sampling logs; the chronology leading upto the error would be missing a few INFO log statements since they would have been sampled out.</br></br>
 
                 What we want is;</br>
-                If the application has not emitted any errors, no logs gets sent to our logging provider(INFO or otherwise.) However, if there are any errors emitted; all the logs leading to that error irrespective of their severity/level are sent to the logging service.</br></br>
+                If the application has not emitted any errors, no logs gets sent to our logging provider(INFO or otherwise.) However, if there are any errors emitted; all the logs leading to that error irrespective of their severity/level are sent to the logging service.
+                </br></br>
 
+                <strong id="Solution">Proposed Solution</strong>
+                </br>
                 I think we should be able to implement such a logging scheme. The basic idea is; whenever your application emits log events, all the logs go into a circular buffer of size X. 
                 Whenever an error occurs, the whole circular buffer is flushed and all its contents are sent to the logging provider.</br>
                 The circular buffer can be in memory or on disk/whatever and the size is configurable.</br></br>
