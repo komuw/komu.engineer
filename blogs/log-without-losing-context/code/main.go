@@ -20,7 +20,9 @@ func main() {
 	// send logs to nowhere by default
 	logrus.SetOutput(ioutil.Discard)
 	logrus.SetFormatter(&logrus.JSONFormatter{})
-	// use stderr for logs
+
+	// Use our custom hook that will append logs to a circular buffer
+	// and ONLY flush them to stderr when errors occur.
 	logrus.AddHook(&hook{writer: os.Stderr})
 
 	updateSocialMedia("Sending out my first social media status message")
