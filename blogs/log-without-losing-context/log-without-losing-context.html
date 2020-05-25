@@ -6,8 +6,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Komu W - Logging without losing context or money.</title>
-    <meta name="description" content="Logging without losing context or money." />
+    <title>Komu W - Logging without losing money or context.</title>
+    <meta name="description" content="Logging without losing money or context." />
     <meta property="og:url" content="https://www.komu.engineer/blog" />
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -44,7 +44,7 @@
         <div class="main">
             <p>
                 </br>
-                <strong>Logging without losing context or money. (26 May 2020)</strong>
+                <strong>Logging without losing money or context. (26 May 2020)</strong>
                 </br>
                 <ol>
                     <li><a href="#Problem">Problem</a></li>
@@ -113,7 +113,7 @@ func linkedin(msg string, logger *logrus.Entry) {
                 </code></pre>
 
                 If we were filtering logs and only sending logs of ERROR level to our logging service provider, then we would lose context on how the <i>facebook send failed</i> error came to be. I had previosuly written 
-                that logs are primarily used to <a target="_blank" rel="noopener" href="https://www.komu.engineer/blogs/timescaledb/timescaledb-for-logs#Opinion">help debug issues in production;</a> thus, 
+                that logs are primarily used to <a target="_blank" rel="noopener" href="https://www.komu.engineer/blogs/timescaledb/timescaledb-for-logs">help debug issues in production;</a> thus, 
                 context and chronology of events that led to a particular issue are of importance. You do not want to investigate a murder mystery where half the clues have been deliberately wiped out by your earlier self.</br>
                 In the same way, if we were sampling logs; the chronology leading upto the error would be missing a few INFO log statements since those would have been sampled out.</br></br>
 
@@ -204,8 +204,23 @@ func main() {
         </code></pre>
 
             
-        Now, if any error occurs; all the logs and chronology leading upto the error are available and are sent to the logging service provider. Conversely, if there are no errors been emitted by your application then
-        no logs are sent to your logging service provider.</br>
+        Now, if any error occurs; all the logs and chronology leading upto the error are available and are sent to the logging service provider.
+        <pre><code class="bash">
+go run .
+
+{"level":"info","msg":"tweet send start","time":"2020-05-25T21:03:36+03:00","traceID":"sa225Hqk"}
+{"level":"info","msg":"tweet send end.","time":"2020-05-25T21:03:36+03:00","traceID":"sa225Hqk"}
+{"level":"info","msg":"facebook send start","time":"2020-05-25T21:03:36+03:00","traceID":"sa225Hqk"}
+{"level":"error","msg":"facebook send failed. error=http 500","time":"2020-05-25T21:03:36+03:00","traceID":"sa225Hqk"}
+        </code></pre>
+
+        Conversely, if there are no errors been emitted by your application then
+        no logs are sent to your logging service provider.
+        <pre><code class="bash">
+go run .
+
+# no log output
+        </code></pre>
         So you do not end up spending tons of money and you also do not lose context when errors occur.
         </br></br>
 
