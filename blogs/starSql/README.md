@@ -1167,7 +1167,8 @@ WHERE
 LIMIT 10;
 ```
 
-10. Find indexed columns with high null_frac. ie indices that index both non-NULL and also NULL items
+10. Find indexed columns with high null_frac. ie indices that index both non-NULL and also NULL items    
+Once you find them, change the index to be conditional on non-NULL(read the top of this document to see how to do that)
 ```sql
 -- https://hakibenita.com/postgresql-unused-index-size
 SELECT
