@@ -1208,3 +1208,6 @@ WHERE
 ORDER BY
     pg_relation_size(c.oid) * s.null_frac DESC;
 ```
+
+11. Tool that parses EXPLAIN ANALYZE and surfaces recommendations to improve performance 
+    https://www.pgmustard.com/
