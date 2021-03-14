@@ -1,0 +1,101 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Komu W - Build a Go package that annotates errors with stack traces.</title>
+    <meta name="description" content="Build a Go package that annotates errors with stack traces." />
+    <meta property="og:url" content="https://www.komu.engineer/blog" />
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ADD FAVICON -->
+
+    <link rel="stylesheet" href="./site.css">
+
+    <!-- Get highlightjs by going to https://highlightjs.org/download/, select the languages you want and download. -->
+    <!--
+    <link rel="stylesheet" href="../../highlightjs/styles/default.css">
+    <script src="../../highlightjs/highlight.pack.js"></script>
+    -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.6.0/styles/default.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.6.0/highlight.min.js"></script>
+    <script>hljs.highlightAll();</script>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <a href="./index.html">Home</a>&nbsp;&nbsp;
+        </div>
+        <div class="left-sidebar">
+            .
+        </div>
+        <div class="right-sidebar">
+            .
+        </div>
+
+        <div class="main">
+            <p>
+<pre><code class="python">
+import random
+
+# array of candidates arriving in random order. candidate 1 is the best candidate
+candidates = [6, 9, 2, 1, 5, 4, 10, 7, 3, 8]
+
+
+# Write a function that will enable us choose the best candidate.
+# - The optimal solution is to reject the first n/e applicants.
+# - Choose the first candidate who is better than the best candidate from the rejected candidates.
+# - If there is no candidate who is better then choose the last candidate.
+def best_candidate(arr: list):
+    """
+    1. For N candidates, reject the first N/e candidates. e==2.7
+    2. Choose the first candidate who is better than the best candidate from the rejected candidates.
+    3. If there is no candidate who is better then choose the last candidate.
+    """
+    # assumes that the best candidate the one whose index is lowest
+    random.shuffle(arr)
+    e = 2.7
+    reject_at = round(len(arr) / e)  # reject first 36%
+    best_from_rejected = min(candidates[:reject_at])
+    rest = candidates[reject_at:]
+    for i in rest:
+        if i < best_from_rejected:
+            return i
+    return rest[-1]
+
+
+best_candidate(candidates)
+
+
+# We can prove that this func works.
+# The following loop should print a number close to 1(the best candidate) the majority of time.
+for i in range(0, 7):
+    random.shuffle(candidates)
+    print(best_candidate(candidates))
+
+
+# doc: https://danluu.com/sattolo/
+# This is same algo used in pythons `random.shuffle`
+def fisher_yates_shuffle(arr: list):
+    n = len(arr)
+    for i in range(n - 1):
+        j = random.randrange(i, n)
+        arr[i], arr[j] = arr[j], arr[i]
+
+            </code></pre>
+            </p>
+        </div>
+    </div>
+</body>
+    

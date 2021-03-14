@@ -1,0 +1,164 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Komu W - Build a Go package that annotates errors with stack traces.</title>
+    <meta name="description" content="Build a Go package that annotates errors with stack traces." />
+    <meta property="og:url" content="https://www.komu.engineer/blog" />
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ADD FAVICON -->
+
+    <link rel="stylesheet" href="./site.css">
+
+    <!-- Get highlightjs by going to https://highlightjs.org/download/, select the languages you want and download. -->
+    <!--
+    <link rel="stylesheet" href="../../highlightjs/styles/default.css">
+    <script src="../../highlightjs/highlight.pack.js"></script>
+    -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.6.0/styles/default.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.6.0/highlight.min.js"></script>
+    <script>hljs.highlightAll();</script>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <a href="./index.html">Home</a>&nbsp;&nbsp;
+        </div>
+        <div class="left-sidebar">
+            .
+        </div>
+        <div class="right-sidebar">
+            .
+        </div>
+
+        <div class="main">
+            <p>
+<pre><code class="python">
+import typing
+
+# Collision in Hashmaps is when more than one key hashes to the same slot.
+# The pigeonhole-principle means that any hash function with more inputs than outputs MUST have collisions.
+# The birthday-paradox places an upper bound on collision resistance;
+# If a hash function produces N bits of output, an attacker who computes √2^N hash operations on random input is likely to find two matching outputs.
+#
+# Collision can be eliminated by the following two ways:
+
+# 1. Chaining
+# In chaining, we place all the elements that hash to the same slot into the same linked list.
+# Downside: It requires additional memory outside the hmap.
+
+# 2. Open Addressing
+# It's where collisions are resolved by probing. One method is by using double hashing.
+# Downside: the hash table can "fill-up" so that no further insertions can be made
+#
+# Universal hashing;
+# Its where we select the hash function from a random list of hash_funcs at runtime.
+# This protects against adversaries been able to choose keys that will cause collision thus degrading perfomance.
+
+
+# For an example of creating a hashMap using probing(open addressing) see the link below
+# It also shows how to grow the hashmap at runtime.
+# https://github.com/benhoyt/counter/blob/6f3e137837f95fe029899f58eef350f38a18be15/counter.go#L41-L80
+# https://gophers.slack.com/archives/C0VP8EF3R/p1615147587400800
+
+
+# https://stackoverflow.com/a/2909572/2768067
+# https://www.strchr.com/hash_functions
+def paul_larson_hash(s: str, capacity: typing.Union[int, None] = None):
+    hash = 0
+    for i in s:
+        hash = 101 * hash + ord(i)
+
+    if capacity:
+        # constrain hash in range [0, capacity - 1]
+        return hash % capacity
+    return hash
+
+
+class Node:
+    def __init__(self, key, val):
+        self.key = key
+        self.val = val
+        self.next = None
+        self.previous = None
+
+    def __repr__(self):
+        return f"{self.key}:{self.val}"
+
+
+# Hmap using chaining
+# Released under GNU General Public License v3.0
+# full license is available: https://github.com/graphoarty/python-dsa/blob/cad73db712b147ba236919461e2263e46480761a/LICENSE
+class Hmap:
+    def __init__(self, capacity=3, hash_func=None):
+        self.capacity = capacity
+        self.buckets: list[Node] = [None] * self.capacity
+        self.hash_func = hash_func
+
+    def hash(self, key):
+        if self.hash_func:
+            # for tests
+            return self.hash_func(key, self.capacity)
+        return paul_larson_hash(key, self.capacity)
+
+    def insert(self, key, val):
+        index = self.hash(key)
+        node = self.buckets[index]
+        if node is None:
+            # bucket is empty, add node
+            self.buckets[index] = Node(key, val)
+            return
+        else:
+            # handle collision
+            while node is not None and node.next is not None:
+                node = node.next
+            new_node = Node(key, val)
+            new_node.previous = node
+            node.next = new_node
+
+    def get(self, key):
+        index = self.hash(key)
+        node = self.buckets[index]
+        while node is not None:
+            if node.key == key:
+                return node.val
+            node = node.next
+        return None
+
+    def delete(self, key):
+        index = self.hash(key)
+        node = self.buckets[index]
+        while node is not None:
+            if node.key == key:
+                res = node.val
+                # delete
+                if node.previous:
+                    node.previous.next = node.next
+                if node.next:
+                    node.next.previous = node.previous
+                if (node.previous is None) and (node.next is None):
+                    # node was on it's own
+                    self.buckets[index] = None
+                return res
+            node = node.next
+        return None
+
+            </code></pre>
+            </p>
+        </div>
+    </div>
+</body>
+    

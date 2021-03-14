@@ -1,0 +1,193 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Komu W - Build a Go package that annotates errors with stack traces.</title>
+    <meta name="description" content="Build a Go package that annotates errors with stack traces." />
+    <meta property="og:url" content="https://www.komu.engineer/blog" />
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ADD FAVICON -->
+
+    <link rel="stylesheet" href="./site.css">
+
+    <!-- Get highlightjs by going to https://highlightjs.org/download/, select the languages you want and download. -->
+    <!--
+    <link rel="stylesheet" href="../../highlightjs/styles/default.css">
+    <script src="../../highlightjs/highlight.pack.js"></script>
+    -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.6.0/styles/default.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.6.0/highlight.min.js"></script>
+    <script>hljs.highlightAll();</script>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <a href="./index.html">Home</a>&nbsp;&nbsp;
+        </div>
+        <div class="left-sidebar">
+            .
+        </div>
+        <div class="right-sidebar">
+            .
+        </div>
+
+        <div class="main">
+            <p>
+<pre><code class="python">
+import pathlib
+
+import utils
+
+# https://albertauyeung.github.io/2020/06/15/python-trie.html
+# A Trie is commonly used to represent a dictionary for looking up words in a vocabulary.
+# eg auto-completion or query suggestion
+#
+# Tries can be implemented using an array, see: https://www.techiedelight.com/trie-implementation-python/
+# However, they waste space since they allocate space for the entire alphabet.
+# The Trie implemented below is space efficient since it only allocates memory for alphabet in use.
+
+
+class Node:
+    def __init__(self, char):
+        self.char = char
+        self.is_end = False  # end of a word?
+        self.counter = 0  # how may times word is inserted
+        self.children: dict[str, Node] = {}  # keys are characters, values are Nodes
+
+
+class Trie:
+    def __init__(self):
+        # root node does not store any character
+        self.root = Node("")
+
+    def insert(self, word: str):
+        node = self.root
+        for i in word:
+            if i in node.children:
+                node = node.children[i]
+            else:
+                # If a character is not found,
+                # create a new node in the trie
+                new_node = Node(i)
+                node.children[i] = new_node
+                node = new_node
+        node.is_end = True
+        node.counter += 1
+
+    def depth_first_traverse(self, node, prefix, output):
+        prefix = prefix + node.char
+        if node.is_end:
+            output.append((prefix, node.counter))
+
+        for child in node.children.values():
+            self.depth_first_traverse(child, prefix, output)
+
+    def query(self, prefix):
+        node = self.root
+        for i in prefix:
+            if i in node.children:
+                node = node.children[i]
+            else:
+                # not found, return empty list
+                return []
+        # traverse trie to get all candidates
+        output = []
+        self.depth_first_traverse(node, prefix[:-1], output=output)
+        return output
+
+
+t = Trie()
+t.insert("was")
+t.insert("word")
+t.insert("war")
+t.insert("what")
+t.insert("where")
+t.insert("where")
+t.insert("where")
+
+
+utils.assert_r("trie", t.query("wh"), [("what", 1), ("where", 3)])
+utils.assert_r("trie", t.query("nothing"), [])
+utils.assert_r("trie", t.query("what"), [("what", 1)])
+
+
+t = Trie()
+f = pathlib.Path.cwd().joinpath("tests/10_000_words.txt").open()
+words = f.readlines()
+f.close()
+for w in words[:1000]:
+    t.insert(w)
+
+
+if t.query("bl") != [
+    ("bl\n", 1),
+    ("black\n", 1),
+    ("blackberry\n", 1),
+    ("blackjack\n", 1),
+    ("blacks\n", 1),
+    ("blade\n", 1),
+    ("blades\n", 1),
+    ("blah\n", 1),
+    ("blair\n", 1),
+    ("blake\n", 1),
+    ("blame\n", 1),
+    ("blank\n", 1),
+    ("blanket\n", 1),
+    ("blast\n", 1),
+    ("bleeding\n", 1),
+    ("blend\n", 1),
+    ("bless\n", 1),
+    ("blessed\n", 1),
+    ("blind\n", 1),
+    ("blink\n", 1),
+    ("block\n", 1),
+    ("blocked\n", 1),
+]:
+    utils.assert_r(
+        "trie",
+        t.query("bl"),
+        [
+            ("bl\n", 1),
+            ("black\n", 1),
+            ("blackberry\n", 1),
+            ("blackjack\n", 1),
+            ("blacks\n", 1),
+            ("blade\n", 1),
+            ("blades\n", 1),
+            ("blah\n", 1),
+            ("blair\n", 1),
+            ("blake\n", 1),
+            ("blame\n", 1),
+            ("blank\n", 1),
+            ("blanket\n", 1),
+            ("blast\n", 1),
+            ("bleeding\n", 1),
+            ("blend\n", 1),
+            ("bless\n", 1),
+            ("blessed\n", 1),
+            ("blind\n", 1),
+            ("blink\n", 1),
+            ("block\n", 1),
+            ("blocked\n", 1),
+        ],
+    )
+
+            </code></pre>
+            </p>
+        </div>
+    </div>
+</body>
+    

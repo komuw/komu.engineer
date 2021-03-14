@@ -1,0 +1,225 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Komu W - Build a Go package that annotates errors with stack traces.</title>
+    <meta name="description" content="Build a Go package that annotates errors with stack traces." />
+    <meta property="og:url" content="https://www.komu.engineer/blog" />
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ADD FAVICON -->
+
+    <link rel="stylesheet" href="./site.css">
+
+    <!-- Get highlightjs by going to https://highlightjs.org/download/, select the languages you want and download. -->
+    <!--
+    <link rel="stylesheet" href="../../highlightjs/styles/default.css">
+    <script src="../../highlightjs/highlight.pack.js"></script>
+    -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.6.0/styles/default.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.6.0/highlight.min.js"></script>
+    <script>hljs.highlightAll();</script>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <a href="./index.html">Home</a>&nbsp;&nbsp;
+        </div>
+        <div class="left-sidebar">
+            .
+        </div>
+        <div class="right-sidebar">
+            .
+        </div>
+
+        <div class="main">
+            <p>
+<pre><code class="python">
+import utils
+
+
+# https://stackabuse.com/doubly-linked-list-with-python-examples/
+class Node:
+    def __init__(self, data):
+        self.data = data
+        self.next = None
+        self.previous = None
+
+    def __repr__(self):
+        return str(self.data)
+
+
+class DoublyLinkedList:
+    def __init__(self):
+        self.start_node: Node = None
+
+    def __repr__(self):
+        node = self.start_node
+        nodes = []
+        while node is not None:
+            nodes.append(node)
+            node = node.next
+        if nodes == []:
+            return "->"  # empty
+        return "->".join([str(i.data) for i in nodes])
+
+    def insert_at_end(self, data):
+        last = self.last_node()
+        if last is None:
+            self.insert_at_start(data)
+            return
+        new_node = Node(data)
+        new_node.previous = last
+        last.next = new_node
+
+    def insert_at_start(self, data):
+        new_node = Node(data)
+
+        if self.start_node is None:
+            self.start_node = new_node
+            return
+
+        new_node.next = self.start_node
+        self.start_node.previous = new_node
+        self.start_node = new_node
+
+    def insert_after_item(self, item, data):
+        if self.start_node is None:
+            self.insert_at_start(data)
+            return
+        else:
+            n = self.start_node
+            while n is not None:
+                if n.data == item:
+                    new_node = Node(data)
+                    new_node.previous = n
+                    new_node.next = n.next
+                    if n.next is not None:
+                        n.next.previous = new_node
+                    n.next = new_node
+                    return
+                n = n.next
+            if n is None:
+                print("item not in the list")
+
+    def traverse_list(self):
+        if self.start_node is None:
+            return
+        else:
+            n = self.start_node
+            while n is not None:
+                n = n.next
+
+    def first_node(self):
+        return self.start_node
+
+    def last_node(self):
+        n = self.start_node
+        if n is None:
+            return n
+        while n is not None and n.next is not None:
+            n = n.next
+        return n
+
+    def delete_at_end(self):
+        last = self.last_node()
+        if last is not None:
+            last.previous.next = None
+            last = None  # gc
+
+    def delete_by_value(self, item):
+        if self.start_node is None:
+            return
+        if self.start_node.next is None:
+            if self.start_node.data == item:
+                self.start_node = None
+            return
+
+        if self.start_node.data == item:
+            # luck us
+            self.start_node = self.start_node.next
+            self.start_node.previous = None
+            return
+
+        n = self.start_node
+        while n is not None:
+            n = n.next
+            if n is not None:
+                if n.data and n.data == item:
+                    # found it
+                    n.next.previous = n.previous
+                    n.previous.next = n.next
+
+    def reverse(self):
+        new_ll = DoublyLinkedList()
+        last = self.last_node()
+        if last is None:
+            return new_ll
+
+        new_ll.insert_at_end(last.data)
+        while last is not None and last.previous is not None:
+            last = last.previous
+            new_ll.insert_at_end(last.data)
+        return new_ll
+
+
+d = DoublyLinkedList()
+
+utils.assert_r("linked_list", d.last_node(), None)
+
+
+for i in range(1, 6):
+    d.insert_at_start(i)
+utils.assert_r("linked_list", str(d), "5->4->3->2->1")
+
+
+d.insert_after_item(4, 88)
+d.insert_after_item(1, 33907)
+d.traverse_list()
+utils.assert_r("linked_list", str(d), "5->4->88->3->2->1->33907")
+
+
+d.insert_at_end(777)
+d.insert_at_end(3)
+utils.assert_r("linked_list", str(d), "5->4->88->3->2->1->33907->777->3")
+
+
+utils.assert_r("linked_list", d.last_node().data, 3)
+
+
+d.delete_at_end()
+d.delete_at_end()
+utils.assert_r("linked_list", str(d), "5->4->88->3->2->1->33907")
+
+d = d.reverse()
+utils.assert_r("linked_list", str(d), "33907->1->2->3->88->4->5")
+
+
+d.delete_by_value(item=3)
+utils.assert_r("linked_list", str(d), "33907->1->2->88->4->5")
+
+
+# TODO: Tackle Linked list questions
+# see: https://stackabuse.com/linked-list-programming-interview-questions/
+
+# TODO: undo/redo using linkedlist
+# https://www.youtube.com/watch?v=O6U9lZJqdeo
+
+            </code></pre>
+            </p>
+        </div>
+    </div>
+</body>
+    

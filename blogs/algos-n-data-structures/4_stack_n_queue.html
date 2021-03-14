@@ -1,0 +1,151 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Komu W - Build a Go package that annotates errors with stack traces.</title>
+    <meta name="description" content="Build a Go package that annotates errors with stack traces." />
+    <meta property="og:url" content="https://www.komu.engineer/blog" />
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ADD FAVICON -->
+
+    <link rel="stylesheet" href="./site.css">
+
+    <!-- Get highlightjs by going to https://highlightjs.org/download/, select the languages you want and download. -->
+    <!--
+    <link rel="stylesheet" href="../../highlightjs/styles/default.css">
+    <script src="../../highlightjs/highlight.pack.js"></script>
+    -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.6.0/styles/default.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.6.0/highlight.min.js"></script>
+    <script>hljs.highlightAll();</script>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <a href="./index.html">Home</a>&nbsp;&nbsp;
+        </div>
+        <div class="left-sidebar">
+            .
+        </div>
+        <div class="right-sidebar">
+            .
+        </div>
+
+        <div class="main">
+            <p>
+<pre><code class="python">
+# In computer science what is a dictionary?
+# It's a dynamic set that only supports:
+# 1. insertion
+# 2. deletion
+# 3. membership test.
+
+# There are other types of Dynamic sets. Some of the operations that other dynamic sets may support are:
+# 1. Search(S, k):     A query that, given a set S and a key value k, returns a pointer x to an element
+#                      in S such that x.key= k, or NIL if no such element belongs to S.
+# 2. Insert(S,x)
+# 3. Deletion
+# 4. Minimum(S):       A query on a totally ordered set S that returns a pointer to the element of S with the smallest key.
+# 5. Maximum(S):       opposite of Minimum(S)
+# 6. Successor(S,x):   A query that, given an element x whose key is from a totally ordered set S,
+#                      returns a pointer to the next larger element in S, or NIL if x is the maximum element.
+# 7. PREDECESSOR(S,x): opposite of Successor(S,x)
+
+
+# Stack implements LIFO policy.
+class Stack:
+    d: list = []
+
+    def empty(self):
+        """
+        Returns whether the stack is empty – Time Complexity : O(1)
+        """
+        if self.top() == 0:
+            return True
+        return False
+
+    def top(self):
+        """
+        This is the index of the most recently added element – Time Complexity : O(1)
+        """
+        return len(self.d)
+
+    def size(self):
+        """Returns the size of the stack – Time Complexity : O(1)"""
+        return len(self.d)
+
+    def push(self, x):
+        """Adds the element ‘g’ at the top of the stack – Time Complexity : O(1)"""
+        self.d.append(x)
+
+    def pop(self):
+        """Deletes the top most element of the stack – Time Complexity : O(1)"""
+        return self.d.pop()
+
+
+s = Stack()
+if s.top() != 0:
+    raise Exception(
+        """The `stack` algo didnt work.
+        \ngot = {}. \nexpected = {}.""".format(
+            s.top(), 0
+        )
+    )
+if s.empty() is not True:
+    raise Exception(
+        """The `stack` algo didnt work.
+        \ngot = {}. \nexpected = {}.""".format(
+            s.empty(), True
+        )
+    )
+
+s.push(34)
+s.push(1)
+s.push(54)
+s.push(358_763_524)
+if s.top() != 4:
+    raise Exception(
+        """The `stack` algo didnt work.
+        \ngot = {}. \nexpected = {}.""".format(
+            s.top(), 4
+        )
+    )
+
+if s.pop() != 358_763_524:
+    raise Exception(
+        """The `stack` algo didnt work.
+        \ngot = {}. \nexpected = {}.""".format(
+            s.pop(), 358_763_524
+        )
+    )
+
+
+# Queue implements FIFO policy.
+class Queue:
+    d: list = []
+
+    def enqueue(self, x):
+        self.d.append(x)
+
+    def dequeue(self):
+        return self.pop(0)
+
+            </code></pre>
+            </p>
+        </div>
+    </div>
+</body>
+    

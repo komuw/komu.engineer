@@ -1,0 +1,227 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Komu W - Build a Go package that annotates errors with stack traces.</title>
+    <meta name="description" content="Build a Go package that annotates errors with stack traces." />
+    <meta property="og:url" content="https://www.komu.engineer/blog" />
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ADD FAVICON -->
+
+    <link rel="stylesheet" href="./site.css">
+
+    <!-- Get highlightjs by going to https://highlightjs.org/download/, select the languages you want and download. -->
+    <!--
+    <link rel="stylesheet" href="../../highlightjs/styles/default.css">
+    <script src="../../highlightjs/highlight.pack.js"></script>
+    -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.6.0/styles/default.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.6.0/highlight.min.js"></script>
+    <script>hljs.highlightAll();</script>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <a href="./index.html">Home</a>&nbsp;&nbsp;
+        </div>
+        <div class="left-sidebar">
+            .
+        </div>
+        <div class="right-sidebar">
+            .
+        </div>
+
+        <div class="main">
+            <p>
+<pre><code class="python">
+import io
+import random
+
+import utils
+
+# https://www.geeksforgeeks.org/write-a-c-program-to-find-the-maximum-depth-or-height-of-a-tree/
+# https://www.educative.io/edpresso/binary-trees-in-python
+# https://stephenagrice.medium.com/how-to-implement-a-binary-search-tree-in-python-e1cdba29c533
+# https://www.codespeedy.com/inorder-tree-traversal-in-python
+# https://www.codespeedy.com/preorder-tree-traversal-in-python
+# https://www.codespeedy.com/postorder-tree-traversal-in-python
+# https://www.freecodecamp.org/news/all-you-need-to-know-about-tree-data-structures-bceacb85490c
+
+
+# A Binary search tree(BST) or BinaryTree is organized, in a binary tree.
+# The search tree data structure supports many dynamic-set operations, including
+# SEARCH, MINIMUM, MAXIMUM, PREDECESSOR, SUCCESSOR, INSERT, & DELETE.
+# Thus, we can use a BST both as a dictionary and as a priority queue.
+#
+# The BST property is:
+# The left child of a node has value less than the parent and right child has value greater than parent.
+#
+# If we insert a set of N items into a binary search tree,
+# the resulting tree may be horribly unbalanced, leading to long search times. - section 13-4 of Cormen et al.
+# However, randomly built binary search trees tend to be balanced - Section 12.4 of Cormen et al.
+# Thus if we know all the input items in advance, we can randomly permute them and then insert them.
+# This will produce a fairly balanced BST
+
+
+class BinaryTree:
+    def __init__(self, data):
+        self.data = data
+        self.left = None
+        self.right = None
+
+    def __repr__(self) -> str:
+        return f"data={self.data}"
+
+    def insert(self, data):
+        # O(h). h== tree height
+        if self.data is None:
+            self.data = data
+            return
+
+        if data <= self.data:
+            if self.left is None:
+                self.left = BinaryTree(data)
+            else:
+                self.left.insert(data)
+        else:
+            if self.right is None:
+                self.right = BinaryTree(data)
+            else:
+                self.right.insert(data)
+
+    def in_order_tree_walk(self, file):
+        """
+        in-order, pre_order & post_order are DFS algos.
+        https://www.freecodecamp.org/news/all-you-need-to-know-about-tree-data-structures-bceacb85490c
+        """
+        # O(n)
+        if self.left:
+            self.left.in_order_tree_walk(file)
+        print(self.data, file=file)
+        if self.right:
+            self.right.in_order_tree_walk(file)
+        # for pre-order traversal; print comes first.
+        # for post-order traversal; print comes last.
+
+    def tree_search(self, data):
+        # O(h)
+        if data == self.data:
+            return self
+        if data < self.data and self.left:
+            return self.left.tree_search(data)
+        else:
+            if self.right:
+                return self.right.tree_search(data)
+
+    def tree_minimum(self):
+        # O(h)
+        node = self
+        while node.left is not None:
+            node = node.left
+        return node
+
+    def tree_maximum(self):
+        # O(h)
+        node = self
+        while node.right is not None:
+            node = node.right
+        return node
+
+    @staticmethod
+    def tree_height(node):
+        if node is None:
+            return -1
+        else:
+            lHeight = BinaryTree.tree_height(node.left)
+            rHeight = BinaryTree.tree_height(node.right)
+
+            # Use the larger one
+            if lHeight > rHeight:
+                return lHeight + 1
+            else:
+                return rHeight + 1
+
+
+# TODO:
+# implement `predecessor` and `successor` method. They are O(h)
+# implement `delete` method. It is O(h)
+
+
+# Also called binary search
+BST = BinaryTree
+
+
+#           6
+#     5          7
+# 2      5           8
+
+root = BinaryTree(6)
+root.insert(8)
+root.insert(7)
+root.insert(5)
+root.insert(2)
+root.insert(5)
+
+fake_file = io.StringIO()
+root.in_order_tree_walk(file=fake_file)
+res = fake_file.getvalue()
+utils.assert_r("binary_tree", res.replace("\n", " ").strip(), "2 5 5 6 7 8")
+
+utils.assert_r("binary_tree", root.tree_search(3), None)
+utils.assert_r("binary_tree", root.tree_search(5).data, 5)
+utils.assert_r("binary_tree", root.tree_minimum().data, 2)
+utils.assert_r("binary_tree", root.tree_maximum().data, 8)
+utils.assert_r("binary_tree", BinaryTree.tree_height(root), 3)
+
+
+ll = [i for i in range(1, 100)]
+normalTree = BinaryTree(0)
+for i in ll:
+    normalTree.insert(i)
+
+height_of_normal_tree = BinaryTree.tree_height(normalTree)
+
+
+random.shuffle(ll)
+randomlyBuiltTree = BinaryTree(0)
+for i in ll:
+    randomlyBuiltTree.insert(i)
+height_of_randomly_bult_tree = BinaryTree.tree_height(randomlyBuiltTree)
+
+
+if height_of_randomly_bult_tree >= height_of_normal_tree:
+    utils.assert_r(
+        "binary_tree",
+        "randomTree has height greater than normal tree",
+        "randomTree should have much smaller height",
+    )
+
+
+# Randomly built BST are usually much smaller than normally built BSTs.
+diff = height_of_normal_tree / height_of_randomly_bult_tree
+if diff < 4:
+    utils.assert_r(
+        "binary_tree",
+        "randomTree has height greater than normal tree",
+        "randomTree should have much smaller height",
+    )
+
+            </code></pre>
+            </p>
+        </div>
+    </div>
+</body>
+    

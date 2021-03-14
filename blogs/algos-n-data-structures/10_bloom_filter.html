@@ -1,0 +1,171 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Komu W - Build a Go package that annotates errors with stack traces.</title>
+    <meta name="description" content="Build a Go package that annotates errors with stack traces." />
+    <meta property="og:url" content="https://www.komu.engineer/blog" />
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ADD FAVICON -->
+
+    <link rel="stylesheet" href="./site.css">
+
+    <!-- Get highlightjs by going to https://highlightjs.org/download/, select the languages you want and download. -->
+    <!--
+    <link rel="stylesheet" href="../../highlightjs/styles/default.css">
+    <script src="../../highlightjs/highlight.pack.js"></script>
+    -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.6.0/styles/default.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.6.0/highlight.min.js"></script>
+    <script>hljs.highlightAll();</script>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <a href="./index.html">Home</a>&nbsp;&nbsp;
+        </div>
+        <div class="left-sidebar">
+            .
+        </div>
+        <div class="right-sidebar">
+            .
+        </div>
+
+        <div class="main">
+            <p>
+<pre><code class="python">
+import utils
+
+hmap = __import__("6_hashmaps")
+
+
+# A Bloom filter is a probabilistic data structure that tells you, efficiently, whether an element is present in a set.
+# It tells us whether an element is;
+# - DEFINITELY NOT in the set, or
+# - may be in the set.
+#
+# GoogleChrome used to use a bloomFilter to detect malicious URLS.
+# It shipped with a bloomFilter containing all known malicious URLs.
+# Then when you click on a link, chrome checks if that link is in the bloomFilter.
+# If the link is not in the bloomFilter; then that link is safe.
+# This is because bloomFilters tell us when something is DEFINITELY NOT in the set.
+
+
+# https://llimllib.github.io/bloomfilter-tutorial/
+# https://www.kdnuggets.com/2016/08/gentle-introduction-bloom-filter.html
+# https://stackoverflow.com/questions/18447874/google-chrome-usage-of-bloom-filter
+class BloomFilter:
+    def __init__(self, size):
+        self.size = size
+        self.bit_array = [0] * self.size  # ie bit array(bit vector)
+        self.hash_count = 3  # increases effectiveness.
+
+    def set(self, item):
+        # O(k). k== number of hash funcs(or self.hash_count in our case)
+
+        # Note it is possible to hash `item` only once.
+        # But hashing more times increases effectiveness.
+        # Ideally you should use different hash functions
+        for i in range(self.hash_count):
+            index = hmap.paul_larson_hash(item + str(i), self.size)
+            self.bit_array[index] = 1
+
+    def get(self, item) -> bool:
+        # O(k)
+        present = True
+        for i in range(self.hash_count):
+            index = hmap.paul_larson_hash(item + str(i), self.size)
+            if self.bit_array[index] == 0:
+                present = False
+        return present
+
+
+bloom = BloomFilter(100)
+
+animals = [
+    "dog",
+    "cat",
+    "giraffe",
+    "fly",
+    "mosquito",
+    "horse",
+    "eagle",
+    "bird",
+    "bison",
+    "boar",
+    "butterfly",
+    "ant",
+    "anaconda",
+    "bear",
+    "chicken",
+    "dolphin",
+    "donkey",
+    "crow",
+    "crocodile",
+]
+# First insertion of animals into the bloom filter
+for animal in animals:
+    bloom.set(animal)
+
+# Membership existence for already inserted animals
+# There should NOT be any false negatives
+for animal in animals:
+    if not bloom.get(animal):
+        # ie: False Negative should not happen
+        utils.assert_r("bloom_filter", bloom.get(animal), True)
+
+
+false_positives = []
+correct = []
+# Membership existence for not inserted animals
+# There could be false positives
+other_animals = [
+    "badger",
+    "cow",
+    "pig",
+    "sheep",
+    "bee",
+    "wolf",
+    "fox",
+    "whale",
+    "shark",
+    "fish",
+    "turkey",
+    "duck",
+    "dove",
+    "deer",
+    "elephant",
+    "frog",
+    "falcon",
+    "goat",
+    "gorilla",
+    "hawk",
+]
+for other_animal in other_animals:
+    if bloom.get(other_animal):
+        false_positives.append(1)
+    else:
+        correct.append(1)
+
+utils.assert_r("bloom_filter", len(false_positives), 6)
+utils.assert_r("bloom_filter", len(correct), 14)
+
+            </code></pre>
+            </p>
+        </div>
+    </div>
+</body>
+    

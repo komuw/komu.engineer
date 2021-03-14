@@ -1,0 +1,234 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Komu W - Build a Go package that annotates errors with stack traces.</title>
+    <meta name="description" content="Build a Go package that annotates errors with stack traces." />
+    <meta property="og:url" content="https://www.komu.engineer/blog" />
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ADD FAVICON -->
+
+    <link rel="stylesheet" href="./site.css">
+
+    <!-- Get highlightjs by going to https://highlightjs.org/download/, select the languages you want and download. -->
+    <!--
+    <link rel="stylesheet" href="../../highlightjs/styles/default.css">
+    <script src="../../highlightjs/highlight.pack.js"></script>
+    -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.6.0/styles/default.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.6.0/highlight.min.js"></script>
+    <script>hljs.highlightAll();</script>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <a href="./index.html">Home</a>&nbsp;&nbsp;
+        </div>
+        <div class="left-sidebar">
+            .
+        </div>
+        <div class="right-sidebar">
+            .
+        </div>
+
+        <div class="main">
+            <p>
+<pre><code class="python">
+import random
+import time
+from typing import Any
+
+
+##################################################################################################
+# 1. INSERTION SORT
+
+# Insertion sort is:
+# 1. stable
+# 2. inplace
+# 3. fast for small arrays(or almost sorted arrays)
+# 4. O(n^2) time perfomance & O(1) space complexity
+def insertion_sort(arr: list):
+    """
+    1. Iterate from arr[1] to arr[n]
+    2. Compare the current_element to the previous_one
+    3. If the current_element < previous_one, compare it to ALL the elements before
+    4. Move the greater elements one position up to make space for the swapped element
+    """
+    for i in range(1, len(arr)):
+        nums_b4 = i
+        c_value = arr[i]
+        while nums_b4 > 0:
+            if c_value < arr[nums_b4 - 1]:
+                arr[nums_b4], arr[nums_b4 - 1] = arr[nums_b4 - 1], arr[nums_b4]
+            nums_b4 = nums_b4 - 1
+
+
+arr = [1, 6, 2, 96, 346, 8, 5]
+insertion_sort(arr)
+
+if arr != sorted(arr):
+    raise Exception(
+        """The `insertion_sort` algo didnt work.
+        \ngot = {}. \nexpected = {}.""".format(
+            arr, sorted(arr)
+        )
+    )
+
+
+# 2. SORT CUSTOM OBJECTS
+class Point:
+    def __init__(self, x, y):
+        self.x = x
+        self.y = y
+
+    def __repr__(self):
+        return f"Point({self.x})"
+
+
+def compare_func(a: Any, b: Any) -> bool:
+    # We sort by the x coordinate, ascending
+    return a.x < b.x
+
+
+def custom_insertion_sort(arr: list, compare_func):
+    for i in range(1, len(arr)):
+        nums_b4 = i
+        c_value = arr[i]
+        while nums_b4 > 0:
+            if compare_func(c_value, arr[nums_b4 - 1]):
+                arr[nums_b4], arr[nums_b4 - 1] = arr[nums_b4 - 1], arr[nums_b4]
+            nums_b4 = nums_b4 - 1
+
+
+ct_array = [Point(4, 4), Point(1, 2), Point(10, 0), Point(3, 1)]
+custom_insertion_sort(ct_array, compare_func)
+if ct_array != sorted(ct_array, key=lambda a: a.x):
+    raise Exception(
+        """The `insertion_sort` algo didnt work.
+        \ngot = {}. \nexpected = {}.""".format(
+            ct_array, sorted(ct_array, key=lambda a: a.x)
+        )
+    )
+##################################################################################################
+
+# 3. MERGE SORT
+
+
+# Merge sort is:
+# 1. stable
+# 2. NOT in-place
+# 3. Uses Divide and Conquer
+# 4. O(n log n) performance & O(n) space complexity
+# 5. Good for large arrays, slower than insertion sort for small arrays.
+def merge_sort(arr: list):
+    if len(arr) > 1:
+        middle = len(arr) // 2
+        left_arr = arr[:middle]
+        right_arr = arr[middle:]
+
+        merge_sort(left_arr)
+        merge_sort(right_arr)
+        merge(arr, left_arr, right_arr)
+
+
+def merge(arr: list, left: list, right: list):
+    # Two iterators for traversing the two halves
+    i = 0
+    j = 0
+    # Iterator for the main list
+    k = 0
+
+    while i < len(left) and j < len(right):
+        if left[i] < right[j]:
+            arr[k] = left[i]
+            i += 1
+        else:
+            arr[k] = right[j]
+            j += 1
+        k += 1
+
+    # For all the remaining values
+    while i < len(left):
+        arr[k] = left[i]
+        i += 1
+        k += 1
+    while j < len(right):
+        arr[k] = right[j]
+        j += 1
+        k += 1
+
+
+arr = [1, 6, 2, 96, 346, 8, 5, 90]
+merge_sort(arr)
+if arr != sorted(arr):
+    raise Exception(
+        """The `merge_sort` algo didnt work.
+        \ngot = {}. \nexpected = {}.""".format(
+            arr, sorted(arr)
+        )
+    )
+
+
+#### comparison of insertion_sort & merge_sort ####
+
+arr = []
+for i in range(45):
+    arr.append(random.randint(0, 99_999_999))
+start_insertion_sort = time.monotonic()
+insertion_sort(arr)
+end_insertion_sort = time.monotonic()
+arr = []
+if arr != sorted(arr):
+    raise Exception(
+        """The `insertion_sort` algo didnt work.
+        \ngot = {}. \nexpected = {}.""".format(
+            arr[:8], sorted(arr)[:8]
+        )
+    )
+insertion_sort_duration = end_insertion_sort - start_insertion_sort
+print(
+    "`insertion_sort` of an array of length:{} took {}secs".format(
+        len(arr), insertion_sort_duration
+    )
+)
+
+
+arr = []
+for i in range(45):
+    arr.append(random.randint(0, 99_999_999))
+start_merge_sort = time.monotonic()
+merge_sort(arr)
+end_merge_sort = time.monotonic()
+arr = []
+if arr != sorted(arr):
+    raise Exception(
+        """The `merge_sort` algo didnt work.
+        \ngot = {}. \nexpected = {}.""".format(
+            arr[:8], sorted(arr)[:8]
+        )
+    )
+merge_sort_duration = end_merge_sort - start_merge_sort
+print("`merge_sort` of an array of length:{} took {}secs".format(len(arr), merge_sort_duration))
+
+
+# insertion_sort seems to perform better than merge_sort when len(arr)<=40
+
+            </code></pre>
+            </p>
+        </div>
+    </div>
+</body>
+    

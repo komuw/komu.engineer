@@ -1,0 +1,150 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Komu W - Build a Go package that annotates errors with stack traces.</title>
+    <meta name="description" content="Build a Go package that annotates errors with stack traces." />
+    <meta property="og:url" content="https://www.komu.engineer/blog" />
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ADD FAVICON -->
+
+    <link rel="stylesheet" href="./site.css">
+
+    <!-- Get highlightjs by going to https://highlightjs.org/download/, select the languages you want and download. -->
+    <!--
+    <link rel="stylesheet" href="../../highlightjs/styles/default.css">
+    <script src="../../highlightjs/highlight.pack.js"></script>
+    -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.6.0/styles/default.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.6.0/highlight.min.js"></script>
+    <script>hljs.highlightAll();</script>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <a href="./index.html">Home</a>&nbsp;&nbsp;
+        </div>
+        <div class="left-sidebar">
+            .
+        </div>
+        <div class="right-sidebar">
+            .
+        </div>
+
+        <div class="main">
+            <p>
+<pre><code class="python">
+# Suppose that you been offered the opportunity to invest in the stock price of the
+# Volatile Chemical Corporation.
+# You are allowed to buy one unit of stock only one time and then sell it at a later date, buying and selling after the
+# close of trading for the day.
+# To compensate for this restriction, you are allowed to learn what the price of the stock will be in the future.
+# Your goal is to maximize your profit.
+# Day    0    1     2   3   4     5   6
+# Price  100  113  110  85  105  102  86
+# Diff    _   13  -3  -25  20   -3 -16 
+import typing
+
+
+def kadane(arr: list) -> typing.Tuple[int, list]:
+    current_maximum = arr[0]
+    maximum_so_far = arr[0]
+    start = 0
+    end = 0
+    s = 0
+
+    # O(n)
+    for i in range(len(arr)):
+        current_maximum = current_maximum + arr[i]
+
+        if maximum_so_far < current_maximum:
+            maximum_so_far = current_maximum
+            start = s
+            end = i
+
+        if current_maximum < 0:
+            current_maximum = 0
+            s = i + 1
+
+    end = end + 1  # coz python lists are exclusive
+    return (maximum_so_far, arr[start:end])
+
+
+arr = [-3, 4, 1, 2, -1, -4, 3]
+res = kadane(arr)[0]
+if res != 7:
+    raise Exception(
+        """The `Kadane` algo didnt work.
+        \ngot = {}. \nexpected = {}.""".format(
+            res, 7
+        )
+    )
+
+a = [-13, -3, -25, -20, -3, -16, -23, -12, -5, -22, -15, -4, -7]
+res = kadane(a)[0]
+if res != -3:
+    raise Exception(
+        """The `Kadane` algo didnt work.
+        \ngot = {}. \nexpected = {}.""".format(
+            res, -3
+        )
+    )
+
+
+arr = [13, -3, -25, 20, -3, -16, -23, 18, 20, -7, 12, -5, -22, 15, -4, 7]
+res = kadane(arr)[0]
+if res != 43:
+    raise Exception(
+        """The `Kadane` algo didnt work.
+        \ngot = {}. \nexpected = {}.""".format(
+            res, 43
+        )
+    )
+if res != sum(arr[7:11]):
+    raise Exception(
+        """The `Kadane` algo didnt work.
+        \ngot = {}. \nexpected = {}.""".format(
+            res, sum(arr[7:11])
+        )
+    )
+
+arr = [-1, -2, -3]
+res = kadane(arr)[0]
+if res != -1:
+    raise Exception(
+        """The `Kadane` algo didnt work.
+        \ngot = {}. \nexpected = {}.""".format(
+            res, -1
+        )
+    )
+
+
+arr = [13, -3, -25, 20, -3, -16, -23, 18, 20, -7, 12, -5, -22, 15, -4, 7]
+_, sub_array = kadane(arr)
+if sub_array != arr[7:11]:
+    raise Exception(
+        """The `Kadane` algo didnt work.
+        \ngot = {}. \nexpected = {}.""".format(
+            sub_array, arr[7:11]
+        )
+    )
+
+            </code></pre>
+            </p>
+        </div>
+    </div>
+</body>
+    
