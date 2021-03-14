@@ -35,7 +35,10 @@
 <body>
     <div class="container">
         <div class="header">
-            <a href="./index.html">Home</a>&nbsp;&nbsp;
+            <a href="https://www.komu.engineer">Home</a>&nbsp;&nbsp;
+            <a href="https://www.komu.engineer/about">About Me</a>&nbsp;&nbsp;
+            <a href="https://www.komu.engineer/blog">Blog</a>&nbsp;&nbsp;
+            <a href="./index.html">Algorithms & datastructures Home</a>&nbsp;&nbsp;
         </div>
         <div class="left-sidebar">
             .
@@ -47,7 +50,9 @@
         <div class="main">
             <p>
 <pre><code class="python">
+import utils
 import typing
+import pathlib
 
 # Collision in Hashmaps is when more than one key hashes to the same slot.
 # The pigeonhole-principle means that any hash function with more inputs than outputs MUST have collisions.
@@ -155,6 +160,101 @@ class Hmap:
                 return res
             node = node.next
         return None
+
+
+ht = Hmap()
+
+
+def test_hash_collision():
+    # 10k words
+    # https://www.mit.edu/~ecprice/wordlist.10000
+    f = pathlib.Path.cwd().joinpath("test_data/10_000_words.txt").open()
+    lines = f.readlines()
+    f.close()
+
+    hashes = []
+    for i in lines:
+        hash = paul_larson_hash(i)
+        if hash in hashes:
+            raise Exception(f"Collision for word: {i} with hash: {hash}")
+        hashes.append(hash)
+
+
+test_hash_collision()
+
+
+def test_hash_func():
+    utils.assert_r("hashmap", ht.hash("hello"), ht.hash("hello"))
+    utils.assert_r("hashmap", ht.hash("hello"), 0)
+
+
+test_hash_func()
+
+
+def test_insert():
+    ht.insert("test_key", "test_value")
+    utils.assert_r("hashmap", ht.buckets[ht.hash("test_key")].val, "test_value")
+
+
+test_insert()
+
+
+def test_get():
+    obj = "hello"
+    ht.insert("key1", obj)
+    utils.assert_r("hashmap", ht.get("key1"), obj)
+
+    obj2 = ["this", "is", "a", "list"]
+    ht.insert("key2", obj2)
+    utils.assert_r("hashmap", ht.get("key2"), obj2)
+
+
+test_get()
+
+
+def test_delete():
+    def fake_hash(s, capacity):
+        # this hash func will produce collisions irrespective of input
+        return 1
+
+    ht = Hmap(hash_func=fake_hash)
+    ht.insert("key1", "One")
+    obj = "Two object"
+    ht.insert("key2", obj)
+    ht.insert("key3", "Three")
+
+    utils.assert_r("hashmap", ht.delete("key2"), obj)
+    utils.assert_r("hashmap", ht.delete("key2"), None)
+    utils.assert_r("hashmap", ht.delete("key2"), None)
+    utils.assert_r("hashmap", ht.delete("some random key"), None)
+    utils.assert_r("hashmap", ht.delete("key2"), None)
+    utils.assert_r("hashmap", ht.buckets[1].key, "key1")
+    utils.assert_r("hashmap", ht.buckets[1].next.key, "key3")
+
+    ht2 = Hmap()
+    ht2.insert("A", 5)
+    ht2.insert("B", 10)
+    ht2.insert("Ball", "hello")
+
+    utils.assert_r("hashmap", ht2.delete("A"), 5)
+    utils.assert_r("hashmap", ht2.delete("A"), None)
+    utils.assert_r("hashmap", ht2.delete("A"), None)
+
+
+test_delete()
+
+
+def test_capacity():
+    # Test all public methods in one run at a large capacity
+    for i in range(0, 1000):
+        ht.insert("key" + str(i), "value")
+    for i in range(0, 1000):
+        _got = ht.get("key" + str(i))
+        _deleted = ht.delete("key" + str(i))
+        utils.assert_r("hashmap", _got, _deleted)
+
+
+test_capacity()
 
             </code></pre>
             </p>
