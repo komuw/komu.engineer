@@ -237,6 +237,7 @@ def test_delete():
     ht2.insert("Ball", "hello")
 
     utils.assert_r("hashmap", ht2.delete("A"), 5)
+    utils.assert_r("hashmap", ht2.get("A"), None)
     utils.assert_r("hashmap", ht2.delete("A"), None)
     utils.assert_r("hashmap", ht2.delete("A"), None)
 
