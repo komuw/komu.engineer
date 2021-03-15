@@ -106,7 +106,7 @@ import utils
 #   [4]     |      [2]
 #     <\    |     /
 #      \    |    /
-#       \   ↓   </
+#       \   ↓   <
 #          [3]
 
 # C. Directed, Weighted graph; G = (V,E)
@@ -116,7 +116,7 @@ import utils
 #   [4]     |5    [2]
 #     <\    |     /
 #     7\    |    / 3
-#       \   ↓   </
+#       \   ↓   <
 #          [3]
 
 # D. Ngative-weight-cycle; G = (V,E)
@@ -128,7 +128,7 @@ import utils
 #  -1 |      [2]
 #     ^     /
 #     |    / 2
-#     |  </
+#     |  <
 #    [3]
 
 
@@ -322,7 +322,7 @@ def directed_weighted_graph():
     #   [4]     |5    [2]
     #     <\    |     /
     #     7\    |    / 3
-    #       \   ↓   </
+    #       \   ↓   <
     #          [3]
     dwg = Graph()
     dwg.add_edge(1, 2, 1)
@@ -388,7 +388,7 @@ def directed_weighted_graph_with_letter_vertices():
     #   [D]     |5    [B] -----> [E] -----> [F] -----> [G] -----> [H]
     #     <\    |     /                             /
     #     7\    |    / 3                           / 1
-    #       \   ↓   </                            /
+    #       \   ↓   <                            /
     #          [C] <-----------------------------
 
     dwgl = Graph()
@@ -509,7 +509,7 @@ def directed_weighted_graph_with_negative_weights():
     #   [4]     |5    [2]
     #     <\    |     /
     #     7\    |    / -3
-    #       \   ↓   </
+    #       \   ↓   <
     #          [3]
     dwgnw = Graph()
     dwgnw.add_edge(1, 2, 1)
@@ -563,7 +563,7 @@ def directed_weighted_graph_with_negative_weight_cycle():
     #  -1 |      [2]
     #     ^     /
     #     |    / 2
-    #     |  </
+    #     |  <
     #    [3]
     dwgnwc = Graph()
     dwgnwc.add_edge(1, 2, -3)
