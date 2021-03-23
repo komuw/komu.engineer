@@ -69,7 +69,7 @@ h = __import__("6_hashmaps")
 
 
 # Rabin-Karp algorithm is a string searching algorithm that uses hashing to find an exact match of a pattern string in a text.
-def robin_karp(s: str, pattern: str):
+def rabin_karp(s: str, pattern: str):
     """
     https://en.wikipedia.org/wiki/Rabin%E2%80%93Karp_algorithm
     """
@@ -88,25 +88,25 @@ def robin_karp(s: str, pattern: str):
     return None
 
 
-res = robin_karp("komu", "mu")
+res = rabin_karp("komu", "mu")
 utils.assert_r("strings", res, 2)
 
 
-res = robin_karp("komu", "k")
+res = rabin_karp("komu", "k")
 utils.assert_r("strings", res, 0)
 
 
-res = robin_karp("komu", "ko")
+res = rabin_karp("komu", "ko")
 utils.assert_r("strings", res, 0)
 
 
-res = robin_karp("abcdefghijklmnopqrstuvwxyz", "w")
+res = rabin_karp("abcdefghijklmnopqrstuvwxyz", "w")
 utils.assert_r("strings", res, 22)
 utils.assert_r("strings", res, "abcdefghijklmnopqrstuvwxyz".index("w"))
 utils.assert_r("strings", list("abcdefghijklmnopqrstuvwxyz")[22], "w")
 
 
-res = robin_karp("komu", "kw")
+res = rabin_karp("komu", "kw")
 utils.assert_r("strings", res, None)
 
 
@@ -117,11 +117,11 @@ Shall be the head cornerstone,
 And no matter what game they play,
 Eh, we got something they could never take away;
 We got something they could never take away - Bob Marley"""
-res = robin_karp(my_str, "builder")
+res = rabin_karp(my_str, "builder")
 utils.assert_r("strings", res, 105)
 utils.assert_r("strings", res, my_str.index("builder"))
 
-res = robin_karp(my_str, "king")
+res = rabin_karp(my_str, "king")
 utils.assert_r("strings", res, None)
 
 </code></pre>
