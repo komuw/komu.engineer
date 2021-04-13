@@ -81,6 +81,9 @@ hmap = __import__("6_hashmaps")
 # If the link is not in the bloomFilter; then that link is safe.
 # This is because bloomFilters tell us when something is DEFINITELY NOT in the set.
 
+# You may also have a large list of already compromised passwords and
+# you want to check whether a new password is part of this list of compromised passwords.
+# https://lemire.me/blog/2019/12/19/xor-filters-faster-and-smaller-than-bloom-filters/
 
 # https://llimllib.github.io/bloomfilter-tutorial/
 # https://www.kdnuggets.com/2016/08/gentle-introduction-bloom-filter.html
