@@ -63,7 +63,9 @@
         <div class="main">
             <p></br>
 <pre><code class="python">
+import sys
 import utils
+import pathlib
 
 hmap = __import__("6_hashmaps")
 
@@ -178,6 +180,44 @@ for other_animal in other_animals:
 
 utils.assert_r("bloom_filter", len(false_positives), 6)
 utils.assert_r("bloom_filter", len(correct), 14)
+
+
+def test_space_efficiency():
+    f = pathlib.Path.cwd().joinpath("test_data/10_000_words.txt").open()
+    fRead = f.readlines()
+    f.close()
+    lines = []
+    for i in fRead:
+        lines.append(i)
+
+    bf = BloomFilter(int(len(lines) / 10))
+    theDict = {}
+    for h in lines:
+        bf.set(h)
+        theDict[h] = h
+
+    size_of_lines_list = sys.getsizeof(lines)
+    size_of_bloom_filter = sys.getsizeof(bf.bit_array)
+    size_of_dict = sys.getsizeof(theDict)
+
+    bloom_better_than_dict = int(size_of_dict / size_of_bloom_filter)
+    bloom_better_than_list = int(size_of_lines_list / size_of_bloom_filter)
+
+    if bloom_better_than_dict < 30:
+        utils.assert_r(
+            "bloom_filter",
+            "bloom_filter is not as space efficient compared to a dictionary",
+            "bloom_filter should be much more space efficient compared to dictionary",
+        )
+    if bloom_better_than_list < 10:
+        utils.assert_r(
+            "bloom_filter",
+            "bloom_filter is not as space efficient compared to a list",
+            "bloom_filter should be much more space efficient compared to list",
+        )
+
+
+test_space_efficiency()
 
 </code></pre>
             </p>

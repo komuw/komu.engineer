@@ -83,10 +83,17 @@ import utils
 # 2. Open Addressing
 # It's where collisions are resolved by probing. One method is by using double hashing.
 # Downside: the hash table can "fill-up" so that no further insertions can be made
+# Linear probing: If we're trying to insert an item but there's one already there, simply move to the next slot.
+#                 If the next slot is full too, move along again, until you find an empty one,
+#                 wrapping around to the beginning if you hit the end of the array.
+#                 This technique is a lot faster than linked lists, because your CPU's
+#                 cache has probably fetched the next items already.
+#                 https://benhoyt.com/writings/hash-table-in-c/
 #
 # Universal hashing;
 # Its where we select the hash function from a random list of hash_funcs at runtime.
 # This protects against adversaries been able to choose keys that will cause collision thus degrading perfomance.
+# Python switched away from FNV-hash for this reason: https://www.python.org/dev/peps/pep-0456/
 
 
 # For an example of creating a hashMap using probing(open addressing) see the link below
