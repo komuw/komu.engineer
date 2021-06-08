@@ -54,6 +54,7 @@
 <a  rel="noopener" href="./11_graphs.html">11_graphs</a></br>
 <a  rel="noopener" href="./12_strings.html">12_strings</a></br>
 <a  rel="noopener" href="./13_approximation_algos.html">13_approximation_algos</a></br>
+<a  rel="noopener" href="./14_interviews.html">14_interviews</a></br>
 
         </div>
         <div class="right-sidebar">
@@ -67,6 +68,8 @@ import utils
 
 h = __import__("6_hashmaps")
 
+
+# https://en.wikibooks.org/wiki/Algorithm_Implementation/Strings
 
 # Rabin-Karp algorithm is a string searching algorithm that uses hashing to find an exact match of a pattern string in a text.
 def rabin_karp(s: str, pattern: str):
@@ -123,6 +126,38 @@ utils.assert_r("strings", res, my_str.index("builder"))
 
 res = rabin_karp(my_str, "king")
 utils.assert_r("strings", res, None)
+
+
+def check_if_anagram(word1: str, word2: str) -> bool:
+    # https://twitter.com/fermatslibrary/status/1385957963429515266?s=21
+    # 1. map each of the 26 chars of alphabet to a unique prime number.
+    # 2. convert each char in each word into its corresponding prime number
+    # 3. multiply each of those prime numbers per word.
+    # 4. if product_of_word1 == product_of_word2 , then the two words are anagrams
+    # note; this only works when u use primes and not natural numbers.
+    # natural numbers work upto a point but they have corner cases.
+    # strictly, natural numbers would work for when both words are of equal length
+    # and since anagrams have to be of equal length, then natural numbers would also work.
+    # primes work for words of all lengths
+
+    # TODO: fully implement this and test
+    primess = {"a": 2, "b": 5, "c": 7}  # etc
+    _ = primess
+    return False
+
+
+# TODO: Levenshtein distance
+# https://en.wikibooks.org/wiki/Algorithm_Implementation/Strings
+
+# TODO:  Sorensen-Dice coefficient(can be used in place of Levenshtein, it is also simpler)
+# https://en.wikibooks.org/wiki/Algorithm_Implementation/Strings
+
+
+# TODO: Longest common subsequence
+# https://en.wikibooks.org/wiki/Algorithm_Implementation/Strings
+
+# TODO: Longest common substring
+# https://en.wikibooks.org/wiki/Algorithm_Implementation/Strings
 
 </code></pre>
             </p>
