@@ -1211,3 +1211,7 @@ ORDER BY
 
 11. Tool that parses EXPLAIN ANALYZE and surfaces recommendations to improve performance 
     https://www.pgmustard.com/
+
+12. Zero downtime db migrations and safe operations in postgresql: https://gist.github.com/komuw/76b91b759c47a9d784498c5c6bd4700c
+
+13. Zero downtime schema migrations in Postgres using views: https://fabianlindfors.se/blog/schema-migrations-in-postgres/
