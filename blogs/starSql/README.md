@@ -1215,3 +1215,4 @@ ORDER BY
 12. Zero downtime db migrations and safe operations in postgresql: https://gist.github.com/komuw/76b91b759c47a9d784498c5c6bd4700c
 
 13. Zero downtime schema migrations in Postgres using views: https://fabianlindfors.se/blog/schema-migrations-in-postgres/
+14. A tool(Reshape) that uses views to do zero-downtime migrations: https://fabianlindfors.se/blog/schema-migrations-in-postgres-using-reshape/
