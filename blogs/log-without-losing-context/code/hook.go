@@ -25,8 +25,8 @@ func (h *hook) Fire(entry *logrus.Entry) error {
 	}
 	h.lineBuffer = append(h.lineBuffer, line)
 
-	// if the logLevel of the current log event is ERROR or more severity,
-	// then emit the logs.
+	// if the current log event is of level ERROR  or a higher severity,
+	// then flush the buffer; thus emitting all the logs.
 	if entry.Level <= logrus.ErrorLevel {
 		var writeError error
 		for _, line := range h.lineBuffer {
