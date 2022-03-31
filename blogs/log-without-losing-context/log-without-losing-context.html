@@ -46,37 +46,49 @@
                 </br>
                 <strong>Logging without losing money or context. (26 May 2020)</strong>
                 </br>
-                <ol>
-                    <li><a href="#Problem">Problem</a></li>
-                    <li> <a href="#Solution">Proposed Solution</a></li>
-                    <li> <a href="#Conclusion">Conclusion</a></li>
-                </ol>
+            <ol>
+                <li><a href="#Problem">Problem</a></li>
+                <li> <a href="#Solution">Proposed Solution</a></li>
+                <li> <a href="#Conclusion">Conclusion</a></li>
+            </ol>
 
-                <strong id="Problem">Problem</strong>
-                </br>
-                In your application, you want all flows of execution to be covered with log statements. That way, if something were to go wrong, you can be able to <a target="_blank" rel="noopener" href="https://www.komu.engineer/blogs/timescaledb/timescaledb-for-logs#Opinion3">trace</a> at which point the flow broke at.</br>
-                However, this presents a problem; if your application has lots of traffic, then the amount of logs it generates are going to be gigantic. This in itself is not a problem, were it not 
-                for the fact that you are using a logging as a service provider and <a target="_blank" rel="noopener" href="https://www.datadoghq.com/pricing/">they</a> all
-                 <a target="_blank" rel="noopener" href="https://www.loggly.com/plans-and-pricing/">charge</a> an <a target="_blank" rel="noopener" href="https://www.honeycomb.io/pricing/">arm</a> and
-                  a <a target="_blank" rel="noopener" href="https://www.sumologic.com/pricing/">leg</a> for every log event.</br>
-                Some of the pricing models are so inscrutable, that the logging service providers offer calculators
-                ( <a target="_blank" rel="noopener" href="https://calculator.aws/">here</a>,
-                <a target="_blank" rel="noopener" href="https://cloud.google.com/products/calculator">here</a>,
-                <a target="_blank" rel="noopener" href="https://azure.microsoft.com/en-us/pricing/calculator/">etc</a>) 
-                to try and help you figure out what should ideally have been kindergaten arithmetic.</br></br>
+            <strong id="Problem">Problem</strong>
+            </br>
+            In your application, you want all flows of execution to be covered with log statements. That way, if
+            something were to go wrong, you can be able to <a target="_blank" rel="noopener"
+                href="https://www.komu.engineer/blogs/timescaledb/timescaledb-for-logs#Opinion3">trace</a> at which
+            point the flow broke at.</br>
+            However, this presents a problem; if your application has lots of traffic, then the amount of logs it
+            generates are going to be gigantic. This in itself is not a problem, were it not
+            for the fact that you are using a logging as a service provider and <a target="_blank" rel="noopener"
+                href="https://www.datadoghq.com/pricing/">they</a> all
+            <a target="_blank" rel="noopener" href="https://www.loggly.com/plans-and-pricing/">charge</a> an <a
+                target="_blank" rel="noopener" href="https://www.honeycomb.io/pricing/">arm</a> and
+            a <a target="_blank" rel="noopener" href="https://www.sumologic.com/pricing/">leg</a> for every log
+            event.</br>
+            Some of the pricing models are so inscrutable, that the logging service providers offer calculators
+            ( <a target="_blank" rel="noopener" href="https://calculator.aws/">here</a>,
+            <a target="_blank" rel="noopener" href="https://cloud.google.com/products/calculator">here</a>,
+            <a target="_blank" rel="noopener" href="https://azure.microsoft.com/en-us/pricing/calculator/">etc</a>)
+            to try and help you figure out what should ideally have been kindergaten arithmetic.</br></br>
 
-                So it seems like for you to have your cake and eat it too, you have to part with large sums of money every month(and due to elastic pricing you can't even tell in advance how much that will be.)</br>
-                There are two main ways that people try and solve this problem(usually at the 
-                <a target="_blank" rel="noopener" href="https://docs.datadoghq.com/logs/indexes/#examples-of-exclusion-filters">suggestion</a> of the 
-                <a target="_blank" rel="noopener" href="https://docs.honeycomb.io/working-with-your-data/best-practices/sampling/">said</a> logging service providers);
-                <ol>
-                    <li>Filtering logs by severity and only sending logs above a certain severity to the logging service provider.</li>
-                      and/or</br>
-                    <li>Sampling logs so that you only send a certain percentage to the logging service provider.</li>
-                </ol>
-                But these two solutions pose a problem; loss of context.</br>
-                Consider an application that updates multiple social media platforms with a status message.
-                <pre><code class="go">
+            So it seems like for you to have your cake and eat it too, you have to part with large sums of money every
+            month(and due to elastic pricing you can't even tell in advance how much that will be.)</br>
+            There are two main ways that people try and solve this problem(usually at the
+            <a target="_blank" rel="noopener"
+                href="https://docs.datadoghq.com/logs/indexes/#examples-of-exclusion-filters">suggestion</a> of the
+            <a target="_blank" rel="noopener"
+                href="https://docs.honeycomb.io/working-with-your-data/best-practices/sampling/">said</a> logging
+            service providers);
+            <ol>
+                <li>Filtering logs by severity and only sending logs above a certain severity to the logging service
+                    provider.</li>
+                and/or</br>
+                <li>Sampling logs so that you only send a certain percentage to the logging service provider.</li>
+            </ol>
+            But these two solutions pose a problem; loss of context.</br>
+            Consider an application that updates multiple social media platforms with a status message.
+            <pre><code class="go">
 func main() {
     updateSocialMedia("Sending out my first social media status message")
 }
@@ -112,25 +124,42 @@ func linkedin(msg string, logger *logrus.Entry) {
 }
                 </code></pre>
 
-                If we were filtering logs and only sending logs of ERROR level to our logging service provider, then we would lose context on how the <i>facebook send failed</i> error came to be. I had previosuly written 
-                that logs are primarily used to <a target="_blank" rel="noopener" href="https://www.komu.engineer/blogs/timescaledb/timescaledb-for-logs">help debug issues in production;</a> thus, 
-                context and chronology of events that led to a particular issue are of importance. You do not want to investigate a murder mystery where half the clues have been deliberately wiped out by your earlier self.</br>
-                In the same way, if we were sampling logs; the chronology leading upto the error would be missing a few INFO log statements since those would have been sampled out.</br></br>
+            If we were filtering logs and only sending logs of ERROR level to our logging service provider, then we
+            would lose context on how the <i>facebook send failed</i> error came to be. I had previosuly written
+            that logs are primarily used to <a target="_blank" rel="noopener"
+                href="https://www.komu.engineer/blogs/timescaledb/timescaledb-for-logs">help debug issues in
+                production;</a> thus,
+            context and chronology of events that led to a particular issue are of importance. You do not want to
+            investigate a murder mystery where half the clues have been deliberately wiped out by your earlier
+            self.</br>
+            In the same way, if we were sampling logs; the chronology leading upto the error would be missing a few INFO
+            log statements since those would have been sampled out.</br></br>
 
-                What we want is;</br>
-                If the application has not emitted any errors, no logs gets sent to our logging service provider(INFO or otherwise.) However, if there are any errors emitted; all the logs leading to that error irrespective of their severity/level are sent to the logging service.
-                </br></br>
+            What we want is;</br>
+            If the application has not emitted any errors, no logs gets sent to our logging service provider(INFO or
+            otherwise.) However, if there are any errors emitted; all the logs leading to that error irrespective of
+            their severity/level are sent to the logging service.
+            </br></br>
 
-                <strong id="Solution">Proposed Solution</strong>
-                </br>
-                I think we should be able to implement such a logging scheme. The basic idea is; whenever your application emits log events, all the logs go into a <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Circular_buffer">circular buffer</a> of size X. 
-                Whenever an error log is emitted, the whole circular buffer is flushed and all its contents are sent to the logging service provider.</br>
-                The circular buffer can be in memory or on disk/whatever and the size is configurable.</br></br>
+            <strong id="Solution">Proposed Solution</strong>
+            </br>
+            I think we should be able to implement such a logging scheme. The basic idea is; whenever your application
+            emits log events, all the logs go into a <a target="_blank" rel="noopener"
+                href="https://en.wikipedia.org/wiki/Circular_buffer">circular buffer</a> of size X.
+            Whenever an error log is emitted, the whole circular buffer is flushed and all its contents are sent to the
+            logging service provider.</br>
+            The circular buffer can be in memory or on disk/whatever and the size is configurable.</br></br>
 
-                I took a stub at implementing this using <a target="_blank" rel="noopener" href="https://github.com/sirupsen/logrus">sirupsen/logrus</a> which is a popular logging library for the Go programming language, but the implementation
-                should be transferable across libraries/languages.</br>
-                In <a target="_blank" rel="noopener" href="https://pkg.go.dev/github.com/sirupsen/logrus">sirupsen/logrus</a>, you can declare a <a target="_blank" rel="noopener" href="https://pkg.go.dev/github.com/sirupsen/logrus?tab=doc#Hook">hook</a> implementing the custom behaviour that you want.
-                <pre><code class="go">
+            I took a stub at implementing this using <a target="_blank" rel="noopener"
+                href="https://github.com/sirupsen/logrus">sirupsen/logrus</a> which is a popular logging library for the
+            Go programming language, but the implementation
+            should be transferable across libraries/languages.</br>
+            In <a target="_blank" rel="noopener"
+                href="https://pkg.go.dev/github.com/sirupsen/logrus">sirupsen/logrus</a>, you can declare a <a
+                target="_blank" rel="noopener"
+                href="https://pkg.go.dev/github.com/sirupsen/logrus?tab=doc#Hook">hook</a> implementing the custom
+            behaviour that you want.
+            <pre><code class="go">
 package main
 
 import (
@@ -178,8 +207,8 @@ func (h *hook) Levels() []logrus.Level {
 }
                     </code></pre>
 
-                    And the way to use it in your application is;
-                    <pre><code class="go">
+            And the way to use it in your application is;
+            <pre><code class="go">
 package main
 
 import (
@@ -205,9 +234,10 @@ func main() {
 }
         </code></pre>
 
-            
-        Now, if any error occurs; all the logs and chronology leading upto the error are available and are sent to the logging service provider.
-        <pre><code class="bash">
+
+            Now, if any error occurs; all the logs and chronology leading upto the error are available and are sent to
+            the logging service provider.
+            <pre><code class="bash">
 go run .
 
 {"level":"info","msg":"tweet send start","time":"2020-05-25T21:03:36+03:00","traceID":"sa225Hqk"}
@@ -216,30 +246,45 @@ go run .
 {"level":"error","msg":"facebook send failed. error=http 500","time":"2020-05-25T21:03:36+03:00","traceID":"sa225Hqk"}
         </code></pre>
 
-        Conversely, if there are no errors been emitted by your application then
-        no logs are sent to your logging service provider.
-        <pre><code class="bash">
+            Conversely, if there are no errors been emitted by your application then
+            no logs are sent to your logging service provider.
+            <pre><code class="bash">
 go run .
 
 # no log output
         </code></pre>
-        So you do not end up spending tons of money and you also do not lose context when errors occur.
-        </br></br>
+            So you do not end up spending tons of money and you also do not lose context when errors occur.
+            </br></br>
 
-        <strong id="Conclusion">Conclusion:</strong>
-        </br>
-        You can implement a logging strategy that loses you neither money nor context.</br>
-        A downside of the presented solution is that it can be hard to tell if there are no logs because the application has not emitted any errors or because the logging pipeline itself has a bug. 
-        However this can be solved by emitting a heartbeat log event every Y minutes and letting this heartbeat propagate upto the logging service provider.</br></br>
+            <strong id="Conclusion">Conclusion:</strong>
+            </br>
+            You can implement a logging strategy that loses you neither money nor context.</br>
+            Indeed this is how logging in the Apollo Guidance Computer worked:
+            <blockquote
+                cite="https://authors.library.caltech.edu/5456/1/hrst.mit.edu/hrs/apollo/public/blairsmith3.htm">
+                Another function served by these auxiliary erasable memories was called the "Coroner,"" which recorded
+                every instruction executed, with its inputs and results, writing over the oldest such record when it
+                filled up. When a program "crashed," you could punch out a full record of what it was doing in most of
+                its last second and analyze the problem at your ease. I have often wished that PCs offered such an
+                advanced feature. - <a target="_blank" rel="noopener"
+                    href="https://authors.library.caltech.edu/5456/1/hrst.mit.edu/hrs/apollo/public/blairsmith3.htm">Annotations
+                    to Eldon Hall's Journey to the Moon. Chapter 13, page 155</a>
+            </blockquote>
 
-        All the code in this blogpost, including the full source code, can be found at: <a target="_blank" rel="noopener"
-            href="https://github.com/komuw/komu.engineer/tree/master/blogs/log-without-losing-context">
-            https://github.com/komuw/komu.engineer/tree/master/blogs/log-without-losing-context</a></br></br>
+            A downside of the presented solution is that it can be hard to tell if there are no logs because the
+            application has not emitted any errors or because the logging pipeline itself has a bug.
+            However this can be solved by emitting a heartbeat log event every Y minutes and letting this heartbeat
+            propagate upto the logging service provider.</br></br>
 
-        You can comment on this article <a target="_blank" rel="noopener"
-        href="https://github.com/komuw/komu.engineer/issues/17">by clicking here.</a>
-        </br>
-        </br>
+            All the code in this blogpost, including the full source code, can be found at: <a target="_blank"
+                rel="noopener"
+                href="https://github.com/komuw/komu.engineer/tree/master/blogs/log-without-losing-context">
+                https://github.com/komuw/komu.engineer/tree/master/blogs/log-without-losing-context</a></br></br>
+
+            You can comment on this article <a target="_blank" rel="noopener"
+                href="https://github.com/komuw/komu.engineer/issues/17">by clicking here.</a>
+            </br>
+            </br>
 
             </p>
         </div>
