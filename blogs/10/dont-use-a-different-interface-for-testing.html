@@ -81,21 +81,9 @@ func (h httpLogger) Write(p []byte) (n int, err error) {
         IdleConnTimeout:    10 * time.Second,
         DisableCompression: true,
     }
-    maxOfThreeRedirects := func(req *http.Request, via []*http.Request) error {
-        max := 3
-        if req.Header.Get("Auth") != "" {
-            // requests that have set Auth header can follow more redirects.
-            max = 12
-        }
-        if len(via) >= max {
-            return fmt.Errorf("stopped after %d redirects", max)
-        }
-        return nil
-    }
     client := &http.Client{
         Transport:     tr,
         Timeout:       10 * time.Second,
-        CheckRedirect: maxOfThreeRedirects,
     }
     // assume httpbin.org is an actual logging service.
     resp, err := client.Post("https://httpbin.org/post", "application/json", bytes.NewReader(p))
@@ -171,21 +159,9 @@ func (h *betterhttpLogger) Write(p []byte) (n int, err error) {
         IdleConnTimeout:    10 * time.Second,
         DisableCompression: true,
     }
-    maxOfThreeRedirects := func(req *http.Request, via []*http.Request) error {
-        max := 3
-        if req.Header.Get("Auth") != "" {
-            // requests that have set Auth header can follow more redirects.
-            max = 12
-        }
-        if len(via) >= max {
-            return fmt.Errorf("stopped after %d redirects", max)
-        }
-        return nil
-    }
     client := &http.Client{
         Transport:     tr,
         Timeout:       10 * time.Second,
-        CheckRedirect: maxOfThreeRedirects,
     }
     if h.test.enabled {
         mockWriter := &bytes.Buffer{}
@@ -238,8 +214,9 @@ http.Client.Post("https://httpbin.org/post", "application/json", bytes.NewReader
             the <a target="_blank" rel="noopener"
                 href="https://github.com/golang/go/blob/go1.18.1/src/net/http/client_test.go#L606-L621">most</a> heavily
             tested functionality out there. So you don't have to re-test that which the Go team has already
-            tested.</br></br>
-
+            tested.</br>
+            Here's the test coverage of this version:</br></br>
+            <img src="./imgs/betterHttp-test-coverage.png" alt="test coverage for mock interfaces"></br></br>
 
             In conclusion, if you have one interface implementation that you use in your 'real' application and another
             implementation that you use in tests; you are probably doing it wrong.</br>
