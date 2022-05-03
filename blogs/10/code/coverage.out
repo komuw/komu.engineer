@@ -1,8 +1,0 @@
-mode: atomic
-dont-use-a-different-interface-for-testing/main.go:12.42,16.2 3 1
-dont-use-a-different-interface-for-testing/main.go:22.56,35.2 4 0
-dont-use-a-different-interface-for-testing/main.go:37.13,39.16 2 0
-dont-use-a-different-interface-for-testing/main.go:39.16,41.3 1 0
-dont-use-a-different-interface-for-testing/main.go:53.63,63.20 3 0
-dont-use-a-different-interface-for-testing/main.go:70.2,71.45 2 0
-dont-use-a-different-interface-for-testing/main.go:63.20,68.3 4 0
