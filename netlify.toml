@@ -45,3 +45,8 @@
   from = "/blogs/python-lambda"
   to = "/blogs/3/python-lambda"
   status = 302 
+
+[[redirects]]
+  from = "/blogs/go-modules-early-peek"
+  to = "/blogs/4/go-modules-early-peek"
+  status = 302 
