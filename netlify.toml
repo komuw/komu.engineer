@@ -29,3 +29,9 @@
   # root directory if a base has not been set. This sample publishes the
   # directory located at the absolute path "root/project/blogs/algos-n-data-structures/"
   publish = "blogs/algos-n-data-structures/"
+
+# TODO: change the status code from 302(temp redirect) to 301(Moved Permanently)
+[[redirects]]
+  from = "/blogs/go-gc-maps"
+  to = "/blogs/1/go-gc-maps"
+  status = 302 
