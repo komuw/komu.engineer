@@ -40,5 +40,4 @@ func TestLogging(t *testing.T) {
 	if strings.Contains(fakeStdErr.String(), infoMsg2) {
 		t.Errorf("logs at INFO level coming after ERROR level should NOT be logged")
 	}
-
 }
