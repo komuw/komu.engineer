@@ -22,8 +22,8 @@
     <link rel="stylesheet" href="../site.css">
 
     <!-- Get highlightjs by going to https://highlightjs.org/download/, select the languages you want and download. -->
-    <link rel="stylesheet" href="../highlightjs/styles/default.css">
-    <script src="../highlightjs/highlight.pack.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/styles/default.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/highlight.min.js"></script>
     <script>hljs.initHighlightingOnLoad();</script>
 </head>
 
@@ -49,18 +49,24 @@
                 <strong>Intro</strong>
                 </br>
                 AWS Lambda lets you run code without provisioning or managing servers.</br>
-                In this article, we will go through an example of how to migrate a python application to AWS lambda. </br>
-                Of importance to note is that; we will not make any significant code changes to our app in order to migrate it.</br>
-                You may have heard of Python frameworks that help you write python code targeted for running on AWS lambda. for example;
+                In this article, we will go through an example of how to migrate a python application to AWS lambda.
+                </br>
+                Of importance to note is that; we will not make any significant code changes to our app in order to
+                migrate it.</br>
+                You may have heard of Python frameworks that help you write python code targeted for running on AWS
+                lambda. for example;
                 <a target="_blank" rel="noopener" href="https://github.com/aws/chalice">Chalice</a> or
                 <a target="_blank" rel="noopener" href="https://github.com/Miserlou/Zappa">Zappa</a>. </br>
-                A drawback of those frameworks - in my opinion - is that they require you to change the way you architect your applications.
+                A drawback of those frameworks - in my opinion - is that they require you to change the way you
+                architect your applications.
                 </br>
                 They require you to make code changes to suit their way of things.</br>
-                In this post we wont do any of that, you will keep your familiar architect/code and still get to run your app on lambda.</br>
+                In this post we wont do any of that, you will keep your familiar architect/code and still get to run
+                your app on lambda.</br>
                 </br>
 
-                - We will create a small python/django app from the ground up, using the same old familiar django pattern.</br>
+                - We will create a small python/django app from the ground up, using the same old familiar django
+                pattern.</br>
                 - We will then run that app on AWS lambda.
 
                 </br>
@@ -68,12 +74,14 @@
                 <strong>Create django app.</strong>
                 </br>
                 The app we will build is a simple one. It is a website uptime checker.</br>
-                It makes a http request to google.com and twitter.com, checks whether they are up or not and reports the same.
+                It makes a http request to google.com and twitter.com, checks whether they are up or not and reports the
+                same.
                 </br>
 
-                We'll create a new directory for our app, create a virtualenv, install django and also create a requirements file with the
+                We'll create a new directory for our app, create a virtualenv, install django and also create a
+                requirements file with the
                 installed packages.
-                <pre><code class="bash">
+            <pre><code class="bash">
 mkdir uptime-checker && \
 cd uptime-checker && \
 virtualenv .uptime-checker && \
@@ -81,9 +89,9 @@ source .uptime-checker/bin/activate && \
 pip install django && \
 pip freeze >> requirements.txt
                 </code></pre> </br>
-                Create a
-                <i>settings.py</i> file with the following contents:</br>
-                <pre><code class="python">
+            Create a
+            <i>settings.py</i> file with the following contents:</br>
+            <pre><code class="python">
 import os
 
 def here(*args):
@@ -107,30 +115,30 @@ INSTALLED_APPS = (
 STATIC_ROOT = project_root_joiner('', 'static/')
 STATIC_URL = '/static/'
                 </code></pre>
-                </br>
-                Create a
-                <i>wsgi.py</i> file with contents;
-                <pre><code class="python">
+            </br>
+            Create a
+            <i>wsgi.py</i> file with contents;
+            <pre><code class="python">
 import os
 from django.core.wsgi import get_wsgi_application
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "settings")
 application = get_wsgi_application()
                 </code></pre>
-                </br>
-                And
-                <i>urls.py</i>;
-                <pre><code class="python">
+            </br>
+            And
+            <i>urls.py</i>;
+            <pre><code class="python">
 from django.conf.urls import url
 import views
 urlpatterns = (
     url(r'^$', views.home, name='home'),
 )
                 </code></pre>
-                </br>
-                We also need the manage.py file. </br>
-                Create
-                <i>manage.py</i> file with content;
-                <pre><code class="python">
+            </br>
+            We also need the manage.py file. </br>
+            Create
+            <i>manage.py</i> file with content;
+            <pre><code class="python">
 #!/usr/bin/env python
 import os
 import sys
@@ -139,26 +147,26 @@ if __name__ == "__main__":
     from django.core.management import execute_from_command_line
     execute_from_command_line(sys.argv)          
                 </code></pre>
-                </br>
+            </br>
 
-                We created urls.py and the code in there is referring to views, but we haven't created views yet.</br>
-                So lets do just that, create
-                <i>views.py</i> whose content is;
-                <pre><code class="python">
+            We created urls.py and the code in there is referring to views, but we haven't created views yet.</br>
+            So lets do just that, create
+            <i>views.py</i> whose content is;
+            <pre><code class="python">
 from django.http import HttpResponse
 def home(request):
     return HttpResponse("Hello. Welcome to Python and AWS lambda.") 
                      </code></pre>
-                </br>
+            </br>
 
-                And this been python, we need an empty __init__ file, so create it.</br>
-                <pre><code class="bash">
+            And this been python, we need an empty __init__ file, so create it.</br>
+            <pre><code class="bash">
 touch __init__.py
                     </code></pre>
-                </br>
+            </br>
 
-                So your final directory structure looks like;</br>
-                <pre><code class="bash">
+            So your final directory structure looks like;</br>
+            <pre><code class="bash">
 uptime-checker/
     __init__.py
     manage.py
@@ -167,22 +175,23 @@ uptime-checker/
     views.py
     wsgi.py
                 </code></pre>
-                </br>
-                But does the app really work? There's only one way to find out; let's run it.
-                <pre><code class="bash">
+            </br>
+            But does the app really work? There's only one way to find out; let's run it.
+            <pre><code class="bash">
 python manage.py runserver 0.0.0.0:8080
                 </code></pre>
-                </br>
-                When you visit
-                <i>http://localhost:8080/</i> with your favorite browser, you see that you get the
-                <i>Hello. Welcome to Python and AWS lambda.</i> greeting.</br>
-                </br>
+            </br>
+            When you visit
+            <i>http://localhost:8080/</i> with your favorite browser, you see that you get the
+            <i>Hello. Welcome to Python and AWS lambda.</i> greeting.</br>
+            </br>
 
-                We were not making a greetings app, we want a website uptime checker. So lets add the logic in our views to check on the
-                uptime of our two websites; google and twitter.</br>
-                The modified
-                <i>views.py</i> becomes;
-                <pre><code class="python">
+            We were not making a greetings app, we want a website uptime checker. So lets add the logic in our views to
+            check on the
+            uptime of our two websites; google and twitter.</br>
+            The modified
+            <i>views.py</i> becomes;
+            <pre><code class="python">
 import urllib
 from django.http import HttpResponse
 def home(request):
@@ -196,75 +205,82 @@ def home(request):
         google_status_code,
         twitter_status_code)) 
                 </code></pre>
-                </br>
-                </br>
-                There, our app is working as per spec. It is not pretty or the most useful app, but it is working albeit on our machines.</br>
-                What we want to do now is deploy this app - as is - to AWS lambda.
+            </br>
+            </br>
+            There, our app is working as per spec. It is not pretty or the most useful app, but it is working albeit on
+            our machines.</br>
+            What we want to do now is deploy this app - as is - to AWS lambda.
 
-                </br>
-                </br>
-                <strong>Deploying django app to AWS lambda.</strong>
-                </br>
-                1. First we need to install
-                <a target="_blank" rel="noopener" href="https://github.com/apex/up">up.</a>
-                </br>
-                <i>up</i> bills itself thus; </br>
-                Up focuses on deploying "vanilla" HTTP servers
-                <strong>there's nothing new to learn</strong>, just develop with your favorite existing frameworks such as Express,
-                Koa, Django, Golang net/http or others. --
-                <a target="_blank" rel="noopener" href="https://github.com/apex/up">https://github.com/apex/up</a> (emphasis is mine.)</br>
-                </br>
-                <i>up</i> can be installed via curl;
-                <pre><code class="bash">
+            </br>
+            </br>
+            <strong>Deploying django app to AWS lambda.</strong>
+            </br>
+            1. First we need to install
+            <a target="_blank" rel="noopener" href="https://github.com/apex/up">up.</a>
+            </br>
+            <i>up</i> bills itself thus; </br>
+            Up focuses on deploying "vanilla" HTTP servers
+            <strong>there's nothing new to learn</strong>, just develop with your favorite existing frameworks such as
+            Express,
+            Koa, Django, Golang net/http or others. --
+            <a target="_blank" rel="noopener" href="https://github.com/apex/up">https://github.com/apex/up</a> (emphasis
+            is mine.)</br>
+            </br>
+            <i>up</i> can be installed via curl;
+            <pre><code class="bash">
 curl -sf https://up.apex.sh/install | sh
                 </code></pre>
-                </br>
-                You can make sure that
-                <i>up</i> has installed succesfully by checking it's help command.
-                <pre><code class="bash">
+            </br>
+            You can make sure that
+            <i>up</i> has installed succesfully by checking it's help command.
+            <pre><code class="bash">
 up --help
                 </code></pre>
-                </br>
-                </br>
+            </br>
+            </br>
 
-                2. Next we need to make sure that our AWS setup is ok.</br>
-                - make sure that your aws credentials are okay and stored in the
-                <a target="_blank" rel="noopener" href="https://up.docs.apex.sh/#aws_credentials">right place/s.</a> For my case, I have a
-                <i>~/.aws/credentials</i> file that looks like;
-                <pre><code class="bash">
+            2. Next we need to make sure that our AWS setup is ok.</br>
+            - make sure that your aws credentials are okay and stored in the
+            <a target="_blank" rel="noopener" href="https://up.docs.apex.sh/#aws_credentials">right place/s.</a> For my
+            case, I have a
+            <i>~/.aws/credentials</i> file that looks like;
+            <pre><code class="bash">
 [apex-up-profile]
 aws_access_key_id = myAccessId
 aws_secret_access_key = myAccessKey
 region = eu-west-1
                 </code></pre>
-                </br>
-                - also make sure that you create
-                <a target="_blank" rel="noopener" href="https://up.docs.apex.sh/#aws_credentials.iam_policy_for_up_cli">this AWS policy</a> in your AWS account.</br>
-                </br>
+            </br>
+            - also make sure that you create
+            <a target="_blank" rel="noopener" href="https://up.docs.apex.sh/#aws_credentials.iam_policy_for_up_cli">this
+                AWS policy</a> in your AWS account.</br>
+            </br>
 
-                3. There's only one change that you have to make to your app files in order to satisfy
-                <i>up</i>, we have to rename our
-                <i>manage.py</i> file to
-                <i>app.py</i>; but the contents of that file remain the same.
-                <pre><code class="bash">
+            3. There's only one change that you have to make to your app files in order to satisfy
+            <i>up</i>, we have to rename our
+            <i>manage.py</i> file to
+            <i>app.py</i>; but the contents of that file remain the same.
+            <pre><code class="bash">
 mv manage.py app.py
                 </code></pre>
-                </br>
-                The reason we have to do that is because
-                <i>up</i> can be used to deploy apps created using other programming languages/runtimes, and the way
-                <i>up</i> is able to tell which runtime it is you want to deploy is by looking for
-                <a target="_blank" rel="noopener" href="https://github.com/apex/up/blob/182d948547ad6643c225da01557fd4d37db43988/config/runtimes.go#L27">specific file names.</a>
-                </br>
-                The file name that tells
-                <i>up</i> you are using a python runtime is
-                <i>app.py</i>
-                </br>
-                </br>
+            </br>
+            The reason we have to do that is because
+            <i>up</i> can be used to deploy apps created using other programming languages/runtimes, and the way
+            <i>up</i> is able to tell which runtime it is you want to deploy is by looking for
+            <a target="_blank" rel="noopener"
+                href="https://github.com/apex/up/blob/182d948547ad6643c225da01557fd4d37db43988/config/runtimes.go#L27">specific
+                file names.</a>
+            </br>
+            The file name that tells
+            <i>up</i> you are using a python runtime is
+            <i>app.py</i>
+            </br>
+            </br>
 
-                4. In the
-                <i>uptime-checker</i> directory, create an
-                <i>up.json</i> file whose contents are;
-                <pre><code class="bash">
+            4. In the
+            <i>uptime-checker</i> directory, create an
+            <i>up.json</i> file whose contents are;
+            <pre><code class="bash">
 {
     "name": "uptime-checker",
     "profile": "apex-up-profile",
@@ -273,48 +289,52 @@ mv manage.py app.py
     }
 }
                 </code></pre>
-                </br>
-                where the value of the profile json key is the same as the profile name in your aws config(
-                <i>~/.aws/credentials</i> for my case)</br>
-                <i>up.json</i> is
-                <i>up's</i> configuration file. See this
-                <a target="_blank" rel="noopener" href="https://up.docs.apex.sh/#configuration">link</a> for more about the config file.
-                </br>
-                </br>
+            </br>
+            where the value of the profile json key is the same as the profile name in your aws config(
+            <i>~/.aws/credentials</i> for my case)</br>
+            <i>up.json</i> is
+            <i>up's</i> configuration file. See this
+            <a target="_blank" rel="noopener" href="https://up.docs.apex.sh/#configuration">link</a> for more about the
+            config file.
+            </br>
+            </br>
 
 
-                5. to deploy your app to AWS lambda, run the following command;
-                <pre><code class="bash">
+            5. to deploy your app to AWS lambda, run the following command;
+            <pre><code class="bash">
 up deploy
                 </code></pre>
-                </br>
-                You will see an output like;
-                <pre><code class="bash">
+            </br>
+            You will see an output like;
+            <pre><code class="bash">
 build: 4,753 files, 14 MB (4.427s)
 deploy: commit bc51169 (28.903s)
 stack: complete (47.398s)
                 </code></pre>
-                </br>
-                To see the domain/url that your app was deployed to, run the command;
-                <pre><code class="bash">
+            </br>
+            To see the domain/url that your app was deployed to, run the command;
+            <pre><code class="bash">
 up url
                 </code></pre>
-                </br>
-                You can copy and paste the url you get, into your browser to access your app.</br>
-                This is what I get;
-                <img src="../imgs/uptime-checker-staging.png" alt="uptime-checker staging" style="width:800px;height:220px;">
-                </br>
-                If you want to debug/introspect what is going on, you can always look at the logs of your app via;
-                <pre><code class="bash">
+            </br>
+            You can copy and paste the url you get, into your browser to access your app.</br>
+            This is what I get;
+            <img src="../imgs/uptime-checker-staging.png" alt="uptime-checker staging"
+                style="width:800px;height:220px;">
+            </br>
+            If you want to debug/introspect what is going on, you can always look at the logs of your app via;
+            <pre><code class="bash">
 up logs -fv
                 </code></pre>
-                </br>
-                <i>Up</i> also sends your logs to AWS cloudwatch, so you can search for them there.
-                <img src="../imgs/uptime-checker-cloudwatch-logs.png" alt="uptime-checker cloudwatch logs" style="width:850px;height:320px;">
-                </br>
-                </br>
-                Anything you log to stdout in your app, will show up in the logs. So you can use a python logging config like;
-                <pre><code class="python">
+            </br>
+            <i>Up</i> also sends your logs to AWS cloudwatch, so you can search for them there.
+            <img src="../imgs/uptime-checker-cloudwatch-logs.png" alt="uptime-checker cloudwatch logs"
+                style="width:850px;height:320px;">
+            </br>
+            </br>
+            Anything you log to stdout in your app, will show up in the logs. So you can use a python logging config
+            like;
+            <pre><code class="python">
 import logging
 logging.basicConfig(
     format="%(message)s\n",
@@ -322,33 +342,37 @@ logging.basicConfig(
     level=logging.DEBUG,
 )
                 </code></pre>
-                </br>
-                </br>
-                <strong>Conclusion</strong>
-                </br>
-                There are lot more bells in
-                <i>up</i>, you can do log querying/filtering from your command line, use custom domains for your app, use secrets,
-                deploy to multiple AWS regions, deploy to multiple stages(test/staging/prod etc) and so much more. </br>
-                Before this article turns into a marketing article for
-                <i>up</i>(up is
-                <a target="_blank" rel="noopener" href="https://github.com/apex/up">open source</a>, though they also have a paid plan) let me invite you to go check it out for yourselves;
-                <a target="_blank" rel="noopener" href="https://github.com/apex/up">https://github.com/apex/up</a>
-                </br>
-                </br>
-                We have deployed a Python/django app to AWS lambda as is, without changing the way we write our app.</br>
-                </br>
-                <img src="../imgs/uptime-checker-on-lambda.png" alt="uptime-checker on lambda" style="width:850px;height:450px;">
-                </br>
-                </br>
-                If you want to tear down everything that we just created,
-                <pre><code class="bash">
+            </br>
+            </br>
+            <strong>Conclusion</strong>
+            </br>
+            There are lot more bells in
+            <i>up</i>, you can do log querying/filtering from your command line, use custom domains for your app, use
+            secrets,
+            deploy to multiple AWS regions, deploy to multiple stages(test/staging/prod etc) and so much more. </br>
+            Before this article turns into a marketing article for
+            <i>up</i>(up is
+            <a target="_blank" rel="noopener" href="https://github.com/apex/up">open source</a>, though they also have a
+            paid plan) let me invite you to go check it out for yourselves;
+            <a target="_blank" rel="noopener" href="https://github.com/apex/up">https://github.com/apex/up</a>
+            </br>
+            </br>
+            We have deployed a Python/django app to AWS lambda as is, without changing the way we write our app.</br>
+            </br>
+            <img src="../imgs/uptime-checker-on-lambda.png" alt="uptime-checker on lambda"
+                style="width:850px;height:450px;">
+            </br>
+            </br>
+            If you want to tear down everything that we just created,
+            <pre><code class="bash">
 up stack delete
                 </code></pre>
-                </br>
-                All the code in this blogpost can be found here:-
-                <a target="_blank" rel="noopener" href="https://github.com/komuw/uptime-checker">https://github.com/komuw/uptime-checker</a>
-                </br>
-                </br>
+            </br>
+            All the code in this blogpost can be found here:-
+            <a target="_blank" rel="noopener"
+                href="https://github.com/komuw/uptime-checker">https://github.com/komuw/uptime-checker</a>
+            </br>
+            </br>
             </p>
         </div>
     </div>

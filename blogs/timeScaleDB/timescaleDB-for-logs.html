@@ -22,8 +22,8 @@
     <link rel="stylesheet" href="../../site.css">
 
     <!-- Get highlightjs by going to https://highlightjs.org/download/, select the languages you want and download. -->
-    <link rel="stylesheet" href="../../highlightjs/styles/default.css">
-    <script src="../../highlightjs/highlight.pack.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/styles/default.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/highlight.min.js"></script>
     <script>hljs.initHighlightingOnLoad();</script>
 </head>
 
@@ -46,92 +46,96 @@
                 <strong>Store application logs in timescaleDB/postgres.(23 November 2018)</strong>
                 </br>
                 </br>
-                <ol>
-                    <li> <a href="#Intro">Intro</a> </li>
-                    <li> <a href="#Opinion">Opinion</a> </li>
-                    <li> <a href="#timescaleDB">timescaleDB & PostgreSQL</a> </li>
-                    <li><a href="#Our application">Our application</a> </li>
-                    <li> <a href="#Querying">Querying</a></li>
-                    <li> <a href="#Conclusion">Conclusion</a></li>
-                </ol>
+            <ol>
+                <li> <a href="#Intro">Intro</a> </li>
+                <li> <a href="#Opinion">Opinion</a> </li>
+                <li> <a href="#timescaleDB">timescaleDB & PostgreSQL</a> </li>
+                <li><a href="#Our application">Our application</a> </li>
+                <li> <a href="#Querying">Querying</a></li>
+                <li> <a href="#Conclusion">Conclusion</a></li>
+            </ol>
 
-                <strong id="Intro">Intro</strong>
-                </br>
-                If the title alone has already turned you off, I understand. It's almost unheard of, these days, to
-                store
-                application logs in a structured datastore.</br>
-                Whenever people talk about logs and their logging pipeline, it usually involves <a target="_blank" rel="noopener"
-                    href="https://www.elastic.co/elk-stack">ELK(Elasticsearch)</a>, MongoDB or such other NoSQL
-                databases.</br></br>
+            <strong id="Intro">Intro</strong>
+            </br>
+            If the title alone has already turned you off, I understand. It's almost unheard of, these days, to
+            store
+            application logs in a structured datastore.</br>
+            Whenever people talk about logs and their logging pipeline, it usually involves <a target="_blank"
+                rel="noopener" href="https://www.elastic.co/elk-stack">ELK(Elasticsearch)</a>, MongoDB or such other
+            NoSQL
+            databases.</br></br>
 
-                And no such talk is complete without a tale of how people have to stay up at night feeding their
-                Elasticsearch monstrous JVM with the blood of unblemished year-old sheep(or whatever JVM's feed on).</br></br>
+            And no such talk is complete without a tale of how people have to stay up at night feeding their
+            Elasticsearch monstrous JVM with the blood of unblemished year-old sheep(or whatever JVM's feed
+            on).</br></br>
 
-                And it does make a lot of sense to store logs in an unstructured database, because after all, logs are
-                unstructured by nature. Are they?</br>
-                In this blogpost, I'll try & make a case for storing logs in an SQL database. I'll then go ahead and
-                implement a proto-type logging pipeline using PostgreSQL/timescaleDB.
+            And it does make a lot of sense to store logs in an unstructured database, because after all, logs are
+            unstructured by nature. Are they?</br>
+            In this blogpost, I'll try & make a case for storing logs in an SQL database. I'll then go ahead and
+            implement a proto-type logging pipeline using PostgreSQL/timescaleDB.
 
 
-                </br></br>
-                <strong id="Opinion">Opinion</strong>
-                </br>
-                I hold a differing opinion, I think if you look at logs hard enough; a structure starts to emerge.</br>
-                In this section, I'll lay out my opinion about logs and logging in general.</br>
-                This are my opinions and I hold no brief for anybody. I'm not going to try and convince you to adopt my
-                worldview, but atleast to consider it.</br></br>
+            </br></br>
+            <strong id="Opinion">Opinion</strong>
+            </br>
+            I hold a differing opinion, I think if you look at logs hard enough; a structure starts to emerge.</br>
+            In this section, I'll lay out my opinion about logs and logging in general.</br>
+            This are my opinions and I hold no brief for anybody. I'm not going to try and convince you to adopt my
+            worldview, but atleast to consider it.</br></br>
 
-                <i>opinion 1:</i> logs are actually structured.</br>
-                If you look at an <a target="_blank" rel="noopener" href="https://cdn.haproxy.com/wp-content/uploads/2017/07/aloha_load_balancer_memo_log.pdf">example
-                    HTTP log</a> of the popular tcp/http load balancer, <i>haproxy</i>:
+            <i>opinion 1:</i> logs are actually structured.</br>
+            If you look at an <a target="_blank" rel="noopener"
+                href="https://cdn.haproxy.com/wp-content/uploads/2017/07/aloha_load_balancer_memo_log.pdf">example
+                HTTP log</a> of the popular tcp/http load balancer, <i>haproxy</i>:
 
-                <pre><code class="bash">
+            <pre><code class="bash">
 Mar 9 15:08:05 LB1 local0.info haproxy[21843]: 10.0.0.1:1028 [09/Mar/2012:15:08:05.179] FT BK/SRV 0/0/1/8/9 304 12 - - ”GET / HTTP/1.1”
                 </code></pre>
-                You can see a lot of structure in it, there's; <i>timestamp</i>, <i>client IP address</i>, <i>backend
-                    name</i>, <i>response time</i>, <i>status code</i> etc</br>
-                And all this things will be available in every log event; that's a lot of structure.</br></br>
+            You can see a lot of structure in it, there's; <i>timestamp</i>, <i>client IP address</i>, <i>backend
+                name</i>, <i>response time</i>, <i>status code</i> etc</br>
+            And all this things will be available in every log event; that's a lot of structure.</br></br>
 
 
-                <i>opinion 2:</i> You should annotate your logs with more structured information to make them
-                much more useful.</br>
-                Take the haproxy log above, it would be much more useful if we added metadata like;
-                <ul>
-                    <li>the environment the application is running in(production/test/dev/staging etc)</li>
-                    <li>the IP address of the server that the app is running in</li>
-                    <li>the name of the service/app</li>
-                    <li>the service/app version number(this can be the last commit hash that was deployed)</li>
-                    <li>etc</li>
-                </ul>
+            <i>opinion 2:</i> You should annotate your logs with more structured information to make them
+            much more useful.</br>
+            Take the haproxy log above, it would be much more useful if we added metadata like;
+            <ul>
+                <li>the environment the application is running in(production/test/dev/staging etc)</li>
+                <li>the IP address of the server that the app is running in</li>
+                <li>the name of the service/app</li>
+                <li>the service/app version number(this can be the last commit hash that was deployed)</li>
+                <li>etc</li>
+            </ul>
 
-                <i id="Opinion3">opinion 3:</i> logs should be primarily used to help debug issues in production.</br></br>
+            <i id="Opinion3">opinion 3:</i> logs should be primarily used to help debug issues in production.</br></br>
 
-                <i>opinion 4:</i> logs should only be persisted for a short period of time(~7days).</br>
-                This is a corollary of opinion 3 above. If we buy into the argument that logs are for debugging
-                purposes,
-                then we can also argue that if an issue occurs in production, you ought to debug it asap. Which means,
-                you only need to store logs
-                for a max of 7days.</br>
-                What you do with the logs after 7days(7 is just a rough estimate) is upto you; you can send them to
-                /dev/null, or AWS s3 or some
-                other cold storage but they should not be lying around in your
-                primary log store.</br></br>
+            <i>opinion 4:</i> logs should only be persisted for a short period of time(~7days).</br>
+            This is a corollary of opinion 3 above. If we buy into the argument that logs are for debugging
+            purposes,
+            then we can also argue that if an issue occurs in production, you ought to debug it asap. Which means,
+            you only need to store logs
+            for a max of 7days.</br>
+            What you do with the logs after 7days(7 is just a rough estimate) is upto you; you can send them to
+            /dev/null, or AWS s3 or some
+            other cold storage but they should not be lying around in your
+            primary log store.</br></br>
 
-                <i>opinion 5:</i> you should not lose logs, but it should not be a big deal if you do.</br></br>
-                <i>opinion 6:</i> you should err on the side of logging more meta/data than you think you'll need.</br></br>
+            <i>opinion 5:</i> you should not lose logs, but it should not be a big deal if you do.</br></br>
+            <i>opinion 6:</i> you should err on the side of logging more meta/data than you think you'll need.</br></br>
 
 
-                <i>opinion 7:</i> logs can be time-series data.</br>
-                Take a deep breathe; time-series data at this point in time in our industry is a loaded term
-                that means
-                different things to different people.</br>
-                The definition of what time-series data is that I like asscociating myself with is;
-                <strong>data that collectively represents how a system/process/behavior changes over time. </strong> -
-                <a target="_blank" rel="noopener" href="https://blog.timescale.com/what-the-heck-is-time-series-data-and-why-do-i-need-a-time-series-database-dcf3b1b18563">taken
-                    from the blogpost; What the heck is time-series data</a> (go read it) </br></br>
-                ie, I'm making the case that, the following log events are time-series data:
+            <i>opinion 7:</i> logs can be time-series data.</br>
+            Take a deep breathe; time-series data at this point in time in our industry is a loaded term
+            that means
+            different things to different people.</br>
+            The definition of what time-series data is that I like asscociating myself with is;
+            <strong>data that collectively represents how a system/process/behavior changes over time. </strong> -
+            <a target="_blank" rel="noopener"
+                href="https://blog.timescale.com/what-the-heck-is-time-series-data-and-why-do-i-need-a-time-series-database-dcf3b1b18563">taken
+                from the blogpost; What the heck is time-series data</a> (go read it) </br></br>
+            ie, I'm making the case that, the following log events are time-series data:
 
-                <pre><code class="bash">
+            <pre><code class="bash">
 
 time                          | application_name |application_version | environment_name |     log_event      | trace_id |            file_path        |  host_ip   |      data
 ------------------------------+------------------+--------------------+------------------+--------------------+----------+-----------------------------+------------+------------------------------------------------------------------------
@@ -142,37 +146,39 @@ time                          | application_name |application_version | environm
 2018-11-18 14:09:10.552307+00 | WorkerApp        | v1.6.8             | staging          | process_work       | 6d07fb95 | /usr/src/app/code/worker.py | 172.23.0.2 | {"worker_id": "97b44537", "datacenter": "us-west"}
 2018-11-18 14:09:10.551532+00 | WorkerApp        | v0.5.6             | production       | process_work       | 8b2daa49 | /usr/src/app/code/woker.py  | 172.23.0.2 | {"worker_id": "a6035461, "datacenter": "us-west"}
                 </code></pre>
-                you can(and probably should) fashion your logs as time-series events.
-                </br></br>
+            you can(and probably should) fashion your logs as time-series events.
+            </br></br>
 
-                When we consider all that, we see that an SQL database is not that bad of an idea as a medium for
-                storing logs.</br>
-                And on top of that you gain a lot of other added advantages:
-                <ul>
-                    <li>you query using SQL which is relatively easy to learn</li>
-                    <li>your fellow developers probably already know SQL</li>
-                    <li>you do not have to learn a new query language from splunk/sumologic/elasctic/influxdb et al
-                    </li>
-                    <li>access to all the domain knowledge in your SQL database
-                        ecosystem(stackoverflow/google/docs/blogposts etc)</li>
-                    <li>access to all the tools/extensions in your SQL database ecosystem</li>
-                    <li>your average SQL database is relatively<sup>*</sup> easy to operate</li>
-                </ul>
+            When we consider all that, we see that an SQL database is not that bad of an idea as a medium for
+            storing logs.</br>
+            And on top of that you gain a lot of other added advantages:
+            <ul>
+                <li>you query using SQL which is relatively easy to learn</li>
+                <li>your fellow developers probably already know SQL</li>
+                <li>you do not have to learn a new query language from splunk/sumologic/elasctic/influxdb et al
+                </li>
+                <li>access to all the domain knowledge in your SQL database
+                    ecosystem(stackoverflow/google/docs/blogposts etc)</li>
+                <li>access to all the tools/extensions in your SQL database ecosystem</li>
+                <li>your average SQL database is relatively<sup>*</sup> easy to operate</li>
+            </ul>
 
-                <strong id="timescaleDB">timescaleDB/postgres</strong>
-                </br>
-                PostgreSQL is a popular SQL datatabse.</br>
-                TimescaleDB, despite the name, is actually a postgres extension
-                that <a target="_blank" rel="noopener" href="https://blog.timescale.com/timescaledb-vs-6a696248104e">enhances</a>
-                postgres for time-series data.</br>
-                &nbsp;&nbsp;&nbsp; <i>side note:</i> it is possible to use <a target="_blank" rel="noopener" href="https://medium.com/@neslinesli93/how-to-efficiently-store-and-query-time-series-data-90313ff0ec20">PostgreSQL
-                    to store time-series data</a> without having to install the timescaleDB extension.</br>
-                In this blogpost, however, we are going to use postgres + timescaleDB extension for storing logs.</br></br>
+            <strong id="timescaleDB">timescaleDB/postgres</strong>
+            </br>
+            PostgreSQL is a popular SQL datatabse.</br>
+            TimescaleDB, despite the name, is actually a postgres extension
+            that <a target="_blank" rel="noopener"
+                href="https://blog.timescale.com/timescaledb-vs-6a696248104e">enhances</a>
+            postgres for time-series data.</br>
+            &nbsp;&nbsp;&nbsp; <i>side note:</i> it is possible to use <a target="_blank" rel="noopener"
+                href="https://medium.com/@neslinesli93/how-to-efficiently-store-and-query-time-series-data-90313ff0ec20">PostgreSQL
+                to store time-series data</a> without having to install the timescaleDB extension.</br>
+            In this blogpost, however, we are going to use postgres + timescaleDB extension for storing logs.</br></br>
 
-                You can go through the <a target="_blank" rel="noopener" href="https://docs.timescale.com">TimescaleDB
-                    documentation to learn how to set it up.</a></br>
-                But assuming you already have PostgreSQL installed, the following bash script should get you going;
-                <pre><code class="bash">
+            You can go through the <a target="_blank" rel="noopener" href="https://docs.timescale.com">TimescaleDB
+                documentation to learn how to set it up.</a></br>
+            But assuming you already have PostgreSQL installed, the following bash script should get you going;
+            <pre><code class="bash">
 #!/usr/bin/env bash
 
 create_extension() {
@@ -218,38 +224,40 @@ create_table_indices
 create_hypertable
                 </code></pre>
 
-                That creates the timescaleDB exension in postgres, creates a table, indices and a timescaledb <a target="_blank"
-                    rel="noopener" href="https://www.timescale.com/how-it-works"> hypertable </a>
+            That creates the timescaleDB exension in postgres, creates a table, indices and a timescaledb <a
+                target="_blank" rel="noopener" href="https://www.timescale.com/how-it-works"> hypertable </a>
 
-                </br></br>
-                <strong id="Our application">Our application</strong>
-                </br>
-                In our application, we want our log events to have a few mandatory items; <i>time</i>, <i>application_name</i>,
-                <i>application_version</i>,
-                <i>environment_name</i>, <i>log_event</i>, <i>trace_id</i>, <i>host_ip</i> etc</br>
-                This will allow us to be able to ask more meaningful questions when debugging our app/service, we can
-                ask questions like;
-                <ul>
-                    <li>from which server are the majority of errors emanating?</li>
-                    <li>what was the path/trace of execution for the request with <i>trace_id</i> XYZ?</li>
-                    <li>in which module/file are the errors been raised from?</li>
-                    <li>is this an issue that only affects our canary servers or does it also affect production?</li>
-                    <li>is the perfomance of the current deployed application version similar to version 2.4.7 ?</li>
-                    <li>etc</li>
-                </ul>
-                That's why we created a database table with those fields in the bash script above. We also added a
-                JSONB field so that we can be able
-                to store any other fields that are not mandatory in all log events eg errors, http status code etc</br></br>
+            </br></br>
+            <strong id="Our application">Our application</strong>
+            </br>
+            In our application, we want our log events to have a few mandatory items; <i>time</i>,
+            <i>application_name</i>,
+            <i>application_version</i>,
+            <i>environment_name</i>, <i>log_event</i>, <i>trace_id</i>, <i>host_ip</i> etc</br>
+            This will allow us to be able to ask more meaningful questions when debugging our app/service, we can
+            ask questions like;
+            <ul>
+                <li>from which server are the majority of errors emanating?</li>
+                <li>what was the path/trace of execution for the request with <i>trace_id</i> XYZ?</li>
+                <li>in which module/file are the errors been raised from?</li>
+                <li>is this an issue that only affects our canary servers or does it also affect production?</li>
+                <li>is the perfomance of the current deployed application version similar to version 2.4.7 ?</li>
+                <li>etc</li>
+            </ul>
+            That's why we created a database table with those fields in the bash script above. We also added a
+            JSONB field so that we can be able
+            to store any other fields that are not mandatory in all log events eg errors, http status code etc</br></br>
 
-                Our app will write logs with the said structure to a <a target="_blank" rel="noopener" href="http://man7.org/linux/man-pages/man7/pipe.7.html">linux
-                    named pipe</a>,
-                then there will be another agent/daemon running continuously that reads from the same pipe and sends
-                the logs
-                to
-                timescaleDB.</br></br>
+            Our app will write logs with the said structure to a <a target="_blank" rel="noopener"
+                href="http://man7.org/linux/man-pages/man7/pipe.7.html">linux
+                named pipe</a>,
+            then there will be another agent/daemon running continuously that reads from the same pipe and sends
+            the logs
+            to
+            timescaleDB.</br></br>
 
-                So, the application code to write logs to a named pipe would look like the following:
-                <pre><code class="python">
+            So, the application code to write logs to a named pipe would look like the following:
+            <pre><code class="python">
 import os
 import json
 import uuid
@@ -341,13 +349,13 @@ loop.run_until_complete(web_app(app_name="web_app"))
 loop.close()
             </code></pre></br>
 
-                Now we need to write code for the agent that will read code from the named pipe and send it to
-                timescaleDB/postgres.</br>
-                This will be in two parts, in part one we read from the named pipe and buffer the logs in memory, the
-                second
-                part takes whatever is buffered in memory and sends it to timescaleDB.</br>
-                In the following code, we read from the named pipe and buffer log events in memory:
-                <pre><code class="python">
+            Now we need to write code for the agent that will read code from the named pipe and send it to
+            timescaleDB/postgres.</br>
+            This will be in two parts, in part one we read from the named pipe and buffer the logs in memory, the
+            second
+            part takes whatever is buffered in memory and sends it to timescaleDB.</br>
+            In the following code, we read from the named pipe and buffer log events in memory:
+            <pre><code class="python">
 import os
 import json
 import random
@@ -426,9 +434,9 @@ loop.run_until_complete(tasks)
 loop.close()         
                 </code></pre></br>
 
-                In the following code, we now take log events from the in memory buffer every X seconds and send them
-                to timescaleDB/postgres:
-                <pre><code class="python">
+            In the following code, we now take log events from the in memory buffer every X seconds and send them
+            to timescaleDB/postgres:
+            <pre><code class="python">
 async def send_log_to_remote_storage(logs):
     IN_DOCKER = os.environ.get("IN_DOCKER")
     try:
@@ -498,14 +506,14 @@ async def schedule_log_sending():
                 </code></pre>
 
 
-                </br>
-                <strong id="Querying">Querying</strong>
-                </br>
-                To badly misquote <a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=vE-d3-3hWVQ">The
-                    O'Jays</a>, <i>now that we have logs in our database, what are we going to do with it</i>?</br></br>
-                Let's run some queries:</br>
-                1. <i>what are the latest five events where an exception/error has been raised?</i>
-                <pre><code class="sql">
+            </br>
+            <strong id="Querying">Querying</strong>
+            </br>
+            To badly misquote <a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=vE-d3-3hWVQ">The
+                O'Jays</a>, <i>now that we have logs in our database, what are we going to do with it</i>?</br></br>
+            Let's run some queries:</br>
+            1. <i>what are the latest five events where an exception/error has been raised?</i>
+            <pre><code class="sql">
 SELECT
     log_event,
     data -> 'error' AS error
@@ -517,7 +525,7 @@ ORDER BY
     time DESC
 LIMIT 5;
                 </code></pre>
-                <pre><code class="bash">
+            <pre><code class="bash">
 log_event          |                                                                            error
 -------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------
 video_process_job3 | "Traceback (most recent call last):\n  File \"/usr/src/app/code/log_emmiter.py\", line 133, in job3\n    ourJobs[5]\nIndexError: list index out of range\n"
@@ -527,8 +535,8 @@ video_process_job3 | "Traceback (most recent call last):\n  File \"/usr/src/app/
 video_process_job3 | "Traceback (most recent call last):\n  File \"/usr/src/app/code/log_emmiter.py\", line 133, in job3\n    ourJobs[5]\nIndexError: list index out of range\n"
                 </code></pre></br>
 
-                2. <i>what is the path/trace taken by the last request which resulted in an exception occuring?</i>
-                <pre><code class="sql">
+            2. <i>what is the path/trace taken by the last request which resulted in an exception occuring?</i>
+            <pre><code class="sql">
 SELECT
     log_event,
     trace_id,
@@ -549,7 +557,7 @@ WHERE
             time DESC
         LIMIT 1);
                 </code></pre>
-                <pre><code class="bash">
+            <pre><code class="bash">
 log_event          | trace_id |            file_path             |                                                                            error
 -------------------+----------+----------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------
 video_process_job1 | f552320e | /usr/src/app/code/log_emmiter.py |
@@ -558,9 +566,9 @@ video_process_job3 | f552320e | /usr/src/app/code/log_emmiter.py |
 video_process_job3 | f552320e | /usr/src/app/code/log_emmiter.py | "Traceback (most recent call last):\n  File \"/usr/src/app/code/log_emmiter.py\", line 133, in job3\n    ourJobs[5]\nIndexError: list index out of range\n"
                 </code></pre></br>
 
-                3. <i>what are the log events in which the web application has returned a http 5XX status code in
-                    production?</i>
-                <pre><code class="sql">
+            3. <i>what are the log events in which the web application has returned a http 5XX status code in
+                production?</i>
+            <pre><code class="sql">
 SELECT
     log_event,
     trace_id,
@@ -574,7 +582,7 @@ WHERE
     AND data -> 'status_code' IN ('500', '504');
                 </code></pre>
 
-                <pre><code class="bash">
+            <pre><code class="bash">
 log_event | trace_id |  host_ip   | status_code
 ----------+----------+------------+-------------
 login     | aa9951dc | 172.24.0.4 | 504
@@ -583,19 +591,19 @@ login     | 6154aa3e | 172.24.0.4 | 504
 login     | 053a9820 | 172.24.0.4 | 504
 login     | 29e6644c | 172.24.0.4 | 504
                 </code></pre>
-                All those instances were login events, maybe we should go and have a look at our login code.</br>
-                But why are all of them emanating from the same server with IP adress <i>172.24.0.4</i>? Maybe the bug
-                is a combination of the login code and
-                that particular server and not necessarily a fault of the login code alone.
-                </br></br>
+            All those instances were login events, maybe we should go and have a look at our login code.</br>
+            But why are all of them emanating from the same server with IP adress <i>172.24.0.4</i>? Maybe the bug
+            is a combination of the login code and
+            that particular server and not necessarily a fault of the login code alone.
+            </br></br>
 
 
-                4. <i>what is the average, 75th and 99th percentile response time(in milliseconds) of the web
-                    application
-                    in
-                    our
-                    canary servers?</i>
-                <pre><code class="sql">
+            4. <i>what is the average, 75th and 99th percentile response time(in milliseconds) of the web
+                application
+                in
+                our
+                canary servers?</i>
+            <pre><code class="sql">
 
 SELECT
     percentile_disc(0.5)
@@ -613,14 +621,14 @@ WHERE
     AND data -> 'response_time' IS NOT NULL;
                 </code></pre>
 
-                <pre><code class="bash">
+            <pre><code class="bash">
 average | seven_five_percentile | nine_nine_percentile
 --------+-----------------------+----------------------
 43      | 86                    | 89
                 </code></pre></br>
 
-                5. <i>which application version introduced the most errors/exceptions?</i>
-                <pre><code class="sql">
+            5. <i>which application version introduced the most errors/exceptions?</i>
+            <pre><code class="sql">
 SELECT
     application_version,
     COUNT(data -> 'error') AS error_count
@@ -634,7 +642,7 @@ ORDER BY
     error_count DESC;
             </code></pre>
 
-                <pre><code class="bash">
+            <pre><code class="bash">
 application_version | error_count
 --------------------+-------------
 v3.5.0              |           5
@@ -642,29 +650,32 @@ v3.4.0              |           1
 v2.3.0              |           1
 v1.7.0              |           1
             </code></pre>
-                Maybe we should roll-back the deployment of version v3.5.0 as we figure out why it has introduced so
-                many regressions.</br>
+            Maybe we should roll-back the deployment of version v3.5.0 as we figure out why it has introduced so
+            many regressions.</br>
 
-                </br>
-                <strong id="Conclusion">Conclusion</strong>
-                </br>
-                All this is fine and dandy, but does the solution scale?</br>
-                This is a hard question to answer conclusively. What I can encourage you to do, is to run your own
-                benchmarks.</br>
+            </br>
+            <strong id="Conclusion">Conclusion</strong>
+            </br>
+            All this is fine and dandy, but does the solution scale?</br>
+            This is a hard question to answer conclusively. What I can encourage you to do, is to run your own
+            benchmarks.</br>
 
-                You could also <a target="_blank" rel="noopener" href="https://medium.com/@neslinesli93/how-to-efficiently-store-and-query-time-series-data-90313ff0ec20">look
-                    at literature</a> of people who have <a target="_blank" rel="noopener" href="https://blog.timescale.com/timescaledb-vs-6a696248104e">ran
-                    some benchmarks.</a></br>
-                But ultimately, it comes down to your own individual application and set of circumstances.
-                Run your benchmarks and adopt the solution that seems to fit your app.</br></br>
+            You could also <a target="_blank" rel="noopener"
+                href="https://medium.com/@neslinesli93/how-to-efficiently-store-and-query-time-series-data-90313ff0ec20">look
+                at literature</a> of people who have <a target="_blank" rel="noopener"
+                href="https://blog.timescale.com/timescaledb-vs-6a696248104e">ran
+                some benchmarks.</a></br>
+            But ultimately, it comes down to your own individual application and set of circumstances.
+            Run your benchmarks and adopt the solution that seems to fit your app.</br></br>
 
-                And maybe a NoSQL database is exactly what fits your needs. Who knows? Explore and find out.</br>
-                If you are a small shop and are already using an SQL database for your other business processes,
-                it might turn out that there's no need to introduce a new database for logs. </br> </br>
+            And maybe a NoSQL database is exactly what fits your needs. Who knows? Explore and find out.</br>
+            If you are a small shop and are already using an SQL database for your other business processes,
+            it might turn out that there's no need to introduce a new database for logs. </br> </br>
 
-                All the code in this blogpost can be found at: <a target="_blank" rel="noopener" href="https://github.com/komuw/komu.engineer/tree/master/blogs/timeScaleDB">https://github.com/komuw/komu.engineer/tree/master/blogs/timeScaleDB</a>
+            All the code in this blogpost can be found at: <a target="_blank" rel="noopener"
+                href="https://github.com/komuw/komu.engineer/tree/master/blogs/timeScaleDB">https://github.com/komuw/komu.engineer/tree/master/blogs/timeScaleDB</a>
 
-                </br>
+            </br>
 
 
             </p>

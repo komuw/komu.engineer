@@ -7,8 +7,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <title>Komu W - Exploring consensus via python.</title>
-    <meta name="description" content="How do you get different computers that are part of a larger cluster to agree on what the value of something is?"
-    />
+    <meta name="description"
+        content="How do you get different computers that are part of a larger cluster to agree on what the value of something is?" />
     <meta property="og:url" content="https://www.komu.engineer/blog" />
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -22,8 +22,8 @@
     <link rel="stylesheet" href="../site.css">
 
     <!-- Get highlightjs by going to https://highlightjs.org/download/, select the languages you want and download. -->
-    <link rel="stylesheet" href="../highlightjs/styles/default.css">
-    <script src="../highlightjs/highlight.pack.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/styles/default.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/highlight.min.js"></script>
     <script>hljs.initHighlightingOnLoad();</script>
 </head>
 
@@ -48,22 +48,27 @@
                 </br>
                 <strong>Intro</strong>
                 </br>
-                How do you get different computers that are part of a larger cluster to agree on what the value of something is?
+                How do you get different computers that are part of a larger cluster to agree on what the value of
+                something is?
                 </br>
                 Suppose a client sent a request to server 1 to set the value of a key
                 <i>foo</i> to the value
-                <i>bar.</i> However, server 1 is part of a cluster of N servers(there are good reasons for having servers be
+                <i>bar.</i> However, server 1 is part of a cluster of N servers(there are good reasons for having
+                servers be
                 part of a cluster, but we wont got into that)
                 </br>
                 </br>
                 <img src="../imgs/client-request.png" alt="client request">
                 </br>
                 </br>
-                Thus the request; set foo=bar needs to be propagated to all the servers. A naive approach would go something like;</br>
-                When server 1 gets the request, it also sends that request to sever 2 which in turn sends the request to server 3 ...</br>
+                Thus the request; set foo=bar needs to be propagated to all the servers. A naive approach would go
+                something like;</br>
+                When server 1 gets the request, it also sends that request to sever 2 which in turn sends the request to
+                server 3 ...</br>
                 However, a couple of problems arise with that approach;</br>
                 - What happens if there is some network error anywhere in that chain of requests?</br>
-                - Does the client have to wait for all those round-trips of requests to finish before it can get a response?</br>
+                - Does the client have to wait for all those round-trips of requests to finish before it can get a
+                response?</br>
                 - What if a 3 letter named goverment agency intercepts the request and changes it from
                 <i>foo=bar</i> to
                 <i>foo=baz</i>?
@@ -72,7 +77,8 @@
                 </br>
                 How we get computers to agree on the value of some data, is through consensus.</br>
                 There are a number of consensus protocols with varying degrees of usage in the real world. Here is a
-                <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Consensus_algorithm">wikipedia rabbit hole</a> to get you started.</br>
+                <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Consensus_algorithm">wikipedia
+                    rabbit hole</a> to get you started.</br>
                 For the remainder of this post, we will explore one of those algorithms; CASPaxos.
                 </br>
                 </br>
@@ -80,7 +86,8 @@
                 <strong>CASPaxos</strong>
                 </br>
                 CASPaxos is a consensus algorithm by Denis Rystsov, the
-                <a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1802.07000.pdf">white paper</a> is available from arxiv.
+                <a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1802.07000.pdf">white paper</a> is
+                available from arxiv.
                 </br>
                 The paper is surprisingly simple and also easy to comprehend.</br>
                 In a nutshell, the algorithm goes like this;</br>
@@ -88,8 +95,10 @@
                 <strong>A. Prepare phase:</strong>
                 <img src="../imgs/caspaxos-prepare.png" alt="CASPaxos prepare">
                 </br>
-                1. client sends request to server 1. Server 1 generates a ballot number and sends that ballot to all other servers</br>
-                2. The other servers will return a conflict(to server 1) if they already saw a greater ballot number. Persists the ballot
+                1. client sends request to server 1. Server 1 generates a ballot number and sends that ballot to all
+                other servers</br>
+                2. The other servers will return a conflict(to server 1) if they already saw a greater ballot number.
+                Persists the ballot
                 number and returns a confirmation either with an empty value (if they haven't accepted any value yet) or
                 with a tuple of an accepted value and its ballot number.</br>
                 3. Server 1 waits for a majority of servers to respond with confirmation.</br>
@@ -99,7 +108,8 @@
                 <img src="../imgs/caspaxos-accept.png" alt="CASPaxos accept">
                 </br>
                 4. Server 1 sends the earlier generated ballot number and value(ie foo=bar) to all other servers.</br>
-                5. The servers will return a conflict if they already saw a greater ballot number. They mark the received ballot number and
+                5. The servers will return a conflict if they already saw a greater ballot number. They mark the
+                received ballot number and
                 value as the accepted value and returns a confirmation.</br>
                 </br>
 
@@ -110,8 +120,10 @@
                 6. Server 1 waits for a majority of servers to respond with confirmation.</br>
                 7. Returns a response to the client.</br>
                 </br>
-                <strong>Disclaimer:</strong> The description above is not 100% correct. I have left out a number of important details(eg
-                in the paper, the client doesn't send a request like, set foo=bar, instead it sends a change function). You
+                <strong>Disclaimer:</strong> The description above is not 100% correct. I have left out a number of
+                important details(eg
+                in the paper, the client doesn't send a request like, set foo=bar, instead it sends a change function).
+                You
                 should read the actual paper for full details. However, the description above will suffice for now.
 
                 </br>
@@ -119,10 +131,11 @@
                 <strong>python</strong>
                 </br>
                 Lets explore how the algorithm achieves consensus, we will use python to try and demonstrate this.</br>
-                We are going to build a proto-type of a distributed storage system, and we will use CASPaxos to achieve consensus among the
+                We are going to build a proto-type of a distributed storage system, and we will use CASPaxos to achieve
+                consensus among the
                 various servers in our storage system.</br>
                 First of all, the code for the proposer(server1 in our CASPaxos description above.)</br>
-                <pre><code class="python">
+            <pre><code class="python">
 import time
 import random
 
@@ -215,9 +228,9 @@ class Proposer(object):
         # Returns the new state to the client.
         return self.state
                 </code></pre>
-                </br>
-                And the code for the Acceptors(the other servers in our CASPaxos description above).
-                <pre><code class="python">
+            </br>
+            And the code for the Acceptors(the other servers in our CASPaxos description above).
+            <pre><code class="python">
 class Acceptor(object):
     promise = 0  # ballot number
     accepted = (0, 0)
@@ -245,13 +258,13 @@ class Acceptor(object):
         self.accepted = (new_state, ballot_number)
         return ("CONFIRM", "CONFIRM")
                 </code></pre>
-                </br>
-                We are going to use python class instances to represent(in place of) actual servers. </br>
-                We are going to create five servers named a1 .... a5 of type Acceptor.</br>
-                We will also create another one server of type Proposer. </br>
-                We will have a client send a request to the proposer, then CASPaxos algorithm will take over. </br>
-                At the end of it all, the client's request will have been persisted in all the 5 servers.</br>
-                <pre><code class="python">
+            </br>
+            We are going to use python class instances to represent(in place of) actual servers. </br>
+            We are going to create five servers named a1 .... a5 of type Acceptor.</br>
+            We will also create another one server of type Proposer. </br>
+            We will have a client send a request to the proposer, then CASPaxos algorithm will take over. </br>
+            At the end of it all, the client's request will have been persisted in all the 5 servers.</br>
+            <pre><code class="python">
 a1 = Acceptor(name='a1')
 a2 = Acceptor(name='a2')
 a3 = Acceptor(name='a3')
@@ -267,9 +280,9 @@ print "response:", response
 for acceptor in acceptorsList:
     print "value persisted by acceptor={0} is {1}".format(acceptor.name, acceptor.accepted[0])
                 </code></pre>
-                </br>
-                And the result:
-                <pre><code class="bash">
+            </br>
+            And the result:
+            <pre><code class="bash">
 response: {'foo': 'bar'}
 value persisted by acceptor=a1 is {'foo': 'bar'}
 value persisted by acceptor=a2 is {'foo': 'bar'}
@@ -277,22 +290,26 @@ value persisted by acceptor=a3 is {'foo': 'bar'}
 value persisted by acceptor=a4 is {'foo': 'bar'}
 value persisted by acceptor=a5 is {'foo': 'bar'}
                 </code></pre> The full code can be found
-                <a target="_blank" rel="noopener" href="https://github.com/komuw/casPaxos/blob/master/casPaxos.py">on github.</a>
-                </br>
-                </br>
-                <strong>Conclusion</strong>
-                </br>
-                CASPaxos can help you achieve consensus in your distributed systems and make failure handling a bit easier. </br>
-                The protocol also has sections that cover other system administration aspects of distributed systems such as Adding and removing
-                servers among others.</br>
-                I invite you to go read the
-                <a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1802.07000.pdf">paper. </a>
-                </br>
-                It's author, Denis Rystsov, is on twitter
-                <a target="_blank" rel="noopener" href="https://twitter.com/rystsov">@rystsov</a> and I'm grateful to him for answering my queries whenever I called on him.
-                </br>
-                </br>
-                CASPaxos, however, won't help you when 3 letter named agencies decide to tamper with your requests.</br>
+            <a target="_blank" rel="noopener" href="https://github.com/komuw/casPaxos/blob/master/casPaxos.py">on
+                github.</a>
+            </br>
+            </br>
+            <strong>Conclusion</strong>
+            </br>
+            CASPaxos can help you achieve consensus in your distributed systems and make failure handling a bit easier.
+            </br>
+            The protocol also has sections that cover other system administration aspects of distributed systems such as
+            Adding and removing
+            servers among others.</br>
+            I invite you to go read the
+            <a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1802.07000.pdf">paper. </a>
+            </br>
+            It's author, Denis Rystsov, is on twitter
+            <a target="_blank" rel="noopener" href="https://twitter.com/rystsov">@rystsov</a> and I'm grateful to him
+            for answering my queries whenever I called on him.
+            </br>
+            </br>
+            CASPaxos, however, won't help you when 3 letter named agencies decide to tamper with your requests.</br>
         </div>
     </div>
 </body>
