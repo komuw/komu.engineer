@@ -6,7 +6,6 @@ import (
 	"io"
 	"log"
 	"net/http"
-	"os"
 	"time"
 )
 
@@ -48,59 +47,51 @@ func (h httpLogger) Write(p []byte) (n int, err error) {
 }
 
 func main() {
-	err := logg(os.Stdout, "hey-Stdout")
-	if err != nil {
-		log.Fatal(err)
-	}
-	err = logg(httpLogger{}, "hey-httpLogger")
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	err = logg(&betterhttpLogger{}, "hey-betterhttpLogger")
+	err := logg(httpLogger{}, "hey-httpLogger")
 	if err != nil {
 		log.Fatal(err)
 	}
 }
 
-type betterhttpLogger struct {
-	test struct {
-		enabled bool
-		written string
-	}
-}
+//
+// type betterhttpLogger struct {
+// 	test struct {
+// 		enabled bool
+// 		written string
+// 	}
+// }
 
-func (h *betterhttpLogger) Write(p []byte) (n int, err error) {
-	tr := &http.Transport{
-		MaxIdleConns:       10,
-		IdleConnTimeout:    10 * time.Second,
-		DisableCompression: true,
-	}
-	maxOfThreeRedirects := func(req *http.Request, via []*http.Request) error {
-		max := 3
-		if req.Header.Get("Auth") != "" {
-			// requests that have set Auth header can follow more redirects.
-			max = 12
-		}
-		if len(via) >= max {
-			return fmt.Errorf("stopped after %d redirects", max)
-		}
-		return nil
-	}
-	client := &http.Client{
-		Transport:     tr,
-		Timeout:       10 * time.Second,
-		CheckRedirect: maxOfThreeRedirects,
-	}
-	if h.test.enabled {
-		mockWriter := &bytes.Buffer{}
-		n, err := mockWriter.Write(p)
-		h.test.written = mockWriter.String()
-		return n, err
-	}
-	resp, err := client.Post("https://httpbin.org/post", "application/json", bytes.NewReader(p))
-	return int(resp.Request.ContentLength), err
-}
+// func (h *betterhttpLogger) Write(p []byte) (n int, err error) {
+// 	tr := &http.Transport{
+// 		MaxIdleConns:       10,
+// 		IdleConnTimeout:    10 * time.Second,
+// 		DisableCompression: true,
+// 	}
+// 	maxOfThreeRedirects := func(req *http.Request, via []*http.Request) error {
+// 		max := 3
+// 		if req.Header.Get("Auth") != "" {
+// 			// requests that have set Auth header can follow more redirects.
+// 			max = 12
+// 		}
+// 		if len(via) >= max {
+// 			return fmt.Errorf("stopped after %d redirects", max)
+// 		}
+// 		return nil
+// 	}
+// 	client := &http.Client{
+// 		Transport:     tr,
+// 		Timeout:       10 * time.Second,
+// 		CheckRedirect: maxOfThreeRedirects,
+// 	}
+// 	if h.test.enabled {
+// 		mockWriter := &bytes.Buffer{}
+// 		n, err := mockWriter.Write(p)
+// 		h.test.written = mockWriter.String()
+// 		return n, err
+// 	}
+// 	resp, err := client.Post("https://httpbin.org/post", "application/json", bytes.NewReader(p))
+// 	return int(resp.Request.ContentLength), err
+// }
 
 // In this version of the code, the only piece of code that is not tested ins just one line;
 //    `client.Post("https://httpbin.org/post", "application/json", bytes.NewReader(p))`

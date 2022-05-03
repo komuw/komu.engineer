@@ -47,6 +47,7 @@
                 <strong>Don't use a different interface in tests. (05 May 2022)</strong>
                 </br>
                 // TODO: remove these ordered lists.
+                // TODO: stop using you/your and use 'us'
             <ol>
                 <li><a href="#Problem">Problem</a></li>
                 <li> <a href="#Solution">Proposed Solution</a></li>
@@ -58,8 +59,8 @@
             Using different implementations(sometimes called 'mocking') is one of the best ways you can lie to yourself
             that you are testing your code whereas you really aren't.</br></br>
 
-            An example will suffice to drive my point. Let's say we have created a library meant to be used in logging.
-            The library has one that takes an <i>io.Writer</i> and a message to log.
+            An example will suffice to drive my point. Let's say we have some functionality that is meant to be used in
+            logging;
             <pre><code class="go">
 // logg writes msg to the data stream provided by w
 func logg(w io.Writer, msg string) error {
@@ -107,7 +108,45 @@ func main() {
 	}
 }
             </code></pre>
-            At this point, we would like to write tests to
+            At this point we would now like to write some test for our application's code. What usually happens in
+            practice is that people
+            will create a 'mock' that fulfills the interface expected by the <i>logg</i> function instead of using the
+            type that their non-test code is already using(ie <i>httpLogger</i>)
+            <pre><code class="go">
+func Test_logg(t *testing.T) {
+    msg := "hey"
+    mockWriter := &bytes.Buffer{}
+    err := logg(mockWriter, msg)
+    if err != nil {
+        t.Fatalf("logg() got error = %v, wantErr = %v", err, nil)
+        return
+    }
+
+    gotMsg := mockWriter.String()
+    wantMsg := msg + "\n"
+    if gotMsg != wantMsg {
+        t.Fatalf("logg() got = %v, want = %v", gotMsg, wantMsg)
+    }
+}
+            </code></pre>
+            In fact, I checked the <i>Generate test functionality</i> that is offered by both VScode &
+            jetbrains Goland;
+            and they both generated tests that uses <i>&bytes.Buffer{}</i>, ie a 'mock'.</br></br>
+
+            The problem with this is; the only thing you have tested is that <i>bytes.Buffer</i> implements
+            the <i>io.Writer</i> interface and that <i>httpLogger</i> also implements the same.</br>
+            In other words, the only thing that our test/s have done is just duplicate the compile-time checks that Go
+            is
+            already giving us for free. The bulk of your application's implementation(the <i>Write</i> method of
+            <i>httpLogger</i>) is still
+            wholly untested.</br>
+            A photo of the test coverage as produced by <i>go test -cover</i> illustrates the situation more
+            clearly;</br></br>
+            <img src="./imgs/mock-test-coverage.png" alt="test coverage for mock interfaces"></br></br>
+
+
+
+
         </div>
     </div>
 </body>
