@@ -1,5 +1,5 @@
 # what
-This is the demo code for my blogpost: [How to use any programming language on AWS lambda](https://www.komu.engineer/blogs/5/lambda-shim)   
+This is the demo code for my blogpost: [How to use any programming language on AWS lambda](https://www.komu.engineer/blogs/05/lambda-shim)   
 
 
 
