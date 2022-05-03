@@ -70,3 +70,8 @@
   from = "/blogs/golang-stackTrace/golang-stackTrace"
   to = "/blogs/8/golang-stackTrace"
   status = 302 
+
+[[redirects]]
+  from = "/blogs/log-without-losing-context/log-without-losing-context"
+  to = "/blogs/9/log-without-losing-context"
+  status = 302 
