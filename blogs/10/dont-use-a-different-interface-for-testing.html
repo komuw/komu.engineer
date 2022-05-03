@@ -45,22 +45,18 @@
             <p>
                 </br>
                 <strong>Don't use a different interface in tests. (05 May 2022)</strong>
-                </br>
-                // TODO: remove these ordered lists.
-                // TODO: stop using you/your and use 'us'
-            <ol>
-                <li><a href="#Problem">Problem</a></li>
-                <li> <a href="#Solution">Proposed Solution</a></li>
-                <li> <a href="#Conclusion">Conclusion</a></li>
-            </ol>
+                </br></br>
+                <!-- TODO: stop using you/your and use 'us' -->
+                This is probably going to be an unpopular opinion, but;</br>
+                Your test code should not be using a different interface implementation compared to your non test
+                code.</br>
+                Using different implementations(sometimes called 'mocking') is one of the best ways you can lie to
+                yourself
+                that you are testing your code whereas you really aren't.</br></br>
 
-            This is probably going to be an unpopular opinion, but;</br>
-            Your test code should not be using a different interface implementation compared to your non test code.</br>
-            Using different implementations(sometimes called 'mocking') is one of the best ways you can lie to yourself
-            that you are testing your code whereas you really aren't.</br></br>
-
-            An example will suffice to drive my point. Let's say we have some functionality that is meant to be used in
-            logging;
+                An example will suffice to drive my point. Let's say we have some functionality that is meant to be used
+                in
+                logging;
             <pre><code class="go">
 // logg writes msg to the data stream provided by w
 func logg(w io.Writer, msg string) error {
@@ -222,7 +218,7 @@ http.Client.Post("https://httpbin.org/post", "application/json", bytes.NewReader
             implementation that you use in tests; you are probably doing it wrong.</br>
             You should, in my opinion, use just one interface implementation for both application and tests.</br></br>
 
-            TODO: replace the links here </br>
+            <!-- TODO: replace the links here. -->
             All the code in this blogpost, including the full source code, can be found at: <a target="_blank"
                 rel="noopener"
                 href="https://github.com/komuw/komu.engineer/tree/master/blogs/log-without-losing-context">
