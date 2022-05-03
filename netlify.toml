@@ -50,3 +50,8 @@
   from = "/blogs/go-modules-early-peek"
   to = "/blogs/4/go-modules-early-peek"
   status = 302 
+
+[[redirects]]
+  from = "/blogs/lambda-shim/lambda-shim"
+  to = "/blogs/5/lambda-shim"
+  status = 302 
