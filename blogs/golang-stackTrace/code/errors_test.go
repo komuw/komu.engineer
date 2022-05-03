@@ -5,7 +5,6 @@ package errors
 //
 import (
 	"strconv"
-
 	"testing"
 )
 
@@ -15,7 +14,6 @@ func atoi() (int, error) {
 		return 0, Wrap(err)
 	}
 	return i, nil
-
 }
 
 // run this as;
@@ -24,6 +22,5 @@ func TestWrap(t *testing.T) {
 	_, err := atoi()
 	if err != nil {
 		t.Log(err)
-
 	}
 }
