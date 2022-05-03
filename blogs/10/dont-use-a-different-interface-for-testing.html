@@ -209,6 +209,11 @@ http.Client.Post("https://httpbin.org/post", "application/json", bytes.NewReader
             tested functionality out there.</br>
             Here's the test coverage of this version:</br></br>
             <img src="./imgs/betterHttp-test-coverage.png" alt="test coverage for mock interfaces"></br></br>
+            Of course this example is a bit silly - it is for illustration purposes - because most of the code in the
+            <i>Write</i> method is just setting up a http transport and client, and thus you could make the argument
+            that those are already tested in the standard library. But you can imagine a situation where most of the
+            code inside the <i>Write</i> method is our own custom code; and using a mock interface in tests would mean
+            that our custom code is never tested.</br></br>
 
             In conclusion, if you have one interface implementation that you use in your 'real' application and another
             implementation that you use in tests; you are probably doing it wrong.</br>
