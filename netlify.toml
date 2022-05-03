@@ -60,3 +60,8 @@
   from = "/blogs/timeScaleDB/timescaleDB-for-logs"
   to = "/blogs/6/timescaleDB-for-logs"
   status = 302 
+
+[[redirects]]
+  from = "/blogs/celery-clone/understand-how-celery-works"
+  to = "/blogs/7/understand-how-celery-works"
+  status = 302 
