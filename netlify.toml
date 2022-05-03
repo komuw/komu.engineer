@@ -65,3 +65,8 @@
   from = "/blogs/celery-clone/understand-how-celery-works"
   to = "/blogs/7/understand-how-celery-works"
   status = 302 
+
+[[redirects]]
+  from = "/blogs/golang-stackTrace/golang-stackTrace"
+  to = "/blogs/8/golang-stackTrace"
+  status = 302 
