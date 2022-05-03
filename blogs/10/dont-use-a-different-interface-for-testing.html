@@ -97,6 +97,7 @@ func (h httpLogger) Write(p []byte) (n int, err error) {
         Timeout:       10 * time.Second,
         CheckRedirect: maxOfThreeRedirects,
     }
+    // assume httpbin.org is an actual logging service.
     resp, err := client.Post("https://httpbin.org/post", "application/json", bytes.NewReader(p))
     return int(resp.Request.ContentLength), err
 }
@@ -116,6 +117,7 @@ func main() {
 func Test_logg(t *testing.T) {
     msg := "hey"
     mockWriter := &bytes.Buffer{}
+
     err := logg(mockWriter, msg)
     if err != nil {
         t.Fatalf("logg() got error = %v, wantErr = %v", err, nil)
@@ -144,8 +146,87 @@ func Test_logg(t *testing.T) {
             clearly;</br></br>
             <img src="./imgs/mock-test-coverage.png" alt="test coverage for mock interfaces"></br></br>
 
+            I do understand why we do use alternate interface implementations for their tests. For example, we may
+            not be in control of the HTTP logging service in question & do not want to send any unwanted/spam test
+            traffic to
+            them.</br>
+            But I think we can do better. We can use the same implementation for both test code and non-test code
+            without spamming the logging service.</br></br>
 
+            One (but not the only) way is by having one implementation that switches conditionally based on whether it
+            is been used in test;
+            <pre><code class="go">
+// betterhttpLogger logs messages to a HTTP logging service
+type betterhttpLogger struct {
+    test struct {
+        enabled bool
+        written string
+    }
+}
 
+// Write fulfills io.Writer interface
+func (h *betterhttpLogger) Write(p []byte) (n int, err error) {
+    tr := &http.Transport{
+        MaxIdleConns:       10,
+        IdleConnTimeout:    10 * time.Second,
+        DisableCompression: true,
+    }
+    maxOfThreeRedirects := func(req *http.Request, via []*http.Request) error {
+        max := 3
+        if req.Header.Get("Auth") != "" {
+            // requests that have set Auth header can follow more redirects.
+            max = 12
+        }
+        if len(via) >= max {
+            return fmt.Errorf("stopped after %d redirects", max)
+        }
+        return nil
+    }
+    client := &http.Client{
+        Transport:     tr,
+        Timeout:       10 * time.Second,
+        CheckRedirect: maxOfThreeRedirects,
+    }
+    if h.test.enabled {
+        mockWriter := &bytes.Buffer{}
+        n, err := mockWriter.Write(p)
+        h.test.written = mockWriter.String()
+        return n, err
+    }
+    // assume httpbin.org is an actual logging service.
+    resp, err := client.Post("https://httpbin.org/post", "application/json", bytes.NewReader(p))
+    return int(resp.Request.ContentLength), err
+}
+
+func main() {
+	err := logg(&betterhttpLogger{}, "hey-httpLogger")
+	if err != nil {
+		log.Fatal(err)
+	}
+}
+            </code></pre>
+            And the test code will be,
+            <pre><code class="go">
+func Test_logg(t *testing.T) {
+    msg := "hey"
+    w := &betterhttpLogger{test: struct {
+        enabled bool
+        written string
+    }{enabled: true}}
+
+    err := logg(w, msg)
+    if err != nil {
+        t.Fatalf("logg() got error = %v, wantErr = %v", err, nil)
+        return
+    }
+
+    gotMsg := w.test.written
+    wantMsg := msg + "\n"
+    if gotMsg != wantMsg {
+        t.Fatalf("logg() got = %v, want = %v", gotMsg, wantMsg)
+    }
+}
+            </code></pre>
 
         </div>
     </div>
