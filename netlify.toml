@@ -29,3 +29,49 @@
   # root directory if a base has not been set. This sample publishes the
   # directory located at the absolute path "root/project/blogs/algos-n-data-structures/"
   publish = "blogs/algos-n-data-structures/"
+
+# TODO: change the status code from 302(temp redirect) to 301(Moved Permanently)
+[[redirects]]
+  from = "/blogs/go-gc-maps"
+  to = "/blogs/1/go-gc-maps"
+  status = 302 
+
+[[redirects]]
+  from = "/blogs/consensus"
+  to = "/blogs/2/consensus"
+  status = 302 
+
+[[redirects]]
+  from = "/blogs/python-lambda"
+  to = "/blogs/3/python-lambda"
+  status = 302 
+
+[[redirects]]
+  from = "/blogs/go-modules-early-peek"
+  to = "/blogs/4/go-modules-early-peek"
+  status = 302 
+
+[[redirects]]
+  from = "/blogs/lambda-shim/lambda-shim"
+  to = "/blogs/5/lambda-shim"
+  status = 302 
+
+[[redirects]]
+  from = "/blogs/timeScaleDB/timescaleDB-for-logs"
+  to = "/blogs/6/timescaleDB-for-logs"
+  status = 302 
+
+[[redirects]]
+  from = "/blogs/celery-clone/understand-how-celery-works"
+  to = "/blogs/7/understand-how-celery-works"
+  status = 302 
+
+[[redirects]]
+  from = "/blogs/golang-stackTrace/golang-stackTrace"
+  to = "/blogs/8/golang-stackTrace"
+  status = 302 
+
+[[redirects]]
+  from = "/blogs/log-without-losing-context/log-without-losing-context"
+  to = "/blogs/9/log-without-losing-context"
+  status = 302 

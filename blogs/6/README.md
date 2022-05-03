@@ -1,4 +1,4 @@
-This is the code for my blogpost : [Storing application logs in an SQL database.](https://www.komu.engineer/blogs/timescaledb/timescaledb-for-logs)    
+This is the code for my blogpost : [Storing application logs in an SQL database.](https://www.komu.engineer/blogs/6/timescaleDB-for-logs)    
 
 
 
