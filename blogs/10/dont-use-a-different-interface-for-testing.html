@@ -117,11 +117,11 @@ func Test_logg(t *testing.T) {
             they both used a <i>&bytes.Buffer{}</i> when I asked them to <i>Generate test</i> for this
             code</i>.</br></br>
 
-            The problem with this code is; the only thing you have tested is that <i>bytes.Buffer</i> implements
+            The problem with this code is; the only thing we have tested is that <i>bytes.Buffer</i> implements
             the <i>io.Writer</i> interface and that <i>httpLogger</i> also implements the same.</br>
             In other words, the only thing that our test/s have done is just duplicate the compile-time checks that Go
             is
-            already giving us for free. The bulk of your application's implementation(the <i>Write</i> method of
+            already giving us for free. The bulk of our application's implementation(the <i>Write</i> method of
             <i>httpLogger</i>) is still
             wholly untested.</br>
             A photo of the test coverage as produced by <i>go test -cover</i> illustrates the situation more
