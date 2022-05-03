@@ -28,7 +28,7 @@ func main() {
 }
 
 func updateSocialMedia(msg string) {
-	traceID := "sa225Hqk" //should be randomly generated per call
+	traceID := "sa225Hqk" // should be randomly generated per call
 	logger := logrus.WithFields(logrus.Fields{"traceID": traceID})
 
 	tweet(msg, logger)
