@@ -134,7 +134,8 @@ func Test_logg(t *testing.T) {
             But I think we can do better. We can use the same implementation for both test code and non-test code
             without spamming the logging service.</br></br>
 
-            One (but not the only) way is by having one implementation that switches conditionally based on whether it
+            One (but not the only) way of doing that is by having one implementation that switches conditionally based
+            on whether it
             is been used in test;
             <pre><code class="go">
 // betterhttpLogger logs messages to a HTTP logging service
