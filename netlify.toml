@@ -40,3 +40,8 @@
   from = "/blogs/consensus"
   to = "/blogs/2/consensus"
   status = 302 
+
+[[redirects]]
+  from = "/blogs/python-lambda"
+  to = "/blogs/3/python-lambda"
+  status = 302 
