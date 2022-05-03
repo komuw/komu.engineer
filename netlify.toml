@@ -55,3 +55,8 @@
   from = "/blogs/lambda-shim/lambda-shim"
   to = "/blogs/5/lambda-shim"
   status = 302 
+
+[[redirects]]
+  from = "/blogs/timeScaleDB/timescaleDB-for-logs"
+  to = "/blogs/6/timescaleDB-for-logs"
+  status = 302 
