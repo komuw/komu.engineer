@@ -35,3 +35,8 @@
   from = "/blogs/go-gc-maps"
   to = "/blogs/1/go-gc-maps"
   status = 302 
+
+[[redirects]]
+  from = "/blogs/consensus"
+  to = "/blogs/2/consensus"
+  status = 302 
