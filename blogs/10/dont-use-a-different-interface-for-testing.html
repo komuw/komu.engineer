@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Komu W - Don't use a different interface in tests.</title>
+    <meta name="description" content="Don't use a different interface in tests." />
+    <meta property="og:url" content="https://www.komu.engineer/blog" />
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ADD FAVICON -->
+
+    <link rel="stylesheet" href="../../site.css">
+
+    <!-- Get highlightjs by going to https://highlightjs.org/download/, select the languages you want and download. -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/styles/default.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/highlight.min.js"></script>
+    <script>hljs.highlightAll();</script>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <a href="https://www.komu.engineer">Home</a>&nbsp;&nbsp;
+            <a href="https://www.komu.engineer/about">About Me</a>&nbsp;&nbsp;
+            <a href="https://www.komu.engineer/blog">Blog</a>&nbsp;&nbsp;
+        </div>
+        <div class="left-sidebar">
+            .
+        </div>
+        <div class="right-sidebar">
+            .
+        </div>
+
+        <div class="main">
+            <p>
+                </br>
+                <strong>Don't use a different interface in tests. (05 May 2022)</strong>
+                </br></br>
+                This is probably going to be an unpopular opinion, but;</br>
+                Your test code should not be using a different interface implementation compared to your non test
+                code.</br>
+                Using different implementations(sometimes called 'mocking') is one of the best ways to lie to
+                yourself that you are testing your code whereas you really aren't.</br></br>
+
+                An example will suffice to drive my point; let's say we have some functionality that is meant to be used
+                in logging:
+            <pre><code class="go">
+// logg writes msg to the data stream provided by w
+func logg(w io.Writer, msg string) error {
+    msg = msg + "\n"
+    _, err := w.Write([]byte(msg))
+    return err
+}
+            </code></pre>
+            And the way we use it in our application(ie non-test code) is;
+            <pre><code class="go">
+// httpLogger logs messages to a HTTP logging service
+type httpLogger struct{}
+
+// Write fulfills io.Writer interface
+func (h httpLogger) Write(p []byte) (n int, err error) {
+    tr := &http.Transport{
+        MaxIdleConns:       10,
+        IdleConnTimeout:    10 * time.Second,
+        DisableCompression: true,
+    }
+    client := &http.Client{
+        Transport:     tr,
+        Timeout:       10 * time.Second,
+    }
+    // assume httpbin.org is an actual logging service.
+    resp, err := client.Post("https://httpbin.org/post", "application/json", bytes.NewReader(p))
+    return int(resp.Request.ContentLength), err
+}
+
+func main() {
+	err := logg(httpLogger{}, "hey-httpLogger")
+	if err != nil {
+		log.Fatal(err)
+	}
+}
+            </code></pre>
+            At this point we would now like to write some test for our application's code. What usually happens in
+            practice is that people
+            will create a 'mock' that fulfills the interface expected by the <i>logg</i> function instead of using the
+            type that their non-test code is already using(ie <i>httpLogger</i>)
+            <pre><code class="go">
+func Test_logg(t *testing.T) {
+    msg := "hey"
+    mockWriter := &bytes.Buffer{}
+
+    err := logg(mockWriter, msg)
+    if err != nil {
+        t.Fatalf("logg() got error = %v, wantErr = %v", err, nil)
+        return
+    }
+
+    gotMsg := mockWriter.String()
+    wantMsg := msg + "\n"
+    if gotMsg != wantMsg {
+        t.Fatalf("logg() got = %v, want = %v", gotMsg, wantMsg)
+    }
+}
+            </code></pre>
+            And it is not just developers that will write code like this. I checked both VS Code & JetBrains GoLand;
+            they both used a <i>&bytes.Buffer{}</i> when I asked them to <i>Generate test</i> for this
+            code</i>.</br></br>
+
+            The problem with this code is; the only thing we have tested is that <i>bytes.Buffer</i> implements
+            the <i>io.Writer</i> interface and that <i>httpLogger</i> also implements the same.</br>
+            In other words, the only thing that our test/s have done is just duplicate the compile-time checks that Go
+            is
+            already giving us for free. The bulk of our application's implementation(the <i>Write</i> method of
+            <i>httpLogger</i>) is still
+            wholly untested.</br>
+            A photo of the test coverage as produced by <i>go test -cover</i> illustrates the situation more
+            clearly;</br></br>
+            <img src="./imgs/mock-test-coverage.png" alt="test coverage for mock interfaces"></br></br>
+
+            I do understand why we do use alternate interface implementations for our tests. For example, we may
+            not be in control of the HTTP logging service in question & do not want to send them any unwanted/spam
+            traffic from our tests.</br>
+            But I think we can do better. We can use the same implementation for both test code and non-test code
+            without spamming the logging service.</br></br>
+
+            One (but not the only) way of doing that is by having one implementation that switches conditionally based
+            on whether it
+            is been used in test;
+            <pre><code class="go">
+// betterhttpLogger logs messages to a HTTP logging service
+type betterhttpLogger struct {
+    test struct {
+        enabled bool
+        written string
+    }
+}
+
+// Write fulfills io.Writer interface
+func (h *betterhttpLogger) Write(p []byte) (n int, err error) {
+    tr := &http.Transport{
+        MaxIdleConns:       10,
+        IdleConnTimeout:    10 * time.Second,
+        DisableCompression: true,
+    }
+    client := &http.Client{
+        Transport:     tr,
+        Timeout:       10 * time.Second,
+    }
+    if h.test.enabled {
+        mockWriter := &bytes.Buffer{}
+        n, err := mockWriter.Write(p)
+        h.test.written = mockWriter.String()
+        return n, err
+    }
+    // assume httpbin.org is an actual logging service.
+    resp, err := client.Post("https://httpbin.org/post", "application/json", bytes.NewReader(p))
+    return int(resp.Request.ContentLength), err
+}
+
+func main() {
+	err := logg(&betterhttpLogger{}, "hey-httpLogger")
+	if err != nil {
+		log.Fatal(err)
+	}
+}
+            </code></pre>
+            And the test code will be,
+            <pre><code class="go">
+func Test_logg(t *testing.T) {
+    msg := "hey"
+    w := &betterhttpLogger{test: struct {
+        enabled bool
+        written string
+    }{enabled: true}}
+
+    err := logg(w, msg)
+    if err != nil {
+        t.Fatalf("logg() got error = %v, wantErr = %v", err, nil)
+        return
+    }
+
+    gotMsg := w.test.written
+    wantMsg := msg + "\n"
+    if gotMsg != wantMsg {
+        t.Fatalf("logg() got = %v, want = %v", gotMsg, wantMsg)
+    }
+}
+            </code></pre>
+            Notice that in this version, the only piece of code that is not tested is just one line;
+            <pre><code class="go">
+http.Client.Post("https://httpbin.org/post", "application/json", bytes.NewReader(p))
+            </code></pre>
+            And guess what? Since that line is calling code from the standard library, you can <a target="_blank"
+                rel="noopener"
+                href="https://github.com/golang/go/blob/go1.18.1/src/net/http/client_test.go#L134-L142">bet</a> that it
+            is one of
+            the <a target="_blank" rel="noopener"
+                href="https://github.com/golang/go/blob/go1.18.1/src/net/http/client_test.go#L606-L621">most</a> heavily
+            tested functionality out there.</br>
+            Here's the test coverage of this version:</br></br>
+            <img src="./imgs/betterHttp-test-coverage.png" alt="test coverage for mock interfaces"></br></br>
+            Of course this example is a bit silly - it is for illustration purposes - because most of the code in the
+            <i>Write</i> method is just setting up a http transport and client, and thus you could make the argument
+            that those are already tested in the standard library. But you can imagine a situation where most of the
+            code inside the <i>Write</i> method is our own custom code; and using a mock interface in tests would mean
+            that our custom code is never tested.</br></br>
+
+            In conclusion, if you have one interface implementation that you use in your 'real' application and another
+            implementation that you use in tests; you are probably doing it wrong.</br>
+            You should, in my opinion, use just one interface implementation for both application code and test
+            code.</br></br>
+
+            All the code in this blogpost, including the full source code, can be found at: <a target="_blank"
+                rel="noopener" href="https://github.com/komuw/komu.engineer/tree/master/blogs/10">
+                https://github.com/komuw/komu.engineer/tree/master/blogs/10</a></br></br>
+
+            You can comment on this article <a target="_blank" rel="noopener"
+                href="https://github.com/komuw/komu.engineer/issues/22">by clicking here.</a>
+            </br>
+            </br>
+
+        </div>
+    </div>
+</body>
