@@ -832,7 +832,7 @@ Here's what did change in an incompatible way:
   ```html
   <script type="text/javascript">
     hljs.configure({classPrefix: ''});
-    hljs.initHighlightingOnLoad();
+    hljs.highlightAll();
   </script>
   ```
 
