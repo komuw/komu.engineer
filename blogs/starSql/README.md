@@ -1216,3 +1216,4 @@ ORDER BY
 
 13. Zero downtime schema migrations in Postgres using views: https://fabianlindfors.se/blog/schema-migrations-in-postgres/
 14. A tool(Reshape) that uses views to do zero-downtime migrations: https://fabianlindfors.se/blog/schema-migrations-in-postgres-using-reshape/
+15. A linter for Postgres migrations: https://squawkhq.com/
