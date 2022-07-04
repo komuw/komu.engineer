@@ -231,6 +231,30 @@ http.Client.Post("https://httpbin.org/post", "application/json", bytes.NewReader
             </br>
             </br>
 
+
+            <strong>Update(04 July 2022);</strong></br>
+            One main argument against the ideas in here has been along the lines; "you should not let test code leak
+            into production code." </br>
+            It is a fair comment. I just wanted to point out that the Go source repo does this(leak test to production)
+            a <a target="_blank" rel="noopener"
+                href="https://sourcegraph.com/search?q=context:global+repo:%5Egithub%5C.com/golang/go%24+testHook+-file:_test%5C.go%24++rev:refs/tags/go1.18.3&patternType=literal">number
+                of times.</a></br>
+            The example</a> of <a target="_blank" rel="noopener"
+                href="https://github.com/golang/go/blob/go1.18.3/src/net/http/server.go#L3009-L3012"><i>http.Server.Serve(l
+                    net.Listener) error</i></a> is particulary interesting. Here's what it looks like:
+            <pre><code class="go">
+var testHookServerServe func(*Server, net.Listener) // used if non-nil
+...
+func (srv *Server) Serve(l net.Listener) error {
+	if fn := testHookServerServe; fn != nil {
+		fn(srv, l) // call hook with unwrapped listener
+	}
+...
+            </code></pre>
+
+            </br> </br>
+
+
         </div>
     </div>
 </body>
