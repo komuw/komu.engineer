@@ -250,7 +250,14 @@ func (srv *Server) Serve(l net.Listener) error {
 		fn(srv, l) // call hook with unwrapped listener
 	}
 ...
-            </code></pre>
+            </code></pre></br>
+            Here's also a good <a target="_blank" rel="noopener"
+                href="https://jrock.us/posts/go-interfaces/">blogpost</a> that makes a similar kind of argument
+            <blockquote cite="https://jrock.us/posts/go-interfaces/">
+                "Do not use interfaces at all, <a target="_blank" rel="noopener"
+                    href="https://jrock.us/posts/go-interfaces/">just add test hooks</a> to your real-life structs" -
+                @jrockway
+            </blockquote>
 
             </br> </br>
 
