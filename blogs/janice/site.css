@@ -28,28 +28,10 @@
 
 .w3-button {
     padding: 15px 16px;
-    color: black;
+    color: #12258d;
     background-color: grey;
     text-align: left;
 }
-
-.w3-display-left {
-    position: absolute;
-    /* top:95%; */
-    left: 25%;
-    transform: translate(0%, -50%);
-    -ms-transform: translate(-0%, -50%)
-}
-
-
-.w3-display-right {
-    position: absolute;
-    /* top:95%; */
-    right: 25%;
-    transform: translate(0%, -50%);
-    -ms-transform: translate(0%, -50%)
-}
-
 
 .fbIcon {
     height: 30px;
