@@ -17,5 +17,6 @@ rename_sequential(){
         mv -i -- "$i" "$new"
         let a=a+1
     done
+    printf "\n\t total: ${a}\n"
 }
 rename_sequential
