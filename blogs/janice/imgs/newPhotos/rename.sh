@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
-a=0
-for i in *.webp; do
-  new=$(printf "%d.webp" "$a") #%04d would pad to length of 4
+
+a=1
+for i in *.jpg; do
+  new=$(printf "%02d.jpg" "$a") #02 pad to length of 2
   mv -i -- "$i" "$new"
   let a=a+1
 done
