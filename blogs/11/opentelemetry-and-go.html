@@ -60,12 +60,78 @@
                 <li>Telemetry should be collected in a secure, perfomant & scalable manner.</li>
             </ul>
 
-            <strong id="Our application">Our application</strong>
+            <strong id="Our application">Our application</strong></br>
+            The application consists of two services(micro-services if you like); serviceA and serviceB. Customers
+            send requests to serviceA, which in turn calls serviceB. </br>
+            serviceB adds two numbers and returns the result inside the <i>SVC-RESPONSE</i> http header. serviceA echos
+            back that header to the client/customer.
             <pre><code class="go">
-func todo() {
-}
-            </code></pre>
+package main
 
+import (
+    "context"
+    "fmt"
+    "net/http"
+)
+
+func main() {
+    ctx := context.Background()
+    go serviceA(ctx, 8081)
+    serviceB(ctx, 8082)
+}
+
+func serviceA(ctx context.Context, port int) {
+    mux := http.NewServeMux()
+    mux.HandleFunc("/serviceA", serviceA_HttpHandler)
+    serverPort := fmt.Sprintf(":%d", port)
+    server := &http.Server{Addr: serverPort, Handler: mux}
+
+    fmt.Println("serviceA listening on", server.Addr)
+    if err := server.ListenAndServe(); err != nil {
+        panic(err)
+    }
+}
+
+func serviceA_HttpHandler(w http.ResponseWriter, r *http.Request) {
+    cli := &http.Client{}
+    req, err := http.NewRequestWithContext(r.Context(), http.MethodGet, "http://localhost:8082/serviceB", nil)
+    if err != nil {
+        panic(err)
+    }
+    resp, err := cli.Do(req)
+    if err != nil {
+        panic(err)
+    }
+
+    w.Header().Add("SVC-RESPONSE", resp.Header.Get("SVC-RESPONSE"))
+}
+
+func serviceB(ctx context.Context, port int) {
+    mux := http.NewServeMux()
+    mux.HandleFunc("/serviceB", serviceB_HttpHandler)
+    serverPort := fmt.Sprintf(":%d", port)
+    server := &http.Server{Addr: serverPort, Handler: mux}
+
+    fmt.Println("serviceB listening on", server.Addr)
+    if err := server.ListenAndServe(); err != nil {
+        panic(err)
+    }
+}
+
+func serviceB_HttpHandler(w http.ResponseWriter, r *http.Request) {
+    answer := add(r.Context(), 42, 1813)
+    w.Header().Add("SVC-RESPONSE", fmt.Sprint(answer))
+    fmt.Fprintf(w, "hello from serviceB: Answer is: %d", answer)
+}
+
+func add(ctx context.Context, x, y int64) int64 { return x + y }                
+            </code></pre>
+            If we call serviceA, we get back;
+            <pre><code class="go">
+curl -I http://127.0.0.1:8081/serviceA
+Svc-Response: 1855
+            </code></pre>
+            Perfect, everything is working.
 
 
 
