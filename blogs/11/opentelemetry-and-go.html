@@ -227,7 +227,8 @@ func getTls() (*tls.Config, error) {
             format. The one we are using here is backed by GRPC, you can also use other exporters backed with other
             transport mechanisms like http etc.</br>
             That exporter will be sending trace data to a 'thing' listening on <i>localhost:4317</i> and for security
-            purposes it is going to authenticate to that 'thing' using mutual TLS.</br>
+            purposes it is going to authenticate to that 'thing' using mutual TLS. That 'thing' is called a collector,
+            and we'll talk about it soon.</br>
             Next, we create a provider with <i>trace.NewTracerProvider()</i>.
             For purposes of scalability, cost, and the like; we have configured the provider to batch trace data and
             also to sample it at a rate of 60%. You can vary this parameters based on your own usecases and specific
@@ -269,7 +270,8 @@ go run -race ./... && curl -I http://127.0.0.1:8081/serviceA
 
 Svc-Response: 1855
             </code></pre>
-            Our app is ready to collect traces, but we have not yet setup the 'thing' that will receive the traces at
+            Our app is ready to collect traces, but we have not yet setup the 'thing'/collector that will receive the
+            traces at
             <i>localhost:4317</i></br>
             We will do that eventually, but first lets look at;
 
@@ -439,6 +441,8 @@ func (t logrusTraceHook) Fire(entry *logrus.Entry) error {
                 target="_blank" rel="noopener" href="https://github.com/komuw/otero/blob/v0.0.1/log/slog.go">here</a>
 
 
+            </br></br>
+            <strong id="Collector">Collector</strong></br>
 
             </br> </br>
         </div>
