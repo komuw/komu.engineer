@@ -47,7 +47,8 @@
                 <strong>The complete guide to OpenTelemetry and Golang. (15 Feb 2023)</strong>
                 </br></br>
                 This guide should take you from zero to production.</br>
-                <a target="_blank" rel="noopener" href="https://opentelemetry.io/">OpenTelemetry</a> is a collection of
+                <a target="_blank" rel="noopener" href="https://opentelemetry.io/">OpenTelemetry(OTLP)</a> is a
+                collection of
                 tools that can be used to instrument, collect, and export telemetry(metrics, logs, & traces). That
                 telemetry data can help you analyze your software's behavior. </br>
                 At the end of this blogpost; </br>
@@ -134,9 +135,113 @@ Svc-Response: 1855
             </code></pre>
             Perfect, everything is working.
 
+            </br></br>
+            <strong id="Tracing">Tracing</strong></br>
+            Let's add tracing support.
+            <pre><code class="go">
+package main
 
+import (
+    "context"
+    "crypto/tls"
+    "crypto/x509"
+    "os"
 
+    "go.opentelemetry.io/otel"
+    "go.opentelemetry.io/otel/attribute"
+    "go.opentelemetry.io/otel/exporters/otlp/otlptrace/otlptracegrpc"
+    "go.opentelemetry.io/otel/propagation"
+    "go.opentelemetry.io/otel/sdk/resource"
+    "go.opentelemetry.io/otel/sdk/trace"
+    semconv "go.opentelemetry.io/otel/semconv/v1.12.0"
+    "google.golang.org/grpc/credentials"
+)
 
+func setupTracing(ctx context.Context, serviceName string) (*trace.TracerProvider, error) {
+    c, err := getTls()
+    if err != nil {
+        return nil, err
+    }
+
+    exporter, err := otlptracegrpc.New(
+        ctx,
+        otlptracegrpc.WithEndpoint("localhost:4317"),
+        otlptracegrpc.WithTLSCredentials(
+            // mutual tls.
+            credentials.NewTLS(c),
+        ),
+    )
+    if err != nil {
+        return nil, err
+    }
+
+    // labels/tags/resources that are common to all traces.
+    resource := resource.NewWithAttributes(
+        semconv.SchemaURL,
+        semconv.ServiceNameKey.String(serviceName),
+        attribute.String("some-attribute", "some-value"),
+    )
+
+    provider := trace.NewTracerProvider(
+        trace.WithBatcher(exporter),
+        trace.WithResource(resource),
+        // set the sampling rate based on the parent span to 60%
+        trace.WithSampler(trace.ParentBased(trace.TraceIDRatioBased(0.6))),
+    )
+
+    otel.SetTracerProvider(provider)
+
+    otel.SetTextMapPropagator(
+        propagation.NewCompositeTextMapPropagator(
+            propagation.TraceContext{}, // W3C Trace Context format; https://www.w3.org/TR/trace-context/
+        ),
+    )
+
+    return provider, nil
+}
+
+// getTls returns a configuration that enables the use of mutual TLS.
+func getTls() (*tls.Config, error) {
+    clientAuth, err := tls.LoadX509KeyPair("./confs/client.crt", "./confs/client.key")
+    if err != nil {
+        return nil, err
+    }
+
+    caCert, err := os.ReadFile("./confs/rootCA.crt")
+    if err != nil {
+        return nil, err
+    }
+    caCertPool := x509.NewCertPool()
+    caCertPool.AppendCertsFromPEM(caCert)
+
+    c := &tls.Config{
+        RootCAs:      caCertPool,
+        Certificates: []tls.Certificate{clientAuth},
+    }
+
+    return c, nil
+}                
+            </code></pre>
+            There's a lot going on here so lets break it down.</br>
+            We create and exporter using <i>otlptracegrpc.New()</i>. An exporter creates trace data in the OTLP wire
+            format. The one we are using here is backed by GRPC, you can also use other exporters backed with other
+            transport mechanisms like http etc.</br>
+            That exporter will be sending trace data to a 'thing' listening on <i>localhost:4317</i> and for security
+            purposes it is going to authenticate to that 'thing' using mutual TLS.</br>
+            Next, we create a provider with <i>trace.NewTracerProvider()</i>.
+            For purposes of scalability, cost, and the like; we have configured the provider to batch trace data and
+            also to sample it at a rate of 60%. You can vary this parameters based on your own usecases and specific
+            requirements.</br>
+            Finally, we set a propagator with <i>otel.SetTextMapPropagator()</i>. Propagation is the mechanism by which
+            a trace can be disseminated/communicated from one service to another across transport boundaries. In our
+            example, we have two services <i>serviceA & serviceB</i>, these can be running in two different computers or
+            even two different geographical regions. But it is still useful to be able to correlate traces across the
+            two services since they 'talk' to each other. In our case, we are using <i>propagation.TraceContext{}</i>
+            which is based on the <a target="_blank" rel="noopener" href="https://www.w3.org/TR/trace-context/">W3C
+                Trace Context standard.</a> There are <a target="_blank" rel="noopener"
+                href="https://opentelemetry.io/docs/reference/specification/context/api-propagators/#propagators-distribution">other
+                propators</a> that you can use.</br>
+            We need to generate the tls certificates that we are using for authentication.
 
 
 

@@ -6,8 +6,18 @@ import (
 	"net/http"
 )
 
+const serviceName = "AdderSvc"
+
 func main() {
 	ctx := context.Background()
+	{
+		tp, err := setupTracing(ctx, serviceName)
+		if err != nil {
+			panic(err)
+		}
+		defer tp.Shutdown(ctx)
+	}
+
 	go serviceA(ctx, 8081)
 	serviceB(ctx, 8082)
 }
