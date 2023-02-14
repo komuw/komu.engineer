@@ -4,13 +4,9 @@ services:
   # Jaeger
   jaeger:
     image: jaegertracing/all-in-one:1.41.0
-    command:
-      - "--memory.max-traces"
-      - "10000"
-      - "--query.base-path"
-      - "/jaeger/ui"
     ports:
-      - "14250:14250"
+      - "14250:14250" # Collector gRPC
+      - "16686:16686" # Web HTTP
     environment:
       - COLLECTOR_OTLP_ENABLED=true
     networks:
@@ -19,15 +15,8 @@ services:
   # Prometheus
   prometheus:
     image: prom/prometheus:v2.42.0
-    container_name: prometheus
     command:
-      # - --web.console.templates=/etc/prometheus/consoles
-      # - --web.console.libraries=/etc/prometheus/console_libraries
-      # - --storage.tsdb.retention.time=1h
       - --config.file=/etc/prometheus/prometheus-config.yaml
-      # - --storage.tsdb.path=/prometheus
-      # - --web.enable-lifecycle
-      # - --web.route-prefix=/
     volumes:
       - ./confs/prometheus-config.yaml:/etc/prometheus/prometheus-config.yaml
     ports:

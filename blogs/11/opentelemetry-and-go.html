@@ -471,7 +471,7 @@ receivers:
   otlp:
     protocols:
       grpc:
-        endpoint: localhost:4317
+        endpoint: 0.0.0.0:4317 # It is important that we do not use localhost
         tls:
           cert_file: /etc/tls/server.crt
           key_file: /etc/tls/server.key
@@ -495,7 +495,7 @@ exporters:
     tls:
       insecure: true
   prometheus:
-    endpoint: localhost:9464
+    endpoint: otel_collector:9464
 
 
 # (4) Service
