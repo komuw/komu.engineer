@@ -41,6 +41,7 @@ func setupMetrics(ctx context.Context, serviceName string) (*sdkmetric.MeterProv
 	mp := sdkmetric.NewMeterProvider(
 		sdkmetric.WithResource(resource),
 		sdkmetric.WithReader(
+			// collects and exports metric data every 2 minutes.
 			sdkmetric.NewPeriodicReader(exporter, sdkmetric.WithInterval(120*time.Second)),
 		),
 	)

@@ -245,7 +245,7 @@ func getTls() (*tls.Config, error) {
             certificates in various ways, <a target="_blank" rel="noopener"
                 href="https://github.com/komuw/komu.engineer/blob/otel-and-go/blogs/11/code/confs/certs.sh">here's the
                 script</a> that I used for this blogpost.</br></br>
-            Let's setup the main func to start the tracing.
+            Let's setup the main func to start tracing.
             <pre><code class="go">
 const serviceName = "AdderSvc"
 
@@ -320,6 +320,7 @@ func setupMetrics(ctx context.Context, serviceName string) (*sdkmetric.MeterProv
     mp := sdkmetric.NewMeterProvider(
         sdkmetric.WithResource(resource),
         sdkmetric.WithReader(
+            // collects and exports metric data every 2 minutes.
             sdkmetric.NewPeriodicReader(exporter, sdkmetric.WithInterval(120*time.Second)),
         ),
     )
@@ -328,6 +329,22 @@ func setupMetrics(ctx context.Context, serviceName string) (*sdkmetric.MeterProv
 
     return mp, nil
 }                
+            </code></pre>
+            The code here is line-for-line almost similar to the previous code for tracing, so I'll not spend anytime
+            explaining it.
+            Let's setup the main func to setup metrics.
+            <pre><code class="go">
+func main() {
+    {
+        // ... previous code here.
+        mp, err := setupMetrics(ctx, serviceName)
+        if err != nil {
+            panic(err)
+        }
+        defer mp.Shutdown(ctx)
+    }
+    // ... previous code here.
+}
             </code></pre>
 
 

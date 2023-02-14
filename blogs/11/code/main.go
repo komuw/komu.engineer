@@ -16,6 +16,12 @@ func main() {
 			panic(err)
 		}
 		defer tp.Shutdown(ctx)
+
+		mp, err := setupMetrics(ctx, serviceName)
+		if err != nil {
+			panic(err)
+		}
+		defer mp.Shutdown(ctx)
 	}
 
 	go serviceA(ctx, 8081)
