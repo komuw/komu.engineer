@@ -463,7 +463,56 @@ func (t logrusTraceHook) Fire(entry *logrus.Entry) error {
 
             Lets start by creating a collector configuration file as described in the <a target="_blank" rel="noopener"
                 href="https://opentelemetry.io/docs/collector/configuration/">documentation</a>
-            <pre><code class="go">
+            <pre><code class="yaml">
+# confs/otel-collector-config.yaml
+
+# (1) Receivers
+receivers:
+  otlp:
+    protocols:
+      grpc:
+        endpoint: localhost:4317
+        tls:
+          cert_file: /etc/tls/server.crt
+          key_file: /etc/tls/server.key
+          ca_file: /etc/tls/rootCA.crt
+          client_ca_file: /etc/tls/rootCA.crt
+
+# (2) Processors
+processors:
+  memory_limiter:
+    limit_percentage: 50
+  batch:
+    send_batch_size: 8192
+
+# (3) Exporters
+exporters:
+  logging: # aka, stdOut/stdErr
+    verbosity: info
+  jaeger:
+    endpoint: localhost:14250
+    tls:
+      insecure: true
+  prometheus:
+    endpoint: localhost:9464
+
+
+# (4) Service
+service:
+  # A pipeline consists of a set of receivers, processors and exporters.
+  pipelines:
+    traces:
+      receivers: [otlp]
+      processors: [memory_limiter, batch]
+      exporters: [logging, jaeger]
+    metrics:
+      receivers: [otlp]
+      processors: [memory_limiter, batch]
+      exporters: [logging, prometheus]
+    logs:
+      receivers: [otlp]
+      processors: [memory_limiter, batch]
+      exporters: [logging]
             </code></pre>
 
 
