@@ -7,8 +7,6 @@ services:
     ports:
       - "14250:14250" # Collector gRPC
       - "16686:16686" # Web HTTP
-    environment:
-      - COLLECTOR_OTLP_ENABLED=true
     networks:
       - my_net
 
