@@ -41,7 +41,7 @@ func setupMetrics(ctx context.Context, serviceName string) (*sdkmetric.MeterProv
 	mp := sdkmetric.NewMeterProvider(
 		sdkmetric.WithResource(resource),
 		sdkmetric.WithReader(
-			sdkmetric.NewPeriodicReader(exporter, sdkmetric.WithInterval(2*time.Second)),
+			sdkmetric.NewPeriodicReader(exporter, sdkmetric.WithInterval(120*time.Second)),
 		),
 	)
 
