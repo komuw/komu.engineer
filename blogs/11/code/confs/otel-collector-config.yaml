@@ -7,10 +7,10 @@ receivers:
       grpc:
         endpoint: localhost:4317
         tls:
-          cert_file: /etc/tls/server.crt
-          key_file: /etc/tls/server.key
-          ca_file: /etc/tls/rootCA.crt
-          client_ca_file: /etc/tls/rootCA.crt
+          cert_file: ./confs/server.crt
+          key_file: ./confs/server.key
+          ca_file: ./confs/rootCA.crt
+          client_ca_file: ./confs/rootCA.crt
 
 # (2) Processors
 processors:

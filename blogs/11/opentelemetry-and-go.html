@@ -473,10 +473,10 @@ receivers:
       grpc:
         endpoint: localhost:4317
         tls:
-          cert_file: /etc/tls/server.crt
-          key_file: /etc/tls/server.key
-          ca_file: /etc/tls/rootCA.crt
-          client_ca_file: /etc/tls/rootCA.crt
+          cert_file: ./confs/server.crt
+          key_file: ./confs/server.key
+          ca_file: ./confs/rootCA.crt
+          client_ca_file: ./confs/rootCA.crt
 
 # (2) Processors
 processors:
@@ -514,6 +514,32 @@ service:
       processors: [memory_limiter, batch]
       exporters: [logging]
             </code></pre>
+            We have defined to have the OpenTelemetry collector to listen/run on <i>localhost</i> port <i>4317</i>. The
+            collector will be authenticated using mutual TLS, and we configure the same TLS as we had configured for
+            both the tracing & metrics Go code. Remember the openssl commands that we used to generate TLS certificates
+            can be found <a target="_blank" rel="noopener"
+                href="https://github.com/komuw/komu.engineer/blob/otel-and-go/blogs/11/code/confs/certs.sh">here.</a>
+            All our telemetry data will be sent to the OpenTelemetry collector's receiver that is running on
+            <i>localhost:4317</i></br>
+            Next we have configured two data processors, <i>memory_limiter</i> & <i>batch</i> processor. The <a
+                target="_blank" rel="noopener"
+                href="https://github.com/open-telemetry/opentelemetry-collector/blob/v0.71.0/processor/memorylimiterprocessor/README.md">memory
+                limiter</a> is used to prevent out of memory situations on the collector. Whereas the <a target="_blank"
+                rel="noopener"
+                href="https://github.com/open-telemetry/opentelemetry-collector/blob/main/processor/batchprocessor/README.md">batch
+                processor</a> places telemetry data into batches thus reducing transmission load.</br>
+            After that, we configure our exporters. Here we have configured a logging (aka <i>stdOut</i>) processor.
+            Using this, the collector will send the collected telemetry data to stdOut/stderr. This can be useful when
+            you are developing locally or for debugging purposes. Remember to turn it off in production/live
+            settings.</br>
+            We have also configured a <i>jaeger</i> exporter, the collector will send tracing data to <i>jaeger</i>
+            listening on <i>localhost:14250</i></br>
+            We have a <i>prometheus</i> exporter, the collector will setup an endpoint at <i>localhost:9464</i> and that
+            endpoint exposes prometheus format metrics. The endpoint can be scraped for prometheus style metrics.</br>
+            Finally, in the services section is where we orchestrate everything together. For example we are saying
+            that; traces will be recieved by the receiver called <i>otlp</i>, processed by both the <i>memory_limiter &
+                batch</i> processor and finally exported both to <i>stdout</i> & <i>jaeger.</i>
+
 
 
 
