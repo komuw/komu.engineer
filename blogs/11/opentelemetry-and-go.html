@@ -433,10 +433,10 @@ func (t logrusTraceHook) Fire(entry *logrus.Entry) error {
             you want. In our case, this hook looks for any <i>traceId's & spanId's</i> from tracing and adds them to log
             events. Additionally, it takes any log events and adds them to traces as <a target="_blank" rel="noopener"
                 href="https://opentelemetry.io/docs/concepts/signals/traces/#span-events">span event</a>. This enables
-            to be able to correlate logs to their corresponding traces and vice versa. And as I said, this technique can
-            be applied to others like <a target="_blank" rel="noopener"
-                href="https://github.com/komuw/otero/blob/v0.0.1/log/zerolog.go">zerolog</a> and to <a target="_blank"
-                rel="noopener" href="https://github.com/komuw/otero/blob/v0.0.1/log/slog.go">golang.org/x/exp/slog</a>
+            us to be able to correlate logs to their corresponding traces and vice versa. And as I said, this technique
+            can be applied to others like <i>zerolog</i> and <i>golang.org/x/exp/slog</i>, see <a target="_blank"
+                rel="noopener" href="https://github.com/komuw/otero/blob/v0.0.1/log/zerolog.go">here</a> and <a
+                target="_blank" rel="noopener" href="https://github.com/komuw/otero/blob/v0.0.1/log/slog.go">here</a>
 
 
 
