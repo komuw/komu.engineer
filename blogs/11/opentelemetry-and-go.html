@@ -347,6 +347,17 @@ func main() {
 }
             </code></pre>
 
+            </br></br>
+            <strong id="Logs">Logs</strong></br>
+            The so-called third pillar of telemetry. In our case we are going to use <a target="_blank" rel="noopener"
+                href="https://github.com/sirupsen/logrus">logrus</a>, but this technique can be applied to many other
+            logging libraries. Indeed, here is the same technique applied to <a target="_blank" rel="noopener"
+                href="https://github.com/komuw/otero/blob/v0.0.1/log/zerolog.go">zerolog</a> and to <a target="_blank"
+                rel="noopener"
+                href="https://github.com/komuw/otero/blob/v0.0.1/log/slog.go">golang.org/x/exp/slog</a></br>
+            What we are going to do is create a logrus hook that will; (a) add TraceIds & spanIds to logs and (b) add
+            logs to the active span as span-events.
+
 
 
             </br> </br>
