@@ -473,24 +473,25 @@ receivers:
       grpc:
         endpoint: localhost:4317
         tls:
-          cert_file: ./confs/server.crt
-          key_file: ./confs/server.key
-          ca_file: ./confs/rootCA.crt
-          client_ca_file: ./confs/rootCA.crt
+          cert_file: /etc/tls/server.crt
+          key_file: /etc/tls/server.key
+          ca_file: /etc/tls/rootCA.crt
+          client_ca_file: /etc/tls/rootCA.crt
 
 # (2) Processors
 processors:
   memory_limiter:
     limit_percentage: 50
+    check_interval: 1s
+    spike_limit_percentage: 30
   batch:
     send_batch_size: 8192
 
 # (3) Exporters
 exporters:
   logging: # aka, stdOut/stdErr
-    verbosity: info
   jaeger:
-    endpoint: localhost:14250
+    endpoint: jaeger:14250
     tls:
       insecure: true
   prometheus:
@@ -533,7 +534,8 @@ service:
             you are developing locally or for debugging purposes. Remember to turn it off in production/live
             settings.</br>
             We have also configured a <i>jaeger</i> exporter, the collector will send tracing data to <i>jaeger</i>
-            listening on <i>localhost:14250</i></br>
+            listening on <i>jaeger:14250</i>(we are not using <i>localhost</i> here since jaeger will be running in a
+            separate docker container, see next section)</br>
             We have a <i>prometheus</i> exporter, the collector will setup an endpoint at <i>localhost:9464</i> and that
             endpoint exposes prometheus format metrics. The endpoint can be scraped for prometheus style metrics.</br>
             Finally, in the services section is where we orchestrate everything together. For example we are saying
@@ -541,7 +543,22 @@ service:
                 batch</i> processor and finally exported both to <i>stdout</i> & <i>jaeger.</i>
 
 
+            </br></br>
+            <strong id="docker services">docker services</strong></br>
+            We have talked about the collector, prometheus, jaeger & stdOut/logging. We need to run these services so
+            that our Go code can talk to them. In most cases you may not have to run these services, it may well be the
+            case that in production/live circumstance; someone else is running these on your behalf. There are a lot of
+            companies(SaaS & otherwise) out there that offer paid versions of these, some even with very generous fee
+            tiers. It might make a lot of sense to use those services where/if you can.</br>
+            Neverthless it would not hurt knowing how to set them up for yourself. Here we will use
+            docker/docker-compose to run these;
+            <pre><code class="yaml">
+TODO: docker-compose
+            </code></pre>
 
+            <pre><code class="yaml">
+TODO: prometheus conf.
+            </code></pre>
 
 
 
