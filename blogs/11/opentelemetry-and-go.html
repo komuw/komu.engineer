@@ -263,8 +263,19 @@ func main() {
     serviceB(ctx, 8082)
 }       
             </code></pre>
+            If we run our app, it will still work
+            <pre><code class="go">
+go run -race ./... && curl -I http://127.0.0.1:8081/serviceA
 
+Svc-Response: 1855
+            </code></pre>
+            Our app is ready to collect traces, but we have not yet setup the 'thing' that will receive the traces at
+            <i>localhost:4317</i></br>
+            We will do that eventually, but first lets look at;
 
+            </br></br>
+            <strong id="Metrics">Metrics</strong></br>
+            Let's add Metric support.
 
 
 
