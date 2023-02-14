@@ -13,8 +13,8 @@ setup_certs(){
       -nodes \
       -x509 \
       -subj "/C=US/ST=CA/O=MyOrg/CN=myOrgCA" \
-      -keyout confs/tls/rootCA.key \
-      -out confs/tls/rootCA.crt
+      -keyout confs/rootCA.key \
+      -out confs/rootCA.crt
   }
 
   { # create server certs.
@@ -27,10 +27,10 @@ setup_certs(){
       -x509 \
       -subj "/C=US/ST=CA/O=MyOrg/CN=myOrgCA" \
       -addext "subjectAltName=DNS:example.com,DNS:example.net,DNS:otel_collector" \
-      -CA confs/tls/rootCA.crt \
-      -CAkey confs/tls/rootCA.key  \
-      -keyout confs/tls/server.key \
-      -out confs/tls/server.crt
+      -CA confs/rootCA.crt \
+      -CAkey confs/rootCA.key  \
+      -keyout confs/server.key \
+      -out confs/server.crt
   }
 
   { # create client certs.
@@ -43,19 +43,17 @@ setup_certs(){
       -x509 \
       -subj "/C=US/ST=CA/O=MyOrg/CN=myOrgCA" \
       -addext "subjectAltName=DNS:example.com,DNS:example.net,DNS:otel_collector" \
-      -CA confs/tls/rootCA.crt \
-      -CAkey confs/tls/rootCA.key  \
-      -keyout confs/tls/client.key \
-      -out confs/tls/client.crt
+      -CA confs/rootCA.crt \
+      -CAkey confs/rootCA.key  \
+      -keyout confs/client.key \
+      -out confs/client.crt
   }
 
   { # clean
-    rm -rf confs/tls/*.csr
-    rm -rf confs/tls/*.srl
+    rm -rf confs/*.csr
+    rm -rf confs/*.srl
 
-    touch confs/otel_file_exporter.json
-    chmod 666 confs/otel_file_exporter.json # otel-collector docker image has no writable file-system
-    chmod 666 confs/tls/server.crt confs/tls/server.key confs/tls/rootCA.crt
+    chmod 666 confs/server.crt confs/server.key confs/rootCA.crt
   }
 }
 setup_certs

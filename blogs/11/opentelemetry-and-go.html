@@ -241,7 +241,11 @@ func getTls() (*tls.Config, error) {
                 Trace Context standard.</a> There are <a target="_blank" rel="noopener"
                 href="https://opentelemetry.io/docs/reference/specification/context/api-propagators/#propagators-distribution">other
                 propators</a> that you can use.</br>
-            We need to generate the tls certificates that we are using for authentication.
+            We need to generate the tls certificates that we are using for authentication. You can generate the
+            certificates in various ways, <a target="_blank" rel="noopener"
+                href="https://github.com/komuw/komu.engineer/blob/otel-and-go/blogs/11/code/confs/certs.sh">here's the
+                script</a> that I used for this blogpost.
+
 
 
 
