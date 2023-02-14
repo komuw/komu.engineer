@@ -443,6 +443,25 @@ func (t logrusTraceHook) Fire(entry *logrus.Entry) error {
 
             </br></br>
             <strong id="Collector">Collector</strong></br>
+            Both the tracing & metrics code we have written so far sends telemetry data to a 'thing' that we have
+            defined to listen on <i>localhost:4317</i></br>
+            That thing is an OpenTelemetry collector. A <a target="_blank" rel="noopener"
+                href="https://opentelemetry.io/docs/collector/">collector</a> is a vendor-agnostic way to receive,
+            process and export telemetry data. It removes the need to run, operate, and maintain multiple
+            agents/collectors. This is one of the great benefits of opentelemetry, you do not have to install multiple
+            client libraries or agents(jaeger, prometheus, datadog, honeycomb, grafana, whoever, whatever). You just use
+            the opentelemetry library for your chosen language(in our case Go) and also use one opentelemetry
+            collector/agent. Then that collector can 'fan-out' to
+            jaeger/prometheus/datadog/honeycomb/grafana/stdOut/whoever/whatever.</br>
+            The Collector is a process/agent/server that you run on your own computer that does 3 main things:</br>
+            <ol>
+                <li>Receives telemetry(logs,traces,metrics) data from the client libraries.</li>
+                <li>Optionally, pre-processes that data.</li>
+                <li>Exports that data to final destinations.</li>
+            </ol>
+
+
+
 
             </br> </br>
         </div>
