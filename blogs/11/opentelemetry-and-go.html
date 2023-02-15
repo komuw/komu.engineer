@@ -570,6 +570,24 @@ service:
 version: '3.3'
 services:
 
+    # OpenTelemetry Collector
+    otel_collector:
+    image: otel/opentelemetry-collector-contrib:0.70.0
+    command: --config=/etc/otel-collector-config.yaml
+    volumes:
+        - ./confs/otel-collector-config.yaml:/etc/otel-collector-config.yaml
+        - ./confs/server.crt:/etc/tls/server.crt
+        - ./confs/server.key:/etc/tls/server.key
+        - ./confs/rootCA.crt:/etc/tls/rootCA.crt
+    ports:
+        - "4317:4317" # OTLP over gRPC receiver
+        - "9464:9464" # Prometheus exporter
+    depends_on:
+        - jaeger
+        - prometheus
+    networks:
+        - my_net
+
     # Jaeger
     jaeger:
     image: jaegertracing/all-in-one:1.41.0
@@ -591,27 +609,14 @@ services:
     networks:
         - my_net
 
-    # OpenTelemetry Collector
-    otel_collector:
-    image: otel/opentelemetry-collector-contrib:0.70.0
-    command: --config=/etc/otel-collector-config.yaml
-    volumes:
-        - ./confs/otel-collector-config.yaml:/etc/otel-collector-config.yaml
-        - ./confs/server.crt:/etc/tls/server.crt
-        - ./confs/server.key:/etc/tls/server.key
-        - ./confs/rootCA.crt:/etc/tls/rootCA.crt
-    ports:
-        - "4317:4317" # OTLP over gRPC receiver
-        - "9464:9464" # Prometheus exporter
-    depends_on:
-        - jaeger
-        - prometheus
-    networks:
-        - my_net
-
 networks:
     my_net:                
             </code></pre>
+            We start the OpenTelemetry collector and have it running on port <i>4317</i> inside the container. We also
+            expose the same port on the host machine. This is the same port we have set in the
+            <i>confs/otel-collector-config.yaml</i> file as the receiver. We also add in the certificates needed for
+            mutual TLS from the host to the container. The port <i>9464</i> is where the collector exposes prometheus
+            format metrics. You can then have your prometheus scrape that port, as we will later on.</br>
             We start <a target="_blank" rel="noopener" href="https://www.jaegertracing.io">jaeger</a>, which is a is a
             distributed tracing system, listening on port <i>14250</i> inside
             the container and also expose the running service onto the host at the same port. Remember in the
@@ -624,13 +629,8 @@ networks:
             by scraping metrics from instrumented services. This is to say; your service does not send metrics to
             prometheus, instead, prometheus pulls metrics from your service. So the port we have exposed here
             <i>9090</i> is the port that we can access on the browser and use it to query for metrics. Since prometheus
-            scrapes metrics, we need to tell it from where to scrape for metrics.
-            </br>
-
-
-
-
-
+            scrapes metrics, we need to tell it from where to scrape for metrics. We do that using a configuration file,
+            telling it to scrape from <i>otel_collector:9464</i>
             <pre><code class="yaml">
 # file: confs/prometheus-config.yaml
 
