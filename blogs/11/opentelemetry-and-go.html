@@ -248,7 +248,7 @@ func getTls() (*tls.Config, error) {
                 propators</a> that you can use.</br>
             We need to generate the tls certificates that we are using for authentication. You can generate the
             certificates in various ways, <a target="_blank" rel="noopener"
-                href="https://github.com/komuw/komu.engineer/blob/otel-and-go/blogs/11/code/confs/certs.sh">here's the
+                href="https://github.com/komuw/komu.engineer/blob/master/blogs/11/code/confs/certs.sh">here's the
                 script</a> that I used for this blogpost.</br></br>
             Let's setup the main func to start tracing.
             <pre><code class="go">
@@ -531,7 +531,7 @@ service:
             collector will be authenticated using mutual TLS, and we configure the same TLS as we had configured for
             both the tracing & metrics Go code. Remember the openssl commands that we used to generate TLS certificates
             can be found <a target="_blank" rel="noopener"
-                href="https://github.com/komuw/komu.engineer/blob/otel-and-go/blogs/11/code/confs/certs.sh">here.</a>
+                href="https://github.com/komuw/komu.engineer/blob/master/blogs/11/code/confs/certs.sh">here.</a>
             All our telemetry data will be sent to the OpenTelemetry collector's receiver that is running on
             <i>localhost:4317</i></br>
             Next we have configured two data processors, <i>memory_limiter</i> & <i>batch</i> processor. The <a
@@ -838,7 +838,7 @@ log := NewLogrus(ctx).WithFields(logrus.Fields{
 
 
             All the code in this blogpost, including the full source code, can be found at: <a target="_blank"
-                rel="noopener" href="https://github.com/komuw/komu.engineer/tree/otel-and-go/blogs/11">this
+                rel="noopener" href="https://github.com/komuw/komu.engineer/tree/master/blogs/11">this
                 link</a></br></br>
 
             You can comment on this article <a target="_blank" rel="noopener"

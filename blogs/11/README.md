@@ -1,8 +1,13 @@
-This is the code for my blogpost: [TODO.](TODO)      
+This is the code for my blogpost: [The complete guide to OpenTelemetry and Golang](https://www.komu.engineer/blogs/11/opentelemetry-and-go.html)        
 
-The Golang code can be found in the `code` folder.  
+The Golang code can be found in the `code` folder.     
+To run the code;
+```sh
+cd code/
 
-TODO: replace the link https://github.com/komuw/komu.engineer/blob/otel-and-go/blogs/11/code/confs/certs.sh with `main` branch.
+./confs/certs.sh
+docker-compose up --build
+go run ./...
 
-
-
+curl -vkL http://127.0.0.1:8081/serviceA
+```
