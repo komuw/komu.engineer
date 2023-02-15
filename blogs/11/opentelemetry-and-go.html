@@ -67,6 +67,8 @@
             serviceB adds two numbers and returns the result inside the <i>SVC-RESPONSE</i> http header. serviceA echos
             back that header to the client/customer.
             <pre><code class="go">
+// file: main.go
+
 package main
 
 import (
@@ -139,6 +141,8 @@ Svc-Response: 1855
             <strong id="Tracing">Tracing</strong></br>
             Let's add tracing support.
             <pre><code class="go">
+// file: tracing.go
+
 package main
 
 import (
@@ -248,6 +252,8 @@ func getTls() (*tls.Config, error) {
                 script</a> that I used for this blogpost.</br></br>
             Let's setup the main func to start tracing.
             <pre><code class="go">
+// file: main.go
+
 const serviceName = "AdderSvc"
 
 func main() {
@@ -279,6 +285,8 @@ Svc-Response: 1855
             <strong id="Metrics">Metrics</strong></br>
             Let's add Metric support.
             <pre><code class="go">
+// file: metrics.go
+
 package main
 
 import (
@@ -336,6 +344,8 @@ func setupMetrics(ctx context.Context, serviceName string) (*sdkmetric.MeterProv
             explaining it.
             Let's setup the main func to setup metrics.
             <pre><code class="go">
+// file: main.go
+
 func main() {
     {
         // ... previous code here.
@@ -360,6 +370,8 @@ func main() {
             What we are going to do is create a logrus hook that will; (a) add TraceIds & spanIds to logs and (b) add
             logs to the active span as span-events.
             <pre><code class="go">
+// file: log.go
+
 package main
 
 import (
@@ -464,7 +476,7 @@ func (t logrusTraceHook) Fire(entry *logrus.Entry) error {
             Lets start by creating a collector configuration file as described in the <a target="_blank" rel="noopener"
                 href="https://opentelemetry.io/docs/collector/configuration/">documentation</a>
             <pre><code class="yaml">
-# confs/otel-collector-config.yaml
+# file: confs/otel-collector-config.yaml
 
 # (1) Receivers
 receivers:
@@ -553,6 +565,8 @@ service:
             Neverthless it would not hurt knowing how to set them up for yourself. Here we will use
             docker/docker-compose to run these;
             <pre><code class="yaml">
+# file: docker-compose.yaml
+
 version: '3.3'
 services:
 
@@ -598,9 +612,21 @@ services:
 networks:
     my_net: null                
             </code></pre>
+            We start <i>jaeger</i>, which is a is a distributed tracing system, listening on port <i>14250</i> inside
+            the container and also expose the running service onto the host at the same port.
+
+
 
             <pre><code class="yaml">
-TODO: prometheus conf.
+# file: confs/prometheus-config.yaml
+
+global:
+  evaluation_interval: 30s
+  scrape_interval: 5s
+scrape_configs:
+- job_name: 'collector'
+    static_configs:
+    - targets: ['otel_collector:9464'] 
             </code></pre>
 
 
