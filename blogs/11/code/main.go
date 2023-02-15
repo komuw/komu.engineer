@@ -4,6 +4,14 @@ import (
 	"context"
 	"fmt"
 	"net/http"
+
+	"go.opentelemetry.io/contrib/instrumentation/net/http/otelhttp"
+	"go.opentelemetry.io/otel"
+	"go.opentelemetry.io/otel/attribute"
+	"go.opentelemetry.io/otel/metric"
+	"go.opentelemetry.io/otel/metric/global"
+	"go.opentelemetry.io/otel/metric/instrument"
+	"go.opentelemetry.io/otel/trace"
 )
 
 const serviceName = "AdderSvc"
@@ -32,8 +40,9 @@ func main() {
 func serviceA(ctx context.Context, port int) {
 	mux := http.NewServeMux()
 	mux.HandleFunc("/serviceA", serviceA_HttpHandler)
+	handler := otelhttp.NewHandler(mux, "server.http")
 	serverPort := fmt.Sprintf(":%d", port)
-	server := &http.Server{Addr: serverPort, Handler: mux}
+	server := &http.Server{Addr: serverPort, Handler: handler}
 
 	fmt.Println("serviceA listening on", server.Addr)
 	if err := server.ListenAndServe(); err != nil {
@@ -42,7 +51,9 @@ func serviceA(ctx context.Context, port int) {
 }
 
 func serviceA_HttpHandler(w http.ResponseWriter, r *http.Request) {
-	cli := &http.Client{}
+	cli := &http.Client{
+		Transport: otelhttp.NewTransport(http.DefaultTransport),
+	}
 	req, err := http.NewRequestWithContext(r.Context(), http.MethodGet, "http://localhost:8082/serviceB", nil)
 	if err != nil {
 		panic(err)
@@ -58,8 +69,9 @@ func serviceA_HttpHandler(w http.ResponseWriter, r *http.Request) {
 func serviceB(ctx context.Context, port int) {
 	mux := http.NewServeMux()
 	mux.HandleFunc("/serviceB", serviceB_HttpHandler)
+	handler := otelhttp.NewHandler(mux, "server.http")
 	serverPort := fmt.Sprintf(":%d", port)
-	server := &http.Server{Addr: serverPort, Handler: mux}
+	server := &http.Server{Addr: serverPort, Handler: handler}
 
 	fmt.Println("serviceB listening on", server.Addr)
 	if err := server.ListenAndServe(); err != nil {

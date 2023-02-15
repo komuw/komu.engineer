@@ -647,7 +647,78 @@ scrape_configs:
 docker-compose up --build --detach
 go run ./...
             </code></pre>
+            This is well and good but our application code is not yet instrumented to emit any telemetry(logs, traces &
+            metrics). That is what we are going to do next.
 
+            </br></br>
+            <strong id="Instrumentation">Instrumentation</strong></br>
+            There are a couple of changes we need to make;
+            <ol>
+                <li>Use a http middleware that will add traces to our http handlers.</li>
+                <li>Use a <i>http.RoundTripper</i> that will add traces to http requests.</li>
+                <li>Create trace spans in relevant places in our code.</li>
+                <li>Emit metrics in relevant places in our code.</li>
+                <li>Emit logs in relevant places in our code.</li>
+            </ol>
+            The diff to implement (1) and (2) is(don't worry if you do not like diffs, the full code will be linked to
+            at the end);
+            <pre><code class="diff">
+diff --git a/main.go b/main.go
+index c0fb2d5..c6a9ee2 100644
+--- a/main.go
++++ b/main.go
+@@ -4,6 +4,14 @@ import (
+        "context"
+        "fmt"
+        "net/http"
++
++	"go.opentelemetry.io/contrib/instrumentation/net/http/otelhttp"
++	"go.opentelemetry.io/otel"
++	"go.opentelemetry.io/otel/attribute"
++	"go.opentelemetry.io/otel/metric"
++	"go.opentelemetry.io/otel/metric/global"
++	"go.opentelemetry.io/otel/metric/instrument"
++	"go.opentelemetry.io/otel/trace"
+    )
+    
+    const serviceName = "AdderSvc"
+@@ -32,8 +40,9 @@ func main() {
+    func serviceA(ctx context.Context, port int) {
+        mux := http.NewServeMux()
+        mux.HandleFunc("/serviceA", serviceA_HttpHandler)
++	handler := otelhttp.NewHandler(mux, "server.http")
+        serverPort := fmt.Sprintf(":%d", port)
+-	server := &http.Server{Addr: serverPort, Handler: mux}
++	server := &http.Server{Addr: serverPort, Handler: handler}
+    
+        fmt.Println("serviceA listening on", server.Addr)
+        if err := server.ListenAndServe(); err != nil {
+@@ -42,7 +51,9 @@ func serviceA(ctx context.Context, port int) {
+    }
+    
+    func serviceA_HttpHandler(w http.ResponseWriter, r *http.Request) {
+-	cli := &http.Client{}
++	cli := &http.Client{
++		Transport: otelhttp.NewTransport(http.DefaultTransport),
++	}
+        req, err := http.NewRequestWithContext(r.Context(), http.MethodGet, "http://localhost:8082/serviceB", nil)
+        if err != nil {
+            panic(err)
+@@ -58,8 +69,9 @@ func serviceA_HttpHandler(w http.ResponseWriter, r *http.Request) {
+    func serviceB(ctx context.Context, port int) {
+        mux := http.NewServeMux()
+        mux.HandleFunc("/serviceB", serviceB_HttpHandler)
++	handler := otelhttp.NewHandler(mux, "server.http")
+        serverPort := fmt.Sprintf(":%d", port)
+-	server := &http.Server{Addr: serverPort, Handler: mux}
++	server := &http.Server{Addr: serverPort, Handler: handler}
+    
+        fmt.Println("serviceB listening on", server.Addr)
+        if err := server.ListenAndServe(); err != nil {
+@@ -73,4 +85,38 @@ func serviceB_HttpHandler(w http.ResponseWriter, r *http.Request) {
+        fmt.Fprintf(w, "hello from serviceB: Answer is: %d", answer)
+    }                
+            </code></pre>
 
 
 
