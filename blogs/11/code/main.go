@@ -118,7 +118,7 @@ func add(ctx context.Context, x, y int64) int64 {
 	)
 
 	log := NewLogrus(ctx)
-	log.Info("add_called", "logger", "logrus")
+	log.Info("add_called")
 
 	return x + y
 }
