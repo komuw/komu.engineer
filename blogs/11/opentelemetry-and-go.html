@@ -786,6 +786,13 @@ index 349bc6e..868c380 100644
 +	return x + y
 +}                
             </code></pre>
+            With that, we are in business. Let's run all the things and send some requests;
+            <pre><code class="sh">
+docker-compose up --build --detach
+go run ./... &
+curl -vkL http://127.0.0.1:8081/serviceA
+            </code></pre>
+
 
 
 
