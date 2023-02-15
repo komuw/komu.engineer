@@ -46,7 +46,7 @@
                 </br>
                 <strong>The complete guide to OpenTelemetry and Golang. (17 Feb 2023)</strong>
                 </br></br>
-                This guide should take you from zero to production.</br>
+                This guide should take you from zero to production.</br></br>
                 <a target="_blank" rel="noopener" href="https://opentelemetry.io/">OpenTelemetry(OTLP)</a> is a
                 collection of
                 tools that can be used to instrument, collect, and export telemetry(metrics, logs, & traces). That
@@ -60,12 +60,15 @@
                 <li>Our application should be able to propagate traces between different services.</li>
                 <li>Telemetry should be collected in a secure, perfomant & scalable manner.</li>
             </ul>
+            I have previously written about how you can implement <a target="_blank" rel="noopener"
+                href="https://www.komu.engineer/blogs/09/log-without-losing-context">logging without losing money</a>,
+            this blogpost kind of completes the triad of observability.</br></br>
 
             <strong id="Our application">Our application</strong></br>
-            The application consists of two services(micro-services if you like); serviceA and serviceB. Customers
-            send requests to serviceA, which in turn calls serviceB. </br>
-            serviceB adds two numbers and returns the result inside the <i>SVC-RESPONSE</i> http header. serviceA echos
-            back that header to the client/customer.
+            The application consists of two services; serviceA and serviceB. Customers send requests to serviceA, which
+            in turn calls serviceB. </br>
+            When called, serviceB adds two numbers and then returns the result as part of the <i>SVC-RESPONSE</i> http
+            header. ServiceA echos back that header to the customer/client.
             <pre><code class="go">
 // file: main.go
 
@@ -227,30 +230,33 @@ func getTls() (*tls.Config, error) {
 }                
             </code></pre>
             There's a lot going on here so lets break it down.</br>
-            We create and exporter using <i>otlptracegrpc.New()</i>. An exporter creates trace data in the OTLP wire
+            We create an exporter using <i>otlptracegrpc.New()</i>. An exporter creates trace data in the OTLP wire
             format. The one we are using here is backed by GRPC, you can also use other exporters backed with other
             transport mechanisms like http etc.</br>
             That exporter will be sending trace data to a 'thing' listening on <i>localhost:4317</i> and for security
             purposes it is going to authenticate to that 'thing' using mutual TLS. That 'thing' is called a collector,
             and we'll talk about it soon.</br>
-            Next, we create a provider with <i>trace.NewTracerProvider()</i>.
-            For purposes of scalability, cost, and the like; we have configured the provider to batch trace data and
-            also to sample it at a rate of 60%. You can vary this parameters based on your own usecases and specific
+            Next, we create a provider with <i>trace.NewTracerProvider()</i>. A provider creates spans containing more
+            information about what is happening for a given operation. For purposes of scalability, cost, and the like;
+            we have configured the provider to batch trace data and
+            also to sample at a rate of 60%. You can vary this parameters based on your own usecases and specific
             requirements.</br>
             Finally, we set a propagator with <i>otel.SetTextMapPropagator()</i>. Propagation is the mechanism by which
             a trace can be disseminated/communicated from one service to another across transport boundaries. In our
             example, we have two services <i>serviceA & serviceB</i>, these can be running in two different computers or
-            even two different geographical regions. But it is still useful to be able to correlate traces across the
+            even two different geographical regions. It is useful to be able to correlate traces across the
             two services since they 'talk' to each other. In our case, we are using <i>propagation.TraceContext{}</i>
             which is based on the <a target="_blank" rel="noopener" href="https://www.w3.org/TR/trace-context/">W3C
                 Trace Context standard.</a> There are <a target="_blank" rel="noopener"
                 href="https://opentelemetry.io/docs/reference/specification/context/api-propagators/#propagators-distribution">other
-                propators</a> that you can use.</br>
-            We need to generate the tls certificates that we are using for authentication. You can generate the
+                propators</a> that you can use if trace-context is not your preference.</br></br>
+
+            We need to generate the tls certificates that will be used for authentication. You can generate the
             certificates in various ways, <a target="_blank" rel="noopener"
                 href="https://github.com/komuw/komu.engineer/blob/master/blogs/11/code/confs/certs.sh">here's the
                 script</a> that I used for this blogpost.</br></br>
-            Let's setup the main func to start tracing.
+
+            Finally, let's setup the main func to start tracing.
             <pre><code class="go">
 // file: main.go
 
@@ -270,20 +276,20 @@ func main() {
     serviceB(ctx, 8082)
 }       
             </code></pre>
-            If we run our app, it will still work
+            If we run our app, it still works
             <pre><code class="go">
 go run -race ./... && curl -I http://127.0.0.1:8081/serviceA
 
 Svc-Response: 1855
             </code></pre>
-            Our app is ready to collect traces, but we have not yet setup the 'thing'/collector that will receive the
+            The app is ready to collect traces, but we have not yet setup the collector that will receive the
             traces at
             <i>localhost:4317</i></br>
             We will do that eventually, but first lets look at;
 
             </br></br>
             <strong id="Metrics">Metrics</strong></br>
-            Let's add Metric support.
+            The code to add metric support is almost similar.
             <pre><code class="go">
 // file: metrics.go
 
@@ -340,7 +346,7 @@ func setupMetrics(ctx context.Context, serviceName string) (*sdkmetric.MeterProv
     return mp, nil
 }                
             </code></pre>
-            The code here is line-for-line almost similar to the previous code for tracing, so I'll not spend anytime
+            That code is almost line-for-line similar to the previous code for tracing, so I'll not spend anytime
             explaining it.
             Let's setup the main func to setup metrics.
             <pre><code class="go">
@@ -361,8 +367,9 @@ func main() {
 
             </br></br>
             <strong id="Logs">Logs</strong></br>
-            The so-called third pillar of telemetry. In our case we are going to use <a target="_blank" rel="noopener"
-                href="https://github.com/sirupsen/logrus">logrus</a>, but this technique can be applied to many other
+            They are the so-called third pillar of telemetry. In our case we are going to use <a target="_blank"
+                rel="noopener" href="https://github.com/sirupsen/logrus">logrus</a>, but this technique can be applied
+            to many other
             logging libraries. Indeed, here is the same technique applied to <a target="_blank" rel="noopener"
                 href="https://github.com/komuw/otero/blob/v0.0.1/log/zerolog.go">zerolog</a> and to <a target="_blank"
                 rel="noopener"
@@ -461,9 +468,9 @@ func (t logrusTraceHook) Fire(entry *logrus.Entry) error {
                 href="https://opentelemetry.io/docs/collector/">collector</a> is a vendor-agnostic way to receive,
             process and export telemetry data. It removes the need to run, operate, and maintain multiple
             agents/collectors. This is one of the great benefits of opentelemetry, you do not have to install multiple
-            client libraries or agents(jaeger, prometheus, datadog, honeycomb, grafana, whoever, whatever). You just use
-            the opentelemetry library for your chosen language(in our case Go) and also use one opentelemetry
-            collector/agent. Then that collector can 'fan-out' to
+            client libraries or agents(jaeger, prometheus, datadog, honeycomb, grafana, whoever, whatever).</br>
+            You just use the opentelemetry library for your chosen language(in our case Go) and also use one
+            opentelemetry collector/agent. Then that collector can 'fan-out' to
             jaeger/prometheus/datadog/honeycomb/grafana/stdOut/whoever/whatever.</br>
             The Collector is a process/agent/server that you run on your own computer that does 3 main things:</br>
             <ol>
@@ -527,9 +534,9 @@ service:
       processors: [memory_limiter, batch]
       exporters: [logging]
             </code></pre>
-            We have defined to have the OpenTelemetry collector to listen/run on <i>localhost</i> port <i>4317</i>. The
-            collector will be authenticated using mutual TLS, and we configure the same TLS as we had configured for
-            both the tracing & metrics Go code. Remember the openssl commands that we used to generate TLS certificates
+            We have defined the OpenTelemetry collector to listen/run on <i>localhost</i> port <i>4317</i>. The
+            collector will authenticate using mutual TLS, and we configure the same TLS as we had configured for
+            both the tracing & metrics Go code. The script that we used to generate TLS certificates
             can be found <a target="_blank" rel="noopener"
                 href="https://github.com/komuw/komu.engineer/blob/master/blogs/11/code/confs/certs.sh">here.</a>
             All our telemetry data will be sent to the OpenTelemetry collector's receiver that is running on
@@ -537,11 +544,11 @@ service:
             Next we have configured two data processors, <i>memory_limiter</i> & <i>batch</i> processor. The <a
                 target="_blank" rel="noopener"
                 href="https://github.com/open-telemetry/opentelemetry-collector/blob/v0.71.0/processor/memorylimiterprocessor/README.md">memory
-                limiter</a> is used to prevent out of memory situations on the collector. Whereas the <a target="_blank"
+                limiter</a> is used to prevent out of memory situations on the collector, whereas the <a target="_blank"
                 rel="noopener"
                 href="https://github.com/open-telemetry/opentelemetry-collector/blob/main/processor/batchprocessor/README.md">batch
                 processor</a> places telemetry data into batches thus reducing transmission load.</br>
-            After that, we configure our exporters. Here we have configured a logging (aka <i>stdOut</i>) processor.
+            After that, we configure exporters. Here we have configured a logging (aka <i>stdOut</i>) processor.
             Using this, the collector will send the collected telemetry data to stdOut/stderr. This can be useful when
             you are developing locally or for debugging purposes. Remember to turn it off in production/live
             settings.</br>
@@ -556,14 +563,14 @@ service:
 
 
             </br></br>
-            <strong id="docker services">docker services</strong></br>
+            <strong id="docker services">collector, prometheus, jaeger</strong></br>
             We have talked about the collector, prometheus, jaeger & stdOut/logging. We need to run these services so
             that our Go code can talk to them. In most cases you may not have to run these services, it may well be the
             case that in production/live circumstance; someone else is running these on your behalf. There are a lot of
-            companies(SaaS & otherwise) out there that offer paid versions of these, some even with very generous fee
-            tiers. It might make a lot of sense to use those services where/if you can.</br>
-            Neverthless it would not hurt knowing how to set them up for yourself. Here we will use
-            docker/docker-compose to run these;
+            companies out there that offer paid versions of these, some even with very generous free tiers. It might
+            make a lot of sense to use those services if you can.</br>
+            Neverthless it would not hurt knowing how to set them up for yourself. We'll use docker/docker-compose to
+            run these;
             <pre><code class="yaml">
 # file: docker-compose.yaml
 
@@ -616,7 +623,7 @@ networks:
             expose the same port on the host machine. This is the same port we have set in the
             <i>confs/otel-collector-config.yaml</i> file as the receiver. We also add in the certificates needed for
             mutual TLS from the host to the container. The port <i>9464</i> is where the collector exposes prometheus
-            format metrics. You can then have your prometheus scrape that port, as we will later on.</br>
+            format metrics. You can then have prometheus scrape that port, as we will.</br>
             We start <a target="_blank" rel="noopener" href="https://www.jaegertracing.io">jaeger</a>, which is a is a
             distributed tracing system, listening on port <i>14250</i> inside
             the container and also expose the running service onto the host at the same port. Remember in the
@@ -626,7 +633,7 @@ networks:
             blogpost.</br>
             We also start <i>prometheus</i>, which is a metrics system. The way prometheus <a target="_blank"
                 rel="noopener" href="https://prometheus.io/docs/introduction/overview/#architecture">primarily works</a>
-            by scraping metrics from instrumented services. This is to say; your service does not send metrics to
+            is by scraping metrics from instrumented services. This is to say; your service does not send metrics to
             prometheus, instead, prometheus pulls metrics from your service. So the port we have exposed here
             <i>9090</i> is the port that we can access on the browser and use it to query for metrics. Since prometheus
             scrapes metrics, we need to tell it from where to scrape for metrics. We do that using a configuration file,
@@ -798,11 +805,12 @@ curl -vkL http://127.0.0.1:8081/serviceA
             <img src="./imgs/web-traces-three.png" alt="image showing sample trace telemetry"></br>
 
             As you can see the traces are recorded and more importantly, the logs emitted by the logger are also added
-            in as trace span events. If you look at the logs emitted by the logger in stdOut;
+            in as trace span events.</br>
+            If you look at the logs emitted by the logger in stdOut;
             <pre><code class="sh">
 INFO[0004] add_called traceId=68d7a4ea8cdaadb7309eebf0fd41037a spanId=c3cf045f0f8ee0f2 
             </code></pre>
-            We can also see that trace <i>spanId</i> & <i>traceId</i> have been added to the logs.</br>
+            We can also see that <i>spanId</i> & <i>traceId</i> from traces have been added to the logs.</br>
             It is now very easy to correlate logs and their corresponding traces.</br></br>
 
             Additionally, if you navigate to the <i>prometheus</i> port that is used to query traces; <a target="_blank"
@@ -815,7 +823,7 @@ INFO[0004] add_called traceId=68d7a4ea8cdaadb7309eebf0fd41037a spanId=c3cf045f0f
             There's only one thing left. As things stand, it is very easy to correlate logs and traces; this is because
             they share <i>traceId's and spanId's</i>. However it is still not that easy to correlate metrics with either
             logs or traces. Let's fix that. You can do that by making sure that you use the same set of attributes when
-            starting a span, when taking metrics and when emitting logs. ie, something along the lines of;
+            starting a span, when taking metrics and when emitting logs. Something along the lines of;
             <pre><code class="go">
 ctx, span := otel.Tracer("myTracer").Start(ctx, "add",
     trace.WithAttributes(attribute.String("component", "addition")),
@@ -833,10 +841,9 @@ log := NewLogrus(ctx).WithFields(logrus.Fields{
 })
             </code></pre>
 
-            </br></br>
+            </br>
             <strong id="Conclusion">Conclusion</strong></br>
-
-
+            We have been able to instrument the application so that it emits all the necessary telemetry data.</br>
             All the code in this blogpost, including the full source code, can be found at: <a target="_blank"
                 rel="noopener" href="https://github.com/komuw/komu.engineer/tree/master/blogs/11">this
                 link</a></br></br>
