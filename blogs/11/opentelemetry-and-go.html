@@ -642,6 +642,11 @@ scrape_configs:
     static_configs:
     - targets: ['otel_collector:9464'] 
             </code></pre>
+            We can now start all the docker services and also the application.
+            <pre><code class="sh">
+docker-compose up --build --detach
+go run ./...
+            </code></pre>
 
 
 
