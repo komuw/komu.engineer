@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"net/http"
 
+	"github.com/sirupsen/logrus"
 	"go.opentelemetry.io/contrib/instrumentation/net/http/otelhttp"
 	"go.opentelemetry.io/otel"
 	"go.opentelemetry.io/otel/attribute"
@@ -98,6 +99,7 @@ func add(ctx context.Context, x, y int64) int64 {
 		// add labels/tags/resources(if any) that are specific to this scope.
 		trace.WithAttributes(attribute.String("component", "addition")),
 		trace.WithAttributes(attribute.String("someKey", "someValue")),
+		trace.WithAttributes(attribute.Int("age", 89)),
 	)
 	defer span.End()
 
@@ -115,9 +117,13 @@ func add(ctx context.Context, x, y int64) int64 {
 		1,
 		// labels/tags
 		attribute.String("component", "addition"),
+		attribute.Int("age", 89),
 	)
 
-	log := NewLogrus(ctx)
+	log := NewLogrus(ctx).WithFields(logrus.Fields{
+		"component": "addition",
+		"age":       89,
+	})
 	log.Info("add_called")
 
 	return x + y

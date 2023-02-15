@@ -814,7 +814,25 @@ INFO[0004] add_called traceId=68d7a4ea8cdaadb7309eebf0fd41037a spanId=c3cf045f0f
 
             There's only one thing left. As things stand, it is very easy to correlate logs and traces; this is because
             they share <i>traceId's and spanId's</i>. However it is still not that easy to correlate metrics with either
-            logs or traces. Let's try and remedy that.
+            logs or traces. Let's fix that. You can do that by making sure that you use the same set of attributes when
+            starting a span, when taking metrics and when emitting logs. ie, something along the lines of;
+            <pre><code class="go">
+ctx, span := otel.Tracer("myTracer").Start(ctx, "add",
+    trace.WithAttributes(attribute.String("component", "addition")),
+    trace.WithAttributes(attribute.Int("age", 89)),
+)
+
+counter.Add(ctx, 1,
+    attribute.String("component", "addition"),
+    attribute.Int("age", 89),
+)
+
+log := NewLogrus(ctx).WithFields(logrus.Fields{
+    "component": "addition",
+    "age":       89,
+})
+            </code></pre>
+
 
 
 
