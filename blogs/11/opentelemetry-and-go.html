@@ -678,7 +678,6 @@ index c0fb2d5..c6a9ee2 100644
 +	"go.opentelemetry.io/otel/metric"
 +	"go.opentelemetry.io/otel/metric/global"
 +	"go.opentelemetry.io/otel/metric/instrument"
-+	"go.opentelemetry.io/otel/trace"
     )
     
     const serviceName = "AdderSvc"
@@ -759,8 +758,8 @@ index 349bc6e..868c380 100644
 +		ctx,
 +		"add",
 +		// add labels/tags/resources(if any) that are specific to this scope.
-+		trace.WithAttributes(attribute.String("component", "addition")),
-+		trace.WithAttributes(attribute.String("someKey", "someValue")),
++		attribute.String("component", "addition"),
++		attribute.String("someKey", "someValue"),
 +	)
 +	defer span.End()
 +

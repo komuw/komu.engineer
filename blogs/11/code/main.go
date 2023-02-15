@@ -11,7 +11,6 @@ import (
 	"go.opentelemetry.io/otel/metric"
 	"go.opentelemetry.io/otel/metric/global"
 	"go.opentelemetry.io/otel/metric/instrument"
-	"go.opentelemetry.io/otel/trace"
 )
 
 const serviceName = "AdderSvc"
@@ -96,8 +95,8 @@ func add(ctx context.Context, x, y int64) int64 {
 		ctx,
 		"add",
 		// add labels/tags/resources(if any) that are specific to this scope.
-		trace.WithAttributes(attribute.String("component", "addition")),
-		trace.WithAttributes(attribute.String("someKey", "someValue")),
+		attribute.String("component", "addition"),
+		attribute.String("someKey", "someValue"),
 	)
 	defer span.End()
 
