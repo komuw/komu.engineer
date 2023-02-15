@@ -114,7 +114,7 @@ func add(ctx context.Context, x, y int64) int64 {
 		ctx,
 		1,
 		// labels/tags
-		[]attribute.KeyValue{attribute.String("component", "addition")}...,
+		attribute.String("component", "addition"),
 	)
 
 	log := NewLogrus(ctx)
