@@ -41,4 +41,4 @@ services:
       - my_net
 
 networks:
-  my_net: null
+  my_net:

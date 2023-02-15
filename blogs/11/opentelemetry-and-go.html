@@ -610,10 +610,24 @@ services:
         - my_net
 
 networks:
-    my_net: null                
+    my_net:                
             </code></pre>
-            We start <i>jaeger</i>, which is a is a distributed tracing system, listening on port <i>14250</i> inside
-            the container and also expose the running service onto the host at the same port.
+            We start <a target="_blank" rel="noopener" href="https://www.jaegertracing.io">jaeger</a>, which is a is a
+            distributed tracing system, listening on port <i>14250</i> inside
+            the container and also expose the running service onto the host at the same port. Remember in the
+            <i>confs/otel-collector-config.yaml</i> file we have setup OpenTelemetry collector to export tracing
+            telemetry(traces) to jaeger on port <i>14250</i>. We also expose jaeger port <i>16686</i>, this is the port
+            that we can access on the browser and use it to query for traces; we will be using that port later on in the
+            blogpost.</br>
+            We also start <i>prometheus</i>, which is a metrics system. The way prometheus <a target="_blank"
+                rel="noopener" href="https://prometheus.io/docs/introduction/overview/#architecture">primarily works</a>
+            by scraping metrics from instrumented services. This is to say; your service does not send metrics to
+            prometheus, instead, prometheus pulls metrics from your service. So the port we have exposed here
+            <i>9090</i> is the port that we can access on the browser and use it to query for metrics. Since prometheus
+            scrapes metrics, we need to tell it from where to scrape for metrics.
+            </br>
+
+
 
 
 
