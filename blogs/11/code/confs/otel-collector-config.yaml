@@ -1,0 +1,50 @@
+# otel collector config: https://opentelemetry.io/docs/collector/configuration/
+
+# (1) Receivers
+receivers:
+  otlp:
+    protocols:
+      grpc:
+        endpoint: 0.0.0.0:4317 # It is important that we do not use localhost
+        tls:
+          cert_file: /etc/tls/server.crt
+          key_file: /etc/tls/server.key
+          ca_file: /etc/tls/rootCA.crt
+          client_ca_file: /etc/tls/rootCA.crt
+
+# (2) Processors
+processors:
+  memory_limiter:
+    limit_percentage: 50
+    check_interval: 1s
+    spike_limit_percentage: 30
+  batch:
+    send_batch_size: 8192
+
+# (3) Exporters
+exporters:
+  logging: # aka, stdOut/stdErr
+  jaeger:
+    endpoint: jaeger:14250
+    tls:
+      insecure: true
+  prometheus:
+    endpoint: otel_collector:9464
+
+
+# (4) Service
+service:
+  # A pipeline consists of a set of receivers, processors and exporters.
+  pipelines:
+    traces:
+      receivers: [otlp]
+      processors: [memory_limiter, batch]
+      exporters: [logging, jaeger]
+    metrics:
+      receivers: [otlp]
+      processors: [memory_limiter, batch]
+      exporters: [logging, prometheus]
+    logs:
+      receivers: [otlp]
+      processors: [memory_limiter, batch]
+      exporters: [logging]

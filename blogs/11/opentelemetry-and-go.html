@@ -1,0 +1,850 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>The complete guide to OpenTelemetry and Golang.</title>
+    <meta name="description" content="The complete guide to OpenTelemetry and Golang." />
+    <meta property="og:url" content="https://www.komu.engineer/blog" />
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ADD FAVICON -->
+
+    <link rel="stylesheet" href="../../site.css">
+
+    <!-- Get highlightjs by going to https://highlightjs.org/download/, select the languages you want and download. -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/styles/default.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/highlight.min.js"></script>
+    <script>hljs.highlightAll();</script>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <a href="https://www.komu.engineer">Home</a>&nbsp;&nbsp;
+            <a href="https://www.komu.engineer/about">About Me</a>&nbsp;&nbsp;
+            <a href="https://www.komu.engineer/blog">Blog</a>&nbsp;&nbsp;
+        </div>
+        <div class="left-sidebar">
+            .
+        </div>
+        <div class="right-sidebar">
+            .
+        </div>
+
+        <div class="main">
+            <p>
+                </br>
+                <strong>The complete guide to OpenTelemetry and Golang. (17 Feb 2023)</strong>
+                </br></br>
+                This guide should take you from zero to production.</br>
+                <a target="_blank" rel="noopener" href="https://opentelemetry.io/">OpenTelemetry(OTLP)</a> is a
+                collection of
+                tools that can be used to instrument, collect, and export telemetry(metrics, logs, & traces). That
+                telemetry data can help you analyze your software's behavior. </br>
+                At the end of this blogpost; </br>
+            <ul>
+                <li>Our application should be emitting logs, traces & metrics.</li>
+                <li>We should be able to correlate logs to their corresponding traces.</li>
+                <li>We should be able to correlate logs to their corresponding metrics.</li>
+                <li>We should be able to correlate traces to their corresponding metrics.</li>
+                <li>Our application should be able to propagate traces between different services.</li>
+                <li>Telemetry should be collected in a secure, perfomant & scalable manner.</li>
+            </ul>
+
+            <strong id="Our application">Our application</strong></br>
+            The application consists of two services(micro-services if you like); serviceA and serviceB. Customers
+            send requests to serviceA, which in turn calls serviceB. </br>
+            serviceB adds two numbers and returns the result inside the <i>SVC-RESPONSE</i> http header. serviceA echos
+            back that header to the client/customer.
+            <pre><code class="go">
+// file: main.go
+
+package main
+
+import (
+    "context"
+    "fmt"
+    "net/http"
+)
+
+func main() {
+    ctx := context.Background()
+    go serviceA(ctx, 8081)
+    serviceB(ctx, 8082)
+}
+
+func serviceA(ctx context.Context, port int) {
+    mux := http.NewServeMux()
+    mux.HandleFunc("/serviceA", serviceA_HttpHandler)
+    serverPort := fmt.Sprintf(":%d", port)
+    server := &http.Server{Addr: serverPort, Handler: mux}
+
+    fmt.Println("serviceA listening on", server.Addr)
+    if err := server.ListenAndServe(); err != nil {
+        panic(err)
+    }
+}
+
+func serviceA_HttpHandler(w http.ResponseWriter, r *http.Request) {
+    cli := &http.Client{}
+    req, err := http.NewRequestWithContext(r.Context(), http.MethodGet, "http://localhost:8082/serviceB", nil)
+    if err != nil {
+        panic(err)
+    }
+    resp, err := cli.Do(req)
+    if err != nil {
+        panic(err)
+    }
+
+    w.Header().Add("SVC-RESPONSE", resp.Header.Get("SVC-RESPONSE"))
+}
+
+func serviceB(ctx context.Context, port int) {
+    mux := http.NewServeMux()
+    mux.HandleFunc("/serviceB", serviceB_HttpHandler)
+    serverPort := fmt.Sprintf(":%d", port)
+    server := &http.Server{Addr: serverPort, Handler: mux}
+
+    fmt.Println("serviceB listening on", server.Addr)
+    if err := server.ListenAndServe(); err != nil {
+        panic(err)
+    }
+}
+
+func serviceB_HttpHandler(w http.ResponseWriter, r *http.Request) {
+    answer := add(r.Context(), 42, 1813)
+    w.Header().Add("SVC-RESPONSE", fmt.Sprint(answer))
+    fmt.Fprintf(w, "hello from serviceB: Answer is: %d", answer)
+}
+
+func add(ctx context.Context, x, y int64) int64 { return x + y }                
+            </code></pre>
+            If we call serviceA, we get back;
+            <pre><code class="go">
+curl -I http://127.0.0.1:8081/serviceA
+
+Svc-Response: 1855
+            </code></pre>
+            Perfect, everything is working.
+
+            </br></br>
+            <strong id="Tracing">Tracing</strong></br>
+            Let's add tracing support.
+            <pre><code class="go">
+// file: tracing.go
+
+package main
+
+import (
+    "context"
+    "crypto/tls"
+    "crypto/x509"
+    "os"
+
+    "go.opentelemetry.io/otel"
+    "go.opentelemetry.io/otel/attribute"
+    "go.opentelemetry.io/otel/exporters/otlp/otlptrace/otlptracegrpc"
+    "go.opentelemetry.io/otel/propagation"
+    "go.opentelemetry.io/otel/sdk/resource"
+    "go.opentelemetry.io/otel/sdk/trace"
+    semconv "go.opentelemetry.io/otel/semconv/v1.12.0"
+    "google.golang.org/grpc/credentials"
+)
+
+func setupTracing(ctx context.Context, serviceName string) (*trace.TracerProvider, error) {
+    c, err := getTls()
+    if err != nil {
+        return nil, err
+    }
+
+    exporter, err := otlptracegrpc.New(
+        ctx,
+        otlptracegrpc.WithEndpoint("localhost:4317"),
+        otlptracegrpc.WithTLSCredentials(
+            // mutual tls.
+            credentials.NewTLS(c),
+        ),
+    )
+    if err != nil {
+        return nil, err
+    }
+
+    // labels/tags/resources that are common to all traces.
+    resource := resource.NewWithAttributes(
+        semconv.SchemaURL,
+        semconv.ServiceNameKey.String(serviceName),
+        attribute.String("some-attribute", "some-value"),
+    )
+
+    provider := trace.NewTracerProvider(
+        trace.WithBatcher(exporter),
+        trace.WithResource(resource),
+        // set the sampling rate based on the parent span to 60%
+        trace.WithSampler(trace.ParentBased(trace.TraceIDRatioBased(0.6))),
+    )
+
+    otel.SetTracerProvider(provider)
+
+    otel.SetTextMapPropagator(
+        propagation.NewCompositeTextMapPropagator(
+            propagation.TraceContext{}, // W3C Trace Context format; https://www.w3.org/TR/trace-context/
+        ),
+    )
+
+    return provider, nil
+}
+
+// getTls returns a configuration that enables the use of mutual TLS.
+func getTls() (*tls.Config, error) {
+    clientAuth, err := tls.LoadX509KeyPair("./confs/client.crt", "./confs/client.key")
+    if err != nil {
+        return nil, err
+    }
+
+    caCert, err := os.ReadFile("./confs/rootCA.crt")
+    if err != nil {
+        return nil, err
+    }
+    caCertPool := x509.NewCertPool()
+    caCertPool.AppendCertsFromPEM(caCert)
+
+    c := &tls.Config{
+        RootCAs:      caCertPool,
+        Certificates: []tls.Certificate{clientAuth},
+    }
+
+    return c, nil
+}                
+            </code></pre>
+            There's a lot going on here so lets break it down.</br>
+            We create and exporter using <i>otlptracegrpc.New()</i>. An exporter creates trace data in the OTLP wire
+            format. The one we are using here is backed by GRPC, you can also use other exporters backed with other
+            transport mechanisms like http etc.</br>
+            That exporter will be sending trace data to a 'thing' listening on <i>localhost:4317</i> and for security
+            purposes it is going to authenticate to that 'thing' using mutual TLS. That 'thing' is called a collector,
+            and we'll talk about it soon.</br>
+            Next, we create a provider with <i>trace.NewTracerProvider()</i>.
+            For purposes of scalability, cost, and the like; we have configured the provider to batch trace data and
+            also to sample it at a rate of 60%. You can vary this parameters based on your own usecases and specific
+            requirements.</br>
+            Finally, we set a propagator with <i>otel.SetTextMapPropagator()</i>. Propagation is the mechanism by which
+            a trace can be disseminated/communicated from one service to another across transport boundaries. In our
+            example, we have two services <i>serviceA & serviceB</i>, these can be running in two different computers or
+            even two different geographical regions. But it is still useful to be able to correlate traces across the
+            two services since they 'talk' to each other. In our case, we are using <i>propagation.TraceContext{}</i>
+            which is based on the <a target="_blank" rel="noopener" href="https://www.w3.org/TR/trace-context/">W3C
+                Trace Context standard.</a> There are <a target="_blank" rel="noopener"
+                href="https://opentelemetry.io/docs/reference/specification/context/api-propagators/#propagators-distribution">other
+                propators</a> that you can use.</br>
+            We need to generate the tls certificates that we are using for authentication. You can generate the
+            certificates in various ways, <a target="_blank" rel="noopener"
+                href="https://github.com/komuw/komu.engineer/blob/otel-and-go/blogs/11/code/confs/certs.sh">here's the
+                script</a> that I used for this blogpost.</br></br>
+            Let's setup the main func to start tracing.
+            <pre><code class="go">
+// file: main.go
+
+const serviceName = "AdderSvc"
+
+func main() {
+    ctx := context.Background()
+    {
+        tp, err := setupTracing(ctx, serviceName)
+        if err != nil {
+            panic(err)
+        }
+        defer tp.Shutdown(ctx)
+    }
+
+    go serviceA(ctx, 8081)
+    serviceB(ctx, 8082)
+}       
+            </code></pre>
+            If we run our app, it will still work
+            <pre><code class="go">
+go run -race ./... && curl -I http://127.0.0.1:8081/serviceA
+
+Svc-Response: 1855
+            </code></pre>
+            Our app is ready to collect traces, but we have not yet setup the 'thing'/collector that will receive the
+            traces at
+            <i>localhost:4317</i></br>
+            We will do that eventually, but first lets look at;
+
+            </br></br>
+            <strong id="Metrics">Metrics</strong></br>
+            Let's add Metric support.
+            <pre><code class="go">
+// file: metrics.go
+
+package main
+
+import (
+    "context"
+    "time"
+
+    "go.opentelemetry.io/otel/attribute"
+    "go.opentelemetry.io/otel/exporters/otlp/otlpmetric/otlpmetricgrpc"
+    "go.opentelemetry.io/otel/metric/global"
+    sdkmetric "go.opentelemetry.io/otel/sdk/metric"
+    "go.opentelemetry.io/otel/sdk/resource"
+    semconv "go.opentelemetry.io/otel/semconv/v1.12.0"
+    "google.golang.org/grpc/credentials"
+)
+
+func setupMetrics(ctx context.Context, serviceName string) (*sdkmetric.MeterProvider, error) {
+    c, err := getTls()
+    if err != nil {
+        return nil, err
+    }
+
+    exporter, err := otlpmetricgrpc.New(
+        ctx,
+        otlpmetricgrpc.WithEndpoint("localhost:4317"),
+        otlpmetricgrpc.WithTLSCredentials(
+            // mutual tls.
+            credentials.NewTLS(c),
+        ),
+    )
+    if err != nil {
+        return nil, err
+    }
+
+    // labels/tags/resources that are common to all metrics.
+    resource := resource.NewWithAttributes(
+        semconv.SchemaURL,
+        semconv.ServiceNameKey.String(serviceName),
+        attribute.String("some-attribute", "some-value"),
+    )
+
+    mp := sdkmetric.NewMeterProvider(
+        sdkmetric.WithResource(resource),
+        sdkmetric.WithReader(
+            // collects and exports metric data every 30 seconds.
+            sdkmetric.NewPeriodicReader(exporter, sdkmetric.WithInterval(30*time.Second)),
+        ),
+    )
+
+    global.SetMeterProvider(mp)
+
+    return mp, nil
+}                
+            </code></pre>
+            The code here is line-for-line almost similar to the previous code for tracing, so I'll not spend anytime
+            explaining it.
+            Let's setup the main func to setup metrics.
+            <pre><code class="go">
+// file: main.go
+
+func main() {
+    {
+        // ... previous code here.
+        mp, err := setupMetrics(ctx, serviceName)
+        if err != nil {
+            panic(err)
+        }
+        defer mp.Shutdown(ctx)
+    }
+    // ... previous code here.
+}
+            </code></pre>
+
+            </br></br>
+            <strong id="Logs">Logs</strong></br>
+            The so-called third pillar of telemetry. In our case we are going to use <a target="_blank" rel="noopener"
+                href="https://github.com/sirupsen/logrus">logrus</a>, but this technique can be applied to many other
+            logging libraries. Indeed, here is the same technique applied to <a target="_blank" rel="noopener"
+                href="https://github.com/komuw/otero/blob/v0.0.1/log/zerolog.go">zerolog</a> and to <a target="_blank"
+                rel="noopener"
+                href="https://github.com/komuw/otero/blob/v0.0.1/log/slog.go">golang.org/x/exp/slog</a></br>
+            What we are going to do is create a logrus hook that will; (a) add TraceIds & spanIds to logs and (b) add
+            logs to the active span as span-events.
+            <pre><code class="go">
+// file: log.go
+
+package main
+
+import (
+    "context"
+
+    "github.com/sirupsen/logrus"
+    "go.opentelemetry.io/otel/attribute"
+    "go.opentelemetry.io/otel/codes"
+    "go.opentelemetry.io/otel/trace"
+)
+
+// usage:
+//
+//	ctx, span := tracer.Start(ctx, "myFuncName")
+//	l := NewLogrus(ctx)
+//	l.Info("hello world")
+func NewLogrus(ctx context.Context) *logrus.Entry {
+    l := logrus.New()
+    l.SetLevel(logrus.TraceLevel)
+    l.AddHook(logrusTraceHook{})
+    return l.WithContext(ctx)
+}
+
+// logrusTraceHook is a hook that;
+// (a) adds TraceIds & spanIds to logs of all LogLevels
+// (b) adds logs to the active span as events.
+type logrusTraceHook struct{}
+
+func (t logrusTraceHook) Levels() []logrus.Level { return logrus.AllLevels }
+
+func (t logrusTraceHook) Fire(entry *logrus.Entry) error {
+    ctx := entry.Context
+    if ctx == nil {
+        return nil
+    }
+    span := trace.SpanFromContext(ctx)
+    if !span.IsRecording() {
+        return nil
+    }
+
+    { // (a) adds TraceIds & spanIds to logs.
+        sCtx := span.SpanContext()
+        if sCtx.HasTraceID() {
+            entry.Data["traceId"] = sCtx.TraceID().String()
+        }
+        if sCtx.HasSpanID() {
+            entry.Data["spanId"] = sCtx.SpanID().String()
+        }
+    }
+
+    { // (b) adds logs to the active span as events.
+
+        // code from: https://github.com/uptrace/opentelemetry-go-extra/tree/main/otellogrus
+        // whose license(BSD 2-Clause) can be found at: https://github.com/uptrace/opentelemetry-go-extra/blob/v0.1.18/LICENSE
+        attrs := make([]attribute.KeyValue, 0)
+        logSeverityKey := attribute.Key("log.severity")
+        logMessageKey := attribute.Key("log.message")
+        attrs = append(attrs, logSeverityKey.String(entry.Level.String()))
+        attrs = append(attrs, logMessageKey.String(entry.Message))
+
+        span.AddEvent("log", trace.WithAttributes(attrs...))
+        if entry.Level <= logrus.ErrorLevel {
+            span.SetStatus(codes.Error, entry.Message)
+        }
+    }
+
+    return nil
+}                
+            </code></pre>
+            If you are not familiar with <a target="_blank" rel="noopener"
+                href="https://pkg.go.dev/github.com/sirupsen/logrus@v1.9.0#Hook">hooks in logrus</a>, they are pieces of
+            code(interfaces) that are called for each log event. You can create a hook to literally do almost anything
+            you want. In our case, this hook looks for any <i>traceId's & spanId's</i> from tracing and adds them to log
+            events. Additionally, it takes any log events and adds them to traces as <a target="_blank" rel="noopener"
+                href="https://opentelemetry.io/docs/concepts/signals/traces/#span-events">span event</a>. This enables
+            us to be able to correlate logs to their corresponding traces and vice versa. And as I said, this technique
+            can be applied to others like <i>zerolog</i> and <i>golang.org/x/exp/slog</i>, see <a target="_blank"
+                rel="noopener" href="https://github.com/komuw/otero/blob/v0.0.1/log/zerolog.go">here</a> and <a
+                target="_blank" rel="noopener" href="https://github.com/komuw/otero/blob/v0.0.1/log/slog.go">here</a>
+
+
+            </br></br>
+            <strong id="Collector">Collector</strong></br>
+            Both the tracing & metrics code we have written so far sends telemetry data to a 'thing' that we have
+            defined to listen on <i>localhost:4317</i></br>
+            That thing is an OpenTelemetry collector. A <a target="_blank" rel="noopener"
+                href="https://opentelemetry.io/docs/collector/">collector</a> is a vendor-agnostic way to receive,
+            process and export telemetry data. It removes the need to run, operate, and maintain multiple
+            agents/collectors. This is one of the great benefits of opentelemetry, you do not have to install multiple
+            client libraries or agents(jaeger, prometheus, datadog, honeycomb, grafana, whoever, whatever). You just use
+            the opentelemetry library for your chosen language(in our case Go) and also use one opentelemetry
+            collector/agent. Then that collector can 'fan-out' to
+            jaeger/prometheus/datadog/honeycomb/grafana/stdOut/whoever/whatever.</br>
+            The Collector is a process/agent/server that you run on your own computer that does 3 main things:</br>
+            <ol>
+                <li>Receives telemetry(logs,traces,metrics) data from the client libraries.</li>
+                <li>Optionally, pre-processes that data.</li>
+                <li>Exports that data to final destinations.</li>
+            </ol>
+            <img src="./imgs/trace-three.png" alt="image showing components of a collector"></br></br>
+
+            Lets start by creating a collector configuration file as described in the <a target="_blank" rel="noopener"
+                href="https://opentelemetry.io/docs/collector/configuration/">documentation</a>
+            <pre><code class="yaml">
+# file: confs/otel-collector-config.yaml
+
+# (1) Receivers
+receivers:
+  otlp:
+    protocols:
+      grpc:
+        endpoint: 0.0.0.0:4317 # It is important that we do not use localhost
+        tls:
+          cert_file: /etc/tls/server.crt
+          key_file: /etc/tls/server.key
+          ca_file: /etc/tls/rootCA.crt
+          client_ca_file: /etc/tls/rootCA.crt
+
+# (2) Processors
+processors:
+  memory_limiter:
+    limit_percentage: 50
+    check_interval: 1s
+    spike_limit_percentage: 30
+  batch:
+    send_batch_size: 8192
+
+# (3) Exporters
+exporters:
+  logging: # aka, stdOut/stdErr
+  jaeger:
+    endpoint: jaeger:14250
+    tls:
+      insecure: true
+  prometheus:
+    endpoint: otel_collector:9464
+
+
+# (4) Service
+service:
+  # A pipeline consists of a set of receivers, processors and exporters.
+  pipelines:
+    traces:
+      receivers: [otlp]
+      processors: [memory_limiter, batch]
+      exporters: [logging, jaeger]
+    metrics:
+      receivers: [otlp]
+      processors: [memory_limiter, batch]
+      exporters: [logging, prometheus]
+    logs:
+      receivers: [otlp]
+      processors: [memory_limiter, batch]
+      exporters: [logging]
+            </code></pre>
+            We have defined to have the OpenTelemetry collector to listen/run on <i>localhost</i> port <i>4317</i>. The
+            collector will be authenticated using mutual TLS, and we configure the same TLS as we had configured for
+            both the tracing & metrics Go code. Remember the openssl commands that we used to generate TLS certificates
+            can be found <a target="_blank" rel="noopener"
+                href="https://github.com/komuw/komu.engineer/blob/otel-and-go/blogs/11/code/confs/certs.sh">here.</a>
+            All our telemetry data will be sent to the OpenTelemetry collector's receiver that is running on
+            <i>localhost:4317</i></br>
+            Next we have configured two data processors, <i>memory_limiter</i> & <i>batch</i> processor. The <a
+                target="_blank" rel="noopener"
+                href="https://github.com/open-telemetry/opentelemetry-collector/blob/v0.71.0/processor/memorylimiterprocessor/README.md">memory
+                limiter</a> is used to prevent out of memory situations on the collector. Whereas the <a target="_blank"
+                rel="noopener"
+                href="https://github.com/open-telemetry/opentelemetry-collector/blob/main/processor/batchprocessor/README.md">batch
+                processor</a> places telemetry data into batches thus reducing transmission load.</br>
+            After that, we configure our exporters. Here we have configured a logging (aka <i>stdOut</i>) processor.
+            Using this, the collector will send the collected telemetry data to stdOut/stderr. This can be useful when
+            you are developing locally or for debugging purposes. Remember to turn it off in production/live
+            settings.</br>
+            We have also configured a <i>jaeger</i> exporter, the collector will send tracing data to <i>jaeger</i>
+            listening on <i>jaeger:14250</i>(we are not using <i>localhost</i> here since jaeger will be running in a
+            separate docker container, see next section)</br>
+            We have a <i>prometheus</i> exporter, the collector will setup an endpoint at <i>localhost:9464</i> and that
+            endpoint exposes prometheus format metrics. The endpoint can be scraped for prometheus style metrics.</br>
+            Finally, in the services section is where we orchestrate everything together. For example we are saying
+            that; traces will be recieved by the receiver called <i>otlp</i>, processed by both the <i>memory_limiter &
+                batch</i> processor and finally exported both to <i>stdout</i> & <i>jaeger.</i>
+
+
+            </br></br>
+            <strong id="docker services">docker services</strong></br>
+            We have talked about the collector, prometheus, jaeger & stdOut/logging. We need to run these services so
+            that our Go code can talk to them. In most cases you may not have to run these services, it may well be the
+            case that in production/live circumstance; someone else is running these on your behalf. There are a lot of
+            companies(SaaS & otherwise) out there that offer paid versions of these, some even with very generous fee
+            tiers. It might make a lot of sense to use those services where/if you can.</br>
+            Neverthless it would not hurt knowing how to set them up for yourself. Here we will use
+            docker/docker-compose to run these;
+            <pre><code class="yaml">
+# file: docker-compose.yaml
+
+version: '3.3'
+services:
+
+    # OpenTelemetry Collector
+    otel_collector:
+    image: otel/opentelemetry-collector-contrib:0.70.0
+    command: --config=/etc/otel-collector-config.yaml
+    volumes:
+        - ./confs/otel-collector-config.yaml:/etc/otel-collector-config.yaml
+        - ./confs/server.crt:/etc/tls/server.crt
+        - ./confs/server.key:/etc/tls/server.key
+        - ./confs/rootCA.crt:/etc/tls/rootCA.crt
+    ports:
+        - "4317:4317" # OTLP over gRPC receiver
+        - "9464:9464" # Prometheus exporter
+    depends_on:
+        - jaeger
+        - prometheus
+    networks:
+        - my_net
+
+    # Jaeger
+    jaeger:
+    image: jaegertracing/all-in-one:1.41.0
+    ports:
+        - "14250:14250" # Collector gRPC
+        - "16686:16686" # Web HTTP
+    networks:
+        - my_net
+
+    # Prometheus
+    prometheus:
+    image: prom/prometheus:v2.42.0
+    command:
+        - --config.file=/etc/prometheus/prometheus-config.yaml
+    volumes:
+        - ./confs/prometheus-config.yaml:/etc/prometheus/prometheus-config.yaml
+    ports:
+        - "9090:9090"
+    networks:
+        - my_net
+
+networks:
+    my_net:                
+            </code></pre>
+            We start the OpenTelemetry collector and have it running on port <i>4317</i> inside the container. We also
+            expose the same port on the host machine. This is the same port we have set in the
+            <i>confs/otel-collector-config.yaml</i> file as the receiver. We also add in the certificates needed for
+            mutual TLS from the host to the container. The port <i>9464</i> is where the collector exposes prometheus
+            format metrics. You can then have your prometheus scrape that port, as we will later on.</br>
+            We start <a target="_blank" rel="noopener" href="https://www.jaegertracing.io">jaeger</a>, which is a is a
+            distributed tracing system, listening on port <i>14250</i> inside
+            the container and also expose the running service onto the host at the same port. Remember in the
+            <i>confs/otel-collector-config.yaml</i> file we have setup OpenTelemetry collector to export tracing
+            telemetry(traces) to jaeger on port <i>14250</i>. We also expose jaeger port <i>16686</i>, this is the port
+            that we can access on the browser and use it to query for traces; we will be using that port later on in the
+            blogpost.</br>
+            We also start <i>prometheus</i>, which is a metrics system. The way prometheus <a target="_blank"
+                rel="noopener" href="https://prometheus.io/docs/introduction/overview/#architecture">primarily works</a>
+            by scraping metrics from instrumented services. This is to say; your service does not send metrics to
+            prometheus, instead, prometheus pulls metrics from your service. So the port we have exposed here
+            <i>9090</i> is the port that we can access on the browser and use it to query for metrics. Since prometheus
+            scrapes metrics, we need to tell it from where to scrape for metrics. We do that using a configuration file,
+            telling it to scrape from <i>otel_collector:9464</i>
+            <pre><code class="yaml">
+# file: confs/prometheus-config.yaml
+
+global:
+  evaluation_interval: 30s
+  scrape_interval: 5s
+scrape_configs:
+- job_name: 'collector'
+    static_configs:
+    - targets: ['otel_collector:9464'] 
+            </code></pre>
+            We can now start all the docker services and also the application.
+            <pre><code class="sh">
+docker-compose up --build --detach
+go run ./...
+            </code></pre>
+            This is well and good but our application code is not yet instrumented to emit any telemetry(logs, traces &
+            metrics). That is what we are going to do next.
+
+            </br></br>
+            <strong id="Instrumentation">Instrumentation</strong></br>
+            There are a couple of changes we need to make;
+            <ol>
+                <li>Use a http middleware that will add traces to our http handlers.</li>
+                <li>Use a <i>http.RoundTripper</i> that will add traces to http requests.</li>
+                <li>Create trace spans in relevant places in our code.</li>
+                <li>Emit metrics in relevant places in our code.</li>
+                <li>Emit logs in relevant places in our code.</li>
+            </ol>
+            The diff to implement (1) and (2) is(don't worry if you do not like diffs, the full code will be linked to
+            at the end);
+            <pre><code class="diff">
+diff --git a/main.go b/main.go
+index c0fb2d5..c6a9ee2 100644
+--- a/main.go
++++ b/main.go
+@@ -4,6 +4,14 @@ import (
+        "context"
+        "fmt"
+        "net/http"
++
++	"go.opentelemetry.io/contrib/instrumentation/net/http/otelhttp"
++	"go.opentelemetry.io/otel"
++	"go.opentelemetry.io/otel/attribute"
++	"go.opentelemetry.io/otel/metric"
++	"go.opentelemetry.io/otel/metric/global"
++	"go.opentelemetry.io/otel/metric/instrument"
++	"go.opentelemetry.io/otel/trace"
+    )
+    
+    const serviceName = "AdderSvc"
+@@ -32,8 +40,9 @@ func main() {
+    func serviceA(ctx context.Context, port int) {
+        mux := http.NewServeMux()
+        mux.HandleFunc("/serviceA", serviceA_HttpHandler)
++	handler := otelhttp.NewHandler(mux, "server.http")
+        serverPort := fmt.Sprintf(":%d", port)
+-	server := &http.Server{Addr: serverPort, Handler: mux}
++	server := &http.Server{Addr: serverPort, Handler: handler}
+    
+        fmt.Println("serviceA listening on", server.Addr)
+        if err := server.ListenAndServe(); err != nil {
+@@ -42,7 +51,9 @@ func serviceA(ctx context.Context, port int) {
+    }
+    
+    func serviceA_HttpHandler(w http.ResponseWriter, r *http.Request) {
+-	cli := &http.Client{}
++	cli := &http.Client{
++		Transport: otelhttp.NewTransport(http.DefaultTransport),
++	}
+        req, err := http.NewRequestWithContext(r.Context(), http.MethodGet, "http://localhost:8082/serviceB", nil)
+        if err != nil {
+            panic(err)
+@@ -58,8 +69,9 @@ func serviceA_HttpHandler(w http.ResponseWriter, r *http.Request) {
+    func serviceB(ctx context.Context, port int) {
+        mux := http.NewServeMux()
+        mux.HandleFunc("/serviceB", serviceB_HttpHandler)
++	handler := otelhttp.NewHandler(mux, "server.http")
+        serverPort := fmt.Sprintf(":%d", port)
+-	server := &http.Server{Addr: serverPort, Handler: mux}
++	server := &http.Server{Addr: serverPort, Handler: handler}
+    
+        fmt.Println("serviceB listening on", server.Addr)
+        if err := server.ListenAndServe(); err != nil {
+@@ -73,4 +85,38 @@ func serviceB_HttpHandler(w http.ResponseWriter, r *http.Request) {
+        fmt.Fprintf(w, "hello from serviceB: Answer is: %d", answer)
+    }                
+            </code></pre>
+            The diff to implement (3), (4) and (5) is;
+            <pre><code class="diff">
+diff --git a/main.go b/main.go
+index 349bc6e..868c380 100644
+--- a/main.go
++++ b/main.go
+@@ -51,10 +51,13 @@ func serviceA(ctx context.Context, port int) {
+    }
+    
+    func serviceA_HttpHandler(w http.ResponseWriter, r *http.Request) {
++	ctx, span := otel.Tracer("myTracer").Start(r.Context(), "serviceA_HttpHandler")
++	defer span.End()
++
+        cli := &http.Client{
+            Transport: otelhttp.NewTransport(http.DefaultTransport),
+        }
+-	req, err := http.NewRequestWithContext(r.Context(), http.MethodGet, "http://localhost:8082/serviceB", nil)
++	req, err := http.NewRequestWithContext(ctx, http.MethodGet, "http://localhost:8082/serviceB", nil)
+        if err != nil {
+            panic(err)
+        }
+@@ -80,9 +83,44 @@ func serviceB(ctx context.Context, port int) {
+    }
+    
+    func serviceB_HttpHandler(w http.ResponseWriter, r *http.Request) {
+-	answer := add(r.Context(), 42, 1813)
++	ctx, span := otel.Tracer("myTracer").Start(r.Context(), "serviceB_HttpHandler")
++	defer span.End()
++
++	answer := add(ctx, 42, 1813)
+        w.Header().Add("SVC-RESPONSE", fmt.Sprint(answer))
+        fmt.Fprintf(w, "hello from serviceB: Answer is: %d", answer)
+    }
+    
+-func add(ctx context.Context, x, y int64) int64 { return x + y }
++func add(ctx context.Context, x, y int64) int64 {
++	ctx, span := otel.Tracer("myTracer").Start(
++		ctx,
++		"add",
++		// add labels/tags/resources(if any) that are specific to this scope.
++		trace.WithAttributes(attribute.String("component", "addition")),
++		trace.WithAttributes(attribute.String("someKey", "someValue")),
++	)
++	defer span.End()
++
++	counter, _ := global.MeterProvider().
++		Meter(
++			"instrumentation/package/name",
++			metric.WithInstrumentationVersion("0.0.1"),
++		).
++		Int64Counter(
++			"add_counter",
++			instrument.WithDescription("how many times add function has been called."),
++		)
++	counter.Add(
++		ctx,
++		1,
++		// labels/tags
++		attribute.String("component", "addition"),
++	)
++
++	log := NewLogrus(ctx)
++	log.Info("add_called")
++
++	return x + y
++}                
+            </code></pre>
+            With that, we are in business. Let's run all the things and send some requests;
+            <pre><code class="sh">
+docker-compose up --build --detach
+go run ./... &
+curl -vkL http://127.0.0.1:8081/serviceA
+            </code></pre>
+            If you navigate to the <i>jaeger</i> port that is used to query traces; <a target="_blank" rel="noopener"
+                href="http://127.0.0.1:16686/search">http://localhost:16686/search</a> you should be able to see
+            traces;</br></br>
+            <img src="./imgs/web-traces-three.png" alt="image showing sample trace telemetry"></br>
+
+            As you can see the traces are recorded and more importantly, the logs emitted by the logger are also added
+            in as trace span events. If you look at the logs emitted by the logger in stdOut;
+            <pre><code class="sh">
+INFO[0004] add_called traceId=68d7a4ea8cdaadb7309eebf0fd41037a spanId=c3cf045f0f8ee0f2 
+            </code></pre>
+            We can also see that trace <i>spanId</i> & <i>traceId</i> have been added to the logs.</br>
+            It is now very easy to correlate logs and their corresponding traces.</br></br>
+
+            Additionally, if you navigate to the <i>prometheus</i> port that is used to query traces; <a target="_blank"
+                rel="noopener" href="http://127.0.0.1:9090/graph">http://localhost:9090/graph</a> you should be able
+            to see metrics;</br></br>
+            <img src="./imgs/web-metrics-two.png" alt="image showing sample metric telemetry"></br>
+
+            This is like oncall/debugging nirvana.</br></br>
+
+            There's only one thing left. As things stand, it is very easy to correlate logs and traces; this is because
+            they share <i>traceId's and spanId's</i>. However it is still not that easy to correlate metrics with either
+            logs or traces. Let's fix that. You can do that by making sure that you use the same set of attributes when
+            starting a span, when taking metrics and when emitting logs. ie, something along the lines of;
+            <pre><code class="go">
+ctx, span := otel.Tracer("myTracer").Start(ctx, "add",
+    trace.WithAttributes(attribute.String("component", "addition")),
+    trace.WithAttributes(attribute.Int("age", 89)),
+)
+
+counter.Add(ctx, 1,
+    attribute.String("component", "addition"),
+    attribute.Int("age", 89),
+)
+
+log := NewLogrus(ctx).WithFields(logrus.Fields{
+    "component": "addition",
+    "age":       89,
+})
+            </code></pre>
+
+            </br></br>
+            <strong id="Conclusion">Conclusion</strong></br>
+
+
+            All the code in this blogpost, including the full source code, can be found at: <a target="_blank"
+                rel="noopener" href="https://github.com/komuw/komu.engineer/tree/otel-and-go/blogs/11">this
+                link</a></br></br>
+
+            You can comment on this article <a target="_blank" rel="noopener"
+                href="https://github.com/komuw/komu.engineer/issues/26">by clicking here.</a>
+
+            </br> </br>
+        </div>
+    </div>
+</body>

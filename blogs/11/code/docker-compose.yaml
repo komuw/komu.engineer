@@ -1,0 +1,44 @@
+version: '3.3'
+services:
+
+  # OpenTelemetry Collector
+  otel_collector:
+    image: otel/opentelemetry-collector-contrib:0.70.0
+    command: --config=/etc/otel-collector-config.yaml
+    volumes:
+      - ./confs/otel-collector-config.yaml:/etc/otel-collector-config.yaml
+      - ./confs/server.crt:/etc/tls/server.crt
+      - ./confs/server.key:/etc/tls/server.key
+      - ./confs/rootCA.crt:/etc/tls/rootCA.crt
+    ports:
+      - "4317:4317" # OTLP over gRPC receiver
+      - "9464:9464" # Prometheus exporter
+    depends_on:
+      - jaeger
+      - prometheus
+    networks:
+      - my_net
+
+  # Jaeger
+  jaeger:
+    image: jaegertracing/all-in-one:1.41.0
+    ports:
+      - "14250:14250" # Collector gRPC
+      - "16686:16686" # Web HTTP
+    networks:
+      - my_net
+
+  # Prometheus
+  prometheus:
+    image: prom/prometheus:v2.42.0
+    command:
+      - --config.file=/etc/prometheus/prometheus-config.yaml
+    volumes:
+      - ./confs/prometheus-config.yaml:/etc/prometheus/prometheus-config.yaml
+    ports:
+      - "9090:9090"
+    networks:
+      - my_net
+
+networks:
+  my_net:
