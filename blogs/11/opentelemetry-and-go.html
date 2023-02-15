@@ -795,7 +795,7 @@ curl -vkL http://127.0.0.1:8081/serviceA
             If you navigate to the <i>jaeger</i> port that is used to query traces; <a target="_blank" rel="noopener"
                 href="http://127.0.0.1:16686/search">http://localhost:16686/search</a> you should be able to see
             traces;</br></br>
-            <img src="./imgs/web-traces-three.png" alt="image showing components of a collector"></br>
+            <img src="./imgs/web-traces-three.png" alt="image showing sample trace telemetry"></br>
 
             As you can see the traces are recorded and more importantly, the logs emitted by the logger are also added
             in as trace span events. If you look at the logs emitted by the logger in stdOut;
@@ -803,7 +803,13 @@ curl -vkL http://127.0.0.1:8081/serviceA
 INFO[0004] add_called traceId=68d7a4ea8cdaadb7309eebf0fd41037a spanId=c3cf045f0f8ee0f2 
             </code></pre>
             We can also see that trace <i>spanId</i> & <i>traceId</i> have been added to the logs.</br>
-            It is now very easy to correlate logs and their corresponding traces. This is like oncall/debugging nirvana.
+            It is now very easy to correlate logs and their corresponding traces. This is like oncall/debugging
+            nirvana.</br></br>
+
+            Additionally, if you navigate to the <i>prometheus</i> port that is used to query traces; <a target="_blank"
+                rel="noopener" href="http://127.0.0.1:9090/graph">http://localhost:9090/graph</a> you should be able
+            to see metrics;</br></br>
+            <img src="./imgs/web-metrics-two.png" alt="image showing sample metric telemetry"></br>
 
 
 
