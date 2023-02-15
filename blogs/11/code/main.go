@@ -107,7 +107,7 @@ func add(ctx context.Context, x, y int64) int64 {
 		).
 		Int64Counter(
 			"add_counter",
-			instrument.WithDescription("how many times add has been called."),
+			instrument.WithDescription("how many times add function has been called."),
 		)
 	counter.Add(
 		ctx,
