@@ -1,4 +1,4 @@
-This is the code for my blogpost: [The complete guide to OpenTelemetry and Golang](https://www.komu.engineer/blogs/11/opentelemetry-and-go.html)        
+This is the code for my blogpost: [The complete guide to OpenTelemetry in Golang](https://www.komu.engineer/blogs/11/opentelemetry-and-go.html)        
 
 The Golang code can be found in the `code` folder.     
 To run the code;
