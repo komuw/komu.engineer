@@ -65,101 +65,41 @@
         <div class="main">
             <p></br>
 <pre><code class="python">
-# In computer science what is a dictionary?
-# It's a dynamic set that only supports:
-# 1. insertion
-# 2. deletion
-# 3. membership test.
+# 1. TODO: approximation algorithms.
+# https://towardsdatascience.com/how-to-implement-the-hill-climbing-algorithm-in-python-1c65c29469de
 
-# There are other types of Dynamic sets. Some of the operations that other dynamic sets may support are:
-# 1. Search(S, k):     A query that, given a set S and a key value k, returns a pointer x to an element
-#                      in S such that x.key= k, or NIL if no such element belongs to S.
-# 2. Insert(S,x)
-# 3. Deletion
-# 4. Minimum(S):       A query on a totally ordered set S that returns a pointer to the element of S with the smallest key.
-# 5. Maximum(S):       opposite of Minimum(S)
-# 6. Successor(S,x):   A query that, given an element x whose key is from a totally ordered set S,
-#                      returns a pointer to the next larger element in S, or NIL if x is the maximum element.
-# 7. PREDECESSOR(S,x): opposite of Successor(S,x)
+# 2. TODO: building a full-text search engine
+# https://bart.degoe.de/building-a-full-text-search-engine-150-lines-of-code/
 
+# 3. TODO: use erasure encoding to survive data loss
+# https://gist.github.com/komuw/989412ecab3c272cb7dddc1e595224cd
+# You can use erasure encoding to;
+# a. survive data loss
+# b. reduce tail latencies
+# c. etc
+# https://twitter.com/copyconstruct/status/1520085040260034560
+# https://brooker.co.za/blog/2023/01/06/erasure.html
 
-# Stack implements LIFO policy.
-class Stack:
-    d: list = []
+# 4. TODO: Content Defined Chunking (CDC)
+# Split large data into smaller blocks in a deterministic way and also deduplication.
+# https://blog.gopheracademy.com/advent-2018/split-data-with-cdc/
+# https://restic.net/blog/2015-09-12/restic-foundation1-cdc/
 
-    def empty(self):
-        """
-        Returns whether the stack is empty – Time Complexity : O(1)
-        """
-        if self.top() == 0:
-            return True
-        return False
+# 5. TODO: Schedulers, bin packing, first fit algorithm
+# https://fly.io/blog/carving-the-scheduler-out-of-our-orchestrator/
+# https://people.eecs.berkeley.edu/~matei/papers/2013/sosp_sparrow.pdf
 
-    def top(self):
-        """
-        This is the index of the most recently added element – Time Complexity : O(1)
-        """
-        return len(self.d)
+# 6. TODO: perceptual hashes.
+# https://news.ycombinator.com/item?id=33228398
+# https://www.phash.org/
+# https://hackerfactor.com/blog/index.php%3F/archives/432-Looks-Like-It.html
 
-    def size(self):
-        """Returns the size of the stack – Time Complexity : O(1)"""
-        return len(self.d)
+# 7. TODO: Blind 75 must know questions
+# https://leetcode.com/list/xi4ci4ig/
+# https://www.adamconrad.dev/blog/changing-jobs-during-the-great-resignation/
 
-    def push(self, x):
-        """Adds the element ‘g' at the top of the stack – Time Complexity : O(1)"""
-        self.d.append(x)
-
-    def pop(self):
-        """Deletes the top most element of the stack – Time Complexity : O(1)"""
-        return self.d.pop()
-
-
-s = Stack()
-if s.top() != 0:
-    raise Exception(
-        """The `stack` algo didnt work.
-        \ngot = {}. \nexpected = {}.""".format(
-            s.top(), 0
-        )
-    )
-if s.empty() is not True:
-    raise Exception(
-        """The `stack` algo didnt work.
-        \ngot = {}. \nexpected = {}.""".format(
-            s.empty(), True
-        )
-    )
-
-s.push(34)
-s.push(1)
-s.push(54)
-s.push(358_763_524)
-if s.top() != 4:
-    raise Exception(
-        """The `stack` algo didnt work.
-        \ngot = {}. \nexpected = {}.""".format(
-            s.top(), 4
-        )
-    )
-
-if s.pop() != 358_763_524:
-    raise Exception(
-        """The `stack` algo didnt work.
-        \ngot = {}. \nexpected = {}.""".format(
-            s.pop(), 358_763_524
-        )
-    )
-
-
-# Queue implements FIFO policy.
-class Queue:
-    d: list = []
-
-    def enqueue(self, x):
-        self.d.append(x)
-
-    def dequeue(self):
-        return self.pop(0)
+# 8. TODO: different hashmap algorithms.
+# https://www.andreinc.net/2021/11/08/a-tale-of-java-hash-tables
 
 </code></pre>
             </p>

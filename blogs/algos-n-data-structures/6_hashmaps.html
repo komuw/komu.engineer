@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -22,8 +23,12 @@
     <link rel="stylesheet" href="./site.css">
 
     <!-- Get highlightjs by going to https://highlightjs.org/download/, select the languages you want and download. -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/styles/default.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/highlight.min.js"></script>
+    <!--
+    <link rel="stylesheet" href="../../highlightjs/styles/default.css">
+    <script src="../../highlightjs/highlight.pack.js"></script>
+    -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.6.0/styles/default.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.6.0/highlight.min.js"></script>
     <script>hljs.highlightAll();</script>
 </head>
 
@@ -36,21 +41,21 @@
             <a href="./index.html">Algorithms & datastructures Home</a>&nbsp;&nbsp;
         </div>
         <div class="left-sidebar">
-            <a rel="noopener" href="./1_sorting.html">1_sorting</a></br>
-            <a rel="noopener" href="./2_kadane.html">2_kadane</a></br>
-            <a rel="noopener" href="./3_hiring.html">3_hiring</a></br>
-            <a rel="noopener" href="./4_stack_n_queue.html">4_stack_n_queue</a></br>
-            <a rel="noopener" href="./5_linked_list.html">5_linked_list</a></br>
-            <a rel="noopener" href="./6_hashmaps.html">6_hashmaps</a></br>
-            <a rel="noopener" href="./7_binary_tree.html">7_binary_tree</a></br>
-            <a rel="noopener" href="./8_other_trees.html">8_other_trees</a></br>
-            <a rel="noopener" href="./9_trie.html">9_trie</a></br>
-            <a rel="noopener" href="./10_bloom_filter.html">10_bloom_filter</a></br>
-            <a rel="noopener" href="./11_graphs.html">11_graphs</a></br>
-            <a rel="noopener" href="./12_strings.html">12_strings</a></br>
-            <a rel="noopener" href="./13_approximation_algos.html">13_approximation_algos</a></br>
-            <a rel="noopener" href="./14_clocks.html">14_clocks</a></br>
-            <a rel="noopener" href="./15_interviews.html">15_interviews</a></br>
+<a  rel="noopener" href="./1_sorting.html">1_sorting</a></br>
+<a  rel="noopener" href="./2_kadane.html">2_kadane</a></br>
+<a  rel="noopener" href="./3_hiring.html">3_hiring</a></br>
+<a  rel="noopener" href="./4_stack_n_queue.html">4_stack_n_queue</a></br>
+<a  rel="noopener" href="./5_linked_list.html">5_linked_list</a></br>
+<a  rel="noopener" href="./6_hashmaps.html">6_hashmaps</a></br>
+<a  rel="noopener" href="./7_binary_tree.html">7_binary_tree</a></br>
+<a  rel="noopener" href="./8_other_trees.html">8_other_trees</a></br>
+<a  rel="noopener" href="./9_trie.html">9_trie</a></br>
+<a  rel="noopener" href="./10_bloom_filter.html">10_bloom_filter</a></br>
+<a  rel="noopener" href="./11_graphs.html">11_graphs</a></br>
+<a  rel="noopener" href="./12_strings.html">12_strings</a></br>
+<a  rel="noopener" href="./13_clocks.html">13_clocks</a></br>
+<a  rel="noopener" href="./14_interviews.html">14_interviews</a></br>
+<a  rel="noopener" href="./15_todo.html">15_todo</a></br>
 
         </div>
         <div class="right-sidebar">
@@ -59,7 +64,7 @@
 
         <div class="main">
             <p></br>
-            <pre><code class="python">
+<pre><code class="python">
 import typing
 import pathlib
 
@@ -86,6 +91,8 @@ import utils
 #                 This technique is a lot faster than linked lists, because your CPU's
 #                 cache has probably fetched the next items already.
 #                 https://benhoyt.com/writings/hash-table-in-c/
+# Look at the email conversation I had with Ben Hoyt with the email-title `hash table probe stats`
+
 #
 # Universal hashing;
 # Its where we select the hash function from a random list of hash_funcs at runtime.
@@ -96,18 +103,39 @@ import utils
 #      (ii)  https://github.com/golang/go/blob/go1.16.4/src/runtime/map.go#L1001-L1003
 #      (iii) https://github.com/golang/go/issues/25237
 #      (iv)  https://hackernoon.com/some-insights-on-maps-in-golang-rm5v3ywh
-
+#      (v) https://www.youtube.com/watch?v=DMQ_HcNSOAI (Great video on hashmaps & perfect hashmaps by Strager)
 
 # For an example of creating a hashMap using probing(open addressing) see the link below
 # It also shows how to grow the hashmap at runtime.
 # https://github.com/benhoyt/counter/blob/6f3e137837f95fe029899f58eef350f38a18be15/counter.go#L41-L80
 # https://gophers.slack.com/archives/C0VP8EF3R/p1615147587400800
 
+# Another hashmap in Go by Josh Baker(tidwall)
+# https://github.com/tidwall/hashmap/tree/v1.4.2
+
+# Different hashmap algorithms;
+# https://www.andreinc.net/2021/11/08/a-tale-of-java-hash-tables
+
 # You can also prevent DOS by using a keyed hash,
 # where the output hash depends not only on the string, but on a secret key.
 # Typically the key is randomly generated at startup, or when creating a new hashtable.
 # SipHash, is an example of a cryptographic keyed hash function.
 # https://blog.polybdenum.com/2017/03/02/generating-64-bit-hash-collisions-to-dos-python.html
+
+# "Zig's ArrayHashMap is basically ArrayList(Key) + ArrayList(Value) + an index object stored separately
+# this is why ArrayHashMap(void, void) is sometimes useful" - Andrew Kelley[1]
+# This also has a HashMap[3]. Difference is, ArrayHashMap is optimized for iteration.
+#
+#  1. https://discord.com/channels/605571803288698900/785499283368706060/951284933484245052
+#  2. https://github.com/ziglang/zig/blob/f736cde397a6abb1399827ed5988c43001706580/lib/std/array_hash_map.zig#L460
+#  3. https://github.com/ziglang/zig/blob/f736cde397a6abb1399827ed5988c43001706580/lib/std/hash_map.zig#L688
+
+# Most hash funcs have more collisions than necessary.
+# To deal with this, you can permute the final result using a "finalizer" such as found in murmurhash.
+#  final_hash = finalizer(paul_larson_hash("hey"))
+# https://www.andreinc.net/2021/10/02/implementing-hash-tables-in-c-part-1
+# https://www.reddit.com/r/C_Programming/comments/q88m49/implementing_hash_tables_in_c_an_article_ive/hgo9qz3/
+# https://github.com/aappleby/smhasher/blob/61a0530f28277f2e850bfc39600ce61d02b518de/src/MurmurHash3.cpp#L66-L77
 
 
 # https://stackoverflow.com/a/2909572/2768067
@@ -292,3 +320,4 @@ test_capacity()
         </div>
     </div>
 </body>
+    
