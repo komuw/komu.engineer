@@ -30,7 +30,7 @@
   # directory located at the absolute path "root/project/blogs/algos-n-data-structures/"
   publish = "blogs/algos-n-data-structures/"
 
-# TODO: after sufficient time AND testing, change the status code from 302(temp redirect) to 301(Moved Permanently)
+# status 301 is Moved Permanently
 [[redirects]]
   from = "/blogs/go-gc-maps"
   to = "/blogs/01/go-gc-maps"
