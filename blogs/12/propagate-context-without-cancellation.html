@@ -74,7 +74,7 @@
             This blog looks deeper at propagating context without cancellation, why it's important, and how we found a
             solution.</br></br>
 
-            <strong id="into the context">Into the context we go</strong></br>
+            <strong id="into the context">Into the context we go</strong></br></br>
             Initially, our code looked like this:
             <pre><code class="go">
 func OnboardAccount(w http.ResponseWriter, r *http.Request) {
@@ -149,8 +149,47 @@ go sendEmail(r.Context(), "accountID", "subscriptionPlan")
             <i>sendEmail</i>
             call is
             running in a goroutine, it is possible that it would run after <i>OnboardAccount</i> has returned (and by
-            extension, the context would already be cancelled.)
+            extension, the context would already be cancelled.)</br></br>
 
+            Here is a small stand-alone reproducer of the issue:
+            <pre><code class="go">
+func main() {
+    OnboardAccount()
+}
+
+func OnboardAccount() {
+    ctx, cancel := context.WithCancel(context.Background())
+    defer cancel()
+    go sendEmail(ctx)
+    fmt.Println("OnboardAccount called")
+}
+
+func sendEmail(ctx context.Context) {
+    fmt.Println("sendEmail called")
+    ctx, cancel := context.WithTimeout(ctx, 120*time.Second)
+    defer cancel()
+    fmt.Println("sendEmail, ctx.Err(): ", ctx.Err())
+}
+            </code></pre>
+            <pre><code class="bash"> 
+go run -race ./...
+            </code></pre>
+            <pre><code class="bash"> 
+OnboardAccount called
+sendEmail called
+sendEmail, ctx.Err():  context canceled
+        </code></pre>
+            We reverted the code change and began looking for permanent solutions to the problem. <strong>We need to
+                propagate a
+                context's values without also propagating its cancellation.</strong></br></br>
+
+            <strong id="solution space">Solution space</strong></br></br>
+            Surely, someone else in the Go community must have experienced similar issues? It turns out, this was not an
+            uncommon problem; there was even an existing <a target="_blank" rel="noopener"
+                href="https://github.com/golang/go/issues/40221">Go proposal</a> suggesting to fix the issue in the
+            standard
+            library. At the time, that proposal had not yet been accepted, so we had to look for alternative solutions
+            to the problem.</br></br>
 
         </div>
     </div>
