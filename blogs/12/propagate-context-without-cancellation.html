@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>How to propagate context without cancellation.</title>
+    <meta name="description" content="How to propagate context without cancellation." />
+    <meta property="og:url" content="https://www.komu.engineer/blog" />
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ADD FAVICON -->
+
+    <!-- This blogpost was initially written for Tyk blog, so let's set tyk blog as the canonical -->
+    <link rel="canonical" href="https://tyk.io/blog/how-to-propagate-context-without-cancellation" />
+
+
+    <link rel="stylesheet" href="../../site.css">
+
+    <!-- Get highlightjs by going to https://highlightjs.org/download/, select the languages you want and download. -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/styles/default.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/highlight.min.js"></script>
+    <script>hljs.highlightAll();</script>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <a href="https://www.komu.engineer">Home</a>&nbsp;&nbsp;
+            <a href="https://www.komu.engineer/about">About Me</a>&nbsp;&nbsp;
+            <a href="https://www.komu.engineer/blog">Blog</a>&nbsp;&nbsp;
+        </div>
+        <div class="left-sidebar">
+            .
+        </div>
+        <div class="right-sidebar">
+            .
+        </div>
+
+        <div class="main">
+            </br>
+            <strong>How to propagate context without cancellation. (23 Aug 2023)</strong>
+            </br></br>
+            <strong>note:</strong> This blogpost was initially written on <a target="_blank" rel="noopener"
+                href="https://tyk.io/blog/how-to-propagate-context-without-cancellation">Tyk's blog</a>. It's reprinted
+            here for posterity, but the Tyk post is still the canonical reference.</br></br>
+
+            <a target="_blank" rel="noopener" href="https://tyk.io/cloud">Tyk Cloud</a> is a fully managed service that
+            makes it easy for developers to create, secure, publish and maintain APIs at any scale, anywhere in the
+            world.</br></br>
+
+            Whenever customers sign up for the service, we send them an email welcoming them onboard. We emit logs to
+            enable our developers to troubleshoot if any error occurs in the email-sending functionality (network
+            timeouts, etc.).</br></br>
+
+            To improve the developer debugging experience, we added corresponding request-scoped values like request-ids
+            to those logs. The way you typically do that in Go is by using <a target="_blank" rel="noopener"
+                href="https://pkg.go.dev/context#Context">context.Context</a>. Maintaining a consistent
+            understanding of the context is essential as data flows through various stages. This helps to ensure
+            accurate processing, error handling, logging, and other operational aspects.</br></br>
+
+            While this information usually has a timeframe for the service to respond (after which it is cancelled), we
+            often need to send this flow of data and context between different components or stages of a system before
+            it is interrupted or prematurely terminated.</br></br>
+
+            This blog looks deeper at propagating context without cancellation, why it's important, and how we found a
+            solution.</br></br>
+
+            <strong id="into the context">Into the context we go</strong></br>
+            Initially, our code looked like this:
+            <pre><code class="go">
+func OnboardAccount(w http.ResponseWriter, r *http.Request) {
+    // Create a subsription, etc
+    // Send email to the customer.
+    go sendEmail("accountID", "subscriptionPlan")
+}
+
+func sendEmail(accountID, subscriptionPlanName string) {
+    ctx := context.Background()
+    ctx, cancel := context.WithTimeout(ctx, 120*time.Second)
+    defer cancel()
+
+    // Call a third-party email sending service.
+    err := thirdPartyMailService(ctx, accountID, subscriptionPlan)
+    if err != nil {
+        log.Error("Failed to send email.", err)
+    } 
+}
+            </code></pre>
+            The <i>OnboardAccount</i> http handler is called when someone signs up as a customer on <a target="_blank"
+                rel="noopener" href="https://tyk.io/cloud">Tyk Cloud</a>. It does several things - synchronously - like
+            creating a subscription, creating an organisation, etc. and eventually sends a welcome email to the customer
+            asynchronously.</br></br>
+
+            As mentioned, we wanted to update the code so that <i>sendEmail</i> will take in a <a target="_blank"
+                rel="noopener" href="https://pkg.go.dev/context#Context">context.Context</a> as a parameter.
+            We would then pass in a <a target="_blank" rel="noopener"
+                href="https://pkg.go.dev/net/http#Request.Context">http.Request.Context</a> when calling
+            <i>sendEmail</i>; this way, we could have richer logs emitted in the <i>sendEmail</i> function since they
+            would now
+            contain request-scoped values(request-ids, etc.) for each specific request.</br></br>
+
+            We updated the code to:
+            <pre><code class="go">
+func OnboardAccount(w http.ResponseWriter, r *http.Request) {
+    // Create a subscription, etc
+    // Send email to the customer.
+    go sendEmail(r.Context(), "accountID", "subscriptionPlan")
+}
+
+func sendEmail(ctx context.Context, accountID, subscriptionPlan string) {
+    ctx, cancel := context.WithTimeout(ctx, 120*time.Second)
+    defer cancel()
+
+    // Call a third-party email sending service.
+    err := thirdPartyMailService(ctx, accountID, subscriptionPlan)
+    if err != nil {
+        log.Error("Failed to send email.", err)
+    } 
+}
+            </code></pre>
+            Soon after, we started seeing these errors in our services' logs:</br>
+            <i>"RequestID=Kj24jR8LQha, Failed to send email. context canceled"</i></br>
+            It was great to see that logs now contained the relevant request-scoped values like RequestID, but what's up
+            with that context cancelled error?</br></br>
+
+            This happened for almost every call of <i>sendEmail</i>, which was surprising since we were using a
+            substantial context duration when calling <i>thirdPartyMailService</i>. This value has served us very well
+            in the past. We established that the third-party email SaaS systems were healthy and experienced no
+            downtime.</br></br>
+
+            After a cup of coffee and proper scrutiny of the new code, we zeroed in on this line:</br>
+            <pre><code class="go">
+go sendEmail(r.Context(), "accountID", "subscriptionPlan")
+            </code></pre>
+            The problem was that the context, <i>r.Context()</i>, is <a target="_blank" rel="noopener"
+                href="https://github.com/golang/go/blob/go1.20.3/src/net/http/request.go#L337-L340">scoped to the
+                lifetime</a> of the http request. Thus,
+            this
+            context would get cancelled as soon as the <i>OnboardAccount</i> http handler returns. Since the
+            <i>sendEmail</i>
+            call is
+            running in a goroutine, it is possible that it would run after <i>OnboardAccount</i> has returned (and by
+            extension, the context would already be cancelled.)
+
+
+        </div>
+    </div>
+</body>
