@@ -2,10 +2,12 @@ package main
 
 import (
 	"context"
+	"fmt"
 	stdLog "log"
 	"net/http"
 	"os"
-	"strings"
+	"path/filepath"
+	"time"
 
 	"github.com/komuw/ong/config"
 	"github.com/komuw/ong/log"
@@ -23,12 +25,14 @@ func main() {
 func run() error {
 	l := log.New(context.Background(), os.Stdout, 30).With("pid", os.Getpid())
 	opts := config.DevOpts(l, "Cool989@LimaTena")
+	opts.DrainTimeout = 1 * time.Nanosecond
 	return server.Run(getMux(opts), opts)
 }
 
 func getMux(opts config.Opts) mux.Muxer {
 	allRoutes := []mux.Route{
 		mux.NewRoute("/blog/:file", mux.MethodGet, ServeFileSources()),
+		mux.NewRoute("/blog/01/:file", mux.MethodGet, ServeFileSources()),
 	}
 
 	mux := mux.New(
@@ -42,16 +46,18 @@ func getMux(opts config.Opts) mux.Muxer {
 }
 
 func ServeFileSources() http.HandlerFunc {
-	// curl -vL https://localhost:65081/some-place/some-file.png
+	// curl -vL https://localhost:65081/blog/ala.txt
 	cwd, err := os.Getwd()
 	if err != nil {
 		panic(err)
 	}
-	cwd = strings.TrimSuffix(cwd, "blogs")
+	cwd = filepath.Join(cwd, "blogs")
 	fs := http.FileServer(http.Dir(cwd))
-	realHandler := http.StripPrefix("/blogs/", fs).ServeHTTP
+	realHandler := http.StripPrefix("/blogsblogs/", fs).ServeHTTP
 
 	return func(w http.ResponseWriter, r *http.Request) {
+		fmt.Println("cwd: ", cwd)
+		fmt.Println("r.URL.String(): ", r.URL.String())
 		realHandler(w, r)
 	}
 }
