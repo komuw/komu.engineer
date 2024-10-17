@@ -16,6 +16,7 @@ import (
 
 	"github.com/komuw/ong/config"
 	"github.com/komuw/ong/errors"
+	"github.com/komuw/ong/id"
 	"github.com/komuw/ong/log"
 	"github.com/komuw/ong/server"
 )
@@ -29,7 +30,7 @@ func main() {
 
 func run() error {
 	l := log.New(context.Background(), os.Stdout, 30).With("pid", os.Getpid())
-	opts := config.DevOpts(l, "Cool989@LimaTena")
+	opts := config.DevOpts(l, id.New())
 	opts.DrainTimeout = 1 * time.Nanosecond
 
 	cwd, err := os.Getwd()
