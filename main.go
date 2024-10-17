@@ -74,6 +74,7 @@ func ServeFileSources(rootDir string) http.HandlerFunc {
 }
 
 type fileHandler struct {
+	// rootDir is required so that a malicious user cannot request for `localhost:80/etc/passwd`
 	rootDir string
 }
 
