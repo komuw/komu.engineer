@@ -2,16 +2,15 @@
 //
 // To use this package, you could replace this code;
 //
-//     if err != nil {
-//         return err
-//     }
+//	if err != nil {
+//	    return err
+//	}
 //
 // with;
 //
-//     if err != nil {
-//         return errors.Wrap(err)
-//     }
-//
+//	if err != nil {
+//	    return errors.Wrap(err)
+//	}
 package errors
 
 import (
