@@ -50,13 +50,11 @@ func ServeFileSources(rootDir string) http.HandlerFunc {
 	// curl -vL https://localhost:65081/blogs/ala.txt
 	// curl -vL https://localhost:65081/blogs/01/go-gc-maps.html
 
-	// TODO: remove this.
-	fs := http.FileServer(http.Dir(rootDir))
-	realHandler := http.StripPrefix("/blogs/", fs).ServeHTTP
-	_ = realHandler
-
-	// TODO: make sure rootDir is not empty.
+	if len(rootDir) < 1 {
+		panic("rootDir cannot be empty")
+	}
 	h := fileHandler{rootDir: rootDir}
+
 	return func(w http.ResponseWriter, r *http.Request) {
 		fmt.Println("r.URL.String()1: ", r.URL.String())
 		h.ServeHTTP(w, r)
