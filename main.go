@@ -31,15 +31,16 @@ func run() error {
 	l := log.New(context.Background(), os.Stdout, 30).With("pid", os.Getpid())
 	opts := config.DevOpts(l, "Cool989@LimaTena")
 	opts.DrainTimeout = 1 * time.Nanosecond
-	return server.Run(getMux(), opts)
-}
 
-func getMux() *http.ServeMux {
 	cwd, err := os.Getwd()
 	if err != nil {
-		panic(err)
+		return err
 	}
 
+	return server.Run(getMux(cwd), opts)
+}
+
+func getMux(cwd string) *http.ServeMux {
 	mux := http.NewServeMux()
 	mux.HandleFunc("GET /", ServeFileSources(cwd))
 	mux.HandleFunc("GET /blogs/", ServeFileSources(filepath.Join(cwd, "blogs")))
@@ -99,7 +100,7 @@ func (f fileHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 				e := errors.Join(err1, err2)
 				// TODO: log.
 				fmt.Println("errrr: ", e)
-				http.Error(w, "unable to open file: "+file, http.StatusInternalServerError)
+				http.Error(w, "unable to open file: "+file, http.StatusNotFound)
 				return
 			}
 		}
