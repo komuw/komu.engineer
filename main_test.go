@@ -24,6 +24,10 @@ func TestMux(t *testing.T) {
 		expectedStatusCode int
 	}{
 		{
+			path:               "/",
+			expectedStatusCode: http.StatusOK,
+		},
+		{
 			path:               "/UnknownUri",
 			expectedStatusCode: http.StatusNotFound,
 		},
@@ -47,15 +51,11 @@ func TestMux(t *testing.T) {
 			path:               "/about.html",
 			expectedStatusCode: http.StatusOK,
 		},
-		//
+		// TODO: fix this
 		// {
 		// 	path:               "/blogs",
 		// 	expectedStatusCode: http.StatusOK,
 		// },
-		{
-			path:               "/",
-			expectedStatusCode: http.StatusOK,
-		},
 	}
 
 	for _, tt := range tests {
