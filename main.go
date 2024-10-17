@@ -62,8 +62,8 @@ func ServeFileSources() http.HandlerFunc {
 
 	h := fileHandler{root: cwd}
 	fs := http.FileServer(http.Dir(cwd))
-	_ = fs
-	// realHandler := http.StripPrefix("/blogs/", fs).ServeHTTP
+	realHandler := http.StripPrefix("/blogs/", fs).ServeHTTP
+	_ = realHandler
 
 	return func(w http.ResponseWriter, r *http.Request) {
 		fmt.Println("r.URL.String()1: ", r.URL.String())
@@ -84,7 +84,6 @@ func (f fileHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	upath := r.URL.Path
 	if !strings.HasPrefix(upath, "/") {
 		upath = "/" + upath
-		// r.URL.Path = upath
 	}
 	upath = upath[1:] // remove slash
 	rootLast := filepath.Base(f.root)
@@ -131,7 +130,6 @@ func (f fileHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Length", strconv.FormatInt(fi.Size(), 10))
 
 	w.WriteHeader(http.StatusOK)
-
 	if _, err := io.Copy(w, fl); err != nil {
 		// TODO: log.
 	}
