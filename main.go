@@ -17,7 +17,6 @@ import (
 	"github.com/komuw/ong/config"
 	"github.com/komuw/ong/errors"
 	"github.com/komuw/ong/log"
-	"github.com/komuw/ong/mux"
 	"github.com/komuw/ong/server"
 )
 
@@ -35,26 +34,40 @@ func run() error {
 	return server.Run(getMux(opts), opts)
 }
 
-func getMux(opts config.Opts) mux.Muxer {
+func getMux(opts config.Opts) *http.ServeMux {
 	cwd, err := os.Getwd()
 	if err != nil {
 		panic(err)
 	}
 
-	allRoutes := []mux.Route{
-		// mux.NewRoute("/blogs/:file", mux.MethodGet, ServeFileSources()),
-		// mux.NewRoute("/blogs/imgs/:file", mux.MethodGet, ServeFileSources()),
-		mux.NewRoute("/blogs/10/:file", mux.MethodGet, ServeFileSources(filepath.Join(cwd, "blogs"))),
-	}
-
-	mux := mux.New(
-		opts,
-		// TODO: add a notFoundHandler
-		nil,
-		allRoutes...,
-	)
+	mux := http.NewServeMux()
+	mux.HandleFunc("GET /", ServeFileSources(filepath.Join(cwd, "blogs")))
 
 	return mux
+
+	// {
+	// 	cwd, err := os.Getwd()
+	// 	if err != nil {
+	// 		panic(err)
+	// 	}
+
+	// 	allRoutes := []mux.Route{
+	// 		// mux.NewRoute("/blogs/:file", mux.MethodGet, ServeFileSources()),
+	// 		// mux.NewRoute("/blogs/imgs/:file", mux.MethodGet, ServeFileSources()),
+	// 		// mux.NewRoute("/blogs/10/:file", mux.MethodGet, ServeFileSources(filepath.Join(cwd, "blogs"))),
+
+	// 		mux.NewRoute("/", mux.MethodGet, ServeFileSources(filepath.Join(cwd, "blogs"))),
+	// 	}
+
+	// 	mux := mux.New(
+	// 		opts,
+	// 		// TODO: add a notFoundHandler
+	// 		nil,
+	// 		allRoutes...,
+	// 	)
+
+	// 	return mux
+	// }
 }
 
 func ServeFileSources(rootDir string) http.HandlerFunc {
