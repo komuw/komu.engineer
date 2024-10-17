@@ -31,8 +31,8 @@ func run() error {
 
 func getMux(opts config.Opts) mux.Muxer {
 	allRoutes := []mux.Route{
-		mux.NewRoute("/blog/:file", mux.MethodGet, ServeFileSources()),
-		mux.NewRoute("/blog/01/:file", mux.MethodGet, ServeFileSources()),
+		mux.NewRoute("/blogs/:file", mux.MethodGet, ServeFileSources()),
+		mux.NewRoute("/blogs/01/:file", mux.MethodGet, ServeFileSources()),
 	}
 
 	mux := mux.New(
@@ -46,14 +46,14 @@ func getMux(opts config.Opts) mux.Muxer {
 }
 
 func ServeFileSources() http.HandlerFunc {
-	// curl -vL https://localhost:65081/blog/ala.txt
+	// curl -vL https://localhost:65081/blogs/ala.txt
 	cwd, err := os.Getwd()
 	if err != nil {
 		panic(err)
 	}
 	cwd = filepath.Join(cwd, "blogs")
 	fs := http.FileServer(http.Dir(cwd))
-	realHandler := http.StripPrefix("/blogsblogs/", fs).ServeHTTP
+	realHandler := http.StripPrefix("/blogs/", fs).ServeHTTP
 
 	return func(w http.ResponseWriter, r *http.Request) {
 		fmt.Println("cwd: ", cwd)
