@@ -60,6 +60,8 @@ func getMux(opts config.Opts) mux.Muxer {
 func ServeFileSources(rootDir string) http.HandlerFunc {
 	// curl -vL https://localhost:65081/blogs/ala.txt
 	// curl -vL https://localhost:65081/blogs/01/go-gc-maps.html
+
+	// TODO: remove this.
 	h := fileHandler{rootDir: rootDir}
 	fs := http.FileServer(http.Dir(rootDir))
 	realHandler := http.StripPrefix("/blogs/", fs).ServeHTTP
