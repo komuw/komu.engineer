@@ -47,6 +47,7 @@ func getMux(opts config.Opts) mux.Muxer {
 
 func ServeFileSources() http.HandlerFunc {
 	// curl -vL https://localhost:65081/blogs/ala.txt
+	// curl -vL https://localhost:65081/blogs/01/go-gc-maps.html
 	cwd, err := os.Getwd()
 	if err != nil {
 		panic(err)
