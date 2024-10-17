@@ -20,18 +20,22 @@ func TestMux(t *testing.T) {
 	mx := getMux(cwd)
 
 	tests := []struct {
-		name string
-		path string
+		path               string
+		expectedStatusCode int
 	}{
 		{
-			name: "UnknownUri",
-			path: "/UnknownUri",
+			path:               "/UnknownUri",
+			expectedStatusCode: http.StatusNotFound,
+		},
+		{
+			path:               "/blogs/10/dont-use-a-different-interface-for-testing",
+			expectedStatusCode: http.StatusOK,
 		},
 	}
 
 	for _, tt := range tests {
 		tt := tt
-		t.Run(tt.name, func(t *testing.T) {
+		t.Run(tt.path, func(t *testing.T) {
 			t.Parallel()
 
 			rec := httptest.NewRecorder()
@@ -41,7 +45,7 @@ func TestMux(t *testing.T) {
 			res := rec.Result()
 			defer res.Body.Close()
 
-			attest.Equal(t, res.StatusCode, http.StatusNotFound)
+			attest.Equal(t, res.StatusCode, tt.expectedStatusCode)
 		})
 	}
 }
