@@ -74,3 +74,37 @@ func TestMux(t *testing.T) {
 		})
 	}
 }
+
+func TestMuxRedirects(t *testing.T) {
+	t.Parallel()
+
+	cwd, err := os.Getwd()
+	attest.Ok(t, err)
+	fmt.Println("cwd: ", cwd)
+
+	mx := getMux(cwd)
+
+	t.Run("redirects", func(t *testing.T) {
+		t.Parallel()
+
+		for _, v := range []string{
+			"/blogs/go-gc-maps",
+			"/blogs/consensus",
+			"/blogs/python-lambda",
+			"/blogs/go-modules-early-peek",
+			"/blogs/lambda-shim/lambda-shim",
+			"/blogs/timeScaleDB/timescaleDB-for-logs",
+			"/blogs/celery-clone/understand-how-celery-works",
+			"/blogs/golang-stackTrace/golang-stackTrace",
+			"/blogs/log-without-losing-context/log-without-losing-context",
+		} {
+			rec := httptest.NewRecorder()
+			req := httptest.NewRequest(http.MethodGet, v, nil)
+			mx.ServeHTTP(rec, req)
+
+			res := rec.Result()
+			defer res.Body.Close()
+			attest.Equal(t, res.StatusCode, http.StatusMovedPermanently)
+		}
+	})
+}

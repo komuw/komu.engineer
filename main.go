@@ -45,6 +45,36 @@ func getMux(cwd string) *http.ServeMux {
 	mux.HandleFunc("GET /", ServeFileSources(cwd))
 	mux.HandleFunc("GET /blogs/", ServeFileSources(filepath.Join(cwd, "blogs")))
 
+	{ // redirects.
+		mux.HandleFunc("GET /blogs/go-gc-maps", func(w http.ResponseWriter, r *http.Request) {
+			http.Redirect(w, r, "/blogs/01/go-gc-maps", http.StatusMovedPermanently)
+		})
+		mux.HandleFunc("GET /blogs/consensus", func(w http.ResponseWriter, r *http.Request) {
+			http.Redirect(w, r, "/blogs/02/consensus", http.StatusMovedPermanently)
+		})
+		mux.HandleFunc("GET /blogs/python-lambda", func(w http.ResponseWriter, r *http.Request) {
+			http.Redirect(w, r, "/blogs/03/python-lambda", http.StatusMovedPermanently)
+		})
+		mux.HandleFunc("GET /blogs/go-modules-early-peek", func(w http.ResponseWriter, r *http.Request) {
+			http.Redirect(w, r, "/blogs/04/go-modules-early-peek", http.StatusMovedPermanently)
+		})
+		mux.HandleFunc("GET /blogs/lambda-shim/lambda-shim", func(w http.ResponseWriter, r *http.Request) {
+			http.Redirect(w, r, "/blogs/05/lambda-shim", http.StatusMovedPermanently)
+		})
+		mux.HandleFunc("GET /blogs/timeScaleDB/timescaleDB-for-logs", func(w http.ResponseWriter, r *http.Request) {
+			http.Redirect(w, r, "/blogs/06/timescaleDB-for-logs", http.StatusMovedPermanently)
+		})
+		mux.HandleFunc("GET /blogs/celery-clone/understand-how-celery-works", func(w http.ResponseWriter, r *http.Request) {
+			http.Redirect(w, r, "/blogs/07/understand-how-celery-works", http.StatusMovedPermanently)
+		})
+		mux.HandleFunc("GET /blogs/golang-stackTrace/golang-stackTrace", func(w http.ResponseWriter, r *http.Request) {
+			http.Redirect(w, r, "/blogs/08/golang-stackTrace", http.StatusMovedPermanently)
+		})
+		mux.HandleFunc("GET /blogs/log-without-losing-context/log-without-losing-context", func(w http.ResponseWriter, r *http.Request) {
+			http.Redirect(w, r, "/blogs/09/log-without-losing-context", http.StatusMovedPermanently)
+		})
+	}
+
 	return mux
 }
 
