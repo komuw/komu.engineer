@@ -32,6 +32,7 @@ func run() error {
 func getMux(opts config.Opts) mux.Muxer {
 	allRoutes := []mux.Route{
 		mux.NewRoute("/blogs/:file", mux.MethodGet, ServeFileSources()),
+		mux.NewRoute("/blogs/imgs/:file", mux.MethodGet, ServeFileSources()),
 		mux.NewRoute("/blogs/01/:file", mux.MethodGet, ServeFileSources()),
 	}
 
