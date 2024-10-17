@@ -91,27 +91,46 @@ func (f fileHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	file = path.Clean(file)
 	fmt.Println("file2: ", file)
 	fl, err1 := os.Open(file)
-	if err1 != nil {
-		{
-			file = file + ".html"
-			fl2, err2 := os.Open(file)
-			fl = fl2
-			if err2 != nil {
-				e := errors.Join(err1, err2)
-				// TODO: log.
-				fmt.Println("errrr: ", e)
-				http.Error(w, "unable to open file: "+file, http.StatusNotFound)
-				return
-			}
+	if err1 == nil {
+		defer fl.Close()
+	} else {
+		fl2, err2 := os.Open(file + ".html")
+		fl = fl2
+		if err2 != nil {
+			e := errors.Join(err1, err2)
+			// TODO: log.
+			fmt.Println("errrr: ", e)
+			http.Error(w, "unable to open file: "+file, http.StatusNotFound)
+			return
 		}
 	}
-	defer fl.Close()
 
 	fi, err := fl.Stat()
 	if err != nil {
 		// TODO: log.
 		http.Error(w, "unable to stat file: "+file, http.StatusInternalServerError)
 		return
+	}
+
+	fmt.Println("dirrr: ", fi.IsDir())
+	if fi.IsDir() {
+		file = filepath.Join(file, "index.html")
+		fl3, err3 := os.Open(file)
+		fl = fl3
+		if err3 != nil {
+			// TODO: log.
+			fmt.Println("err3: ", err3)
+			http.Error(w, "unable to open file: "+file, http.StatusNotFound)
+			return
+		}
+
+		fi2, err := fl.Stat()
+		if err != nil {
+			// TODO: log.
+			http.Error(w, "unable to stat file: "+file, http.StatusInternalServerError)
+			return
+		}
+		fi = fi2
 	}
 
 	// If Content-Type isn't set, use the file's extension to find it, but
