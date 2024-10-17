@@ -100,8 +100,6 @@ type fileHandler struct {
 }
 
 func (f fileHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
-	const indexPage = "/index.html" // TODO: handle this.
-
 	// TODO: handle directory. Maybe you should list directory.
 	// See stdlib.http.serveFile.dirList
 
