@@ -31,10 +31,10 @@ func run() error {
 	l := log.New(context.Background(), os.Stdout, 30).With("pid", os.Getpid())
 	opts := config.DevOpts(l, "Cool989@LimaTena")
 	opts.DrainTimeout = 1 * time.Nanosecond
-	return server.Run(getMux(opts), opts)
+	return server.Run(getMux(), opts)
 }
 
-func getMux(opts config.Opts) *http.ServeMux {
+func getMux() *http.ServeMux {
 	cwd, err := os.Getwd()
 	if err != nil {
 		panic(err)
@@ -44,30 +44,6 @@ func getMux(opts config.Opts) *http.ServeMux {
 	mux.HandleFunc("GET /", ServeFileSources(filepath.Join(cwd, "blogs")))
 
 	return mux
-
-	// {
-	// 	cwd, err := os.Getwd()
-	// 	if err != nil {
-	// 		panic(err)
-	// 	}
-
-	// 	allRoutes := []mux.Route{
-	// 		// mux.NewRoute("/blogs/:file", mux.MethodGet, ServeFileSources()),
-	// 		// mux.NewRoute("/blogs/imgs/:file", mux.MethodGet, ServeFileSources()),
-	// 		// mux.NewRoute("/blogs/10/:file", mux.MethodGet, ServeFileSources(filepath.Join(cwd, "blogs"))),
-
-	// 		mux.NewRoute("/", mux.MethodGet, ServeFileSources(filepath.Join(cwd, "blogs"))),
-	// 	}
-
-	// 	mux := mux.New(
-	// 		opts,
-	// 		// TODO: add a notFoundHandler
-	// 		nil,
-	// 		allRoutes...,
-	// 	)
-
-	// 	return mux
-	// }
 }
 
 func ServeFileSources(rootDir string) http.HandlerFunc {
