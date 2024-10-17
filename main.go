@@ -15,6 +15,7 @@ import (
 	"time"
 
 	"github.com/komuw/ong/config"
+	"github.com/komuw/ong/errors"
 	"github.com/komuw/ong/log"
 	"github.com/komuw/ong/mux"
 	"github.com/komuw/ong/server"
@@ -38,7 +39,7 @@ func getMux(opts config.Opts) mux.Muxer {
 	allRoutes := []mux.Route{
 		// mux.NewRoute("/blogs/:file", mux.MethodGet, ServeFileSources()),
 		// mux.NewRoute("/blogs/imgs/:file", mux.MethodGet, ServeFileSources()),
-		mux.NewRoute("/blogs/01/:file", mux.MethodGet, ServeFileSources()),
+		mux.NewRoute("/blogs/10/:file", mux.MethodGet, ServeFileSources()),
 	}
 
 	mux := mux.New(
@@ -60,7 +61,7 @@ func ServeFileSources() http.HandlerFunc {
 	}
 	cwd = filepath.Join(cwd, "blogs")
 
-	h := fileHandler{root: cwd}
+	h := fileHandler{rootDir: cwd}
 	fs := http.FileServer(http.Dir(cwd))
 	realHandler := http.StripPrefix("/blogs/", fs).ServeHTTP
 	_ = realHandler
@@ -72,7 +73,7 @@ func ServeFileSources() http.HandlerFunc {
 }
 
 type fileHandler struct {
-	root string
+	rootDir string
 }
 
 func (f fileHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
@@ -86,22 +87,31 @@ func (f fileHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		upath = "/" + upath
 	}
 	upath = upath[1:] // remove slash
-	rootLast := filepath.Base(f.root)
+	rootLast := filepath.Base(f.rootDir)
 	if strings.HasPrefix(upath, rootLast) {
 		upath = "/" + strings.TrimPrefix(upath, rootLast)
 	}
-	file := filepath.Join(f.root, upath)
+	file := filepath.Join(f.rootDir, upath)
 	fmt.Println("rootLast: ", rootLast)
 	fmt.Println("upath: ", upath)
 	fmt.Println("file1: ", file)
 
 	file = path.Clean(file)
 	fmt.Println("file2: ", file)
-	fl, err := os.Open(file)
-	if err != nil {
-		// TODO: log.
-		http.Error(w, "unable to open file: "+file, http.StatusInternalServerError)
-		return
+	fl, err1 := os.Open(file)
+	if err1 != nil {
+		{
+			file = file + ".html"
+			fl2, err2 := os.Open(file)
+			fl = fl2
+			if err2 != nil {
+				e := errors.Join(err1, err2)
+				// TODO: log.
+				fmt.Println("errrr: ", e)
+				http.Error(w, "unable to open file: "+file, http.StatusInternalServerError)
+				return
+			}
+		}
 	}
 	defer fl.Close()
 
