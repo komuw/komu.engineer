@@ -41,7 +41,7 @@ func getMux() *http.ServeMux {
 	}
 
 	mux := http.NewServeMux()
-	mux.HandleFunc("GET /", ServeFileSources(filepath.Join(cwd, "blogs")))
+	mux.HandleFunc("GET /blogs/", ServeFileSources(filepath.Join(cwd, "blogs")))
 
 	return mux
 }
