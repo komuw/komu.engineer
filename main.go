@@ -3,10 +3,15 @@ package main
 import (
 	"context"
 	"fmt"
+	"io"
 	stdLog "log"
+	"mime"
 	"net/http"
 	"os"
+	"path"
 	"path/filepath"
+	"strconv"
+	"strings"
 	"time"
 
 	"github.com/komuw/ong/config"
@@ -31,8 +36,8 @@ func run() error {
 
 func getMux(opts config.Opts) mux.Muxer {
 	allRoutes := []mux.Route{
-		mux.NewRoute("/blogs/:file", mux.MethodGet, ServeFileSources()),
-		mux.NewRoute("/blogs/imgs/:file", mux.MethodGet, ServeFileSources()),
+		// mux.NewRoute("/blogs/:file", mux.MethodGet, ServeFileSources()),
+		// mux.NewRoute("/blogs/imgs/:file", mux.MethodGet, ServeFileSources()),
 		mux.NewRoute("/blogs/01/:file", mux.MethodGet, ServeFileSources()),
 	}
 
@@ -54,12 +59,80 @@ func ServeFileSources() http.HandlerFunc {
 		panic(err)
 	}
 	cwd = filepath.Join(cwd, "blogs")
+
+	h := fileHandler{root: cwd}
 	fs := http.FileServer(http.Dir(cwd))
-	realHandler := http.StripPrefix("/blogs/", fs).ServeHTTP
+	_ = fs
+	// realHandler := http.StripPrefix("/blogs/", fs).ServeHTTP
 
 	return func(w http.ResponseWriter, r *http.Request) {
-		fmt.Println("cwd: ", cwd)
-		fmt.Println("r.URL.String(): ", r.URL.String())
-		realHandler(w, r)
+		fmt.Println("r.URL.String()1: ", r.URL.String())
+		h.ServeHTTP(w, r)
+	}
+}
+
+type fileHandler struct {
+	root string
+}
+
+func (f fileHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+	const indexPage = "/index.html" // TODO: handle this.
+
+	// TODO: handle directory. Maybe you should list directory.
+	// See stdlib.http.serveFile.dirList
+
+	upath := r.URL.Path
+	if !strings.HasPrefix(upath, "/") {
+		upath = "/" + upath
+		// r.URL.Path = upath
+	}
+	upath = upath[1:] // remove slash
+	rootLast := filepath.Base(f.root)
+	if strings.HasPrefix(upath, rootLast) {
+		upath = "/" + strings.TrimPrefix(upath, rootLast)
+	}
+	file := filepath.Join(f.root, upath)
+	fmt.Println("rootLast: ", rootLast)
+	fmt.Println("upath: ", upath)
+	fmt.Println("file1: ", file)
+
+	file = path.Clean(file)
+	fmt.Println("file2: ", file)
+	fl, err := os.Open(file)
+	if err != nil {
+		// TODO: log.
+		http.Error(w, "unable to open file: "+file, http.StatusInternalServerError)
+		return
+	}
+	defer fl.Close()
+
+	fi, err := fl.Stat()
+	if err != nil {
+		// TODO: log.
+		http.Error(w, "unable to stat file: "+file, http.StatusInternalServerError)
+		return
+	}
+
+	// If Content-Type isn't set, use the file's extension to find it, but
+	// if the Content-Type is unset explicitly, do not sniff the type.
+	ctype := ""
+	ctypes, haveType := w.Header()["Content-Type"]
+	if !haveType {
+		ctype = mime.TypeByExtension(filepath.Ext(file))
+		if ctype != "" {
+			w.Header().Set("Content-Type", ctype)
+		}
+	} else {
+		if len(ctypes) > 0 {
+			ctype = ctypes[0]
+			w.Header().Set("Content-Type", ctype)
+		}
+	}
+	w.Header().Set("Content-Length", strconv.FormatInt(fi.Size(), 10))
+
+	w.WriteHeader(http.StatusOK)
+
+	if _, err := io.Copy(w, fl); err != nil {
+		// TODO: log.
 	}
 }
