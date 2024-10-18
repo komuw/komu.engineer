@@ -21,6 +21,65 @@ import (
 	"go.akshayshah.org/attest"
 )
 
+/////////////////////////////// utils ///////////////////////
+
+func getPort() uint16 {
+	r := rand.IntN(10_000) + 1
+	p := math.MaxUint16 - uint16(r)
+	return p
+}
+
+// Taken from https://github.com/komuw/ong/blob/v0.1.11/internal/tst/tst.go#L17-L19
+func TlsServer(h http.Handler, domain string, httpsPort uint16) (*httptest.Server, error) {
+	if !testing.Testing() {
+		panic("this func should only be called from tests")
+	}
+
+	ts := httptest.NewUnstartedServer(h)
+	if err := ts.Listener.Close(); err != nil {
+		return nil, err
+	}
+
+	l, err := net.Listen("tcp", net.JoinHostPort(domain, fmt.Sprintf("%d", httpsPort)))
+	if err != nil {
+		return nil, err
+	}
+
+	ts.Listener = l
+	ts.StartTLS()
+
+	return ts, nil
+}
+
+// Taken from https://github.com/komuw/ong/blob/v0.1.11/internal/tst/tst.go#L83-L84
+func Ping(port uint16) error {
+	if !testing.Testing() {
+		panic("this func should only be called from tests")
+	}
+
+	var err error
+	count := 0
+	maxCount := 12
+
+	for {
+		count = count + 1
+		time.Sleep(1 * time.Second)
+		if _, err := net.DialTimeout("tcp", fmt.Sprintf("localhost:%d", port), 1*time.Second); err == nil {
+			fmt.Println("connected to ", port, "after: ", count)
+			break
+		}
+
+		if count > maxCount {
+			err = fmt.Errorf("ping max count(%d) reached: %w", maxCount, err)
+			break
+		}
+	}
+
+	return err
+}
+
+/////////////////////////////////////////////////////////////
+
 func TestMux(t *testing.T) {
 	t.Parallel()
 
@@ -248,58 +307,3 @@ func TestMuxRedirects(t *testing.T) {
 // 		})
 // 	}
 // }
-
-func getPort() uint16 {
-	r := rand.IntN(10_000) + 1
-	p := math.MaxUint16 - uint16(r)
-	return p
-}
-
-// Taken from https://github.com/komuw/ong/blob/v0.1.11/internal/tst/tst.go#L17-L19
-func TlsServer(h http.Handler, domain string, httpsPort uint16) (*httptest.Server, error) {
-	if !testing.Testing() {
-		panic("this func should only be called from tests")
-	}
-
-	ts := httptest.NewUnstartedServer(h)
-	if err := ts.Listener.Close(); err != nil {
-		return nil, err
-	}
-
-	l, err := net.Listen("tcp", net.JoinHostPort(domain, fmt.Sprintf("%d", httpsPort)))
-	if err != nil {
-		return nil, err
-	}
-
-	ts.Listener = l
-	ts.StartTLS()
-
-	return ts, nil
-}
-
-// Taken from https://github.com/komuw/ong/blob/v0.1.11/internal/tst/tst.go#L83-L84
-func Ping(port uint16) error {
-	if !testing.Testing() {
-		panic("this func should only be called from tests")
-	}
-
-	var err error
-	count := 0
-	maxCount := 12
-
-	for {
-		count = count + 1
-		time.Sleep(1 * time.Second)
-		if _, err := net.DialTimeout("tcp", fmt.Sprintf("localhost:%d", port), 1*time.Second); err == nil {
-			fmt.Println("connected to ", port, "after: ", count)
-			break
-		}
-
-		if count > maxCount {
-			err = fmt.Errorf("ping max count(%d) reached: %w", maxCount, err)
-			break
-		}
-	}
-
-	return err
-}
