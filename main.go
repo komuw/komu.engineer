@@ -44,7 +44,7 @@ func run() error {
 }
 
 func cfg() (config.Opts, *slog.Logger, error) {
-	const envVar = "WEBSITE_ENVIRONMENT"
+	const envVar = "KOMU_ENGINEER_WEBSITE_ENVIRONMENT"
 	env := os.Getenv(envVar)
 
 	l := log.New(context.Background(), os.Stdout, 30).With("pid", os.Getpid())
@@ -57,9 +57,9 @@ func cfg() (config.Opts, *slog.Logger, error) {
 		opts = config.DevOpts(l, id.New())
 		opts.DrainTimeout = 1 * time.Nanosecond
 	case v == "production":
-		acmeEmail := os.Getenv("WEBSITE_LETSENCRYPT_EMAIL")
+		acmeEmail := os.Getenv("KOMU_ENGINEER_WEBSITE_LETSENCRYPT_EMAIL")
 		if acmeEmail == "" {
-			return opts, l, errors.Errorf("the env var %s is either not set or has the wrong value. got = `%s`", "WEBSITE_LETSENCRYPT_EMAIL", acmeEmail)
+			return opts, l, errors.Errorf("the env var %s is either not set or has the wrong value. got = `%s`", "KOMU_ENGINEER_WEBSITE_LETSENCRYPT_EMAIL", acmeEmail)
 		}
 		domain := "*.komu.engineer"
 		opts = config.LetsEncryptOpts(

@@ -90,7 +90,7 @@ sudo apt -y purge '~c' # https://askubuntu.com/a/181965"
 }
 
 run_rsync() {
-    printf "\n\n rsync website build: \n"
+    printf "\n\n rsync komu_engineer_website build: \n"
 
     IP=${1:-NotSet}
     if [ "$IP" == "NotSet"  ]; then
@@ -100,13 +100,13 @@ run_rsync() {
 
     NOW=$(date +%dd-%mm-%Yy-%Hh-%Mmin-%Ssec);
     ssh root@"${IP}" \
-'mkdir -p /root/serve/;'
+'mkdir -p /root/serve/komu_engineer_website;'
 
 	rsync -v --recursive \
 	  --perms \
 	  --executability \
-	  website \
-	  root@"${IP}":/root/serve/website
+	  komu_engineer_website \
+	  root@"${IP}":/root/serve/komu_engineer_website/komu_engineer_website
 }
 
 install_software(){
@@ -119,20 +119,20 @@ install_software(){
     fi
 
     ssh root@"${IP}" \
-'cd /root/serve/;
+'cd /root/serve/komu_engineer_website/;
 pwd;ls -lsha;
-OLD_WEBSITE_PID=$(pidof website);
-echo "OLD_WEBSITE_PID = ${OLD_WEBSITE_PID}";
-export WEBSITE_ENVIRONMENT=production;
-export WEBSITE_LETSENCRYPT_EMAIL=komuw05+komu-engineer-LetsencryptEmail@gmail.com;
+OLD_KOMU_ENGINEER_WEBSITE_PID=$(pidof komu_engineer_website);
+echo "OLD_KOMU_ENGINEER_WEBSITE_PID = ${OLD_KOMU_ENGINEER_WEBSITE_PID}";
+export KOMU_ENGINEER_WEBSITE_ENVIRONMENT=production;
+export KOMU_ENGINEER_WEBSITE_LETSENCRYPT_EMAIL=komuw05+komu-engineer-LetsencryptEmail@gmail.com;
 rm -rf /tmp/website_background.out;
-./website > /tmp/website_background.out 2>&1 &
+./komu_engineer_website > /tmp/komu_engineer_website_background.out 2>&1 &
 sleep 5;
-NEW_WEBSITE_PID=$(pidof website);
-echo "NEW_WEBSITE_PID = ${NEW_WEBSITE_PID}";
-kill -15 ${OLD_WEBSITE_PID};
+NEW_KOMU_ENGINEER_WEBSITE_PID=$(pidof komu_engineer_website);
+echo "NEW_KOMU_ENGINEER_WEBSITE_PID = ${NEW_KOMU_ENGINEER_WEBSITE_PID}";
+kill -15 ${OLD_KOMU_ENGINEER_WEBSITE_PID};
 sleep 15;
-tail -n10 /tmp/website_background.out;'
+tail -n10 /tmp/wkomu_engineer_website_background.out;'
 }
 
 # Note you need to enable ipv6 via:
