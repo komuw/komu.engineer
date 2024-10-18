@@ -98,6 +98,15 @@ run_rsync() {
         exit 1
     fi
 
+    CWD=$(basename "$PWD")
+    if [ "$CWD" == "komu" ]; then
+        #
+        echo -n ""
+    else
+        printf "\n\t You are in the wrong directory $PWD \n"
+        exit 1
+    fi
+
     NOW=$(date +%dd-%mm-%Yy-%Hh-%Mmin-%Ssec);
     ssh root@"${IP}" \
 'mkdir -p /root/serve/komu_engineer_website;'
