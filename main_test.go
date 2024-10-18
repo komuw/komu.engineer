@@ -117,39 +117,82 @@ func TestMux(t *testing.T) {
 	}
 }
 
-// func TestMuxRedirects(t *testing.T) {
-// 	t.Parallel()
+func TestMuxRedirects(t *testing.T) {
+	t.Parallel()
 
-// 	cwd, err := os.Getwd()
-// 	attest.Ok(t, err)
+	cwd, err := os.Getwd()
+	attest.Ok(t, err)
 
-// 	w := os.Stderr
-// 	mx := getMux(log.New(context.Background(), w, 10), cwd)
+	w := os.Stderr
+	l := log.New(context.Background(), w, 10)
+	opts := config.DevOpts(l, id.New())
+	opts.Domain = "localhost"
+	mx := getMux(l, opts, cwd)
 
-// 	t.Run("redirects", func(t *testing.T) {
-// 		t.Parallel()
+	httpsPort := getPort()
+	ts, err := TlsServer(mx, opts.Domain, httpsPort)
+	attest.Ok(t, err)
+	t.Cleanup(func() {
+		// It is important that we close in `t.Cleanup` rather than `defer ts.Close()`
+		// This is because using defer will close it for this fumc.
+		// When we call the server in `t.Run` it will already be closed.
+		ts.Close()
+	})
+	attest.Ok(t, Ping(httpsPort)) // wait for server to start.
 
-// 		for _, v := range []string{
-// 			"/blogs/go-gc-maps",
-// 			"/blogs/consensus",
-// 			"/blogs/python-lambda",
-// 			"/blogs/go-modules-early-peek",
-// 			"/blogs/lambda-shim/lambda-shim",
-// 			"/blogs/timeScaleDB/timescaleDB-for-logs",
-// 			"/blogs/celery-clone/understand-how-celery-works",
-// 			"/blogs/golang-stackTrace/golang-stackTrace",
-// 			"/blogs/log-without-losing-context/log-without-losing-context",
-// 		} {
-// 			rec := httptest.NewRecorder()
-// 			req := httptest.NewRequest(http.MethodGet, v, nil)
-// 			mx.ServeHTTP(rec, req)
+	tr := &http.Transport{
+		// since we are using self-signed certificates, we need to skip verification.
+		TLSClientConfig: &tls.Config{InsecureSkipVerify: true},
+	}
+	clientNoRedirect := &http.Client{
+		Transport: tr,
+		CheckRedirect: func(req *http.Request, via []*http.Request) error {
+			return http.ErrUseLastResponse
+		},
+	} // does NOT follow redirects.
+	clientWithRedirect := &http.Client{Transport: tr} // follows redirects.
 
-// 			res := rec.Result()
-// 			defer res.Body.Close()
-// 			attest.Equal(t, res.StatusCode, http.StatusMovedPermanently)
-// 		}
-// 	})
-// }
+	t.Run("redirects", func(t *testing.T) {
+		t.Parallel()
+
+		for _, v := range []string{
+			"/blogs/go-gc-maps",
+			"/blogs/consensus",
+			"/blogs/python-lambda",
+			"/blogs/go-modules-early-peek",
+			"/blogs/lambda-shim/lambda-shim",
+			"/blogs/timeScaleDB/timescaleDB-for-logs",
+			"/blogs/celery-clone/understand-how-celery-works",
+			"/blogs/golang-stackTrace/golang-stackTrace",
+			"/blogs/log-without-losing-context/log-without-losing-context",
+		} {
+			{
+				url := ts.URL + v
+				url = strings.ReplaceAll(url, "127.0.0.1", "localhost")
+				res, err := clientNoRedirect.Get(url)
+				attest.Ok(t, err)
+				defer res.Body.Close()
+
+				rb, err := io.ReadAll(res.Body)
+				attest.Ok(t, err)
+				_ = rb
+				attest.Equal(t, res.StatusCode, http.StatusMovedPermanently, attest.Sprintf("url: %v", url))
+			}
+			{
+				url := ts.URL + v
+				url = strings.ReplaceAll(url, "127.0.0.1", "localhost")
+				res, err := clientWithRedirect.Get(url)
+				attest.Ok(t, err)
+				defer res.Body.Close()
+
+				rb, err := io.ReadAll(res.Body)
+				attest.Ok(t, err)
+				_ = rb
+				attest.Equal(t, res.StatusCode, http.StatusOK, attest.Sprintf("url: %v", url))
+			}
+		}
+	})
+}
 
 // func TestMuxRouteSubdomains(t *testing.T) {
 // 	t.Parallel()
