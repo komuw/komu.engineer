@@ -45,7 +45,7 @@ func getMux(l *slog.Logger, cwd string) *http.ServeMux {
 	mux := http.NewServeMux()
 	// For how precedence matching works,
 	// see: https://go.dev/blog/routing-enhancements#precedence
-	mux.HandleFunc("GET /", ServeFileSources(l, cwd))
+	mux.HandleFunc("GET /", serveFileSources(l, cwd))
 
 	{ // redirects.
 		mux.HandleFunc("GET /blogs/go-gc-maps", func(w http.ResponseWriter, r *http.Request) {
@@ -80,7 +80,7 @@ func getMux(l *slog.Logger, cwd string) *http.ServeMux {
 	return mux
 }
 
-func ServeFileSources(l *slog.Logger, rootDir string) http.HandlerFunc {
+func serveFileSources(l *slog.Logger, rootDir string) http.HandlerFunc {
 	// curl -vL https://localhost:65081/blogs/ala.txt
 	// curl -vL https://localhost:65081/blogs/01/go-gc-maps.html
 
