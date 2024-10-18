@@ -82,13 +82,18 @@ func getMux(l *slog.Logger, cwd string) *http.ServeMux {
 }
 
 func router(l *slog.Logger, rootDir string) http.HandlerFunc {
-	website := serveFileSources(l, rootDir)
+	website := serveFileSources(
+		l,
+		rootDir,
+	)
 	srs := func(w http.ResponseWriter, r *http.Request) {
 		w.Write([]byte("this is the srs subdomain"))
 	}
-	algo := func(w http.ResponseWriter, r *http.Request) {
-		w.Write([]byte("this is the algorithm subdomain"))
-	}
+	algo := serveFileSources(
+		// curl -vkL -H "Host:algo.komu.engineer:80" https://localhost:65081/
+		l,
+		filepath.Join(rootDir, "/blogs/algos-n-data-structures"),
+	)
 
 	return func(w http.ResponseWriter, r *http.Request) {
 		host := r.Host

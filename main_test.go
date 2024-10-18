@@ -137,7 +137,7 @@ func TestMuxRouteSubdomains(t *testing.T) {
 		{
 			host:               "localhost:80",
 			expectedStatusCode: http.StatusOK,
-			expectedBody:       "styled using css-grid",
+			expectedBody:       "Is a software developer currently",
 		},
 		{
 			host:               "srs.komu.engineer:80",
@@ -147,7 +147,7 @@ func TestMuxRouteSubdomains(t *testing.T) {
 		{
 			host:               "algo.komu.engineer:80",
 			expectedStatusCode: http.StatusOK,
-			expectedBody:       "this is the algorithm subdomain",
+			expectedBody:       "4_stack_n_queue",
 		},
 	}
 
@@ -158,7 +158,7 @@ func TestMuxRouteSubdomains(t *testing.T) {
 			t.Parallel()
 
 			rec := httptest.NewRecorder()
-			req := httptest.NewRequest(http.MethodGet, "/site.css", nil)
+			req := httptest.NewRequest(http.MethodGet, "/index.html", nil)
 			req.Header.Set("Host", tt.host)
 			req.Host = tt.host
 
