@@ -145,6 +145,7 @@ func router(l *slog.Logger, opts config.Opts, rootDir string) http.HandlerFunc {
 			}
 		}
 
+		// Sometimes the host has a port, other times it does not.
 		hst := host
 		last := host[len(host)-1]
 		if _, err := strconv.Atoi(string(last)); err == nil {
