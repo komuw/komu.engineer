@@ -298,6 +298,11 @@ func TestMuxRouteSubdomains(t *testing.T) {
 			expectedBody:       "this is the srs subdomain",
 		},
 		{
+			host:               "srs.localhost", // no port
+			expectedStatusCode: http.StatusOK,
+			expectedBody:       "this is the srs subdomain",
+		},
+		{
 			host:               "algo.localhost:80",
 			expectedStatusCode: http.StatusOK,
 			expectedBody:       "4_stack_n_queue",

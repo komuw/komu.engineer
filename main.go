@@ -145,12 +145,18 @@ func router(l *slog.Logger, opts config.Opts, rootDir string) http.HandlerFunc {
 			}
 		}
 
-		hst, port, err := net.SplitHostPort(host)
-		args = append(args, []any{"err", err, "hst", hst, "port", port}...)
-		if err != nil {
-			l.Error("router_handler", args...)
-			website(w, r)
-			return
+		hst := host
+		last := host[len(host)-1]
+		if _, err := strconv.Atoi(string(last)); err == nil {
+			// host has a port
+			h, port, err := net.SplitHostPort(host)
+			args = append(args, []any{"err", err, "hst", hst, "port", port}...)
+			if err != nil {
+				l.Error("router_handler", args...)
+				website(w, r)
+				return
+			}
+			hst = h
 		}
 		hst = strings.ToLower(hst)
 
