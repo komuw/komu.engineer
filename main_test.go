@@ -1,6 +1,8 @@
 package main
 
 import (
+	"bytes"
+	"context"
 	"fmt"
 	"net/http"
 	"net/http/httptest"
@@ -8,6 +10,7 @@ import (
 	"strings"
 	"testing"
 
+	"github.com/komuw/ong/log"
 	"go.akshayshah.org/attest"
 )
 
@@ -18,7 +21,8 @@ func TestMux(t *testing.T) {
 	attest.Ok(t, err)
 	fmt.Println("cwd: ", cwd)
 
-	mx := getMux(cwd)
+	w := &bytes.Buffer{}
+	mx := getMux(log.New(context.Background(), w, 10), cwd)
 
 	tests := []struct {
 		path               string
@@ -91,7 +95,8 @@ func TestMuxRedirects(t *testing.T) {
 	attest.Ok(t, err)
 	fmt.Println("cwd: ", cwd)
 
-	mx := getMux(cwd)
+	w := &bytes.Buffer{}
+	mx := getMux(log.New(context.Background(), w, 10), cwd)
 
 	t.Run("redirects", func(t *testing.T) {
 		t.Parallel()

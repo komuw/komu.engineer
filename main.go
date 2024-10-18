@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"io"
 	stdLog "log"
+	"log/slog"
 	"mime"
 	"net/http"
 	"os"
@@ -38,14 +39,14 @@ func run() error {
 		return err
 	}
 
-	return server.Run(getMux(cwd), opts)
+	return server.Run(getMux(l, cwd), opts)
 }
 
-func getMux(cwd string) *http.ServeMux {
+func getMux(l *slog.Logger, cwd string) *http.ServeMux {
 	mux := http.NewServeMux()
 	// For how precedence matching works,
 	// see: https://go.dev/blog/routing-enhancements#precedence
-	mux.HandleFunc("GET /", ServeFileSources(cwd))
+	mux.HandleFunc("GET /", ServeFileSources(l, cwd))
 
 	{ // redirects.
 		mux.HandleFunc("GET /blogs/go-gc-maps", func(w http.ResponseWriter, r *http.Request) {
@@ -80,14 +81,14 @@ func getMux(cwd string) *http.ServeMux {
 	return mux
 }
 
-func ServeFileSources(rootDir string) http.HandlerFunc {
+func ServeFileSources(l *slog.Logger, rootDir string) http.HandlerFunc {
 	// curl -vL https://localhost:65081/blogs/ala.txt
 	// curl -vL https://localhost:65081/blogs/01/go-gc-maps.html
 
 	if len(rootDir) < 1 {
 		panic("rootDir cannot be empty")
 	}
-	h := fileHandler{rootDir: rootDir}
+	h := fileHandler{rootDir: rootDir, l: l}
 
 	return func(w http.ResponseWriter, r *http.Request) {
 		fmt.Println("r.URL.String()1: ", r.URL.String())
@@ -98,6 +99,7 @@ func ServeFileSources(rootDir string) http.HandlerFunc {
 type fileHandler struct {
 	// rootDir is required so that a malicious user cannot request for `localhost:80/etc/passwd`
 	rootDir string
+	l       *slog.Logger
 }
 
 func (f fileHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
@@ -114,12 +116,13 @@ func (f fileHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		upath = "/" + strings.TrimPrefix(upath, rootLast)
 	}
 	file := filepath.Join(f.rootDir, upath)
-	fmt.Println("rootLast: ", rootLast)
-	fmt.Println("upath: ", upath)
-	fmt.Println("file1: ", file)
-
 	file = path.Clean(file)
-	fmt.Println("file2: ", file)
+	args := []any{
+		"url", r.URL.String(),
+		"rootDir", f.rootDir,
+		"file", file,
+	}
+
 	fl, err1 := os.Open(file)
 	if err1 == nil {
 		defer fl.Close()
@@ -128,8 +131,9 @@ func (f fileHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		fl = fl2
 		if err2 != nil {
 			e := errors.Join(err1, err2)
-			// TODO: log.
-			fmt.Println("errrr: ", e)
+			args = append(args, []any{"err", e}...)
+			f.l.Error("fileHandler_response", args...)
+
 			http.Error(w, "unable to open file: "+file, http.StatusNotFound)
 			return
 		}
@@ -137,26 +141,30 @@ func (f fileHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 
 	fi, err := fl.Stat()
 	if err != nil {
-		// TODO: log.
+		args = append(args, []any{"err", err}...)
+		f.l.Error("fileHandler_response", args...)
+
 		http.Error(w, "unable to stat file: "+file, http.StatusInternalServerError)
 		return
 	}
 
-	fmt.Println("dirrr: ", fi.IsDir())
 	if fi.IsDir() {
 		file = filepath.Join(file, "index.html")
 		fl3, err3 := os.Open(file)
 		fl = fl3
 		if err3 != nil {
-			// TODO: log.
-			fmt.Println("err3: ", err3)
+			args = append(args, []any{"err", err3}...)
+			f.l.Error("fileHandler_response", args...)
+
 			http.Error(w, "unable to open file: "+file, http.StatusNotFound)
 			return
 		}
 
 		fi2, err := fl.Stat()
 		if err != nil {
-			// TODO: log.
+			args = append(args, []any{"err", err}...)
+			f.l.Error("fileHandler_response", args...)
+
 			http.Error(w, "unable to stat file: "+file, http.StatusInternalServerError)
 			return
 		}
@@ -182,6 +190,7 @@ func (f fileHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 
 	w.WriteHeader(http.StatusOK)
 	if _, err := io.Copy(w, fl); err != nil {
-		// TODO: log.
+		args = append(args, []any{"err", err}...)
+		f.l.Error("fileHandler_response", args...)
 	}
 }
