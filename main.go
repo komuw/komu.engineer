@@ -82,6 +82,7 @@ func cfg() (config.Opts, *slog.Logger, error) {
 
 func getMux(l *slog.Logger, opts config.Opts, cwd string) mux.Muxer {
 	allRoutes := []mux.Route{
+		// TODO: add tarpit handler.
 		mux.NewRoute(
 			"/*",
 			mux.MethodAll,
@@ -103,6 +104,7 @@ func router(l *slog.Logger, opts config.Opts, rootDir string) http.HandlerFunc {
 		domain = domain[2:]
 	}
 
+	// TODO: use embed package.
 	website := serveFileSources(
 		l,
 		rootDir,
