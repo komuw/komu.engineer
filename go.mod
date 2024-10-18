@@ -13,5 +13,3 @@ require (
 )
 
 require go.akshayshah.org/attest v1.1.0 // test
-
-replace github.com/komuw/ong => /home/kw/gohack/github.com/komuw/ong

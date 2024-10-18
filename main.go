@@ -58,7 +58,7 @@ func cfg() (config.Opts, *slog.Logger, error) {
 	default:
 		return opts, l, errors.Errorf("the env var %s is either not set or has the wrong value. got = `%s`", envVar, v)
 	case v == "development":
-		opts = config.DevOpts(l, id.New())
+		opts = config.DevOpts(l, id.UUID4().String())
 		opts.DrainTimeout = 1 * time.Nanosecond
 	case v == "production":
 		acmeEmail := os.Getenv("KOMU_ENGINEER_WEBSITE_LETSENCRYPT_EMAIL")
@@ -68,7 +68,7 @@ func cfg() (config.Opts, *slog.Logger, error) {
 		domain := "*.komu.engineer"
 		opts = config.LetsEncryptOpts(
 			domain,
-			id.New(),
+			id.UUID4().String(),
 			// TODO: change clientIPstrategy based on our server host.
 			config.DirectIpStrategy,
 			l,

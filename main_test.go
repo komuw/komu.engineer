@@ -88,7 +88,7 @@ func TestMux(t *testing.T) {
 
 	w := os.Stderr
 	l := log.New(context.Background(), w, 10)
-	opts := config.DevOpts(l, id.New())
+	opts := config.DevOpts(l, id.UUID4().String())
 	opts.Domain = "localhost"
 	mx := getMux(l, opts, cwd)
 
@@ -184,7 +184,7 @@ func TestMuxRedirects(t *testing.T) {
 
 	w := os.Stderr
 	l := log.New(context.Background(), w, 10)
-	opts := config.DevOpts(l, id.New())
+	opts := config.DevOpts(l, id.UUID4().String())
 	opts.Domain = "localhost"
 	mx := getMux(l, opts, cwd)
 
@@ -261,7 +261,7 @@ func TestMuxRouteSubdomains(t *testing.T) {
 
 	w := os.Stderr
 	l := log.New(context.Background(), w, 10)
-	opts := config.DevOpts(l, id.New())
+	opts := config.DevOpts(l, id.UUID4().String())
 	opts.Domain = "localhost"
 	mx := getMux(l, opts, cwd)
 
