@@ -52,6 +52,14 @@ func TestMux(t *testing.T) {
 			path:               "/about.html",
 			expectedStatusCode: http.StatusOK,
 		},
+		{
+			path:               "/cv/komu-CV.pdf",
+			expectedStatusCode: http.StatusOK,
+		},
+		{
+			path:               "/cv/okay-CV.pdf",
+			expectedStatusCode: http.StatusNotFound,
+		},
 		// TODO: fix this
 		// {
 		// 	path:               "/blogs",
