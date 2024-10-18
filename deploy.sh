@@ -34,6 +34,16 @@ get_ip() {
 
 run_tests(){
     printf "\n\n running tests: \n"
+
+    CWD=$(basename "$PWD")
+    if [ "$CWD" == "komu" ]; then
+        #
+        echo -n ""
+    else
+        printf "\n\t You are in the wrong directory $PWD \n"
+        exit 1
+    fi
+
     goimports -w . && \
     gofumpt -extra -w . && \
     gofmt -w -s . && \
