@@ -144,6 +144,11 @@ func TestMuxRouteSubdomains(t *testing.T) {
 			expectedStatusCode: http.StatusOK,
 			expectedBody:       "this is the srs subdomain",
 		},
+		{
+			host:               "algo.komu.engineer:80",
+			expectedStatusCode: http.StatusOK,
+			expectedBody:       "this is the algorithm subdomain",
+		},
 	}
 
 	for _, tt := range tests {

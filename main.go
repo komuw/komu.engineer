@@ -86,6 +86,9 @@ func router(l *slog.Logger, rootDir string) http.HandlerFunc {
 	srs := func(w http.ResponseWriter, r *http.Request) {
 		w.Write([]byte("this is the srs subdomain"))
 	}
+	algo := func(w http.ResponseWriter, r *http.Request) {
+		w.Write([]byte("this is the algorithm subdomain"))
+	}
 
 	return func(w http.ResponseWriter, r *http.Request) {
 		host := r.Host
@@ -111,6 +114,10 @@ func router(l *slog.Logger, rootDir string) http.HandlerFunc {
 		if strings.Contains(hst, "srs.komu.engineer") {
 			// TODO: plugin route to srs.
 			srs(w, r)
+			return
+		}
+		if strings.Contains(hst, "algo.komu.engineer") {
+			algo(w, r)
 			return
 		}
 
