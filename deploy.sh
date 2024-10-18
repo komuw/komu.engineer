@@ -130,6 +130,8 @@ run_rsync() {
     rsync -v --recursive \
 	  --perms \
 	  --executability \
+      --exclude .git/ \
+      --exclude .gitignore \
 	  . \
 	  root@"${IP}":/root/serve/komu_engineer_website/
 }
