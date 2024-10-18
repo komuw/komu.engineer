@@ -149,6 +149,18 @@ func router(l *slog.Logger, rootDir string) http.HandlerFunc {
 		l,
 		filepath.Join(rootDir, "/blogs/algos-n-data-structures"),
 	)
+	redirectMap := map[string]string{
+		// key is original url, value is the new location.
+		"/blogs/go-gc-maps":                                            "/blogs/01/go-gc-maps",
+		"/blogs/consensus":                                             "/blogs/02/consensus",
+		"/blogs/python-lambda":                                         "/blogs/03/python-lambda",
+		"/blogs/go-modules-early-peek":                                 "/blogs/04/go-modules-early-peek",
+		"/blogs/lambda-shim/lambda-shim":                               "/blogs/05/lambda-shim",
+		"/blogs/timeScaleDB/timescaleDB-for-logs":                      "/blogs/06/timescaleDB-for-logs",
+		"/blogs/celery-clone/understand-how-celery-works":              "/blogs/07/understand-how-celery-works",
+		"/blogs/golang-stackTrace/golang-stackTrace":                   "/blogs/08/golang-stackTrace",
+		"/blogs/log-without-losing-context/log-without-losing-context": "/blogs/09/log-without-losing-context",
+	}
 
 	return func(w http.ResponseWriter, r *http.Request) {
 		host := r.Host
@@ -156,6 +168,15 @@ func router(l *slog.Logger, rootDir string) http.HandlerFunc {
 			"func", "router",
 			"url", r.URL.String(),
 			"host", host,
+			"r.URL.Path", r.URL.Path,
+		}
+
+		{ // handle redirects
+			for k, v := range redirectMap {
+				if r.URL.Path == k {
+					http.Redirect(w, r, v, http.StatusMovedPermanently)
+				}
+			}
 		}
 
 		hst, port, err := net.SplitHostPort(host)
