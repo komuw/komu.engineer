@@ -1,9 +1,8 @@
 package main
 
 import (
-	"bytes"
 	"context"
-	"fmt"
+	"io"
 	"net/http"
 	"net/http/httptest"
 	"os"
@@ -19,9 +18,8 @@ func TestMux(t *testing.T) {
 
 	cwd, err := os.Getwd()
 	attest.Ok(t, err)
-	fmt.Println("cwd: ", cwd)
 
-	w := &bytes.Buffer{}
+	w := os.Stderr
 	mx := getMux(log.New(context.Background(), w, 10), cwd)
 
 	tests := []struct {
@@ -93,9 +91,8 @@ func TestMuxRedirects(t *testing.T) {
 
 	cwd, err := os.Getwd()
 	attest.Ok(t, err)
-	fmt.Println("cwd: ", cwd)
 
-	w := &bytes.Buffer{}
+	w := os.Stderr
 	mx := getMux(log.New(context.Background(), w, 10), cwd)
 
 	t.Run("redirects", func(t *testing.T) {
@@ -121,4 +118,54 @@ func TestMuxRedirects(t *testing.T) {
 			attest.Equal(t, res.StatusCode, http.StatusMovedPermanently)
 		}
 	})
+}
+
+func TestMuxRouteSubdomains(t *testing.T) {
+	t.Parallel()
+
+	cwd, err := os.Getwd()
+	attest.Ok(t, err)
+
+	w := os.Stderr
+	mx := getMux(log.New(context.Background(), w, 10), cwd)
+
+	tests := []struct {
+		host               string
+		expectedStatusCode int
+		expectedBody       string
+	}{
+		{
+			host:               "localhost:80",
+			expectedStatusCode: http.StatusOK,
+			expectedBody:       "styled using css-grid",
+		},
+		{
+			host:               "srs.komu.engineer:80",
+			expectedStatusCode: http.StatusOK,
+			expectedBody:       "this is the srs subdomain",
+		},
+	}
+
+	for _, tt := range tests {
+		tt := tt
+
+		t.Run(tt.host, func(t *testing.T) {
+			t.Parallel()
+
+			rec := httptest.NewRecorder()
+			req := httptest.NewRequest(http.MethodGet, "/site.css", nil)
+			req.Header.Set("Host", tt.host)
+			req.Host = tt.host
+
+			mx.ServeHTTP(rec, req)
+
+			res := rec.Result()
+			defer res.Body.Close()
+			rb, err := io.ReadAll(res.Body)
+			attest.Ok(t, err)
+
+			attest.Equal(t, res.StatusCode, tt.expectedStatusCode)
+			attest.Subsequence(t, string(rb), tt.expectedBody)
+		})
+	}
 }

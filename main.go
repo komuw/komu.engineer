@@ -2,10 +2,12 @@ package main
 
 import (
 	"context"
+	"fmt"
 	"io"
 	stdLog "log"
 	"log/slog"
 	"mime"
+	"net"
 	"net/http"
 	"os"
 	"path"
@@ -45,7 +47,7 @@ func getMux(l *slog.Logger, cwd string) *http.ServeMux {
 	mux := http.NewServeMux()
 	// For how precedence matching works,
 	// see: https://go.dev/blog/routing-enhancements#precedence
-	mux.HandleFunc("GET /", serveFileSources(l, cwd))
+	mux.HandleFunc("GET /", router(l, cwd))
 
 	{ // redirects.
 		mux.HandleFunc("GET /blogs/go-gc-maps", func(w http.ResponseWriter, r *http.Request) {
@@ -78,6 +80,45 @@ func getMux(l *slog.Logger, cwd string) *http.ServeMux {
 	}
 
 	return mux
+}
+
+func router(l *slog.Logger, rootDir string) http.HandlerFunc {
+	website := serveFileSources(l, rootDir)
+	srs := func(w http.ResponseWriter, r *http.Request) {
+		w.Write([]byte("this is the srs subdomain"))
+	}
+
+	return func(w http.ResponseWriter, r *http.Request) {
+		host := r.Host
+		fmt.Println("req: ", r)
+
+		args := []any{
+			"url", r.URL.String(),
+			"func", "router",
+		}
+
+		hst, port, err := net.SplitHostPort(host)
+		args = append(args, []any{"err", err, "hst", hst, "port", port}...)
+		if err != nil {
+			l.Error("router_handler", args...)
+			website(w, r)
+			return
+		}
+		hst = strings.ToLower(hst)
+		fmt.Println("hst: ", hst, args)
+
+		if hst == "localhost" {
+			website(w, r)
+			return
+		}
+		if strings.Contains(hst, "srs.komu.engineer") {
+			// TODO: plugin route to srs.
+			srs(w, r)
+			return
+		}
+
+		website(w, r)
+	}
 }
 
 func serveFileSources(l *slog.Logger, rootDir string) http.HandlerFunc {
