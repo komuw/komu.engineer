@@ -124,7 +124,7 @@ func getMux2(l *slog.Logger, opts config.Opts, cwd string) mux.Muxer {
 	allRoutes := []mux.Route{
 		mux.NewRoute(
 			"/*",
-			http.MethodGet,
+			mux.MethodAll,
 			router(l, cwd),
 		),
 	}
