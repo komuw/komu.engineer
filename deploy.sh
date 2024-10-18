@@ -126,6 +126,12 @@ run_rsync() {
 	  --executability \
 	  komu_engineer_website \
 	  root@"${IP}":/root/serve/komu_engineer_website/komu_engineer_website
+
+    rsync -v --recursive \
+	  --perms \
+	  --executability \
+	  . \
+	  root@"${IP}":/root/serve/komu_engineer_website/
 }
 
 install_software(){
