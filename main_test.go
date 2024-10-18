@@ -253,57 +253,90 @@ func TestMuxRedirects(t *testing.T) {
 	})
 }
 
-// func TestMuxRouteSubdomains(t *testing.T) {
-// 	t.Parallel()
+func TestMuxRouteSubdomains(t *testing.T) {
+	t.Parallel()
 
-// 	cwd, err := os.Getwd()
-// 	attest.Ok(t, err)
+	cwd, err := os.Getwd()
+	attest.Ok(t, err)
 
-// 	w := os.Stderr
-// 	mx := getMux(log.New(context.Background(), w, 10), cwd)
+	w := os.Stderr
+	l := log.New(context.Background(), w, 10)
+	opts := config.DevOpts(l, id.New())
+	opts.Domain = "localhost"
+	mx := getMux(l, opts, cwd)
 
-// 	tests := []struct {
-// 		host               string
-// 		expectedStatusCode int
-// 		expectedBody       string
-// 	}{
-// 		{
-// 			host:               "localhost:80",
-// 			expectedStatusCode: http.StatusOK,
-// 			expectedBody:       "Is a software developer currently",
-// 		},
-// 		{
-// 			host:               "srs.komu.engineer:80",
-// 			expectedStatusCode: http.StatusOK,
-// 			expectedBody:       "this is the srs subdomain",
-// 		},
-// 		{
-// 			host:               "algo.komu.engineer:80",
-// 			expectedStatusCode: http.StatusOK,
-// 			expectedBody:       "4_stack_n_queue",
-// 		},
-// 	}
+	httpsPort := getPort()
+	ts, err := TlsServer(mx, opts.Domain, httpsPort)
+	attest.Ok(t, err)
+	t.Cleanup(func() {
+		// It is important that we close in `t.Cleanup` rather than `defer ts.Close()`
+		// This is because using defer will close it for this fumc.
+		// When we call the server in `t.Run` it will already be closed.
+		ts.Close()
+	})
+	attest.Ok(t, Ping(httpsPort)) // wait for server to start.
 
-// 	for _, tt := range tests {
-// 		tt := tt
+	tr := &http.Transport{
+		// since we are using self-signed certificates, we need to skip verification.
+		TLSClientConfig: &tls.Config{InsecureSkipVerify: true},
+	}
+	client := &http.Client{Transport: tr} // follows redirects.
 
-// 		t.Run(tt.host, func(t *testing.T) {
-// 			t.Parallel()
+	tests := []struct {
+		host               string
+		expectedStatusCode int
+		expectedBody       string
+	}{
+		{
+			host:               "localhost:80",
+			expectedStatusCode: http.StatusOK,
+			expectedBody:       "Is a software developer currently",
+		},
+		{
+			host:               "srs.komu.engineer:80",
+			expectedStatusCode: http.StatusOK,
+			expectedBody:       "this is the srs subdomain",
+		},
+		{
+			host:               "algo.komu.engineer:80",
+			expectedStatusCode: http.StatusOK,
+			expectedBody:       "4_stack_n_queue",
+		},
+	}
 
-// 			rec := httptest.NewRecorder()
-// 			req := httptest.NewRequest(http.MethodGet, "/index.html", nil)
-// 			req.Header.Set("Host", tt.host)
-// 			req.Host = tt.host
+	for _, tt := range tests {
+		tt := tt
 
-// 			mx.ServeHTTP(rec, req)
+		t.Run(tt.host, func(t *testing.T) {
+			t.Parallel()
 
-// 			res := rec.Result()
-// 			defer res.Body.Close()
-// 			rb, err := io.ReadAll(res.Body)
-// 			attest.Ok(t, err)
+			url := ts.URL + "/index.html"
+			url = strings.ReplaceAll(url, "127.0.0.1", "localhost")
+			res, err := client.Get(url)
+			attest.Ok(t, err)
+			defer res.Body.Close()
 
-// 			attest.Equal(t, res.StatusCode, tt.expectedStatusCode)
-// 			attest.Subsequence(t, string(rb), tt.expectedBody)
-// 		})
-// 	}
-// }
+			rb, err := io.ReadAll(res.Body)
+			attest.Ok(t, err)
+			_ = rb
+
+			attest.Equal(t, res.StatusCode, tt.expectedStatusCode)
+			attest.Subsequence(t, string(rb), tt.expectedBody)
+
+			// rec := httptest.NewRecorder()
+			// req := httptest.NewRequest(http.MethodGet, "/index.html", nil)
+			// req.Header.Set("Host", tt.host)
+			// req.Host = tt.host
+
+			// mx.ServeHTTP(rec, req)
+
+			// res := rec.Result()
+			// defer res.Body.Close()
+			// rb, err := io.ReadAll(res.Body)
+			// attest.Ok(t, err)
+
+			// attest.Equal(t, res.StatusCode, tt.expectedStatusCode)
+			// attest.Subsequence(t, string(rb), tt.expectedBody)
+		})
+	}
+}
