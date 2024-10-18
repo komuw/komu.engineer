@@ -9,6 +9,8 @@ import (
 	"strings"
 	"testing"
 
+	"github.com/komuw/ong/config"
+	"github.com/komuw/ong/id"
 	"github.com/komuw/ong/log"
 	"go.akshayshah.org/attest"
 )
@@ -20,7 +22,11 @@ func TestMux(t *testing.T) {
 	attest.Ok(t, err)
 
 	w := os.Stderr
-	mx := getMux(log.New(context.Background(), w, 10), cwd)
+	l := log.New(context.Background(), w, 10)
+	// mx := getMux(log.New(context.Background(), w, 10), cwd)
+	opts := config.DevOpts(l, id.New())
+	opts.Domain = "example.com"
+	mx := getMux2(l, opts, cwd)
 
 	tests := []struct {
 		path               string

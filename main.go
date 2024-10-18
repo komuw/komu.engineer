@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"fmt"
 	"io"
 	stdLog "log"
 	"log/slog"
@@ -19,6 +20,7 @@ import (
 	"github.com/komuw/ong/errors"
 	"github.com/komuw/ong/id"
 	"github.com/komuw/ong/log"
+	"github.com/komuw/ong/mux"
 	"github.com/komuw/ong/server"
 )
 
@@ -40,7 +42,10 @@ func run() error {
 		return err
 	}
 
-	return server.Run(getMux(l, cwd), opts)
+	// mx := getMux(l, cwd)
+	mx := getMux2(l, opts, cwd)
+
+	return server.Run(mx, opts)
 }
 
 func cfg() (config.Opts, *slog.Logger, error) {
@@ -115,6 +120,22 @@ func getMux(l *slog.Logger, cwd string) *http.ServeMux {
 	return mux
 }
 
+func getMux2(l *slog.Logger, opts config.Opts, cwd string) mux.Muxer {
+	allRoutes := []mux.Route{
+		mux.NewRoute(
+			"/*",
+			http.MethodGet,
+			router(l, cwd),
+		),
+	}
+
+	return mux.New(
+		opts,
+		nil,
+		allRoutes...,
+	)
+}
+
 func router(l *slog.Logger, rootDir string) http.HandlerFunc {
 	website := serveFileSources(
 		l,
@@ -139,6 +160,7 @@ func router(l *slog.Logger, rootDir string) http.HandlerFunc {
 
 		hst, port, err := net.SplitHostPort(host)
 		args = append(args, []any{"err", err, "hst", hst, "port", port}...)
+		fmt.Println("\t args: ", args)
 		if err != nil {
 			l.Error("router_handler", args...)
 			website(w, r)

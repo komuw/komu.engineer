@@ -2,7 +2,7 @@ module github.com/komuw/komu.engineer
 
 go 1.23
 
-require github.com/komuw/ong v0.1.11
+require github.com/komuw/ong v0.1.12-beta
 
 require (
 	github.com/google/go-cmp v0.6.0 // indirect
@@ -13,3 +13,5 @@ require (
 )
 
 require go.akshayshah.org/attest v1.1.0 // test
+
+replace github.com/komuw/ong => /home/kw/gohack/github.com/komuw/ong
