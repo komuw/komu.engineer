@@ -36,7 +36,7 @@ run_tests(){
     printf "\n\n running tests: \n"
 
     CWD=$(basename "$PWD")
-    if [ "$CWD" == "komu" ]; then
+    if [ "$CWD" == "komu.engineer" ]; then
         #
         echo -n ""
     else
@@ -109,7 +109,7 @@ run_rsync() {
     fi
 
     CWD=$(basename "$PWD")
-    if [ "$CWD" == "komu" ]; then
+    if [ "$CWD" == "komu.engineer" ]; then
         #
         echo -n ""
     else
