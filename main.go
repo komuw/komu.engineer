@@ -30,9 +30,10 @@ func main() {
 }
 
 func run() error {
-	l := log.New(context.Background(), os.Stdout, 30).With("pid", os.Getpid())
-	opts := config.DevOpts(l, id.New())
-	opts.DrainTimeout = 1 * time.Nanosecond
+	opts, l, err := cfg()
+	if err != nil {
+		return err
+	}
 
 	cwd, err := os.Getwd()
 	if err != nil {
@@ -40,6 +41,39 @@ func run() error {
 	}
 
 	return server.Run(getMux(l, cwd), opts)
+}
+
+func cfg() (config.Opts, *slog.Logger, error) {
+	const envVar = "WEBSITE_ENVIRONMENT"
+	env := os.Getenv(envVar)
+
+	l := log.New(context.Background(), os.Stdout, 30).With("pid", os.Getpid())
+	opts := config.Opts{}
+
+	switch v := env; {
+	default:
+		return opts, l, errors.Errorf("the env var %s is either not set or has the wrong value. got = `%s`", envVar, v)
+	case v == "development":
+		opts = config.DevOpts(l, id.New())
+		opts.DrainTimeout = 1 * time.Nanosecond
+	case v == "production":
+		acmeEmail := os.Getenv("WEBSITE_LETSENCRYPT_EMAIL")
+		if acmeEmail == "" {
+			return opts, l, errors.Errorf("the env var %s is either not set or has the wrong value. got = `%s`", "WEBSITE_LETSENCRYPT_EMAIL", acmeEmail)
+		}
+		domain := "*.komu.engineer"
+		opts = config.LetsEncryptOpts(
+			domain,
+			id.New(),
+			// TODO: change clientIPstrategy based on our server host.
+			config.DirectIpStrategy,
+			l,
+			acmeEmail,
+			[]string{domain},
+		)
+	}
+
+	return opts, l, nil
 }
 
 func getMux(l *slog.Logger, cwd string) *http.ServeMux {
