@@ -43,6 +43,8 @@ func run() error {
 
 func getMux(cwd string) *http.ServeMux {
 	mux := http.NewServeMux()
+	// For how precedence matching works,
+	// see: https://go.dev/blog/routing-enhancements#precedence
 	mux.HandleFunc("GET /", ServeFileSources(cwd))
 	mux.HandleFunc("GET /blogs/", ServeFileSources(filepath.Join(cwd, "blogs")))
 
