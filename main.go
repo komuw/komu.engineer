@@ -2,7 +2,6 @@ package main
 
 import (
 	"context"
-	"fmt"
 	"io"
 	stdLog "log"
 	"log/slog"
@@ -90,11 +89,10 @@ func router(l *slog.Logger, rootDir string) http.HandlerFunc {
 
 	return func(w http.ResponseWriter, r *http.Request) {
 		host := r.Host
-		fmt.Println("req: ", r)
-
 		args := []any{
-			"url", r.URL.String(),
 			"func", "router",
+			"url", r.URL.String(),
+			"host", host,
 		}
 
 		hst, port, err := net.SplitHostPort(host)
@@ -105,7 +103,6 @@ func router(l *slog.Logger, rootDir string) http.HandlerFunc {
 			return
 		}
 		hst = strings.ToLower(hst)
-		fmt.Println("hst: ", hst, args)
 
 		if hst == "localhost" {
 			website(w, r)
