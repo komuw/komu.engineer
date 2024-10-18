@@ -2,7 +2,6 @@ package main
 
 import (
 	"context"
-	"fmt"
 	"io"
 	stdLog "log"
 	"log/slog"
@@ -42,8 +41,7 @@ func run() error {
 		return err
 	}
 
-	// mx := getMux(l, cwd)
-	mx := getMux2(l, opts, cwd)
+	mx := getMux(l, opts, cwd)
 
 	return server.Run(mx, opts)
 }
@@ -81,46 +79,7 @@ func cfg() (config.Opts, *slog.Logger, error) {
 	return opts, l, nil
 }
 
-func getMux(l *slog.Logger, cwd string) *http.ServeMux {
-	mux := http.NewServeMux()
-	// For how precedence matching works,
-	// see: https://go.dev/blog/routing-enhancements#precedence
-	mux.HandleFunc("GET /", router(l, cwd))
-
-	{ // redirects.
-		mux.HandleFunc("GET /blogs/go-gc-maps", func(w http.ResponseWriter, r *http.Request) {
-			http.Redirect(w, r, "/blogs/01/go-gc-maps", http.StatusMovedPermanently)
-		})
-		mux.HandleFunc("GET /blogs/consensus", func(w http.ResponseWriter, r *http.Request) {
-			http.Redirect(w, r, "/blogs/02/consensus", http.StatusMovedPermanently)
-		})
-		mux.HandleFunc("GET /blogs/python-lambda", func(w http.ResponseWriter, r *http.Request) {
-			http.Redirect(w, r, "/blogs/03/python-lambda", http.StatusMovedPermanently)
-		})
-		mux.HandleFunc("GET /blogs/go-modules-early-peek", func(w http.ResponseWriter, r *http.Request) {
-			http.Redirect(w, r, "/blogs/04/go-modules-early-peek", http.StatusMovedPermanently)
-		})
-		mux.HandleFunc("GET /blogs/lambda-shim/lambda-shim", func(w http.ResponseWriter, r *http.Request) {
-			http.Redirect(w, r, "/blogs/05/lambda-shim", http.StatusMovedPermanently)
-		})
-		mux.HandleFunc("GET /blogs/timeScaleDB/timescaleDB-for-logs", func(w http.ResponseWriter, r *http.Request) {
-			http.Redirect(w, r, "/blogs/06/timescaleDB-for-logs", http.StatusMovedPermanently)
-		})
-		mux.HandleFunc("GET /blogs/celery-clone/understand-how-celery-works", func(w http.ResponseWriter, r *http.Request) {
-			http.Redirect(w, r, "/blogs/07/understand-how-celery-works", http.StatusMovedPermanently)
-		})
-		mux.HandleFunc("GET /blogs/golang-stackTrace/golang-stackTrace", func(w http.ResponseWriter, r *http.Request) {
-			http.Redirect(w, r, "/blogs/08/golang-stackTrace", http.StatusMovedPermanently)
-		})
-		mux.HandleFunc("GET /blogs/log-without-losing-context/log-without-losing-context", func(w http.ResponseWriter, r *http.Request) {
-			http.Redirect(w, r, "/blogs/09/log-without-losing-context", http.StatusMovedPermanently)
-		})
-	}
-
-	return mux
-}
-
-func getMux2(l *slog.Logger, opts config.Opts, cwd string) mux.Muxer {
+func getMux(l *slog.Logger, opts config.Opts, cwd string) mux.Muxer {
 	allRoutes := []mux.Route{
 		mux.NewRoute(
 			"/*",
@@ -181,7 +140,6 @@ func router(l *slog.Logger, rootDir string) http.HandlerFunc {
 
 		hst, port, err := net.SplitHostPort(host)
 		args = append(args, []any{"err", err, "hst", hst, "port", port}...)
-		fmt.Println("\t args: ", args)
 		if err != nil {
 			l.Error("router_handler", args...)
 			website(w, r)
