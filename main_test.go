@@ -42,7 +42,6 @@ func TestMux(t *testing.T) {
 		// When we call the server in `t.Run` it will already be closed.
 		ts.Close()
 	})
-
 	attest.Ok(t, Ping(httpsPort)) // wait for server to start.
 
 	tr := &http.Transport{
@@ -114,14 +113,6 @@ func TestMux(t *testing.T) {
 			_ = rb
 
 			attest.Equal(t, res.StatusCode, tt.expectedStatusCode)
-			// attest.Equal(t, string(rb), msg)
-
-			// rec := httptest.NewRecorder()
-			// req := httptest.NewRequest(http.MethodGet, tt.path, nil)
-			// mx.ServeHTTP(rec, req)
-			// res := rec.Result()
-			// defer res.Body.Close()
-			// attest.Equal(t, res.StatusCode, tt.expectedStatusCode)
 		})
 	}
 }
