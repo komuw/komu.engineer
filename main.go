@@ -2,7 +2,6 @@ package main
 
 import (
 	"context"
-	"fmt"
 	"io"
 	stdLog "log"
 	"log/slog"
@@ -91,7 +90,6 @@ func ServeFileSources(l *slog.Logger, rootDir string) http.HandlerFunc {
 	h := fileHandler{rootDir: rootDir, l: l}
 
 	return func(w http.ResponseWriter, r *http.Request) {
-		fmt.Println("r.URL.String()1: ", r.URL.String())
 		h.ServeHTTP(w, r)
 	}
 }
