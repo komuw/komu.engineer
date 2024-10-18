@@ -152,14 +152,14 @@ OLD_KOMU_ENGINEER_WEBSITE_PID=$(pidof komu_engineer_website);
 echo "OLD_KOMU_ENGINEER_WEBSITE_PID = ${OLD_KOMU_ENGINEER_WEBSITE_PID}";
 export KOMU_ENGINEER_WEBSITE_ENVIRONMENT=production;
 export KOMU_ENGINEER_WEBSITE_LETSENCRYPT_EMAIL=komuw05+komu-engineer-LetsencryptEmail@gmail.com;
-rm -rf /tmp/website_background.out;
+rm -rf /tmp/komu_engineer_website_background.out;
 ./komu_engineer_website > /tmp/komu_engineer_website_background.out 2>&1 &
 sleep 5;
 NEW_KOMU_ENGINEER_WEBSITE_PID=$(pidof komu_engineer_website);
 echo "NEW_KOMU_ENGINEER_WEBSITE_PID = ${NEW_KOMU_ENGINEER_WEBSITE_PID}";
 kill -15 ${OLD_KOMU_ENGINEER_WEBSITE_PID};
 sleep 15;
-tail -n10 /tmp/wkomu_engineer_website_background.out;'
+tail -n10 /tmp/komu_engineer_website_background.out;'
 }
 
 # Note you need to enable ipv6 via:
