@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"fmt"
 	"io"
 	stdLog "log"
 	"log/slog"
@@ -84,7 +85,7 @@ func getMux(l *slog.Logger, opts config.Opts, cwd string) mux.Muxer {
 		mux.NewRoute(
 			"/*",
 			mux.MethodAll,
-			router(l, cwd),
+			router(l, opts, cwd),
 		),
 	}
 
@@ -95,7 +96,13 @@ func getMux(l *slog.Logger, opts config.Opts, cwd string) mux.Muxer {
 	)
 }
 
-func router(l *slog.Logger, rootDir string) http.HandlerFunc {
+func router(l *slog.Logger, opts config.Opts, rootDir string) http.HandlerFunc {
+	domain := opts.Domain
+	if strings.Contains(domain, "*") {
+		// remove the `*` and `.`
+		domain = domain[2:]
+	}
+
 	website := serveFileSources(
 		l,
 		rootDir,
@@ -151,12 +158,12 @@ func router(l *slog.Logger, rootDir string) http.HandlerFunc {
 			website(w, r)
 			return
 		}
-		if strings.Contains(hst, "srs.komu.engineer") {
+		if strings.Contains(hst, strings.ReplaceAll(fmt.Sprintf("srs.%s", domain), "..", "")) {
 			// TODO: plugin route to srs.
 			srs(w, r)
 			return
 		}
-		if strings.Contains(hst, "algo.komu.engineer") {
+		if strings.Contains(hst, strings.ReplaceAll(fmt.Sprintf("algo.%s", domain), "..", "")) {
 			algo(w, r)
 			return
 		}

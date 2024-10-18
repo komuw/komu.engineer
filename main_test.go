@@ -293,12 +293,12 @@ func TestMuxRouteSubdomains(t *testing.T) {
 			expectedBody:       "Is a software developer currently",
 		},
 		{
-			host:               "srs.komu.engineer:80",
+			host:               "srs.localhost:80",
 			expectedStatusCode: http.StatusOK,
 			expectedBody:       "this is the srs subdomain",
 		},
 		{
-			host:               "algo.komu.engineer:80",
+			host:               "algo.localhost:80",
 			expectedStatusCode: http.StatusOK,
 			expectedBody:       "4_stack_n_queue",
 		},
@@ -312,7 +312,12 @@ func TestMuxRouteSubdomains(t *testing.T) {
 
 			url := ts.URL + "/index.html"
 			url = strings.ReplaceAll(url, "127.0.0.1", "localhost")
-			res, err := client.Get(url)
+			req, err := http.NewRequest(http.MethodGet, url, nil)
+			attest.Ok(t, err)
+			req.Header.Set("Host", tt.host)
+			req.Host = tt.host
+
+			res, err := client.Do(req)
 			attest.Ok(t, err)
 			defer res.Body.Close()
 
@@ -322,21 +327,6 @@ func TestMuxRouteSubdomains(t *testing.T) {
 
 			attest.Equal(t, res.StatusCode, tt.expectedStatusCode)
 			attest.Subsequence(t, string(rb), tt.expectedBody)
-
-			// rec := httptest.NewRecorder()
-			// req := httptest.NewRequest(http.MethodGet, "/index.html", nil)
-			// req.Header.Set("Host", tt.host)
-			// req.Host = tt.host
-
-			// mx.ServeHTTP(rec, req)
-
-			// res := rec.Result()
-			// defer res.Body.Close()
-			// rb, err := io.ReadAll(res.Body)
-			// attest.Ok(t, err)
-
-			// attest.Equal(t, res.StatusCode, tt.expectedStatusCode)
-			// attest.Subsequence(t, string(rb), tt.expectedBody)
 		})
 	}
 }
