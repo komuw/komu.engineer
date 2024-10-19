@@ -139,6 +139,13 @@ func router(l *slog.Logger, opts config.Opts, rootDir string) http.HandlerFunc {
 			"r.URL.Path", r.URL.Path,
 		}
 
+		{ // TODO: fix the CSP policy.
+			// Override the CSP that is set by `ong`. We need to do this because highlightJs uses innerHtml which conflicts with ong's csp.
+			// We need to remove `require-trusted-types-for` from the csp so that innerHtml can work.
+			cspVal := "default-src * 'self'; img-src 'self' *; media-src 'self'; object-src 'none'; base-uri 'none'; script-src * 'self' 'unsafe-inline';"
+			w.Header().Set("Content-Security-Policy", cspVal)
+		}
+
 		{ // handle redirects
 			for k, v := range redirectMap {
 				if r.URL.Path == k {
