@@ -128,6 +128,8 @@ func router(l *slog.Logger, opts config.Opts, rootDir string) http.HandlerFunc {
 		"/blogs/celery-clone/understand-how-celery-works":              "/blogs/07/understand-how-celery-works",
 		"/blogs/golang-stackTrace/golang-stackTrace":                   "/blogs/08/golang-stackTrace",
 		"/blogs/log-without-losing-context/log-without-losing-context": "/blogs/09/log-without-losing-context",
+		//
+		"/cv/komu-CV.pdf": "/cv/komu-cv.pdf",
 	}
 
 	return func(w http.ResponseWriter, r *http.Request) {
@@ -211,6 +213,9 @@ type fileHandler struct {
 func (f fileHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	// TODO: handle directory. Maybe you should list directory.
 	// See stdlib.http.serveFile.dirList
+
+	// TODO: requests for `/some-dir/SOME-file.txt` and `/some-dir/some-file.txt` and `/some-dir/somE-fIlE.txt`
+	// should both return same thing.
 
 	upath := r.URL.Path
 	if !strings.HasPrefix(upath, "/") {
