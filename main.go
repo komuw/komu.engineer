@@ -129,6 +129,7 @@ func router(l *slog.Logger, opts config.Opts, rootDir string) http.HandlerFunc {
 		"/blogs/golang-stackTrace/golang-stackTrace":                   "/blogs/08/golang-stackTrace",
 		"/blogs/log-without-losing-context/log-without-losing-context": "/blogs/09/log-without-losing-context",
 		//
+		"/blog":           "/blogs",
 		"/cv/komu-CV.pdf": "/cv/komu-cv.pdf",
 	}
 
