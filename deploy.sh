@@ -70,7 +70,9 @@ run_build() {
     # build static binary.
     # srs app uses `mattn/go-sqlite3` which requires cgo enabled.
     export CGO_ENABLED=1 && \
-    go build -trimpath -o komu_engineer_website .
+    export GOARCH=amd64 && \
+    export GOOS=linux && \
+    go build -trimpath -o komu_engineer_website . && \
     chmod +x komu_engineer_website
 }
 
