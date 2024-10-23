@@ -12,6 +12,8 @@ github.com/komuw/ong v0.1.13-beta h1:+7sO/HpdwuyTld5ZYX0xeKq78XZBtMbnS/KTnB8zlQc
 github.com/komuw/ong v0.1.13-beta/go.mod h1:wB5JrX6+bnn3uWyuTVrmhkB2o3kv0YN1QofoQfhOc8Y=
 github.com/komuw/srs v0.0.0-20241023081615-ec44039d6e72 h1:MT89YY0IsIYkixcmTHqwCrX3U+Y4PVLv3Hgset5tvTQ=
 github.com/komuw/srs v0.0.0-20241023081615-ec44039d6e72/go.mod h1:sF8ftaY1UztxibEQdTE+QjoMfP/a7CIJeZPJPRlsI34=
+github.com/komuw/srs v0.0.0-20241023092359-5368dae869be h1:fvnv0Zat6c9b1R2nyk+yHAsQKlf5cv8qpGSLp36Jaj8=
+github.com/komuw/srs v0.0.0-20241023092359-5368dae869be/go.mod h1:sF8ftaY1UztxibEQdTE+QjoMfP/a7CIJeZPJPRlsI34=
 github.com/mattn/go-colorable v0.1.13 h1:fFA4WZxdEF4tXPZVKMLwD8oUnCTTo08duU7wxecdEvA=
 github.com/mattn/go-colorable v0.1.13/go.mod h1:7S9/ev0klgBDR4GtXTXX8a3vIGJpMovkB8vQcUbaXHg=
 github.com/mattn/go-isatty v0.0.20 h1:xfD0iDuEKnDkl03q4limB+vH+GxLEtL/jb4xVJSWWEY=
