@@ -103,16 +103,23 @@ func getMux(l *slog.Logger, opts config.Opts, cwd string, srsMx mux.Muxer) mux.M
 		// TODO: add tarpit handler.
 		mux.NewRoute(
 			"/*",
-			mux.MethodAll,
+			mux.MethodGet,
 			router(l, opts, cwd, srsMx),
 		),
 	}
 
-	return mux.New(
+	m1 := mux.New(
 		opts,
 		nil,
 		allRoutes...,
 	)
+
+	// m, err := m1.Merge(srsMx)
+	// if err != nil {
+	// 	panic(err)
+	// }
+
+	return m1
 }
 
 func router(l *slog.Logger, opts config.Opts, rootDir string, srsMx mux.Muxer) http.HandlerFunc {
@@ -129,6 +136,7 @@ func router(l *slog.Logger, opts config.Opts, rootDir string, srsMx mux.Muxer) h
 	)
 
 	srs := srsMx.ServeHTTP
+	_ = srs
 
 	algo := serveFileSources(
 		// curl -vkL -H "Host:algo.komu.engineer:80" https://localhost:65081/
@@ -197,7 +205,6 @@ func router(l *slog.Logger, opts config.Opts, rootDir string, srsMx mux.Muxer) h
 			return
 		}
 		if strings.Contains(hst, strings.ReplaceAll(fmt.Sprintf("srs.%s", domain), "..", "")) {
-			// TODO: plugin route to srs.
 			srs(w, r)
 			return
 		}
