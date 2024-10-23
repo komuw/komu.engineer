@@ -152,6 +152,8 @@ pwd;ls -lsha;
 OLD_KOMU_ENGINEER_WEBSITE_PID=$(pidof komu_engineer_website);
 echo "OLD_KOMU_ENGINEER_WEBSITE_PID = ${OLD_KOMU_ENGINEER_WEBSITE_PID}";
 export KOMU_ENGINEER_WEBSITE_ENVIRONMENT=production;
+export SRS_ENVIRONMENT=production;
+export SRS_DB_PATH="/tmp/srs.sqlite"; # TODO: use a better path.
 export KOMU_ENGINEER_WEBSITE_LETSENCRYPT_EMAIL=komuw05+komu-engineer-LetsencryptEmail@gmail.com;
 rm -rf /tmp/komu_engineer_website_background.out;
 ./komu_engineer_website > /tmp/komu_engineer_website_background.out 2>&1 &
