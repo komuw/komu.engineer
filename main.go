@@ -22,6 +22,8 @@ import (
 	"github.com/komuw/ong/log"
 	"github.com/komuw/ong/mux"
 	"github.com/komuw/ong/server"
+
+	"github.com/komuw/srs/ext"
 )
 
 // The main func should be very small in size since you cannot test it.
@@ -42,7 +44,23 @@ func run() error {
 		return err
 	}
 
-	mx := getMux(l, opts, cwd)
+	srsMx := mux.Muxer{}
+	{ // srs muxer
+		dbPath := os.Getenv("SRS_DB_PATH")
+		if dbPath == "" {
+			return errors.New("environment variable `SRS_DB_PATH` has not been set")
+		}
+
+		mx, opts, closer, err := ext.Run(dbPath)
+		if err != nil {
+			return err
+		}
+		defer closer()
+		srsMx = mx
+		_ = opts
+	}
+
+	mx := getMux(l, opts, cwd, srsMx)
 
 	return server.Run(mx, opts)
 }
@@ -80,13 +98,13 @@ func cfg() (config.Opts, *slog.Logger, error) {
 	return opts, l, nil
 }
 
-func getMux(l *slog.Logger, opts config.Opts, cwd string) mux.Muxer {
+func getMux(l *slog.Logger, opts config.Opts, cwd string, srsMx mux.Muxer) mux.Muxer {
 	allRoutes := []mux.Route{
 		// TODO: add tarpit handler.
 		mux.NewRoute(
 			"/*",
 			mux.MethodAll,
-			router(l, opts, cwd),
+			router(l, opts, cwd, srsMx),
 		),
 	}
 
@@ -97,7 +115,7 @@ func getMux(l *slog.Logger, opts config.Opts, cwd string) mux.Muxer {
 	)
 }
 
-func router(l *slog.Logger, opts config.Opts, rootDir string) http.HandlerFunc {
+func router(l *slog.Logger, opts config.Opts, rootDir string, srsMx mux.Muxer) http.HandlerFunc {
 	domain := opts.Domain
 	if strings.Contains(domain, "*") {
 		// remove the `*` and `.`
@@ -109,14 +127,15 @@ func router(l *slog.Logger, opts config.Opts, rootDir string) http.HandlerFunc {
 		l,
 		rootDir,
 	)
-	srs := func(w http.ResponseWriter, r *http.Request) {
-		w.Write([]byte("this is the srs subdomain"))
-	}
+
+	srs := srsMx.ServeHTTP
+
 	algo := serveFileSources(
 		// curl -vkL -H "Host:algo.komu.engineer:80" https://localhost:65081/
 		l,
 		filepath.Join(rootDir, "/blogs/algos-n-data-structures"),
 	)
+
 	redirectMap := map[string]string{
 		// key is original url, value is the new location.
 		"/blogs/go-gc-maps":                                            "/blogs/01/go-gc-maps",
