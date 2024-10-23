@@ -2,7 +2,7 @@ module github.com/komuw/komu.engineer
 
 go 1.23
 
-require github.com/komuw/ong v0.1.12-beta
+require github.com/komuw/ong v0.1.12
 
 require (
 	github.com/google/go-cmp v0.6.0 // indirect
