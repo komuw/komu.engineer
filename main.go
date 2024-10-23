@@ -95,6 +95,20 @@ func cfg() (config.Opts, *slog.Logger, error) {
 		)
 	}
 
+	{ // from srs.
+		// TODO: call `ext.Run(dbPath)` here so that we can use values from its returned `opts`.
+		const (
+			readHeaderTime = 5 * time.Second
+			readTime       = readHeaderTime + (35 * time.Second)
+			writeTime      = readTime + (5 * time.Second)
+			maxBodyBytes   = (50 * 1024 * 1024) // 50MB. Should match maximum file upload limit for flashcards.
+		)
+		opts.ReadHeaderTimeout = readHeaderTime
+		opts.ReadTimeout = readTime
+		opts.WriteTimeout = writeTime
+		opts.MaxBodyBytes = maxBodyBytes
+	}
+
 	return opts, l, nil
 }
 
@@ -205,6 +219,7 @@ func router(l *slog.Logger, opts config.Opts, rootDir string, srsMx mux.Muxer) h
 			return
 		}
 		if strings.Contains(hst, strings.ReplaceAll(fmt.Sprintf("srs.%s", domain), "..", "")) {
+			// curl -u "admin:some-srs-passwd" -vkL "https://srs.localhost:65081/review-flashcard"
 			srs(w, r)
 			return
 		}
