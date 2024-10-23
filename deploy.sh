@@ -68,8 +68,9 @@ run_build() {
     printf "\n\n build for release: \n"
 	rm -rf komu_engineer_website && \
     # build static binary.
-    export CGO_ENABLED=0 && \
-    go build -trimpath -ldflags="-extldflags=-static" -o komu_engineer_website .
+    # srs app uses `mattn/go-sqlite3` which requires cgo enabled.
+    export CGO_ENABLED=1 && \
+    go build -trimpath -o komu_engineer_website .
     chmod +x komu_engineer_website
 }
 
