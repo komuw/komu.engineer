@@ -22,6 +22,8 @@ import (
 	"github.com/komuw/ong/log"
 	"github.com/komuw/ong/mux"
 	"github.com/komuw/ong/server"
+
+	"github.com/komuw/srs/ext"
 )
 
 // The main func should be very small in size since you cannot test it.
@@ -42,7 +44,23 @@ func run() error {
 		return err
 	}
 
-	mx := getMux(l, opts, cwd)
+	srsMx := mux.Muxer{}
+	{ // srs muxer
+		dbPath := os.Getenv("SRS_DB_PATH")
+		if dbPath == "" {
+			return errors.New("environment variable `SRS_DB_PATH` has not been set")
+		}
+
+		mx, opts, closer, err := ext.Run(dbPath)
+		if err != nil {
+			return err
+		}
+		defer closer()
+		srsMx = mx
+		_ = opts
+	}
+
+	mx := getMux(l, opts, cwd, srsMx)
 
 	return server.Run(mx, opts)
 }
@@ -77,27 +95,48 @@ func cfg() (config.Opts, *slog.Logger, error) {
 		)
 	}
 
+	{ // from srs.
+		// TODO: call `ext.Run(dbPath)` here so that we can use values from its returned `opts`.
+		const (
+			readHeaderTime = 5 * time.Second
+			readTime       = readHeaderTime + (35 * time.Second)
+			writeTime      = readTime + (5 * time.Second)
+			maxBodyBytes   = (50 * 1024 * 1024) // 50MB. Should match maximum file upload limit for flashcards.
+		)
+		opts.ReadHeaderTimeout = readHeaderTime
+		opts.ReadTimeout = readTime
+		opts.WriteTimeout = writeTime
+		opts.MaxBodyBytes = maxBodyBytes
+	}
+
 	return opts, l, nil
 }
 
-func getMux(l *slog.Logger, opts config.Opts, cwd string) mux.Muxer {
+func getMux(l *slog.Logger, opts config.Opts, cwd string, srsMx mux.Muxer) mux.Muxer {
 	allRoutes := []mux.Route{
 		// TODO: add tarpit handler.
 		mux.NewRoute(
 			"/*",
-			mux.MethodAll,
-			router(l, opts, cwd),
+			mux.MethodGet,
+			router(l, opts, cwd, srsMx),
 		),
 	}
 
-	return mux.New(
+	m1 := mux.New(
 		opts,
 		nil,
 		allRoutes...,
 	)
+
+	// m, err := m1.Merge(srsMx)
+	// if err != nil {
+	// 	panic(err)
+	// }
+
+	return m1
 }
 
-func router(l *slog.Logger, opts config.Opts, rootDir string) http.HandlerFunc {
+func router(l *slog.Logger, opts config.Opts, rootDir string, srsMx mux.Muxer) http.HandlerFunc {
 	domain := opts.Domain
 	if strings.Contains(domain, "*") {
 		// remove the `*` and `.`
@@ -109,14 +148,16 @@ func router(l *slog.Logger, opts config.Opts, rootDir string) http.HandlerFunc {
 		l,
 		rootDir,
 	)
-	srs := func(w http.ResponseWriter, r *http.Request) {
-		w.Write([]byte("this is the srs subdomain"))
-	}
+
+	srs := srsMx.ServeHTTP
+	_ = srs
+
 	algo := serveFileSources(
 		// curl -vkL -H "Host:algo.komu.engineer:80" https://localhost:65081/
 		l,
 		filepath.Join(rootDir, "/blogs/algos-n-data-structures"),
 	)
+
 	redirectMap := map[string]string{
 		// key is original url, value is the new location.
 		"/blogs/go-gc-maps":                                            "/blogs/01/go-gc-maps",
@@ -133,6 +174,13 @@ func router(l *slog.Logger, opts config.Opts, rootDir string) http.HandlerFunc {
 		"/cv/komu-CV.pdf": "/cv/komu-cv.pdf",
 	}
 
+	const (
+		// TODO: fix the CSP policy.
+		// Override the CSP that is set by `ong`. We need to do this because highlightJs uses innerHtml which conflicts with ong's csp.
+		// We need to remove `require-trusted-types-for` from the csp so that innerHtml can work.
+		cspVal = "default-src * 'self'; img-src 'self' *; media-src 'self'; object-src 'none'; base-uri 'none'; script-src * 'self' 'unsafe-inline';"
+	)
+
 	return func(w http.ResponseWriter, r *http.Request) {
 		host := r.Host
 		args := []any{
@@ -143,9 +191,6 @@ func router(l *slog.Logger, opts config.Opts, rootDir string) http.HandlerFunc {
 		}
 
 		{ // TODO: fix the CSP policy.
-			// Override the CSP that is set by `ong`. We need to do this because highlightJs uses innerHtml which conflicts with ong's csp.
-			// We need to remove `require-trusted-types-for` from the csp so that innerHtml can work.
-			cspVal := "default-src * 'self'; img-src 'self' *; media-src 'self'; object-src 'none'; base-uri 'none'; script-src * 'self' 'unsafe-inline';"
 			w.Header().Set("Content-Security-Policy", cspVal)
 		}
 
@@ -178,8 +223,12 @@ func router(l *slog.Logger, opts config.Opts, rootDir string) http.HandlerFunc {
 			return
 		}
 		if strings.Contains(hst, strings.ReplaceAll(fmt.Sprintf("srs.%s", domain), "..", "")) {
-			// TODO: plugin route to srs.
+			// curl -u "admin:some-srs-passwd" -vkL "https://srs.localhost:65081/review-flashcard"
 			srs(w, r)
+
+			{ // TODO: fix the CSP policy.
+				w.Header().Set("Content-Security-Policy", cspVal)
+			}
 			return
 		}
 		if strings.Contains(hst, strings.ReplaceAll(fmt.Sprintf("algo.%s", domain), "..", "")) {
