@@ -117,7 +117,8 @@ func getMux(l *slog.Logger, opts config.Opts, cwd string, srsMx mux.Muxer) mux.M
 		// TODO: add tarpit handler.
 		mux.NewRoute(
 			"/*",
-			mux.MethodGet,
+			// allow all methods because of srs.komu.engineer
+			mux.MethodAll,
 			router(l, opts, cwd, srsMx),
 		),
 	}
