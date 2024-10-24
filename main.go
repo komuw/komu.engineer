@@ -174,6 +174,13 @@ func router(l *slog.Logger, opts config.Opts, rootDir string, srsMx mux.Muxer) h
 		"/cv/komu-CV.pdf": "/cv/komu-cv.pdf",
 	}
 
+	const (
+		// TODO: fix the CSP policy.
+		// Override the CSP that is set by `ong`. We need to do this because highlightJs uses innerHtml which conflicts with ong's csp.
+		// We need to remove `require-trusted-types-for` from the csp so that innerHtml can work.
+		cspVal = "default-src * 'self'; img-src 'self' *; media-src 'self'; object-src 'none'; base-uri 'none'; script-src * 'self' 'unsafe-inline';"
+	)
+
 	return func(w http.ResponseWriter, r *http.Request) {
 		host := r.Host
 		args := []any{
@@ -184,9 +191,6 @@ func router(l *slog.Logger, opts config.Opts, rootDir string, srsMx mux.Muxer) h
 		}
 
 		{ // TODO: fix the CSP policy.
-			// Override the CSP that is set by `ong`. We need to do this because highlightJs uses innerHtml which conflicts with ong's csp.
-			// We need to remove `require-trusted-types-for` from the csp so that innerHtml can work.
-			cspVal := "default-src * 'self'; img-src 'self' *; media-src 'self'; object-src 'none'; base-uri 'none'; script-src * 'self' 'unsafe-inline';"
 			w.Header().Set("Content-Security-Policy", cspVal)
 		}
 
@@ -221,6 +225,10 @@ func router(l *slog.Logger, opts config.Opts, rootDir string, srsMx mux.Muxer) h
 		if strings.Contains(hst, strings.ReplaceAll(fmt.Sprintf("srs.%s", domain), "..", "")) {
 			// curl -u "admin:some-srs-passwd" -vkL "https://srs.localhost:65081/review-flashcard"
 			srs(w, r)
+
+			{ // TODO: fix the CSP policy.
+				w.Header().Set("Content-Security-Policy", cspVal)
+			}
 			return
 		}
 		if strings.Contains(hst, strings.ReplaceAll(fmt.Sprintf("algo.%s", domain), "..", "")) {
