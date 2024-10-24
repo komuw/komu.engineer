@@ -99,7 +99,7 @@ func cfg() (config.Opts, *slog.Logger, error) {
 		// TODO: call `ext.Run(dbPath)` here so that we can use values from its returned `opts`.
 		const (
 			readHeaderTime = 5 * time.Second
-			readTime       = readHeaderTime + (35 * time.Second)
+			readTime       = readHeaderTime + (45 * time.Second)
 			writeTime      = readTime + (5 * time.Second)
 			maxBodyBytes   = (50 * 1024 * 1024) // 50MB. Should match maximum file upload limit for flashcards.
 		)
