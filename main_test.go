@@ -262,7 +262,7 @@ func TestMuxRouteSubdomains(t *testing.T) {
 
 	srsMx := func(t *testing.T) mux.Muxer {
 		dbPath := t.TempDir() + "/srs.sqlite"
-		mx, _, closer, err := ext.Run(dbPath)
+		mx, _, closer, err := ext.Run(dbPath, "development")
 		attest.Ok(t, err)
 		t.Cleanup(func() {
 			closer()
@@ -299,26 +299,31 @@ func TestMuxRouteSubdomains(t *testing.T) {
 
 	tests := []struct {
 		host               string
+		uri                string
 		expectedStatusCode int
 		expectedBody       string
 	}{
 		{
 			host:               "localhost:80",
+			uri:                "/index.html",
 			expectedStatusCode: http.StatusOK,
 			expectedBody:       "Is a software developer currently",
 		},
 		{
 			host:               "srs.localhost:80",
+			uri:                "/zhealthz",
 			expectedStatusCode: http.StatusOK,
 			expectedBody:       "this is the srs subdomain",
 		},
 		{
 			host:               "srs.localhost", // no port
+			uri:                "/zhealthz",
 			expectedStatusCode: http.StatusOK,
 			expectedBody:       "this is the srs subdomain",
 		},
 		{
 			host:               "algo.localhost:80",
+			uri:                "/index.html",
 			expectedStatusCode: http.StatusOK,
 			expectedBody:       "4_stack_n_queue",
 		},
@@ -330,7 +335,7 @@ func TestMuxRouteSubdomains(t *testing.T) {
 		t.Run(tt.host, func(t *testing.T) {
 			t.Parallel()
 
-			url := ts.URL + "/index.html"
+			url := ts.URL + tt.uri
 			url = strings.ReplaceAll(url, "127.0.0.1", "localhost")
 			req, err := http.NewRequest(http.MethodGet, url, nil)
 			attest.Ok(t, err)

@@ -4,7 +4,6 @@ privateRepo:
 run:
 	@export KOMU_ENGINEER_WEBSITE_ENVIRONMENT="development"
 	@export SRS_DB_PATH="/tmp/srs.sqlite"
-	@export SRS_ENVIRONMENT="development"
 	@goimports -w .;gofumpt -extra -w .;gofmt -w -s .;go mod tidy;go run -race github.com/komuw/komu.engineer 
 
 

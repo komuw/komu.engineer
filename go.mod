@@ -4,7 +4,7 @@ go 1.23
 
 require (
 	github.com/komuw/ong v0.1.13-beta
-	github.com/komuw/srs v0.0.0-20241025163936-538ea25d5569 // TODO: use a tagged version.
+	github.com/komuw/srs v0.0.0-20241025204506-19e170be104e // TODO: use a tagged version.
 )
 
 require (
