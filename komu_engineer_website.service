@@ -11,7 +11,7 @@ After=network.target
 [Service]
 Type=simple
 WorkingDirectory=/root/serve/komu_engineer_website/
-ExecStart=./komu_engineer_website
+ExecStart=/root/serve/komu_engineer_website/komu_engineer_website
 DynamicUser=yes
 ProtectHome=yes
 # Restart configures whether the service shall be restarted when the service process exits, is killed, or a timeout is reached.
