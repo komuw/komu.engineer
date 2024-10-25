@@ -18,7 +18,7 @@ ProtectHome=yes
 # When the death of the process is a result of systemd operation (e.g. service stop or restart), the service will not be restarted
 Restart=always
 # RestartSec is the time to sleep before restarting a service.
-RestartSec=1s
+RestartSec=4s
 Environment="KOMU_ENGINEER_WEBSITE_LETSENCRYPT_EMAIL=komuw05+komu-engineer-LetsencryptEmail@gmail.com"
 Environment="KOMU_ENGINEER_WEBSITE_ENVIRONMENT=production"
 Environment="SRS_ENVIRONMENT=srs.komu.engineer"
