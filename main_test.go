@@ -19,6 +19,7 @@ import (
 	"github.com/komuw/ong/id"
 	"github.com/komuw/ong/log"
 	"github.com/komuw/ong/mux"
+	"github.com/komuw/srs/ext"
 	"go.akshayshah.org/attest"
 )
 
@@ -259,6 +260,17 @@ func TestMuxRedirects(t *testing.T) {
 func TestMuxRouteSubdomains(t *testing.T) {
 	t.Parallel()
 
+	srsMx := func(t *testing.T) mux.Muxer {
+		dbPath := t.TempDir() + "/srs.sqlite"
+		mx, _, closer, err := ext.Run(dbPath)
+		attest.Ok(t, err)
+		t.Cleanup(func() {
+			closer()
+		})
+
+		return mx
+	}
+
 	cwd, err := os.Getwd()
 	attest.Ok(t, err)
 
@@ -266,7 +278,7 @@ func TestMuxRouteSubdomains(t *testing.T) {
 	l := log.New(context.Background(), w, 10)
 	opts := config.DevOpts(l, id.UUID4().String())
 	opts.Domain = "localhost"
-	mx := getMux(l, opts, cwd, mux.Muxer{})
+	mx := getMux(l, opts, cwd, srsMx(t))
 
 	httpsPort := getPort()
 	ts, err := TlsServer(mx, opts.Domain, httpsPort)
