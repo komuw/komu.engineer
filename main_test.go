@@ -313,13 +313,13 @@ func TestMuxRouteSubdomains(t *testing.T) {
 			host:               "srs.localhost:80",
 			uri:                "/zhealthz",
 			expectedStatusCode: http.StatusOK,
-			expectedBody:       "this is the srs subdomain",
+			expectedBody:       `"status": "ok"`,
 		},
 		{
 			host:               "srs.localhost", // no port
 			uri:                "/zhealthz",
 			expectedStatusCode: http.StatusOK,
-			expectedBody:       "this is the srs subdomain",
+			expectedBody:       `"status": "ok"`,
 		},
 		{
 			host:               "algo.localhost:80",
