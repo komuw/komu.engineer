@@ -12,8 +12,8 @@ After=network.target
 Type=simple
 WorkingDirectory=/root/serve/komu_engineer_website/
 ExecStart=/root/serve/komu_engineer_website/komu_engineer_website
-# DynamicUser=yes # this may not work.
-ProtectHome=yes
+DynamicUser=yes # this may not work.
+# ProtectHome=yes # this may not work.
 # Restart configures whether the service shall be restarted when the service process exits, is killed, or a timeout is reached.
 # When the death of the process is a result of systemd operation (e.g. service stop or restart), the service will not be restarted
 Restart=always
