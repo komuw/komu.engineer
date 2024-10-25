@@ -343,15 +343,15 @@ func TestMuxRouteSubdomains(t *testing.T) {
 			req.Host = tt.host
 
 			res, err := client.Do(req)
-			attest.Ok(t, err)
+			attest.Ok(t, err, attest.Sprintf("url=%s", url))
 			defer res.Body.Close()
 
 			rb, err := io.ReadAll(res.Body)
 			attest.Ok(t, err)
 			_ = rb
 
-			attest.Equal(t, res.StatusCode, tt.expectedStatusCode)
-			attest.Subsequence(t, string(rb), tt.expectedBody)
+			attest.Equal(t, res.StatusCode, tt.expectedStatusCode, attest.Sprintf("url=%s", url))
+			attest.Subsequence(t, string(rb), tt.expectedBody, attest.Sprintf("url=%s", url))
 		})
 	}
 }
