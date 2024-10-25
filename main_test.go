@@ -18,6 +18,7 @@ import (
 	"github.com/komuw/ong/config"
 	"github.com/komuw/ong/id"
 	"github.com/komuw/ong/log"
+	"github.com/komuw/ong/mux"
 	"go.akshayshah.org/attest"
 )
 
@@ -92,7 +93,7 @@ func TestMux(t *testing.T) {
 	l := log.New(context.Background(), w, 10)
 	opts := config.DevOpts(l, id.UUID4().String())
 	opts.Domain = "localhost"
-	mx := getMux(l, opts, cwd)
+	mx := getMux(l, opts, cwd, mux.Muxer{})
 
 	httpsPort := getPort()
 	ts, err := TlsServer(mx, opts.Domain, httpsPort)
@@ -188,7 +189,7 @@ func TestMuxRedirects(t *testing.T) {
 	l := log.New(context.Background(), w, 10)
 	opts := config.DevOpts(l, id.UUID4().String())
 	opts.Domain = "localhost"
-	mx := getMux(l, opts, cwd)
+	mx := getMux(l, opts, cwd, mux.Muxer{})
 
 	httpsPort := getPort()
 	ts, err := TlsServer(mx, opts.Domain, httpsPort)
@@ -265,7 +266,7 @@ func TestMuxRouteSubdomains(t *testing.T) {
 	l := log.New(context.Background(), w, 10)
 	opts := config.DevOpts(l, id.UUID4().String())
 	opts.Domain = "localhost"
-	mx := getMux(l, opts, cwd)
+	mx := getMux(l, opts, cwd, mux.Muxer{})
 
 	httpsPort := getPort()
 	ts, err := TlsServer(mx, opts.Domain, httpsPort)
