@@ -20,8 +20,6 @@ RestartSec=4s
 Environment="KOMU_ENGINEER_WEBSITE_LETSENCRYPT_EMAIL=komuw05+komu-engineer-LetsencryptEmail@gmail.com"
 Environment="KOMU_ENGINEER_WEBSITE_ENVIRONMENT=production"
 Environment="SRS_DB_PATH=/tmp/srs.sqlite"
-Environment="KOMU_ENGINEER_WEBSITE_SECRET_KEY=${KOMU_ENGINEER_WEBSITE_SECRET_KEY}"
-
 
 # DynamicUser=yes # this may not work.
 # ProtectHome=yes # this may not work.
