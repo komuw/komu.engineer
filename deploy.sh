@@ -160,7 +160,6 @@ echo KOMU_ENGINEER_WEBSITE_SECRET_KEY=$(uuidgen) >> /tmp/komu_engineer_website_e
 cat /tmp/komu_engineer_website_envs.txt
 
 systemctl restart komu_engineer_website
-sleep 5;rm -rf /tmp/komu_engineer_website_envs.txt # minimize chance of secret leak.
 journalctl -n20 -u komu_engineer_website'
 }
 
