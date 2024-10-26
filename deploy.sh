@@ -145,7 +145,6 @@ install_software(){
         exit 1
     fi
 
-    # TODO: use systemd
     ssh root@"${IP}" \
 'cd /root/serve/komu_engineer_website/;
 pwd;ls -lsha;
