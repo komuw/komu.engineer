@@ -23,8 +23,6 @@ import (
 	"go.akshayshah.org/attest"
 )
 
-// TODO: fix tests.
-
 /////////////////////////////// utils ///////////////////////
 
 func getPort() uint16 {
