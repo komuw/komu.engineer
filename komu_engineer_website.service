@@ -22,7 +22,7 @@ Environment="KOMU_ENGINEER_WEBSITE_ENVIRONMENT=production"
 Environment="SRS_DB_PATH=/tmp/srs.sqlite"
 # See: https://systemd.io/CREDENTIALS/
 LoadCredential=secret_key:/tmp/komu_engineer_website_secret_key.txt
-Environment="KOMU_ENGINEER_WEBSITE_SECRET_KEY=%d/secret_key"
+Environment="KOMU_ENGINEER_WEBSITE_SECRET_KEY=$CREDENTIALS_DIRECTORY/secret_key"
 
 
 # DynamicUser=yes # this may not work.
