@@ -1,5 +1,5 @@
 privateRepo:
-	@export GOPRIVATE=github.com/komuw/srs && go get github.com/komuw/srs/ext@ext
+	@export GOPRIVATE=github.com/komuw/srs && go get github.com/komuw/srs/ext@v0.0.1
 
 run:
 	@export KOMU_ENGINEER_WEBSITE_ENVIRONMENT="development"
