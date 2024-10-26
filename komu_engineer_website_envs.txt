@@ -1,4 +1,4 @@
 KOMU_ENGINEER_WEBSITE_LETSENCRYPT_EMAIL="komuw05+komu-engineer-LetsencryptEmail@gmail.com"
 KOMU_ENGINEER_WEBSITE_ENVIRONMENT="production"
-SRS_DB_PATH="/tmp/srs.sqlite"
+SRS_DB_PATH="/root/serve/srs.sqlite"
 # KOMU_ENGINEER_WEBSITE_SECRET_KEY will be added automatically by deploy.sh
