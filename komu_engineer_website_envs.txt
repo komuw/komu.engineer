@@ -1,0 +1,4 @@
+KOMU_ENGINEER_WEBSITE_LETSENCRYPT_EMAIL="komuw05+komu-engineer-LetsencryptEmail@gmail.com"
+KOMU_ENGINEER_WEBSITE_ENVIRONMENT="production"
+SRS_DB_PATH="/tmp/srs.sqlite"
+KOMU_ENGINEER_WEBSITE_SECRET_KEY=$(cat /tmp/komu_engineer_website_secret_key.txt)
