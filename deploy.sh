@@ -155,13 +155,10 @@ systemctl daemon-reload
 systemctl enable komu_engineer_website.service
 systemctl list-unit-files | grep enabled | grep -i komu_engineer_website
 
-rm -rf /tmp/komu_engineer_website_secret_key.txt
-uuid=$(uuidgen)
-echo "${uuid}" >> /tmp/komu_engineer_website_secret_key.txt
-cat /tmp/komu_engineer_website_secret_key.txt
+export KOMU_ENGINEER_WEBSITE_SECRET_KEY=$(uuidgen
+echo "KOMU_ENGINEER_WEBSITE_SECRET_KEY: ${KOMU_ENGINEER_WEBSITE_SECRET_KEY}"
 
 systemctl restart komu_engineer_website
-# sleep 5;rm -rf /tmp/komu_engineer_website_secret_key.txt # eliminate secretto minimize exposure. 
 journalctl -n20 -u komu_engineer_website'
 }
 
@@ -181,3 +178,5 @@ main() {
 }
 
 main
+
+export KOMU_ENGINEER_WEBSITE_SECRET_KEY=$(uuidgen)
