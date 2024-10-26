@@ -161,7 +161,7 @@ echo "${uuid}" >> /tmp/komu_engineer_website_secret_key.txt
 cat /tmp/komu_engineer_website_secret_key.txt
 
 systemctl restart komu_engineer_website
-sleep 5;rm -rf /tmp/komu_engineer_website_secret_key.txt # eliminate secretto minimize exposure. 
+# sleep 5;rm -rf /tmp/komu_engineer_website_secret_key.txt # eliminate secretto minimize exposure. 
 journalctl -n20 -u komu_engineer_website'
 }
 
