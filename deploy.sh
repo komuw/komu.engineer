@@ -166,8 +166,8 @@ journalctl -n20 -u komu_engineer_website'
 # Note you need to enable ipv6 via:
 # https://docs.digitalocean.com/products/networking/ipv6/how-to/enable/#during-creation
 # Both the following should work;
-#  mtr -r -w --show-ips -4 dushed.com
-#  mtr -r -w --show-ips -6 dushed.com
+#  mtr -r -w --show-ips -4 komu.engineer
+#  mtr -r -w --show-ips -6 komu.engineer
 main() {
     run_check_env
     get_ip
