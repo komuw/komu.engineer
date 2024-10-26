@@ -155,8 +155,10 @@ systemctl daemon-reload
 systemctl enable komu_engineer_website.service
 systemctl list-unit-files | grep enabled | grep -i komu_engineer_website
 
+cp /root/serve/komu_engineer_website/komu_engineer_website_envs.txt /tmp/komu_engineer_website_envs.txt
 rm -rf /tmp/komu_engineer_website_secret_key.txt
 echo "$(uuidgen)" >> /tmp/komu_engineer_website_secret_key.txt
+cat /tmp/komu_engineer_website_envs.txt
 
 systemctl restart komu_engineer_website
 journalctl -n20 -u komu_engineer_website'
