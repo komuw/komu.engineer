@@ -1,0 +1,26 @@
+# DOCS:
+#  1. https://github.com/komuw/ong/issues/419
+#  2. https://www.freedesktop.org/software/systemd/man/latest/systemd.service.html
+#  3. https://michael.stapelberg.ch/posts/2024-01-17-systemd-indefinite-service-restarts/
+#
+[Unit]
+Description=komu website
+Documentation=https://github.com/komuw/hardstone
+After=network.target
+
+[Service]
+Type=simple
+WorkingDirectory=/root/serve/komu_engineer_website/
+ExecStart=/root/serve/komu_engineer_website/komu_engineer_website
+# Restart configures whether the service shall be restarted when the service process exits, is killed, or a timeout is reached.
+# When the death of the process is a result of systemd operation (e.g. service stop or restart), the service will not be restarted
+Restart=always
+# RestartSec is the time to sleep before restarting a service.
+RestartSec=4s
+EnvironmentFile=/tmp/komu_engineer_website_envs.txt
+
+# DynamicUser=yes # this may not work.
+# ProtectHome=yes # this may not work.
+
+[Install]
+WantedBy=multi-user.target

@@ -22,6 +22,8 @@ import (
 	"github.com/komuw/ong/log"
 	"github.com/komuw/ong/mux"
 	"github.com/komuw/ong/server"
+
+	"github.com/komuw/srs/ext"
 )
 
 // The main func should be very small in size since you cannot test it.
@@ -42,7 +44,23 @@ func run() error {
 		return err
 	}
 
-	mx := getMux(l, opts, cwd)
+	srsMx := mux.Muxer{}
+	{ // srs muxer
+		dbPath := os.Getenv("SRS_DB_PATH")
+		if dbPath == "" {
+			return errors.New("environment variable `SRS_DB_PATH` has not been set")
+		}
+
+		mx, opts, closer, err := ext.Run(dbPath, "production")
+		if err != nil {
+			return err
+		}
+		defer closer()
+		srsMx = mx
+		_ = opts
+	}
+
+	mx := getMux(l, opts, cwd, srsMx)
 
 	return server.Run(mx, opts)
 }
@@ -65,10 +83,15 @@ func cfg() (config.Opts, *slog.Logger, error) {
 		if acmeEmail == "" {
 			return opts, l, errors.Errorf("the env var %s is either not set or has the wrong value. got = `%s`", "KOMU_ENGINEER_WEBSITE_LETSENCRYPT_EMAIL", acmeEmail)
 		}
+		secretKey := os.Getenv("KOMU_ENGINEER_WEBSITE_SECRET_KEY")
+		if secretKey == "" {
+			return opts, l, errors.Errorf("the env var %s is either not set or has the wrong value. got = `%s`", "KOMU_ENGINEER_WEBSITE_SECRET_KEY", secretKey)
+		}
+
 		domain := "*.komu.engineer"
 		opts = config.LetsEncryptOpts(
 			domain,
-			id.UUID4().String(),
+			secretKey,
 			// TODO: change clientIPstrategy based on our server host.
 			config.DirectIpStrategy,
 			l,
@@ -77,16 +100,31 @@ func cfg() (config.Opts, *slog.Logger, error) {
 		)
 	}
 
+	{ // from srs.
+		// TODO: call `ext.Run(dbPath)` here so that we can use values from its returned `opts`.
+		const (
+			readHeaderTime = 5 * time.Second
+			readTime       = readHeaderTime + (45 * time.Second)
+			writeTime      = readTime + (5 * time.Second)
+			maxBodyBytes   = (50 * 1024 * 1024) // 50MB. Should match maximum file upload limit for flashcards.
+		)
+		opts.ReadHeaderTimeout = readHeaderTime
+		opts.ReadTimeout = readTime
+		opts.WriteTimeout = writeTime
+		opts.MaxBodyBytes = maxBodyBytes
+	}
+
 	return opts, l, nil
 }
 
-func getMux(l *slog.Logger, opts config.Opts, cwd string) mux.Muxer {
+func getMux(l *slog.Logger, opts config.Opts, cwd string, srsMx mux.Muxer) mux.Muxer {
 	allRoutes := []mux.Route{
 		// TODO: add tarpit handler.
 		mux.NewRoute(
 			"/*",
+			// allow all methods because of srs.komu.engineer
 			mux.MethodAll,
-			router(l, opts, cwd),
+			router(l, opts, cwd, srsMx),
 		),
 	}
 
@@ -97,7 +135,7 @@ func getMux(l *slog.Logger, opts config.Opts, cwd string) mux.Muxer {
 	)
 }
 
-func router(l *slog.Logger, opts config.Opts, rootDir string) http.HandlerFunc {
+func router(l *slog.Logger, opts config.Opts, rootDir string, srsMx mux.Muxer) http.HandlerFunc {
 	domain := opts.Domain
 	if strings.Contains(domain, "*") {
 		// remove the `*` and `.`
@@ -109,14 +147,16 @@ func router(l *slog.Logger, opts config.Opts, rootDir string) http.HandlerFunc {
 		l,
 		rootDir,
 	)
-	srs := func(w http.ResponseWriter, r *http.Request) {
-		w.Write([]byte("this is the srs subdomain"))
-	}
+
+	srs := srsMx.ServeHTTP
+	_ = srs
+
 	algo := serveFileSources(
 		// curl -vkL -H "Host:algo.komu.engineer:80" https://localhost:65081/
 		l,
 		filepath.Join(rootDir, "/blogs/algos-n-data-structures"),
 	)
+
 	redirectMap := map[string]string{
 		// key is original url, value is the new location.
 		"/blogs/go-gc-maps":                                            "/blogs/01/go-gc-maps",
@@ -178,7 +218,7 @@ func router(l *slog.Logger, opts config.Opts, rootDir string) http.HandlerFunc {
 			return
 		}
 		if strings.Contains(hst, strings.ReplaceAll(fmt.Sprintf("srs.%s", domain), "..", "")) {
-			// TODO: plugin route to srs.
+			// curl -u "admin:some-srs-passwd" -vkL "https://srs.localhost:65081/review-flashcard"
 			srs(w, r)
 			return
 		}

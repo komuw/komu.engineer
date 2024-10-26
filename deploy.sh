@@ -69,7 +69,7 @@ run_build() {
 	rm -rf komu_engineer_website && \
     # build static binary.
     export CGO_ENABLED=0 && \
-    go build -trimpath -ldflags="-extldflags=-static" -o komu_engineer_website .
+    go build -trimpath -ldflags="-extldflags=-static" -o komu_engineer_website . && \
     chmod +x komu_engineer_website
 }
 
@@ -148,18 +148,19 @@ install_software(){
     ssh root@"${IP}" \
 'cd /root/serve/komu_engineer_website/;
 pwd;ls -lsha;
-OLD_KOMU_ENGINEER_WEBSITE_PID=$(pidof komu_engineer_website);
-echo "OLD_KOMU_ENGINEER_WEBSITE_PID = ${OLD_KOMU_ENGINEER_WEBSITE_PID}";
-export KOMU_ENGINEER_WEBSITE_ENVIRONMENT=production;
-export KOMU_ENGINEER_WEBSITE_LETSENCRYPT_EMAIL=komuw05+komu-engineer-LetsencryptEmail@gmail.com;
-rm -rf /tmp/komu_engineer_website_background.out;
-./komu_engineer_website > /tmp/komu_engineer_website_background.out 2>&1 &
-sleep 5;
-NEW_KOMU_ENGINEER_WEBSITE_PID=$(pidof komu_engineer_website);
-echo "NEW_KOMU_ENGINEER_WEBSITE_PID = ${NEW_KOMU_ENGINEER_WEBSITE_PID}";
-kill -15 ${OLD_KOMU_ENGINEER_WEBSITE_PID};
-sleep 15;
-tail -n10 /tmp/komu_engineer_website_background.out;'
+cp /root/serve/komu_engineer_website/komu_engineer_website.service /etc/systemd/system/komu_engineer_website.service
+chmod 0777 /etc/systemd/system/komu_engineer_website.service
+systemctl daemon-reload
+systemctl enable komu_engineer_website.service
+systemctl list-unit-files | grep enabled | grep -i komu_engineer_website
+
+cp /root/serve/komu_engineer_website/komu_engineer_website_envs.txt /tmp/komu_engineer_website_envs.txt
+echo KOMU_ENGINEER_WEBSITE_SECRET_KEY=$(uuidgen) >> /tmp/komu_engineer_website_envs.txt
+cat /tmp/komu_engineer_website_envs.txt
+# NB: when the /tmp directory is cleaned up. systemd will be unable to re-start due to missing /tmp/komu_engineer_website_envs.txt
+
+systemctl restart komu_engineer_website
+journalctl -n20 -u komu_engineer_website'
 }
 
 # Note you need to enable ipv6 via:

@@ -18,6 +18,8 @@ import (
 	"github.com/komuw/ong/config"
 	"github.com/komuw/ong/id"
 	"github.com/komuw/ong/log"
+	"github.com/komuw/ong/mux"
+	"github.com/komuw/srs/ext"
 	"go.akshayshah.org/attest"
 )
 
@@ -90,7 +92,7 @@ func TestMux(t *testing.T) {
 	l := log.New(context.Background(), w, 10)
 	opts := config.DevOpts(l, id.UUID4().String())
 	opts.Domain = "localhost"
-	mx := getMux(l, opts, cwd)
+	mx := getMux(l, opts, cwd, mux.Muxer{})
 
 	httpsPort := getPort()
 	ts, err := TlsServer(mx, opts.Domain, httpsPort)
@@ -186,7 +188,7 @@ func TestMuxRedirects(t *testing.T) {
 	l := log.New(context.Background(), w, 10)
 	opts := config.DevOpts(l, id.UUID4().String())
 	opts.Domain = "localhost"
-	mx := getMux(l, opts, cwd)
+	mx := getMux(l, opts, cwd, mux.Muxer{})
 
 	httpsPort := getPort()
 	ts, err := TlsServer(mx, opts.Domain, httpsPort)
@@ -256,6 +258,17 @@ func TestMuxRedirects(t *testing.T) {
 func TestMuxRouteSubdomains(t *testing.T) {
 	t.Parallel()
 
+	srsMx := func(t *testing.T) mux.Muxer {
+		dbPath := t.TempDir() + "/srs.sqlite"
+		mx, _, closer, err := ext.Run(dbPath, "development")
+		attest.Ok(t, err)
+		t.Cleanup(func() {
+			closer()
+		})
+
+		return mx
+	}
+
 	cwd, err := os.Getwd()
 	attest.Ok(t, err)
 
@@ -263,7 +276,7 @@ func TestMuxRouteSubdomains(t *testing.T) {
 	l := log.New(context.Background(), w, 10)
 	opts := config.DevOpts(l, id.UUID4().String())
 	opts.Domain = "localhost"
-	mx := getMux(l, opts, cwd)
+	mx := getMux(l, opts, cwd, srsMx(t))
 
 	httpsPort := getPort()
 	ts, err := TlsServer(mx, opts.Domain, httpsPort)
@@ -284,26 +297,31 @@ func TestMuxRouteSubdomains(t *testing.T) {
 
 	tests := []struct {
 		host               string
+		uri                string
 		expectedStatusCode int
 		expectedBody       string
 	}{
 		{
 			host:               "localhost:80",
+			uri:                "/index.html",
 			expectedStatusCode: http.StatusOK,
 			expectedBody:       "Is a software developer currently",
 		},
 		{
 			host:               "srs.localhost:80",
+			uri:                "/zhealthz",
 			expectedStatusCode: http.StatusOK,
-			expectedBody:       "this is the srs subdomain",
+			expectedBody:       `"status": "ok"`,
 		},
 		{
 			host:               "srs.localhost", // no port
+			uri:                "/zhealthz",
 			expectedStatusCode: http.StatusOK,
-			expectedBody:       "this is the srs subdomain",
+			expectedBody:       `"status": "ok"`,
 		},
 		{
 			host:               "algo.localhost:80",
+			uri:                "/index.html",
 			expectedStatusCode: http.StatusOK,
 			expectedBody:       "4_stack_n_queue",
 		},
@@ -315,7 +333,7 @@ func TestMuxRouteSubdomains(t *testing.T) {
 		t.Run(tt.host, func(t *testing.T) {
 			t.Parallel()
 
-			url := ts.URL + "/index.html"
+			url := ts.URL + tt.uri
 			url = strings.ReplaceAll(url, "127.0.0.1", "localhost")
 			req, err := http.NewRequest(http.MethodGet, url, nil)
 			attest.Ok(t, err)
@@ -323,15 +341,15 @@ func TestMuxRouteSubdomains(t *testing.T) {
 			req.Host = tt.host
 
 			res, err := client.Do(req)
-			attest.Ok(t, err)
+			attest.Ok(t, err, attest.Sprintf("url=%s", url))
 			defer res.Body.Close()
 
 			rb, err := io.ReadAll(res.Body)
 			attest.Ok(t, err)
 			_ = rb
 
-			attest.Equal(t, res.StatusCode, tt.expectedStatusCode)
-			attest.Subsequence(t, string(rb), tt.expectedBody)
+			attest.Equal(t, res.StatusCode, tt.expectedStatusCode, attest.Sprintf("url=%s", url))
+			attest.Subsequence(t, string(rb), tt.expectedBody, attest.Sprintf("url=%s", url))
 		})
 	}
 }
