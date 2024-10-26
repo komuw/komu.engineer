@@ -5,7 +5,7 @@
 #
 [Unit]
 Description=komu website
-Documentation=https://github.com/komuw/hardstone
+Documentation=https://github.com/komuw/komu.engineer
 After=network.target
 
 [Service]
