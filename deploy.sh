@@ -155,7 +155,7 @@ systemctl daemon-reload
 systemctl enable komu_engineer_website.service
 systemctl list-unit-files | grep enabled | grep -i komu_engineer_website
 
-export KOMU_ENGINEER_WEBSITE_SECRET_KEY=$(uuidgen
+export KOMU_ENGINEER_WEBSITE_SECRET_KEY=$(uuidgen)
 echo "KOMU_ENGINEER_WEBSITE_SECRET_KEY: ${KOMU_ENGINEER_WEBSITE_SECRET_KEY}"
 
 systemctl restart komu_engineer_website
