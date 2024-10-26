@@ -83,10 +83,15 @@ func cfg() (config.Opts, *slog.Logger, error) {
 		if acmeEmail == "" {
 			return opts, l, errors.Errorf("the env var %s is either not set or has the wrong value. got = `%s`", "KOMU_ENGINEER_WEBSITE_LETSENCRYPT_EMAIL", acmeEmail)
 		}
+		secretKey := os.Getenv("KOMU_ENGINEER_WEBSITE_SECRET_KEY")
+		if secretKey == "" {
+			return opts, l, errors.Errorf("the env var %s is either not set or has the wrong value. got = `%s`", "KOMU_ENGINEER_WEBSITE_SECRET_KEY", secretKey)
+		}
+
 		domain := "*.komu.engineer"
 		opts = config.LetsEncryptOpts(
 			domain,
-			id.UUID4().String(),
+			secretKey,
 			// TODO: change clientIPstrategy based on our server host.
 			config.DirectIpStrategy,
 			l,
