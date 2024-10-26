@@ -159,7 +159,6 @@ rm -rf /tmp/komu_engineer_website_secret_key.txt
 uuid=$(uuidgen)
 echo "${uuid}" >> /tmp/komu_engineer_website_secret_key.txt
 cat /tmp/komu_engineer_website_secret_key.txt
-e914f4e2-2e50-4a4e-a55a-797e55ea8fbf
 
 systemctl restart komu_engineer_website
 sleep 5;rm -rf /tmp/komu_engineer_website_secret_key.txt # eliminate secretto minimize exposure. 
