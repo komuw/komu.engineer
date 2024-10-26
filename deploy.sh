@@ -158,6 +158,7 @@ systemctl list-unit-files | grep enabled | grep -i komu_engineer_website
 cp /root/serve/komu_engineer_website/komu_engineer_website_envs.txt /tmp/komu_engineer_website_envs.txt
 echo KOMU_ENGINEER_WEBSITE_SECRET_KEY=$(uuidgen) >> /tmp/komu_engineer_website_envs.txt
 cat /tmp/komu_engineer_website_envs.txt
+# NB: when the /tmp directory is cleaned up. systemd will be unable to re-start due to missing /tmp/komu_engineer_website_envs.txt
 
 systemctl restart komu_engineer_website
 journalctl -n20 -u komu_engineer_website'
