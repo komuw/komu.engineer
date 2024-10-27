@@ -260,7 +260,7 @@ func TestMuxRouteSubdomains(t *testing.T) {
 
 	srsMx := func(t *testing.T) mux.Muxer {
 		dbPath := t.TempDir() + "/srs.sqlite"
-		mx, _, closer, err := ext.Run(dbPath, "development")
+		mx, _, closer, _, err := ext.Run(dbPath, "development")
 		attest.Ok(t, err)
 		t.Cleanup(func() {
 			closer()

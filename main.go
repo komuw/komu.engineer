@@ -51,13 +51,16 @@ func run() error {
 			return errors.New("environment variable `SRS_DB_PATH` has not been set")
 		}
 
-		mx, opts, closer, err := ext.Run(dbPath, "production")
+		mx, opts, closer, backup, err := ext.Run(dbPath, "production")
 		if err != nil {
 			return err
 		}
 		defer closer()
 		srsMx = mx
 		_ = opts
+		{
+			go backup()
+		}
 	}
 
 	mx := getMux(l, opts, cwd, srsMx)
