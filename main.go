@@ -34,17 +34,8 @@ func main() {
 }
 
 func run() error {
-	opts, l, err := cfg()
-	if err != nil {
-		return err
-	}
-
-	cwd, err := os.Getwd()
-	if err != nil {
-		return err
-	}
-
 	srsMx := mux.Muxer{}
+	srsOpts := config.Opts{}
 	{ // srs muxer
 		dbPath := os.Getenv("SRS_DB_PATH")
 		if dbPath == "" {
@@ -57,10 +48,20 @@ func run() error {
 		}
 		defer closer()
 		srsMx = mx
-		_ = opts
+		srsOpts = opts
 		{
 			go backup()
 		}
+	}
+
+	opts, l, err := cfg(srsOpts)
+	if err != nil {
+		return err
+	}
+
+	cwd, err := os.Getwd()
+	if err != nil {
+		return err
 	}
 
 	mx := getMux(l, opts, cwd, srsMx)
@@ -68,7 +69,7 @@ func run() error {
 	return server.Run(mx, opts)
 }
 
-func cfg() (config.Opts, *slog.Logger, error) {
+func cfg(srsOpts config.Opts) (config.Opts, *slog.Logger, error) {
 	const envVar = "KOMU_ENGINEER_WEBSITE_ENVIRONMENT"
 	env := os.Getenv(envVar)
 
@@ -104,17 +105,10 @@ func cfg() (config.Opts, *slog.Logger, error) {
 	}
 
 	{ // from srs.
-		// TODO: call `ext.Run(dbPath)` here so that we can use values from its returned `opts`.
-		const (
-			readHeaderTime = 5 * time.Second
-			readTime       = readHeaderTime + (45 * time.Second)
-			writeTime      = readTime + (5 * time.Second)
-			maxBodyBytes   = (50 * 1024 * 1024) // 50MB. Should match maximum file upload limit for flashcards.
-		)
-		opts.ReadHeaderTimeout = readHeaderTime
-		opts.ReadTimeout = readTime
-		opts.WriteTimeout = writeTime
-		opts.MaxBodyBytes = maxBodyBytes
+		opts.ReadHeaderTimeout = srsOpts.ReadHeaderTimeout
+		opts.ReadTimeout = srsOpts.ReadTimeout
+		opts.WriteTimeout = srsOpts.WriteTimeout
+		opts.MaxBodyBytes = srsOpts.MaxBodyBytes
 	}
 
 	return opts, l, nil
