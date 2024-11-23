@@ -111,6 +111,13 @@ func cfg(srsOpts config.Opts) (config.Opts, *slog.Logger, error) {
 		opts.MaxBodyBytes = srsOpts.MaxBodyBytes
 	}
 
+	// The wikipedia [monitoring] dashboards are public.
+	// In there we can see that the p95 [response] times for http GET requests is ~700ms, & the p95 response times for http POST requests is ~900ms.
+	// Thus, we'll use a `loadShedBreachLatency` of ~900ms * 1.5.
+	// [monitoring]: https://grafana.wikimedia.org/?orgId=1
+	// [response]: https://grafana.wikimedia.org/d/RIA1lzDZk/application-servers-red?orgId=1
+	opts.LoadShedBreachLatency = 1_500 * time.Millisecond
+
 	return opts, l, nil
 }
 
