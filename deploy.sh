@@ -91,7 +91,7 @@ sudo apt -y update
 # This version of sqlite has a bug to do with interaction between STRICT and REAL values.
 # Unfortunately this version(v3.37.2) is the latest in ubuntu sources.
 # https://sqlite.org/forum/info/96da0cd6dd291394
-sudo apt install -y et sqlite3
+sudo apt install -y et sqlite3 net-tools psmisc
 
 sudo apt-get -y dist-upgrade # security updates
 sudo apt -y autoremove
