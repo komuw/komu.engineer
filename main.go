@@ -109,6 +109,7 @@ func cfg(srsOpts config.Opts) (config.Opts, *slog.Logger, error) {
 		opts.ReadTimeout = srsOpts.ReadTimeout
 		opts.WriteTimeout = srsOpts.WriteTimeout
 		opts.MaxBodyBytes = srsOpts.MaxBodyBytes
+		opts.RateLimit = srsOpts.RateLimit
 	}
 
 	// The wikipedia [monitoring] dashboards are public.
