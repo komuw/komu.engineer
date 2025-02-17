@@ -75,6 +75,8 @@ import utils
 # The pigeonhole-principle means that any hash function with more inputs than outputs MUST have collisions.
 # The birthday-paradox places an upper bound on collision resistance;
 # If a hash function produces N bits of output, an attacker who computes √2^N hash operations on random input is likely to find two matching outputs.
+# The number of N-bit hashes that can be generated before getting a collision is 2^(N/2)
+#   - https://en.wikipedia.org/wiki/Birthday_problem#Probability_of_a_shared_birthday_(collision)
 #
 # Collision can be eliminated by the following two ways:
 
