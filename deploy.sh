@@ -148,6 +148,9 @@ install_software(){
     ssh root@"${IP}" \
 'cd /root/serve/komu_engineer_website/;
 pwd;ls -lsha;
+
+# todo: backup srs sqlite db: https://github.com/komuw/komu.engineer/issues/34
+
 cp /root/serve/komu_engineer_website/komu_engineer_website.service /etc/systemd/system/komu_engineer_website.service
 chmod 0777 /etc/systemd/system/komu_engineer_website.service
 systemctl daemon-reload
