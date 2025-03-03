@@ -163,7 +163,7 @@ cat /tmp/komu_engineer_website_envs.txt
 # NB: when the /tmp directory is cleaned up. systemd will be unable to re-start due to missing /tmp/komu_engineer_website_envs.txt
 
 systemctl restart komu_engineer_website
-journalctl -xef -n20 -u komu_engineer_website'
+journalctl -xe -n20 --no-pager -u komu_engineer_website'
 }
 
 # Note you need to enable ipv6 via:
