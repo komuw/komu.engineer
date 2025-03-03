@@ -4,7 +4,7 @@ go 1.24
 
 require (
 	github.com/komuw/ong v0.1.13
-	github.com/komuw/srs v0.0.64-0.20250303200530-7fa9a292c04a
+	github.com/komuw/srs v0.0.64
 )
 
 require (
