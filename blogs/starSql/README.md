@@ -261,7 +261,8 @@ END
 /*
 A CASE block is like an IF/THEN/ELSE clause in other programming languages.
 each condition(condition_1, condition_2 etc) is an expression that returns a boolean value, either true or false.
-If the condition evaluates to true, it returns the result which follows the condition, and all other CASE branches do not process at all.
+If the condition evaluates to true, it returns the result which follows the condition, and all other CASE branches
+do not process at all.
 
 If all conditions evaluate to false, the CASE expression will return the result in the ELSE(ie result_n) part. 
 If you omit the ELSE clause, the CASE expression will return null.
