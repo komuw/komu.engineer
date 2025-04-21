@@ -86,6 +86,7 @@ security_update() {
 "set -x;
 sudo update-ca-certificates --fresh
 
+sudo apt --fix-broken install -y;
 sudo apt install -y software-properties-common
 sudo add-apt-repository -y ppa:jgmath2000/et
 sudo apt -y update
@@ -95,6 +96,7 @@ sudo apt -y update
 sudo apt install -y et sqlite3 net-tools psmisc
 
 sudo apt-get -y dist-upgrade # security updates
+sudo apt --fix-broken install -y
 sudo apt -y autoremove
 sudo apt -y clean
 sudo apt -y purge '~c' # https://askubuntu.com/a/181965"
