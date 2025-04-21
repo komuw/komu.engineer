@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 if test "$BASH" = "" || "$BASH" -uc "a=();true \"\${a[@]}\"" 2>/dev/null; then
     # Bash 4.4, Zsh
-    set -eo pipefail
+    set -xeo pipefail
 else
     # Bash 4.3 and older chokes on empty arrays with set -u.
-    set -eo pipefail
+    set -xeo pipefail
 fi
 shopt -s nullglob globstar
 
@@ -83,7 +83,8 @@ security_update() {
     fi
 
     ssh root@"${IP}" \
-"sudo update-ca-certificates --fresh
+"set -x;
+sudo update-ca-certificates --fresh
 
 sudo apt install -y software-properties-common
 sudo add-apt-repository -y ppa:jgmath2000/et
@@ -146,7 +147,8 @@ install_software(){
     fi
 
     ssh root@"${IP}" \
-'cd /root/serve/komu_engineer_website/;
+'set -x;
+cd /root/serve/komu_engineer_website/;
 pwd;ls -lsha;
 
 # todo: backup srs sqlite db: https://github.com/komuw/komu.engineer/issues/34
