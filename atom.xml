@@ -46,11 +46,8 @@
         <title>Logging without losing money or context</title>
         <updated>2020-05-26T00:00:00.000Z</updated>
         <summary type="html">
-            In order to minimize logging costs, conventional wisdom asks that you filter logs by severity and/or
-            implement sampling.</br>
-            This article articulates why that may be a bad idea, it then proposes an alternative that loses you neither
-            money nor context and then finally it
-            presents a proto-type implementation of that alternative.
+            In order to minimize logging costs, conventional wisdom asks that you filter logs by severity and/or implement sampling.</br>
+            This article articulates why that may be a bad idea, it then proposes an alternative that loses you neither money nor context and then finally it presents a proto-type implementation of that alternative.
         </summary>
     </entry>
     <entry>
@@ -60,8 +57,7 @@
         <updated>2019-11-18T00:00:00.000Z</updated>
         <summary type="html">
             This article assumes that you have come to the conclusion that you need stacktraces in your errors.</br>
-            We are going to build a package that can annotate any errors - including the ones created by the stdlib
-            <i>errors</i> package - with stack traces.
+            We are going to build a package that can annotate any errors - including the ones created by the stdlib <i>errors</i> package - with stack traces.
         </summary>
     </entry>
     <entry>
@@ -70,8 +66,7 @@
         <title>Understand how celery works by building a clone</title>
         <updated>2019-07-15T00:00:00.000Z</updated>
         <summary type="html">
-            How do Celery, Resque, Sidekiq, among other background task processors
-            work?</br>
+            How do Celery, Resque, Sidekiq, among other background task processors work?</br>
             In this blogpost, we figure that out while building our own background task processor one step at a time.
         </summary>
     </entry>
@@ -82,8 +77,7 @@
         <updated>2018-11-23T00:00:00.000Z</updated>
         <summary type="html">
             It's almost unheard of, these days, to store application logs in a structured datastore.</br>
-            In this blogpost I propose and implement a logging pipeline that involves storing logs in
-            PostgreSQL(timescaleDB)
+            In this blogpost I propose and implement a logging pipeline that involves storing logs in PostgreSQL(timescaleDB)
         </summary>
     </entry>
     <entry>
@@ -92,10 +86,8 @@
         <title>How to use any programming language on AWS lambda</title>
         <updated>2018-10-01T00:00:00.000Z</updated>
         <summary type="html">
-            Sometimes you may have a usecase for AWS lambda but the programming language that you are
-            using is not natively supported by AWS lambda.</br>
-            But you can still use your favorite programming language with AWS lambda even if it is not natively
-            supported. </br>
+            Sometimes you may have a usecase for AWS lambda but the programming language that you are using is not natively supported by AWS lambda.</br>
+            But you can still use your favorite programming language with AWS lambda even if it is not natively supported. </br>
             In this article, we explore how to do that.
         </summary>
     </entry>
@@ -125,8 +117,7 @@
         <title>Exploring consensus via python</title>
         <updated>2018-03-24T00:00:00.000Z</updated>
         <summary type="html">
-            How do you get different computers that are part of a larger cluster to agree on what the value of
-            something is?</br>
+            How do you get different computers that are part of a larger cluster to agree on what the value of something is?</br>
             We try and answer that question.</br>
             We also learn about, CASPaxos, the consensus protocol.
         </summary>
@@ -138,9 +129,7 @@
         <updated>2018-01-25T00:00:00.000Z</updated>
         <summary type="html">
             I'm left wondering, shouldn't the Go runtime then not do it for me/you by default?</br>
-            Anytime the runtime sees a map that is larger than X and the keys to that map contains pointers,</br>
-            the runtime inlines(for lack of a better term) that map into one whose keys are ints(or whatever) and does
-            the string->ints hashing for you without you even noticing.
+            Anytime the runtime sees a map that is larger than X and the keys to that map contains pointers, the runtime inlines(for lack of a better term) that map into one whose keys are ints(or whatever) and does the string->ints hashing for you without you even noticing.
         </summary>
     </entry>
 </feed>
