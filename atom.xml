@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-    <id>https://www.komu.engineer</id>
+    <id>https://www.komu.engineer/</id>
     <title>Komu Wairagu</title>
     <link type="application/atom+xml" href="https://www.komu.engineer/atom.xml" rel="self"/>
     <link href="https://www.komu.engineer/blogs"/>
@@ -71,7 +71,7 @@
             In this blogpost, we figure that out while building our own background task processor one step at a time.
         </summary>
     </entry>
-        <entry>
+    <entry>
         <id>https://www.komu.engineer/blogs/06/timescaleDB-for-logs.html</id>
         <link href="https://www.komu.engineer/blogs/06/timescaleDB-for-logs.html"/>
         <title>Storing application logs in an SQL database</title>
