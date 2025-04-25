@@ -26,7 +26,12 @@ import (
 	"github.com/komuw/srs/ext"
 )
 
-// The main func should be very small in size since you cannot test it.
+/*
+The main func should be very small in size since you cannot test it.
+
+export SRS_DB_PATH="/tmp/srs.sqlite";export KOMU_ENGINEER_WEBSITE_ENVIRONMENT="development"
+go run -race .
+*/
 func main() {
 	if err := run(); err != nil {
 		stdLog.Fatalf("run failed: %#+v", err)

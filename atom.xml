@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+    <id>https://www.komu.engineer</id>
+    <title>Komu Wairagu</title>
+    <link type="application/atom+xml" href="https://www.komu.engineer/atom.xml" rel="self"/>
+    <link href="https://www.komu.engineer/blogs"/>
+    <author>
+        <name>Komu Wairagu</name>
+    </author>
+    <updated>2025-04-25T00:00:00.000Z</updated>
+
+    <!-- Also remember to update `blogs/index.html` -->
+    <entry>
+        <id>https://www.komu.engineer/blogs/12/propagate-context-without-cancellation.html</id>
+        <link href="https://www.komu.engineer/blogs/12/propagate-context-without-cancellation.html"/>
+        <title>How to propagate Golang context without cancellation</title>
+        <updated>2023-08-23T00:00:00.000Z</updated>
+        <summary type="html">
+            Sometimes you need to propagate a context's values without also propagating its cancellation. In what situations would you run into such a need? How do you do that? What solutions exists in the ecosystem? Is this something that Go itself should solve? Let's find out together in this post.
+        </summary>
+    </entry>
+    <entry>
+        <id>https://www.komu.engineer/blogs/11/opentelemetry-and-go.html</id>
+        <link href="https://www.komu.engineer/blogs/11/opentelemetry-and-go.html"/>
+        <title>The complete guide to OpenTelemetry in Golang</title>
+        <updated>2023-02-17T00:00:00.000Z</updated>
+        <summary type="html">
+            This guide should take you from zero to production in instrumenting, collecting, and exporting telemetry data(metrics, logs, & traces) in a secure and scalable manner.
+        </summary>
+    </entry>
+    <entry>
+        <id>https://www.komu.engineer/blogs/10/dont-use-a-different-interface-for-testing.html</id>
+        <link href="https://www.komu.engineer/blogs/10/dont-use-a-different-interface-for-testing.html"/>
+        <title>Don't use a different interface in tests</title>
+        <updated>2022-05-22T00:00:00.000Z</updated>
+        <summary type="html">
+            Your test code should not be using a different interface implementation compared to your non test code.</br>
+            Using different implementations(sometimes called 'mocking') is one of the best ways to lie to yourself that you are testing your code whereas you really aren't.</br>
+            This article articulates why, including code examples.
+        </summary>
+    </entry>
+    <entry>
+        <id>https://www.komu.engineer/blogs/09/log-without-losing-context.html</id>
+        <link href="https://www.komu.engineer/blogs/09/log-without-losing-context.html"/>
+        <title>Logging without losing money or context</title>
+        <updated>2020-05-26T00:00:00.000Z</updated>
+        <summary type="html">
+            In order to minimize logging costs, conventional wisdom asks that you filter logs by severity and/or
+            implement sampling.</br>
+            This article articulates why that may be a bad idea, it then proposes an alternative that loses you neither
+            money nor context and then finally it
+            presents a proto-type implementation of that alternative.
+        </summary>
+    </entry>
+    <entry>
+        <id>https://www.komu.engineer/blogs/08/golang-stackTrace.html</id>
+        <link href="https://www.komu.engineer/blogs/08/golang-stackTrace.html"/>
+        <title>Build a Go package that annotates errors with stack traces</title>
+        <updated>2019-11-18T00:00:00.000Z</updated>
+        <summary type="html">
+            This article assumes that you have come to the conclusion that you need stacktraces in your errors.</br>
+            We are going to build a package that can annotate any errors - including the ones created by the stdlib
+            <i>errors</i> package - with stack traces.
+        </summary>
+    </entry>
+    <entry>
+        <id>https://www.komu.engineer/blogs/07/understand-how-celery-works.html</id>
+        <link href="https://www.komu.engineer/blogs/07/understand-how-celery-works.html"/>
+        <title>Understand how celery works by building a clone</title>
+        <updated>2019-07-15T00:00:00.000Z</updated>
+        <summary type="html">
+            How do Celery, Resque, Sidekiq, among other background task processors
+            work?</br>
+            In this blogpost, we figure that out while building our own background task processor one step at a time.
+        </summary>
+    </entry>
+        <entry>
+        <id>https://www.komu.engineer/blogs/06/timescaleDB-for-logs.html</id>
+        <link href="https://www.komu.engineer/blogs/06/timescaleDB-for-logs.html"/>
+        <title>Storing application logs in an SQL database</title>
+        <updated>2018-11-23T00:00:00.000Z</updated>
+        <summary type="html">
+            It's almost unheard of, these days, to store application logs in a structured datastore.</br>
+            In this blogpost I propose and implement a logging pipeline that involves storing logs in
+            PostgreSQL(timescaleDB)
+        </summary>
+    </entry>
+    <entry>
+        <id>https://www.komu.engineer/blogs/05/lambda-shim.html</id>
+        <link href="https://www.komu.engineer/blogs/05/lambda-shim.html"/>
+        <title>How to use any programming language on AWS lambda</title>
+        <updated>2018-10-01T00:00:00.000Z</updated>
+        <summary type="html">
+            Sometimes you may have a usecase for AWS lambda but the programming language that you are
+            using is not natively supported by AWS lambda.</br>
+            But you can still use your favorite programming language with AWS lambda even if it is not natively
+            supported. </br>
+            In this article, we explore how to do that.
+        </summary>
+    </entry>
+    <entry>
+        <id>https://www.komu.engineer/blogs/04/go-modules-early-peek.html</id>
+        <link href="https://www.komu.engineer/blogs/04/go-modules-early-peek.html"/>
+        <title>An early peek at Go modules</title>
+        <updated>2018-07-20T00:00:00.000Z</updated>
+        <summary type="html">
+            In this article, we add versioning to a go package while working outside of GOPATH.</br>
+            We take a peek into the future of developing in Go, we stumble and we rise.
+        </summary>
+    </entry>
+    <entry>
+        <id>https://www.komu.engineer/blogs/03/python-lambda.html</id>
+        <link href="https://www.komu.engineer/blogs/03/python-lambda.html"/>
+        <title>Migrating a python application to AWS lambda as is; without code change</title>
+        <updated>2018-06-02T00:00:00.000Z</updated>
+        <summary type="html">
+            In this article, we will go through an example of how to migrate a python application to AWS lambda.</br>
+            We will not make any code changes(or re-architect it) to our app in order to migrate it.
+        </summary>
+    </entry>
+    <entry>
+        <id>https://www.komu.engineer/blogs/02/consensus.html</id>
+        <link href="https://www.komu.engineer/blogs/02/consensus.html"/>
+        <title>Exploring consensus via python</title>
+        <updated>2018-03-24T00:00:00.000Z</updated>
+        <summary type="html">
+            How do you get different computers that are part of a larger cluster to agree on what the value of
+            something is?</br>
+            We try and answer that question.</br>
+            We also learn about, CASPaxos, the consensus protocol.
+        </summary>
+    </entry>
+    <entry>
+        <id>https://www.komu.engineer/blogs/01/go-gc-maps.html</id>
+        <link href="https://www.komu.engineer/blogs/01/go-gc-maps.html"/>
+        <title>Go Garbage collector and Large maps with pointers</title>
+        <updated>2018-01-25T00:00:00.000Z</updated>
+        <summary type="html">
+            I'm left wondering, shouldn't the Go runtime then not do it for me/you by default?</br>
+            Anytime the runtime sees a map that is larger than X and the keys to that map contains pointers,</br>
+            the runtime inlines(for lack of a better term) that map into one whose keys are ints(or whatever) and does
+            the string->ints hashing for you without you even noticing.
+        </summary>
+    </entry>
+</feed>
