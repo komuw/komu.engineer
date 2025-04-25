@@ -10,6 +10,7 @@
     </author>
     <updated>2025-04-25T00:00:00.000Z</updated>
 
+    <!-- Use https://validator.w3.org/feed/ to validate this file.  -->
     <!-- Also remember to update `blogs/index.html` -->
     <entry>
         <id>https://www.komu.engineer/blogs/12/propagate-context-without-cancellation.html</id>
