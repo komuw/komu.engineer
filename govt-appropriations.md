@@ -181,6 +181,8 @@ Office of the President
       Chiefs do solve some family cases but this can very well be solved via the judiciary, religious roots or even via community members. Yes sometimes when you apply for your national ID it is delivered to your sub-chief, but you can as well have it delivered at the nearest huduma center. 
       Back in my village, we sometimes report chicken thieves to the chief but this a role that the police system can handle well. For every role that the provincial adminstration plays, there's a duplicate goverment office that is mandated by law to do the same. Let's let the offices mandated by law to do their work. 
       "Within five years ...national government shall restructure ...the provincial administration to accord with and respect the system of devolved government" - https://new.kenyalaw.org/akn/ke/act/2010/constitution/eng@2010-09-03#att_6__part_4__para_17
+      Look at how thin the NATIONAL GOVERNMENT CO-ORDINATION ACT is; https://new.kenyalaw.org/akn/ke/act/2013/1/eng@2024-05-17
+      It does not even assign any duties to national government administrative officers(chiefs, county commissioner, etc)
 29. Ministry of Defence
     sub-programme: Kenya Meat Commission KES 200,000,000
                                          KES 2,980,000,000
