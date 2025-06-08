@@ -180,6 +180,7 @@ Office of the President
       We need to dismantle the provincial adminstration(which nowadays they call National Government Administration). Yes chiefs do play some role but most of their roles are duplicative and are just a carry-over from the pre-2010 constitituon.    
       Chiefs do solve some family cases but this can very well be solved via the judiciary, religious roots or even via community members. Yes sometimes when you apply for your national ID it is delivered to your sub-chief, but you can as well have it delivered at the nearest huduma center. 
       Back in my village, we sometimes report chicken thieves to the chief but this a role that the police system can handle well. For every role that the provincial adminstration plays, there's a duplicate goverment office that is mandated by law to do the same. Let's let the offices mandated by law to do their work. 
+      "Within five years ...national government shall restructure ...the provincial administration to accord with and respect the system of devolved government" - https://new.kenyalaw.org/akn/ke/act/2010/constitution/eng@2010-09-03#att_6__part_4__para_17
 29. Ministry of Defence
     sub-programme: Kenya Meat Commission KES 200,000,000
                                          KES 2,980,000,000
