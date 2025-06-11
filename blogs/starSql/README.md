@@ -1220,3 +1220,4 @@ ORDER BY
 15. A linter for Postgres migrations: https://squawkhq.com/
 16. Sqlite index automatic recommendations: https://sqlite.org/cli.html#index_recommendations_sqlite_expert_
 17. Automatic sharding & horizontal scaling: https://github.com/pgdogdev/pgdog
+18. Vitess for postgres by the same guy who made vitess: https://github.com/multigres/multigres
