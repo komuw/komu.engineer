@@ -312,7 +312,8 @@ update:
 
 
 
-TODO: effect of investment promotion levy: https://x.com/AmbokoJH/status/1924826493592432967
+TODO: effect of investment promotion levy: https://x.com/AmbokoJH/status/1924826493592432967      
+                                         : https://x.com/ntvkenya/status/1932686729967734794     
 TODO: where is the provincial adminstration? Can we bin it?
 TODO: where is fuel development levy(road development levy) in the budget/appropriations books? (maybe `Transfer of receipts` in  the `Program-Based-Budget-Book`??)
 TODO: search kenha/kura/KeRRA/krb
