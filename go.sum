@@ -20,8 +20,8 @@ github.com/klauspost/compress v1.17.11 h1:In6xLpyWOi1+C7tXUUWv2ot1QvBjxevKAaI6IX
 github.com/klauspost/compress v1.17.11/go.mod h1:pMDklpSncoRMuLFrf1W9Ss9KT+0rH90U12bZKk7uwG0=
 github.com/komuw/ong v0.1.13 h1:idcqgxsl9Fjy1+8sZZzT8OEskfJxvg+g+Y19XFdKKSI=
 github.com/komuw/ong v0.1.13/go.mod h1:DwZfcejkWDK+fzdyhzGH0nP4F00xRni0v54P3UQa5ro=
-github.com/komuw/srs v0.0.94 h1:CnXO3JCU5F7FhUQ3FBkSKh7fwFGmebdhA6dbUn11Ozk=
-github.com/komuw/srs v0.0.94/go.mod h1:irvu0YwwtFj+TKyJDQNtnhQcHIx7IWZw7k0TpJU7WxI=
+github.com/komuw/srs v0.0.95 h1:tMQUAQ3YmnL+7HL4166B93xVV0jM9h3BibnfezLDaNI=
+github.com/komuw/srs v0.0.95/go.mod h1:irvu0YwwtFj+TKyJDQNtnhQcHIx7IWZw7k0TpJU7WxI=
 github.com/mattn/go-colorable v0.1.13 h1:fFA4WZxdEF4tXPZVKMLwD8oUnCTTo08duU7wxecdEvA=
 github.com/mattn/go-colorable v0.1.13/go.mod h1:7S9/ev0klgBDR4GtXTXX8a3vIGJpMovkB8vQcUbaXHg=
 github.com/mattn/go-isatty v0.0.20 h1:xfD0iDuEKnDkl03q4limB+vH+GxLEtL/jb4xVJSWWEY=
