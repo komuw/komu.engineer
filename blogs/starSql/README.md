@@ -1221,3 +1221,4 @@ ORDER BY
 16. Sqlite index automatic recommendations: https://sqlite.org/cli.html#index_recommendations_sqlite_expert_
 17. Automatic sharding & horizontal scaling: https://github.com/pgdogdev/pgdog
 18. Vitess for postgres by the same guy who made vitess: https://github.com/multigres/multigres
+19. `FOR UPDATE SKIP LOCKED` might scale better than `listen/notify`: https://news.ycombinator.com/item?id=44490510
