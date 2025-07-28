@@ -1,9 +1,6 @@
-privateRepo:
-	@export GOPRIVATE=github.com/komuw/srs && go get github.com/komuw/srs/ext@v0.0.1
 
 run:
 	@export KOMU_ENGINEER_WEBSITE_ENVIRONMENT="development"
-	@export SRS_DB_PATH="/tmp/srs.sqlite"
 	@goimports -w .;gofumpt -extra -w .;gofmt -w -s .;go mod tidy;go run -race github.com/komuw/komu.engineer 
 
 

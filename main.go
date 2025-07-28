@@ -22,14 +22,12 @@ import (
 	"github.com/komuw/ong/log"
 	"github.com/komuw/ong/mux"
 	"github.com/komuw/ong/server"
-
-	"github.com/komuw/srs/ext"
 )
 
 /*
 The main func should be very small in size since you cannot test it.
 
-export SRS_DB_PATH="/tmp/srs.sqlite";export KOMU_ENGINEER_WEBSITE_ENVIRONMENT="development"
+export KOMU_ENGINEER_WEBSITE_ENVIRONMENT="development"
 go run -race .
 */
 func main() {
@@ -39,28 +37,7 @@ func main() {
 }
 
 func run() error {
-	srsMx := mux.Muxer{}
-	srsOpts := config.Opts{}
-	{ // srs muxer
-		dbPath := os.Getenv("SRS_DB_PATH")
-		if dbPath == "" {
-			return errors.New("environment variable `SRS_DB_PATH` has not been set")
-		}
-
-		mx, opts, closer, backupFn, processFeedsFn, err := ext.Run(dbPath, "production")
-		if err != nil {
-			return err
-		}
-		defer closer()
-		srsMx = mx
-		srsOpts = opts
-		{
-			go backupFn()
-			go processFeedsFn()
-		}
-	}
-
-	opts, l, err := cfg(srsOpts)
+	opts, l, err := cfg()
 	if err != nil {
 		return err
 	}
@@ -70,12 +47,12 @@ func run() error {
 		return err
 	}
 
-	mx := getMux(l, opts, cwd, srsMx)
+	mx := getMux(l, opts, cwd)
 
 	return server.Run(mx, opts)
 }
 
-func cfg(srsOpts config.Opts) (config.Opts, *slog.Logger, error) {
+func cfg() (config.Opts, *slog.Logger, error) {
 	const envVar = "KOMU_ENGINEER_WEBSITE_ENVIRONMENT"
 	env := os.Getenv(envVar)
 
@@ -110,14 +87,6 @@ func cfg(srsOpts config.Opts) (config.Opts, *slog.Logger, error) {
 		)
 	}
 
-	{ // from srs.
-		opts.ReadHeaderTimeout = srsOpts.ReadHeaderTimeout
-		opts.ReadTimeout = srsOpts.ReadTimeout
-		opts.WriteTimeout = srsOpts.WriteTimeout
-		opts.MaxBodyBytes = srsOpts.MaxBodyBytes
-		opts.RateLimit = srsOpts.RateLimit
-	}
-
 	// The wikipedia [monitoring] dashboards are public.
 	// In there we can see that the p95 [response] times for http GET requests is ~700ms, & the p95 response times for http POST requests is ~900ms.
 	// Thus, we'll use a `loadShedBreachLatency` of ~900ms * 1.5.
@@ -128,14 +97,14 @@ func cfg(srsOpts config.Opts) (config.Opts, *slog.Logger, error) {
 	return opts, l, nil
 }
 
-func getMux(l *slog.Logger, opts config.Opts, cwd string, srsMx mux.Muxer) mux.Muxer {
+func getMux(l *slog.Logger, opts config.Opts, cwd string) mux.Muxer {
 	allRoutes := []mux.Route{
 		// TODO: add tarpit handler.
 		mux.NewRoute(
 			"/*",
-			// allow all methods because of srs.komu.engineer
+			// allow all methods because of algo.komu.engineer
 			mux.MethodAll,
-			router(l, opts, cwd, srsMx),
+			router(l, opts, cwd),
 		),
 	}
 
@@ -146,7 +115,7 @@ func getMux(l *slog.Logger, opts config.Opts, cwd string, srsMx mux.Muxer) mux.M
 	)
 }
 
-func router(l *slog.Logger, opts config.Opts, rootDir string, srsMx mux.Muxer) http.HandlerFunc {
+func router(l *slog.Logger, opts config.Opts, rootDir string) http.HandlerFunc {
 	domain := opts.Domain
 	if strings.Contains(domain, "*") {
 		// remove the `*` and `.`
@@ -158,9 +127,6 @@ func router(l *slog.Logger, opts config.Opts, rootDir string, srsMx mux.Muxer) h
 		l,
 		rootDir,
 	)
-
-	srs := srsMx.ServeHTTP
-	_ = srs
 
 	algo := serveFileSources(
 		// curl -vkL -H "Host:algo.komu.engineer:80" https://localhost:65081/
@@ -229,8 +195,8 @@ func router(l *slog.Logger, opts config.Opts, rootDir string, srsMx mux.Muxer) h
 			return
 		}
 		if strings.Contains(hst, strings.ReplaceAll(fmt.Sprintf("srs.%s", domain), "..", "")) {
-			// curl -u "admin:some-srs-passwd" -vkL "https://srs.localhost:65081/review-flashcard"
-			srs(w, r)
+			// Redirect to new domain.
+			http.Redirect(w, r, "https://dushed.com", http.StatusTemporaryRedirect)
 			return
 		}
 		if strings.Contains(hst, strings.ReplaceAll(fmt.Sprintf("algo.%s", domain), "..", "")) {
