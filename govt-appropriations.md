@@ -310,6 +310,21 @@ update:
 - In `Program-Based-Budget-Book.pdf` we have gone upto; DONE
 
 
+TODO:
+- Talk about reducing goverment spening by 6% of gdp.
+- Talk about reducing govt debt cost by ~30%.      
+  This will involve creating a voluntary debt exchange program. Kenya debt cost for 2025/26 is kes 1.9t. This includes about kes 800b in domestic debt redemptions and 400b of domestic debt interest payments. The rest are external.     
+  The exchange would involve;  
+  (a) any domestic debt due this year or in the next 5 years can be exchanged into another long term govt bond.
+  (b) the new bond will have an interest rate that is 100bps(1%) higher than the one its replacing.
+  (c) the investor will be allowed to get a 3% upfront principal payment.
+  (d) the higher interest and upfront payments are incentives to make the investors exchange their bonds.      
+  todo: figure out how much in cost savings this would get us. Remember it will result in higher costs in the future(because we are just kicking the can down the road)
+  https://g.co/gemini/share/c4a5aa623667          
+  https://g.co/gemini/share/c8032fe670fb          
+  https://chatgpt.com/share/68b357b7-48f0-8010-948a-5da3b982b226          
+  https://chatgpt.com/share/68b357db-0cf4-8010-8ef0-90a958765e82          
+- Talk about cutting all taxes by 30%
 
 
 TODO: effect of investment promotion levy: https://x.com/AmbokoJH/status/1924826493592432967      
