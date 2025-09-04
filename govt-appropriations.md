@@ -324,6 +324,11 @@ TODO:
   https://g.co/gemini/share/c8032fe670fb          
   https://chatgpt.com/share/68b357b7-48f0-8010-948a-5da3b982b226          
   https://chatgpt.com/share/68b357db-0cf4-8010-8ef0-90a958765e82          
+  TODO: Look at how Jamaica did it(JDX of 2010 and NDX of 2013).     
+        JDX saved 3.5% of gdp. 
+        2012 144% debt-gdp ratio. 2023 72% debt-gdp ratio.
+        https://x.com/komu_wairagu/status/1853137613407867327    
+        https://www.brookings.edu/articles/how-did-jamaica-halve-its-debt-in-10-years
 - Talk about cutting all taxes by 30%
 
 
