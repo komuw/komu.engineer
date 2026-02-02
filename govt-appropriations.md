@@ -330,6 +330,10 @@ TODO:
         https://x.com/komu_wairagu/status/1853137613407867327    
         https://www.brookings.edu/articles/how-did-jamaica-halve-its-debt-in-10-years
 - Talk about cutting all taxes by 30%
+- High court recently ruled that any budgets that will have more than "35% public wage bill to revenue ratio" will be declared "unconstitutional, null and void" starting in yr 2030.
+  So we need to figure out how to do the reduction. IEA kenya has argued that the way to do it is to cap allowances and reduce their number.
+  https://drive.google.com/file/d/1BrVYh0-UQvzVS70bRoxw130GpLrTXtEq/view
+  https://nation.africa/kenya/blogs-opinion/blogs/dot9/kwame/cutting-salaries-is-the-wrong-way-to-lower-kenya-s-wage-bill-380770 
 
 
 TODO: effect of investment promotion levy: https://x.com/AmbokoJH/status/1924826493592432967      
