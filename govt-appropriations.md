@@ -56,7 +56,7 @@ Office of the President
 2. State Department for Devolution KES 17,226,352,790
    Mission: To offer strategic leadership and establish policy direction in the governance of devolution and intergovernmental relations.
    The State Department for Devolution is tasked with the coordination of intergovernmental relations between the National and County Governments.   
-   There's significant overlap between this and the work of; the Senate, Commission on Revenue Allocation, Intergovernmental Budget and Economic Council, the Council of Governors among others.    
+   There's significant overlap between this and the work of; the Senate, Commission on Revenue Allocation, Intergovernmental Budget and Economic Council, the Council of Governors, Intergovernmental Relations Technical Committee(igrtc.go.ke) among others.    
    We already have doctors working in counties among other devolved functionationaries. What we do not have is the devolution of funds to follow those functions. It can be argued that the fact we have a national goverment 'eating' KES 17b per year ostensibly to facilitate devolution is one reason why devolution is yet to be fully achieved. 
    There also exists the `State Department for Justice Human Rights and Constitutional Affairs` which among other objects helps in Effective Implementation of the Constitution(https://www.statelaw.go.ke/departments/department-of-justice/)
 3. State Department for Special Programmes KES 609,495,880
