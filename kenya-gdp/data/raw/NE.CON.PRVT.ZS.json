@@ -1,0 +1,1068 @@
+[
+ {
+  "page": 1,
+  "pages": 1,
+  "per_page": 300,
+  "total": 66,
+  "sourceid": "2",
+  "lastupdated": "2026-07-13"
+ },
+ [
+  {
+   "indicator": {
+    "id": "NE.CON.PRVT.ZS",
+    "value": "Households and NPISHs final consumption expenditure (% of GDP)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "2025",
+   "value": 76.9411869920263,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 0
+  },
+  {
+   "indicator": {
+    "id": "NE.CON.PRVT.ZS",
+    "value": "Households and NPISHs final consumption expenditure (% of GDP)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "2024",
+   "value": 77.3205390858163,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 0
+  },
+  {
+   "indicator": {
+    "id": "NE.CON.PRVT.ZS",
+    "value": "Households and NPISHs final consumption expenditure (% of GDP)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "2023",
+   "value": 76.9538720240847,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 0
+  },
+  {
+   "indicator": {
+    "id": "NE.CON.PRVT.ZS",
+    "value": "Households and NPISHs final consumption expenditure (% of GDP)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "2022",
+   "value": 75.6878425683943,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 0
+  },
+  {
+   "indicator": {
+    "id": "NE.CON.PRVT.ZS",
+    "value": "Households and NPISHs final consumption expenditure (% of GDP)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "2021",
+   "value": 75.4961521200047,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 0
+  },
+  {
+   "indicator": {
+    "id": "NE.CON.PRVT.ZS",
+    "value": "Households and NPISHs final consumption expenditure (% of GDP)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "2020",
+   "value": 76.4393699714514,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 0
+  },
+  {
+   "indicator": {
+    "id": "NE.CON.PRVT.ZS",
+    "value": "Households and NPISHs final consumption expenditure (% of GDP)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "2019",
+   "value": 77.4226642300581,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 0
+  },
+  {
+   "indicator": {
+    "id": "NE.CON.PRVT.ZS",
+    "value": "Households and NPISHs final consumption expenditure (% of GDP)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "2018",
+   "value": 77.1029078594526,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 0
+  },
+  {
+   "indicator": {
+    "id": "NE.CON.PRVT.ZS",
+    "value": "Households and NPISHs final consumption expenditure (% of GDP)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "2017",
+   "value": 77.9129619789056,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 0
+  },
+  {
+   "indicator": {
+    "id": "NE.CON.PRVT.ZS",
+    "value": "Households and NPISHs final consumption expenditure (% of GDP)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "2016",
+   "value": 76.4073215606295,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 0
+  },
+  {
+   "indicator": {
+    "id": "NE.CON.PRVT.ZS",
+    "value": "Households and NPISHs final consumption expenditure (% of GDP)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "2015",
+   "value": 75.5167578715507,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 0
+  },
+  {
+   "indicator": {
+    "id": "NE.CON.PRVT.ZS",
+    "value": "Households and NPISHs final consumption expenditure (% of GDP)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "2014",
+   "value": 76.068046506941,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 0
+  },
+  {
+   "indicator": {
+    "id": "NE.CON.PRVT.ZS",
+    "value": "Households and NPISHs final consumption expenditure (% of GDP)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "2013",
+   "value": 76.496962526467,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 0
+  },
+  {
+   "indicator": {
+    "id": "NE.CON.PRVT.ZS",
+    "value": "Households and NPISHs final consumption expenditure (% of GDP)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "2012",
+   "value": 75.2015180428055,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 0
+  },
+  {
+   "indicator": {
+    "id": "NE.CON.PRVT.ZS",
+    "value": "Households and NPISHs final consumption expenditure (% of GDP)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "2011",
+   "value": 76.0117563568555,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 0
+  },
+  {
+   "indicator": {
+    "id": "NE.CON.PRVT.ZS",
+    "value": "Households and NPISHs final consumption expenditure (% of GDP)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "2010",
+   "value": 72.8257213776847,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 0
+  },
+  {
+   "indicator": {
+    "id": "NE.CON.PRVT.ZS",
+    "value": "Households and NPISHs final consumption expenditure (% of GDP)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "2009",
+   "value": 72.4743424342465,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 0
+  },
+  {
+   "indicator": {
+    "id": "NE.CON.PRVT.ZS",
+    "value": "Households and NPISHs final consumption expenditure (% of GDP)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "2008",
+   "value": 75.3275598073021,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 0
+  },
+  {
+   "indicator": {
+    "id": "NE.CON.PRVT.ZS",
+    "value": "Households and NPISHs final consumption expenditure (% of GDP)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "2007",
+   "value": 74.85466095924,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 0
+  },
+  {
+   "indicator": {
+    "id": "NE.CON.PRVT.ZS",
+    "value": "Households and NPISHs final consumption expenditure (% of GDP)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "2006",
+   "value": 76.2317800735859,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 0
+  },
+  {
+   "indicator": {
+    "id": "NE.CON.PRVT.ZS",
+    "value": "Households and NPISHs final consumption expenditure (% of GDP)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "2005",
+   "value": 75.3993890056332,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 0
+  },
+  {
+   "indicator": {
+    "id": "NE.CON.PRVT.ZS",
+    "value": "Households and NPISHs final consumption expenditure (% of GDP)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "2004",
+   "value": 75.5246878945704,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 0
+  },
+  {
+   "indicator": {
+    "id": "NE.CON.PRVT.ZS",
+    "value": "Households and NPISHs final consumption expenditure (% of GDP)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "2003",
+   "value": 77.1191801954793,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 0
+  },
+  {
+   "indicator": {
+    "id": "NE.CON.PRVT.ZS",
+    "value": "Households and NPISHs final consumption expenditure (% of GDP)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "2002",
+   "value": 78.6144703406405,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 0
+  },
+  {
+   "indicator": {
+    "id": "NE.CON.PRVT.ZS",
+    "value": "Households and NPISHs final consumption expenditure (% of GDP)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "2001",
+   "value": 79.5703087860375,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 0
+  },
+  {
+   "indicator": {
+    "id": "NE.CON.PRVT.ZS",
+    "value": "Households and NPISHs final consumption expenditure (% of GDP)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "2000",
+   "value": 78.2907715662389,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 0
+  },
+  {
+   "indicator": {
+    "id": "NE.CON.PRVT.ZS",
+    "value": "Households and NPISHs final consumption expenditure (% of GDP)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "1999",
+   "value": 78.5800295884689,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 0
+  },
+  {
+   "indicator": {
+    "id": "NE.CON.PRVT.ZS",
+    "value": "Households and NPISHs final consumption expenditure (% of GDP)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "1998",
+   "value": 77.6940090610316,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 0
+  },
+  {
+   "indicator": {
+    "id": "NE.CON.PRVT.ZS",
+    "value": "Households and NPISHs final consumption expenditure (% of GDP)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "1997",
+   "value": 77.1795361106459,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 0
+  },
+  {
+   "indicator": {
+    "id": "NE.CON.PRVT.ZS",
+    "value": "Households and NPISHs final consumption expenditure (% of GDP)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "1996",
+   "value": 76.069552527769,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 0
+  },
+  {
+   "indicator": {
+    "id": "NE.CON.PRVT.ZS",
+    "value": "Households and NPISHs final consumption expenditure (% of GDP)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "1995",
+   "value": 69.2617361554331,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 0
+  },
+  {
+   "indicator": {
+    "id": "NE.CON.PRVT.ZS",
+    "value": "Households and NPISHs final consumption expenditure (% of GDP)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "1994",
+   "value": 62.4163872464492,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 0
+  },
+  {
+   "indicator": {
+    "id": "NE.CON.PRVT.ZS",
+    "value": "Households and NPISHs final consumption expenditure (% of GDP)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "1993",
+   "value": 63.1259664158778,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 0
+  },
+  {
+   "indicator": {
+    "id": "NE.CON.PRVT.ZS",
+    "value": "Households and NPISHs final consumption expenditure (% of GDP)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "1992",
+   "value": 67.304250876581,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 0
+  },
+  {
+   "indicator": {
+    "id": "NE.CON.PRVT.ZS",
+    "value": "Households and NPISHs final consumption expenditure (% of GDP)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "1991",
+   "value": 63.5143758571723,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 0
+  },
+  {
+   "indicator": {
+    "id": "NE.CON.PRVT.ZS",
+    "value": "Households and NPISHs final consumption expenditure (% of GDP)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "1990",
+   "value": 62.3896733863416,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 0
+  },
+  {
+   "indicator": {
+    "id": "NE.CON.PRVT.ZS",
+    "value": "Households and NPISHs final consumption expenditure (% of GDP)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "1989",
+   "value": 68.8850796430368,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 0
+  },
+  {
+   "indicator": {
+    "id": "NE.CON.PRVT.ZS",
+    "value": "Households and NPISHs final consumption expenditure (% of GDP)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "1988",
+   "value": 61.5419973782702,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 0
+  },
+  {
+   "indicator": {
+    "id": "NE.CON.PRVT.ZS",
+    "value": "Households and NPISHs final consumption expenditure (% of GDP)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "1987",
+   "value": 62.2532895990875,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 0
+  },
+  {
+   "indicator": {
+    "id": "NE.CON.PRVT.ZS",
+    "value": "Households and NPISHs final consumption expenditure (% of GDP)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "1986",
+   "value": 59.9222715438932,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 0
+  },
+  {
+   "indicator": {
+    "id": "NE.CON.PRVT.ZS",
+    "value": "Households and NPISHs final consumption expenditure (% of GDP)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "1985",
+   "value": 58.2423451269497,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 0
+  },
+  {
+   "indicator": {
+    "id": "NE.CON.PRVT.ZS",
+    "value": "Households and NPISHs final consumption expenditure (% of GDP)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "1984",
+   "value": 64.224843292329,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 0
+  },
+  {
+   "indicator": {
+    "id": "NE.CON.PRVT.ZS",
+    "value": "Households and NPISHs final consumption expenditure (% of GDP)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "1983",
+   "value": 61.1442829825033,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 0
+  },
+  {
+   "indicator": {
+    "id": "NE.CON.PRVT.ZS",
+    "value": "Households and NPISHs final consumption expenditure (% of GDP)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "1982",
+   "value": 63.5030278528296,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 0
+  },
+  {
+   "indicator": {
+    "id": "NE.CON.PRVT.ZS",
+    "value": "Households and NPISHs final consumption expenditure (% of GDP)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "1981",
+   "value": 61.7356811145511,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 0
+  },
+  {
+   "indicator": {
+    "id": "NE.CON.PRVT.ZS",
+    "value": "Households and NPISHs final consumption expenditure (% of GDP)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "1980",
+   "value": 62.0255959181749,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 0
+  },
+  {
+   "indicator": {
+    "id": "NE.CON.PRVT.ZS",
+    "value": "Households and NPISHs final consumption expenditure (% of GDP)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "1979",
+   "value": 64.505192687323,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 0
+  },
+  {
+   "indicator": {
+    "id": "NE.CON.PRVT.ZS",
+    "value": "Households and NPISHs final consumption expenditure (% of GDP)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "1978",
+   "value": 60.495772613954,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 0
+  },
+  {
+   "indicator": {
+    "id": "NE.CON.PRVT.ZS",
+    "value": "Households and NPISHs final consumption expenditure (% of GDP)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "1977",
+   "value": 55.6481531265122,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 0
+  },
+  {
+   "indicator": {
+    "id": "NE.CON.PRVT.ZS",
+    "value": "Households and NPISHs final consumption expenditure (% of GDP)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "1976",
+   "value": 61.605668684645,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 0
+  },
+  {
+   "indicator": {
+    "id": "NE.CON.PRVT.ZS",
+    "value": "Households and NPISHs final consumption expenditure (% of GDP)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "1975",
+   "value": 68.2209409208657,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 0
+  },
+  {
+   "indicator": {
+    "id": "NE.CON.PRVT.ZS",
+    "value": "Households and NPISHs final consumption expenditure (% of GDP)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "1974",
+   "value": 64.4291505609503,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 0
+  },
+  {
+   "indicator": {
+    "id": "NE.CON.PRVT.ZS",
+    "value": "Households and NPISHs final consumption expenditure (% of GDP)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "1973",
+   "value": 59.0117272002733,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 0
+  },
+  {
+   "indicator": {
+    "id": "NE.CON.PRVT.ZS",
+    "value": "Households and NPISHs final consumption expenditure (% of GDP)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "1972",
+   "value": 62.1711400478342,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 0
+  },
+  {
+   "indicator": {
+    "id": "NE.CON.PRVT.ZS",
+    "value": "Households and NPISHs final consumption expenditure (% of GDP)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "1971",
+   "value": 64.6534543565198,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 0
+  },
+  {
+   "indicator": {
+    "id": "NE.CON.PRVT.ZS",
+    "value": "Households and NPISHs final consumption expenditure (% of GDP)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "1970",
+   "value": 60.1840446338141,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 0
+  },
+  {
+   "indicator": {
+    "id": "NE.CON.PRVT.ZS",
+    "value": "Households and NPISHs final consumption expenditure (% of GDP)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "1969",
+   "value": 62.7531822981665,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 0
+  },
+  {
+   "indicator": {
+    "id": "NE.CON.PRVT.ZS",
+    "value": "Households and NPISHs final consumption expenditure (% of GDP)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "1968",
+   "value": 64.6403935280973,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 0
+  },
+  {
+   "indicator": {
+    "id": "NE.CON.PRVT.ZS",
+    "value": "Households and NPISHs final consumption expenditure (% of GDP)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "1967",
+   "value": 66.6061108587006,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 0
+  },
+  {
+   "indicator": {
+    "id": "NE.CON.PRVT.ZS",
+    "value": "Households and NPISHs final consumption expenditure (% of GDP)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "1966",
+   "value": 66.1216318680414,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 0
+  },
+  {
+   "indicator": {
+    "id": "NE.CON.PRVT.ZS",
+    "value": "Households and NPISHs final consumption expenditure (% of GDP)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "1965",
+   "value": 70.0617340240556,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 0
+  },
+  {
+   "indicator": {
+    "id": "NE.CON.PRVT.ZS",
+    "value": "Households and NPISHs final consumption expenditure (% of GDP)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "1964",
+   "value": 68.9094548539339,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 0
+  },
+  {
+   "indicator": {
+    "id": "NE.CON.PRVT.ZS",
+    "value": "Households and NPISHs final consumption expenditure (% of GDP)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "1963",
+   "value": 72.5194583423611,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 0
+  },
+  {
+   "indicator": {
+    "id": "NE.CON.PRVT.ZS",
+    "value": "Households and NPISHs final consumption expenditure (% of GDP)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "1962",
+   "value": 71.934269688054,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 0
+  },
+  {
+   "indicator": {
+    "id": "NE.CON.PRVT.ZS",
+    "value": "Households and NPISHs final consumption expenditure (% of GDP)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "1961",
+   "value": 71.1935057892406,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 0
+  },
+  {
+   "indicator": {
+    "id": "NE.CON.PRVT.ZS",
+    "value": "Households and NPISHs final consumption expenditure (% of GDP)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "1960",
+   "value": 71.8979502533167,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 0
+  }
+ ]
+]

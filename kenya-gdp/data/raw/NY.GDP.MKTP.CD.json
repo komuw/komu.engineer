@@ -1,0 +1,1068 @@
+[
+ {
+  "page": 1,
+  "pages": 1,
+  "per_page": 100,
+  "total": 66,
+  "sourceid": "2",
+  "lastupdated": "2026-07-13"
+ },
+ [
+  {
+   "indicator": {
+    "id": "NY.GDP.MKTP.CD",
+    "value": "GDP (current US$)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "2025",
+   "value": 135941278878.815,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 0
+  },
+  {
+   "indicator": {
+    "id": "NY.GDP.MKTP.CD",
+    "value": "GDP (current US$)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "2024",
+   "value": 120397537849.826,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 0
+  },
+  {
+   "indicator": {
+    "id": "NY.GDP.MKTP.CD",
+    "value": "GDP (current US$)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "2023",
+   "value": 107500884685.013,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 0
+  },
+  {
+   "indicator": {
+    "id": "NY.GDP.MKTP.CD",
+    "value": "GDP (current US$)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "2022",
+   "value": 114448978152.637,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 0
+  },
+  {
+   "indicator": {
+    "id": "NY.GDP.MKTP.CD",
+    "value": "GDP (current US$)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "2021",
+   "value": 109703658904.994,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 0
+  },
+  {
+   "indicator": {
+    "id": "NY.GDP.MKTP.CD",
+    "value": "GDP (current US$)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "2020",
+   "value": 100657505750.545,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 0
+  },
+  {
+   "indicator": {
+    "id": "NY.GDP.MKTP.CD",
+    "value": "GDP (current US$)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "2019",
+   "value": 100378436207.371,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 0
+  },
+  {
+   "indicator": {
+    "id": "NY.GDP.MKTP.CD",
+    "value": "GDP (current US$)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "2018",
+   "value": 92202979985.2863,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 0
+  },
+  {
+   "indicator": {
+    "id": "NY.GDP.MKTP.CD",
+    "value": "GDP (current US$)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "2017",
+   "value": 82036510877.2599,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 0
+  },
+  {
+   "indicator": {
+    "id": "NY.GDP.MKTP.CD",
+    "value": "GDP (current US$)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "2016",
+   "value": 74815144163.8931,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 0
+  },
+  {
+   "indicator": {
+    "id": "NY.GDP.MKTP.CD",
+    "value": "GDP (current US$)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "2015",
+   "value": 70120446896.8359,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 0
+  },
+  {
+   "indicator": {
+    "id": "NY.GDP.MKTP.CD",
+    "value": "GDP (current US$)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "2014",
+   "value": 68285796514.2896,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 0
+  },
+  {
+   "indicator": {
+    "id": "NY.GDP.MKTP.CD",
+    "value": "GDP (current US$)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "2013",
+   "value": 61671440407.8387,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 0
+  },
+  {
+   "indicator": {
+    "id": "NY.GDP.MKTP.CD",
+    "value": "GDP (current US$)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "2012",
+   "value": 56396704671.5777,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 0
+  },
+  {
+   "indicator": {
+    "id": "NY.GDP.MKTP.CD",
+    "value": "GDP (current US$)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "2011",
+   "value": 46869473150.61,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 0
+  },
+  {
+   "indicator": {
+    "id": "NY.GDP.MKTP.CD",
+    "value": "GDP (current US$)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "2010",
+   "value": 45405615063.7551,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 0
+  },
+  {
+   "indicator": {
+    "id": "NY.GDP.MKTP.CD",
+    "value": "GDP (current US$)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "2009",
+   "value": 42347217912.9176,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 0
+  },
+  {
+   "indicator": {
+    "id": "NY.GDP.MKTP.CD",
+    "value": "GDP (current US$)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "2008",
+   "value": 35895153327.8497,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 0
+  },
+  {
+   "indicator": {
+    "id": "NY.GDP.MKTP.CD",
+    "value": "GDP (current US$)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "2007",
+   "value": 31958195182.2406,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 0
+  },
+  {
+   "indicator": {
+    "id": "NY.GDP.MKTP.CD",
+    "value": "GDP (current US$)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "2006",
+   "value": 25825512284.2891,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 0
+  },
+  {
+   "indicator": {
+    "id": "NY.GDP.MKTP.CD",
+    "value": "GDP (current US$)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "2005",
+   "value": 18737895512.7378,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 0
+  },
+  {
+   "indicator": {
+    "id": "NY.GDP.MKTP.CD",
+    "value": "GDP (current US$)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "2004",
+   "value": 16095337093.8366,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 0
+  },
+  {
+   "indicator": {
+    "id": "NY.GDP.MKTP.CD",
+    "value": "GDP (current US$)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "2003",
+   "value": 14904517649.8476,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 0
+  },
+  {
+   "indicator": {
+    "id": "NY.GDP.MKTP.CD",
+    "value": "GDP (current US$)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "2002",
+   "value": 13147736898.5176,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 0
+  },
+  {
+   "indicator": {
+    "id": "NY.GDP.MKTP.CD",
+    "value": "GDP (current US$)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "2001",
+   "value": 12986007425.8781,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 0
+  },
+  {
+   "indicator": {
+    "id": "NY.GDP.MKTP.CD",
+    "value": "GDP (current US$)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "2000",
+   "value": 12705350097.8044,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 0
+  },
+  {
+   "indicator": {
+    "id": "NY.GDP.MKTP.CD",
+    "value": "GDP (current US$)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "1999",
+   "value": 12896010459.3711,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 0
+  },
+  {
+   "indicator": {
+    "id": "NY.GDP.MKTP.CD",
+    "value": "GDP (current US$)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "1998",
+   "value": 14093998843.7334,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 0
+  },
+  {
+   "indicator": {
+    "id": "NY.GDP.MKTP.CD",
+    "value": "GDP (current US$)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "1997",
+   "value": 13115764358.2846,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 0
+  },
+  {
+   "indicator": {
+    "id": "NY.GDP.MKTP.CD",
+    "value": "GDP (current US$)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "1996",
+   "value": 12045865396.1323,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 0
+  },
+  {
+   "indicator": {
+    "id": "NY.GDP.MKTP.CD",
+    "value": "GDP (current US$)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "1995",
+   "value": 9046320255.40507,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 0
+  },
+  {
+   "indicator": {
+    "id": "NY.GDP.MKTP.CD",
+    "value": "GDP (current US$)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "1994",
+   "value": 7148148564.04239,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 0
+  },
+  {
+   "indicator": {
+    "id": "NY.GDP.MKTP.CD",
+    "value": "GDP (current US$)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "1993",
+   "value": 5751786642.55871,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 0
+  },
+  {
+   "indicator": {
+    "id": "NY.GDP.MKTP.CD",
+    "value": "GDP (current US$)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "1992",
+   "value": 8209120763.04955,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 0
+  },
+  {
+   "indicator": {
+    "id": "NY.GDP.MKTP.CD",
+    "value": "GDP (current US$)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "1991",
+   "value": 8151488783.19064,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 0
+  },
+  {
+   "indicator": {
+    "id": "NY.GDP.MKTP.CD",
+    "value": "GDP (current US$)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "1990",
+   "value": 8572359038.16958,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 0
+  },
+  {
+   "indicator": {
+    "id": "NY.GDP.MKTP.CD",
+    "value": "GDP (current US$)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "1989",
+   "value": 8283114514.17081,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 0
+  },
+  {
+   "indicator": {
+    "id": "NY.GDP.MKTP.CD",
+    "value": "GDP (current US$)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "1988",
+   "value": 8355380879.12955,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 0
+  },
+  {
+   "indicator": {
+    "id": "NY.GDP.MKTP.CD",
+    "value": "GDP (current US$)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "1987",
+   "value": 7970820369.2949,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 0
+  },
+  {
+   "indicator": {
+    "id": "NY.GDP.MKTP.CD",
+    "value": "GDP (current US$)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "1986",
+   "value": 7239126568.14092,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 0
+  },
+  {
+   "indicator": {
+    "id": "NY.GDP.MKTP.CD",
+    "value": "GDP (current US$)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "1985",
+   "value": 6135034213.78998,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 0
+  },
+  {
+   "indicator": {
+    "id": "NY.GDP.MKTP.CD",
+    "value": "GDP (current US$)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "1984",
+   "value": 6191437070.18411,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 0
+  },
+  {
+   "indicator": {
+    "id": "NY.GDP.MKTP.CD",
+    "value": "GDP (current US$)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "1983",
+   "value": 5979198313.76093,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 0
+  },
+  {
+   "indicator": {
+    "id": "NY.GDP.MKTP.CD",
+    "value": "GDP (current US$)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "1982",
+   "value": 6431579356.95926,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 0
+  },
+  {
+   "indicator": {
+    "id": "NY.GDP.MKTP.CD",
+    "value": "GDP (current US$)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "1981",
+   "value": 6854491705.88377,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 0
+  },
+  {
+   "indicator": {
+    "id": "NY.GDP.MKTP.CD",
+    "value": "GDP (current US$)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "1980",
+   "value": 7265315820.20777,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 0
+  },
+  {
+   "indicator": {
+    "id": "NY.GDP.MKTP.CD",
+    "value": "GDP (current US$)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "1979",
+   "value": 6234391113.46434,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 0
+  },
+  {
+   "indicator": {
+    "id": "NY.GDP.MKTP.CD",
+    "value": "GDP (current US$)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "1978",
+   "value": 5303735110.55151,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 0
+  },
+  {
+   "indicator": {
+    "id": "NY.GDP.MKTP.CD",
+    "value": "GDP (current US$)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "1977",
+   "value": 4494378764.32011,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 0
+  },
+  {
+   "indicator": {
+    "id": "NY.GDP.MKTP.CD",
+    "value": "GDP (current US$)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "1976",
+   "value": 3474542391.69992,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 0
+  },
+  {
+   "indicator": {
+    "id": "NY.GDP.MKTP.CD",
+    "value": "GDP (current US$)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "1975",
+   "value": 3259345083.26283,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 0
+  },
+  {
+   "indicator": {
+    "id": "NY.GDP.MKTP.CD",
+    "value": "GDP (current US$)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "1974",
+   "value": 2969958812.01648,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 0
+  },
+  {
+   "indicator": {
+    "id": "NY.GDP.MKTP.CD",
+    "value": "GDP (current US$)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "1973",
+   "value": 2509001324.34591,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 0
+  },
+  {
+   "indicator": {
+    "id": "NY.GDP.MKTP.CD",
+    "value": "GDP (current US$)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "1972",
+   "value": 2107279157.08834,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 0
+  },
+  {
+   "indicator": {
+    "id": "NY.GDP.MKTP.CD",
+    "value": "GDP (current US$)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "1971",
+   "value": 1778391288.64348,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 0
+  },
+  {
+   "indicator": {
+    "id": "NY.GDP.MKTP.CD",
+    "value": "GDP (current US$)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "1970",
+   "value": 1603447358.62106,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 0
+  },
+  {
+   "indicator": {
+    "id": "NY.GDP.MKTP.CD",
+    "value": "GDP (current US$)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "1969",
+   "value": 1458379416.64823,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 0
+  },
+  {
+   "indicator": {
+    "id": "NY.GDP.MKTP.CD",
+    "value": "GDP (current US$)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "1968",
+   "value": 1353295458.68182,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 0
+  },
+  {
+   "indicator": {
+    "id": "NY.GDP.MKTP.CD",
+    "value": "GDP (current US$)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "1967",
+   "value": 1232559506.9762,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 0
+  },
+  {
+   "indicator": {
+    "id": "NY.GDP.MKTP.CD",
+    "value": "GDP (current US$)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "1966",
+   "value": 1164519674.19213,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 0
+  },
+  {
+   "indicator": {
+    "id": "NY.GDP.MKTP.CD",
+    "value": "GDP (current US$)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "1965",
+   "value": 997919320.832272,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 0
+  },
+  {
+   "indicator": {
+    "id": "NY.GDP.MKTP.CD",
+    "value": "GDP (current US$)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "1964",
+   "value": 998759334.496266,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 0
+  },
+  {
+   "indicator": {
+    "id": "NY.GDP.MKTP.CD",
+    "value": "GDP (current US$)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "1963",
+   "value": 926589349.36426,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 0
+  },
+  {
+   "indicator": {
+    "id": "NY.GDP.MKTP.CD",
+    "value": "GDP (current US$)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "1962",
+   "value": 868111400.75544,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 0
+  },
+  {
+   "indicator": {
+    "id": "NY.GDP.MKTP.CD",
+    "value": "GDP (current US$)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "1961",
+   "value": 792959472.816211,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 0
+  },
+  {
+   "indicator": {
+    "id": "NY.GDP.MKTP.CD",
+    "value": "GDP (current US$)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "1960",
+   "value": 791265459.493816,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 0
+  }
+ ]
+]

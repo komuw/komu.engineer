@@ -1,0 +1,1068 @@
+[
+ {
+  "page": 1,
+  "pages": 1,
+  "per_page": 300,
+  "total": 66,
+  "sourceid": "2",
+  "lastupdated": "2026-07-13"
+ },
+ [
+  {
+   "indicator": {
+    "id": "NE.IMP.GNFS.ZS",
+    "value": "Imports of goods and services (% of GDP)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "2025",
+   "value": 21.756976808552,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 1
+  },
+  {
+   "indicator": {
+    "id": "NE.IMP.GNFS.ZS",
+    "value": "Imports of goods and services (% of GDP)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "2024",
+   "value": 23.151298075842,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 1
+  },
+  {
+   "indicator": {
+    "id": "NE.IMP.GNFS.ZS",
+    "value": "Imports of goods and services (% of GDP)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "2023",
+   "value": 24.2204234378835,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 1
+  },
+  {
+   "indicator": {
+    "id": "NE.IMP.GNFS.ZS",
+    "value": "Imports of goods and services (% of GDP)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "2022",
+   "value": 24.3182954744092,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 1
+  },
+  {
+   "indicator": {
+    "id": "NE.IMP.GNFS.ZS",
+    "value": "Imports of goods and services (% of GDP)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "2021",
+   "value": 21.8923095777051,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 1
+  },
+  {
+   "indicator": {
+    "id": "NE.IMP.GNFS.ZS",
+    "value": "Imports of goods and services (% of GDP)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "2020",
+   "value": 18.9580936008817,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 1
+  },
+  {
+   "indicator": {
+    "id": "NE.IMP.GNFS.ZS",
+    "value": "Imports of goods and services (% of GDP)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "2019",
+   "value": 20.3314661545478,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 1
+  },
+  {
+   "indicator": {
+    "id": "NE.IMP.GNFS.ZS",
+    "value": "Imports of goods and services (% of GDP)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "2018",
+   "value": 21.8727778433835,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 1
+  },
+  {
+   "indicator": {
+    "id": "NE.IMP.GNFS.ZS",
+    "value": "Imports of goods and services (% of GDP)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "2017",
+   "value": 23.2583979340349,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 1
+  },
+  {
+   "indicator": {
+    "id": "NE.IMP.GNFS.ZS",
+    "value": "Imports of goods and services (% of GDP)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "2016",
+   "value": 21.6152747725065,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 1
+  },
+  {
+   "indicator": {
+    "id": "NE.IMP.GNFS.ZS",
+    "value": "Imports of goods and services (% of GDP)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "2015",
+   "value": 25.1986507884515,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 1
+  },
+  {
+   "indicator": {
+    "id": "NE.IMP.GNFS.ZS",
+    "value": "Imports of goods and services (% of GDP)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "2014",
+   "value": 29.6976848964037,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 1
+  },
+  {
+   "indicator": {
+    "id": "NE.IMP.GNFS.ZS",
+    "value": "Imports of goods and services (% of GDP)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "2013",
+   "value": 29.6724619595649,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 1
+  },
+  {
+   "indicator": {
+    "id": "NE.IMP.GNFS.ZS",
+    "value": "Imports of goods and services (% of GDP)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "2012",
+   "value": 31.7587443003647,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 1
+  },
+  {
+   "indicator": {
+    "id": "NE.IMP.GNFS.ZS",
+    "value": "Imports of goods and services (% of GDP)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "2011",
+   "value": 36.8527289037346,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 1
+  },
+  {
+   "indicator": {
+    "id": "NE.IMP.GNFS.ZS",
+    "value": "Imports of goods and services (% of GDP)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "2010",
+   "value": 30.2699277024041,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 1
+  },
+  {
+   "indicator": {
+    "id": "NE.IMP.GNFS.ZS",
+    "value": "Imports of goods and services (% of GDP)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "2009",
+   "value": 27.1702463211792,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 1
+  },
+  {
+   "indicator": {
+    "id": "NE.IMP.GNFS.ZS",
+    "value": "Imports of goods and services (% of GDP)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "2008",
+   "value": 34.9045410940864,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 1
+  },
+  {
+   "indicator": {
+    "id": "NE.IMP.GNFS.ZS",
+    "value": "Imports of goods and services (% of GDP)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "2007",
+   "value": 31.975797511236,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 1
+  },
+  {
+   "indicator": {
+    "id": "NE.IMP.GNFS.ZS",
+    "value": "Imports of goods and services (% of GDP)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "2006",
+   "value": 32.2515454815442,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 1
+  },
+  {
+   "indicator": {
+    "id": "NE.IMP.GNFS.ZS",
+    "value": "Imports of goods and services (% of GDP)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "2005",
+   "value": 35.9698359497784,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 1
+  },
+  {
+   "indicator": {
+    "id": "NE.IMP.GNFS.ZS",
+    "value": "Imports of goods and services (% of GDP)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "2004",
+   "value": 32.8667447731316,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 1
+  },
+  {
+   "indicator": {
+    "id": "NE.IMP.GNFS.ZS",
+    "value": "Imports of goods and services (% of GDP)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "2003",
+   "value": 30.045450590308,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 1
+  },
+  {
+   "indicator": {
+    "id": "NE.IMP.GNFS.ZS",
+    "value": "Imports of goods and services (% of GDP)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "2002",
+   "value": 30.2746996493051,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 1
+  },
+  {
+   "indicator": {
+    "id": "NE.IMP.GNFS.ZS",
+    "value": "Imports of goods and services (% of GDP)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "2001",
+   "value": 33.0152596643276,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 1
+  },
+  {
+   "indicator": {
+    "id": "NE.IMP.GNFS.ZS",
+    "value": "Imports of goods and services (% of GDP)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "2000",
+   "value": 31.7214732444648,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 1
+  },
+  {
+   "indicator": {
+    "id": "NE.IMP.GNFS.ZS",
+    "value": "Imports of goods and services (% of GDP)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "1999",
+   "value": 27.359539790402,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 1
+  },
+  {
+   "indicator": {
+    "id": "NE.IMP.GNFS.ZS",
+    "value": "Imports of goods and services (% of GDP)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "1998",
+   "value": 28.7279811125469,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 1
+  },
+  {
+   "indicator": {
+    "id": "NE.IMP.GNFS.ZS",
+    "value": "Imports of goods and services (% of GDP)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "1997",
+   "value": 31.3707295086543,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 1
+  },
+  {
+   "indicator": {
+    "id": "NE.IMP.GNFS.ZS",
+    "value": "Imports of goods and services (% of GDP)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "1996",
+   "value": 32.1115087543859,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 1
+  },
+  {
+   "indicator": {
+    "id": "NE.IMP.GNFS.ZS",
+    "value": "Imports of goods and services (% of GDP)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "1995",
+   "value": 39.1540404213006,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 1
+  },
+  {
+   "indicator": {
+    "id": "NE.IMP.GNFS.ZS",
+    "value": "Imports of goods and services (% of GDP)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "1994",
+   "value": 34.2258443908956,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 1
+  },
+  {
+   "indicator": {
+    "id": "NE.IMP.GNFS.ZS",
+    "value": "Imports of goods and services (% of GDP)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "1993",
+   "value": 33.9548511937601,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 1
+  },
+  {
+   "indicator": {
+    "id": "NE.IMP.GNFS.ZS",
+    "value": "Imports of goods and services (% of GDP)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "1992",
+   "value": 26.6704959131936,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 1
+  },
+  {
+   "indicator": {
+    "id": "NE.IMP.GNFS.ZS",
+    "value": "Imports of goods and services (% of GDP)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "1991",
+   "value": 28.5560669003459,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 1
+  },
+  {
+   "indicator": {
+    "id": "NE.IMP.GNFS.ZS",
+    "value": "Imports of goods and services (% of GDP)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "1990",
+   "value": 31.3283077167904,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 1
+  },
+  {
+   "indicator": {
+    "id": "NE.IMP.GNFS.ZS",
+    "value": "Imports of goods and services (% of GDP)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "1989",
+   "value": 30.1233477950354,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 1
+  },
+  {
+   "indicator": {
+    "id": "NE.IMP.GNFS.ZS",
+    "value": "Imports of goods and services (% of GDP)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "1988",
+   "value": 27.6037685308535,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 1
+  },
+  {
+   "indicator": {
+    "id": "NE.IMP.GNFS.ZS",
+    "value": "Imports of goods and services (% of GDP)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "1987",
+   "value": 26.3975466582492,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 1
+  },
+  {
+   "indicator": {
+    "id": "NE.IMP.GNFS.ZS",
+    "value": "Imports of goods and services (% of GDP)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "1986",
+   "value": 29.8930303200573,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 1
+  },
+  {
+   "indicator": {
+    "id": "NE.IMP.GNFS.ZS",
+    "value": "Imports of goods and services (% of GDP)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "1985",
+   "value": 30.1465015930706,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 1
+  },
+  {
+   "indicator": {
+    "id": "NE.IMP.GNFS.ZS",
+    "value": "Imports of goods and services (% of GDP)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "1984",
+   "value": 32.0540049258986,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 1
+  },
+  {
+   "indicator": {
+    "id": "NE.IMP.GNFS.ZS",
+    "value": "Imports of goods and services (% of GDP)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "1983",
+   "value": 28.2127729852925,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 1
+  },
+  {
+   "indicator": {
+    "id": "NE.IMP.GNFS.ZS",
+    "value": "Imports of goods and services (% of GDP)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "1982",
+   "value": 31.558271148705,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 1
+  },
+  {
+   "indicator": {
+    "id": "NE.IMP.GNFS.ZS",
+    "value": "Imports of goods and services (% of GDP)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "1981",
+   "value": 33.8203044375645,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 1
+  },
+  {
+   "indicator": {
+    "id": "NE.IMP.GNFS.ZS",
+    "value": "Imports of goods and services (% of GDP)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "1980",
+   "value": 35.8998317232487,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 1
+  },
+  {
+   "indicator": {
+    "id": "NE.IMP.GNFS.ZS",
+    "value": "Imports of goods and services (% of GDP)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "1979",
+   "value": 31.6110205132607,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 1
+  },
+  {
+   "indicator": {
+    "id": "NE.IMP.GNFS.ZS",
+    "value": "Imports of goods and services (% of GDP)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "1978",
+   "value": 38.6880223248916,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 1
+  },
+  {
+   "indicator": {
+    "id": "NE.IMP.GNFS.ZS",
+    "value": "Imports of goods and services (% of GDP)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "1977",
+   "value": 31.5930964030324,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 1
+  },
+  {
+   "indicator": {
+    "id": "NE.IMP.GNFS.ZS",
+    "value": "Imports of goods and services (% of GDP)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "1976",
+   "value": 31.7556377270226,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 1
+  },
+  {
+   "indicator": {
+    "id": "NE.IMP.GNFS.ZS",
+    "value": "Imports of goods and services (% of GDP)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "1975",
+   "value": 34.5115818500877,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 1
+  },
+  {
+   "indicator": {
+    "id": "NE.IMP.GNFS.ZS",
+    "value": "Imports of goods and services (% of GDP)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "1974",
+   "value": 40.8975205053267,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 1
+  },
+  {
+   "indicator": {
+    "id": "NE.IMP.GNFS.ZS",
+    "value": "Imports of goods and services (% of GDP)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "1973",
+   "value": 28.6690140043265,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 1
+  },
+  {
+   "indicator": {
+    "id": "NE.IMP.GNFS.ZS",
+    "value": "Imports of goods and services (% of GDP)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "1972",
+   "value": 28.7270794578794,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 1
+  },
+  {
+   "indicator": {
+    "id": "NE.IMP.GNFS.ZS",
+    "value": "Imports of goods and services (% of GDP)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "1971",
+   "value": 35.189107913216,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 1
+  },
+  {
+   "indicator": {
+    "id": "NE.IMP.GNFS.ZS",
+    "value": "Imports of goods and services (% of GDP)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "1970",
+   "value": 30.6639192540076,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 1
+  },
+  {
+   "indicator": {
+    "id": "NE.IMP.GNFS.ZS",
+    "value": "Imports of goods and services (% of GDP)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "1969",
+   "value": 28.0887011615628,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 1
+  },
+  {
+   "indicator": {
+    "id": "NE.IMP.GNFS.ZS",
+    "value": "Imports of goods and services (% of GDP)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "1968",
+   "value": 29.2973599271704,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 1
+  },
+  {
+   "indicator": {
+    "id": "NE.IMP.GNFS.ZS",
+    "value": "Imports of goods and services (% of GDP)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "1967",
+   "value": 29.3730122671513,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 1
+  },
+  {
+   "indicator": {
+    "id": "NE.IMP.GNFS.ZS",
+    "value": "Imports of goods and services (% of GDP)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "1966",
+   "value": 30.8728022514063,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 1
+  },
+  {
+   "indicator": {
+    "id": "NE.IMP.GNFS.ZS",
+    "value": "Imports of goods and services (% of GDP)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "1965",
+   "value": 30.6958559752682,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 1
+  },
+  {
+   "indicator": {
+    "id": "NE.IMP.GNFS.ZS",
+    "value": "Imports of goods and services (% of GDP)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "1964",
+   "value": 29.2122309368151,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 1
+  },
+  {
+   "indicator": {
+    "id": "NE.IMP.GNFS.ZS",
+    "value": "Imports of goods and services (% of GDP)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "1963",
+   "value": 28.9627646635234,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 1
+  },
+  {
+   "indicator": {
+    "id": "NE.IMP.GNFS.ZS",
+    "value": "Imports of goods and services (% of GDP)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "1962",
+   "value": 30.1251538874463,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 1
+  },
+  {
+   "indicator": {
+    "id": "NE.IMP.GNFS.ZS",
+    "value": "Imports of goods and services (% of GDP)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "1961",
+   "value": 31.1299517469858,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 1
+  },
+  {
+   "indicator": {
+    "id": "NE.IMP.GNFS.ZS",
+    "value": "Imports of goods and services (% of GDP)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "1960",
+   "value": 33.6701045439883,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 1
+  }
+ ]
+]

@@ -1,0 +1,1068 @@
+[
+ {
+  "page": 1,
+  "pages": 1,
+  "per_page": 100,
+  "total": 66,
+  "sourceid": "2",
+  "lastupdated": "2026-07-13"
+ },
+ [
+  {
+   "indicator": {
+    "id": "NE.RSB.GNFS.ZS",
+    "value": "External balance on goods and services (% of GDP)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "2025",
+   "value": -5.99290902598126,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 1
+  },
+  {
+   "indicator": {
+    "id": "NE.RSB.GNFS.ZS",
+    "value": "External balance on goods and services (% of GDP)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "2024",
+   "value": -6.29634318499017,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 1
+  },
+  {
+   "indicator": {
+    "id": "NE.RSB.GNFS.ZS",
+    "value": "External balance on goods and services (% of GDP)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "2023",
+   "value": -7.50707913801143,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 1
+  },
+  {
+   "indicator": {
+    "id": "NE.RSB.GNFS.ZS",
+    "value": "External balance on goods and services (% of GDP)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "2022",
+   "value": -8.36126711146226,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 1
+  },
+  {
+   "indicator": {
+    "id": "NE.RSB.GNFS.ZS",
+    "value": "External balance on goods and services (% of GDP)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "2021",
+   "value": -8.78257137588336,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 1
+  },
+  {
+   "indicator": {
+    "id": "NE.RSB.GNFS.ZS",
+    "value": "External balance on goods and services (% of GDP)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "2020",
+   "value": -7.51704841872242,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 1
+  },
+  {
+   "indicator": {
+    "id": "NE.RSB.GNFS.ZS",
+    "value": "External balance on goods and services (% of GDP)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "2019",
+   "value": -8.90347046761454,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 1
+  },
+  {
+   "indicator": {
+    "id": "NE.RSB.GNFS.ZS",
+    "value": "External balance on goods and services (% of GDP)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "2018",
+   "value": -9.33080251002456,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 1
+  },
+  {
+   "indicator": {
+    "id": "NE.RSB.GNFS.ZS",
+    "value": "External balance on goods and services (% of GDP)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "2017",
+   "value": -10.5217379926624,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 1
+  },
+  {
+   "indicator": {
+    "id": "NE.RSB.GNFS.ZS",
+    "value": "External balance on goods and services (% of GDP)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "2016",
+   "value": -8.36552997183063,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 1
+  },
+  {
+   "indicator": {
+    "id": "NE.RSB.GNFS.ZS",
+    "value": "External balance on goods and services (% of GDP)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "2015",
+   "value": -10.0699168850011,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 1
+  },
+  {
+   "indicator": {
+    "id": "NE.RSB.GNFS.ZS",
+    "value": "External balance on goods and services (% of GDP)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "2014",
+   "value": -13.2248804305914,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 1
+  },
+  {
+   "indicator": {
+    "id": "NE.RSB.GNFS.ZS",
+    "value": "External balance on goods and services (% of GDP)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "2013",
+   "value": -11.8802814063994,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 1
+  },
+  {
+   "indicator": {
+    "id": "NE.RSB.GNFS.ZS",
+    "value": "External balance on goods and services (% of GDP)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "2012",
+   "value": -11.8937965774814,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 1
+  },
+  {
+   "indicator": {
+    "id": "NE.RSB.GNFS.ZS",
+    "value": "External balance on goods and services (% of GDP)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "2011",
+   "value": -15.3032518329067,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 1
+  },
+  {
+   "indicator": {
+    "id": "NE.RSB.GNFS.ZS",
+    "value": "External balance on goods and services (% of GDP)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "2010",
+   "value": -10.1455680545248,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 1
+  },
+  {
+   "indicator": {
+    "id": "NE.RSB.GNFS.ZS",
+    "value": "External balance on goods and services (% of GDP)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "2009",
+   "value": -8.39530082957784,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 1
+  },
+  {
+   "indicator": {
+    "id": "NE.RSB.GNFS.ZS",
+    "value": "External balance on goods and services (% of GDP)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "2008",
+   "value": -12.2304835408597,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 1
+  },
+  {
+   "indicator": {
+    "id": "NE.RSB.GNFS.ZS",
+    "value": "External balance on goods and services (% of GDP)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "2007",
+   "value": -10.0568062178661,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 1
+  },
+  {
+   "indicator": {
+    "id": "NE.RSB.GNFS.ZS",
+    "value": "External balance on goods and services (% of GDP)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "2006",
+   "value": -9.26660583735804,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 1
+  },
+  {
+   "indicator": {
+    "id": "NE.RSB.GNFS.ZS",
+    "value": "External balance on goods and services (% of GDP)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "2005",
+   "value": -7.46080573557718,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 1
+  },
+  {
+   "indicator": {
+    "id": "NE.RSB.GNFS.ZS",
+    "value": "External balance on goods and services (% of GDP)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "2004",
+   "value": -6.25648619783431,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 1
+  },
+  {
+   "indicator": {
+    "id": "NE.RSB.GNFS.ZS",
+    "value": "External balance on goods and services (% of GDP)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "2003",
+   "value": -5.95863528488702,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 1
+  },
+  {
+   "indicator": {
+    "id": "NE.RSB.GNFS.ZS",
+    "value": "External balance on goods and services (% of GDP)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "2002",
+   "value": -5.37672703460492,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 1
+  },
+  {
+   "indicator": {
+    "id": "NE.RSB.GNFS.ZS",
+    "value": "External balance on goods and services (% of GDP)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "2001",
+   "value": -10.0836832999909,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 1
+  },
+  {
+   "indicator": {
+    "id": "NE.RSB.GNFS.ZS",
+    "value": "External balance on goods and services (% of GDP)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "2000",
+   "value": -10.1339021027024,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 1
+  },
+  {
+   "indicator": {
+    "id": "NE.RSB.GNFS.ZS",
+    "value": "External balance on goods and services (% of GDP)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "1999",
+   "value": -6.5268045918945,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 1
+  },
+  {
+   "indicator": {
+    "id": "NE.RSB.GNFS.ZS",
+    "value": "External balance on goods and services (% of GDP)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "1998",
+   "value": -8.55872028501841,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 1
+  },
+  {
+   "indicator": {
+    "id": "NE.RSB.GNFS.ZS",
+    "value": "External balance on goods and services (% of GDP)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "1997",
+   "value": -8.68434215701929,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 1
+  },
+  {
+   "indicator": {
+    "id": "NE.RSB.GNFS.ZS",
+    "value": "External balance on goods and services (% of GDP)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "1996",
+   "value": -6.91090680496164,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 1
+  },
+  {
+   "indicator": {
+    "id": "NE.RSB.GNFS.ZS",
+    "value": "External balance on goods and services (% of GDP)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "1995",
+   "value": -6.56233920229767,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 1
+  },
+  {
+   "indicator": {
+    "id": "NE.RSB.GNFS.ZS",
+    "value": "External balance on goods and services (% of GDP)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "1994",
+   "value": 2.81443644751947,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 1
+  },
+  {
+   "indicator": {
+    "id": "NE.RSB.GNFS.ZS",
+    "value": "External balance on goods and services (% of GDP)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "1993",
+   "value": 4.94877897604404,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 1
+  },
+  {
+   "indicator": {
+    "id": "NE.RSB.GNFS.ZS",
+    "value": "External balance on goods and services (% of GDP)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "1992",
+   "value": -0.410121722558514,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 1
+  },
+  {
+   "indicator": {
+    "id": "NE.RSB.GNFS.ZS",
+    "value": "External balance on goods and services (% of GDP)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "1991",
+   "value": -1.51443457632647,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 1
+  },
+  {
+   "indicator": {
+    "id": "NE.RSB.GNFS.ZS",
+    "value": "External balance on goods and services (% of GDP)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "1990",
+   "value": -5.63570175185397,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 1
+  },
+  {
+   "indicator": {
+    "id": "NE.RSB.GNFS.ZS",
+    "value": "External balance on goods and services (% of GDP)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "1989",
+   "value": -7.09031836675291,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 1
+  },
+  {
+   "indicator": {
+    "id": "NE.RSB.GNFS.ZS",
+    "value": "External balance on goods and services (% of GDP)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "1988",
+   "value": -5.2325549699367,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 1
+  },
+  {
+   "indicator": {
+    "id": "NE.RSB.GNFS.ZS",
+    "value": "External balance on goods and services (% of GDP)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "1987",
+   "value": -5.09232531081355,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 1
+  },
+  {
+   "indicator": {
+    "id": "NE.RSB.GNFS.ZS",
+    "value": "External balance on goods and services (% of GDP)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "1986",
+   "value": -4.04467504737775,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 1
+  },
+  {
+   "indicator": {
+    "id": "NE.RSB.GNFS.ZS",
+    "value": "External balance on goods and services (% of GDP)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "1985",
+   "value": -4.84756863297478,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 1
+  },
+  {
+   "indicator": {
+    "id": "NE.RSB.GNFS.ZS",
+    "value": "External balance on goods and services (% of GDP)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "1984",
+   "value": -5.30411227373474,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 1
+  },
+  {
+   "indicator": {
+    "id": "NE.RSB.GNFS.ZS",
+    "value": "External balance on goods and services (% of GDP)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "1983",
+   "value": -2.26284057985582,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 1
+  },
+  {
+   "indicator": {
+    "id": "NE.RSB.GNFS.ZS",
+    "value": "External balance on goods and services (% of GDP)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "1982",
+   "value": -4.90080514976982,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 1
+  },
+  {
+   "indicator": {
+    "id": "NE.RSB.GNFS.ZS",
+    "value": "External balance on goods and services (% of GDP)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "1981",
+   "value": -3.36042311661507,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 1
+  },
+  {
+   "indicator": {
+    "id": "NE.RSB.GNFS.ZS",
+    "value": "External balance on goods and services (% of GDP)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "1980",
+   "value": -6.38286750573669,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 1
+  },
+  {
+   "indicator": {
+    "id": "NE.RSB.GNFS.ZS",
+    "value": "External balance on goods and services (% of GDP)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "1979",
+   "value": -5.85786627757274,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 1
+  },
+  {
+   "indicator": {
+    "id": "NE.RSB.GNFS.ZS",
+    "value": "External balance on goods and services (% of GDP)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "1978",
+   "value": -9.75250398833017,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 1
+  },
+  {
+   "indicator": {
+    "id": "NE.RSB.GNFS.ZS",
+    "value": "External balance on goods and services (% of GDP)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "1977",
+   "value": 3.36577235335233,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 1
+  },
+  {
+   "indicator": {
+    "id": "NE.RSB.GNFS.ZS",
+    "value": "External balance on goods and services (% of GDP)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "1976",
+   "value": 0.694833516785911,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 1
+  },
+  {
+   "indicator": {
+    "id": "NE.RSB.GNFS.ZS",
+    "value": "External balance on goods and services (% of GDP)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "1975",
+   "value": -4.68789588033759,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 1
+  },
+  {
+   "indicator": {
+    "id": "NE.RSB.GNFS.ZS",
+    "value": "External balance on goods and services (% of GDP)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "1974",
+   "value": -7.22163665503913,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 1
+  },
+  {
+   "indicator": {
+    "id": "NE.RSB.GNFS.ZS",
+    "value": "External balance on goods and services (% of GDP)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "1973",
+   "value": -1.2751793236935,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 1
+  },
+  {
+   "indicator": {
+    "id": "NE.RSB.GNFS.ZS",
+    "value": "External balance on goods and services (% of GDP)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "1972",
+   "value": -2.13925059792719,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 1
+  },
+  {
+   "indicator": {
+    "id": "NE.RSB.GNFS.ZS",
+    "value": "External balance on goods and services (% of GDP)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "1971",
+   "value": -6.54975281040401,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 1
+  },
+  {
+   "indicator": {
+    "id": "NE.RSB.GNFS.ZS",
+    "value": "External balance on goods and services (% of GDP)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "1970",
+   "value": -0.838193692592463,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 1
+  },
+  {
+   "indicator": {
+    "id": "NE.RSB.GNFS.ZS",
+    "value": "External balance on goods and services (% of GDP)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "1969",
+   "value": 1.43995392147451,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 1
+  },
+  {
+   "indicator": {
+    "id": "NE.RSB.GNFS.ZS",
+    "value": "External balance on goods and services (% of GDP)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "1968",
+   "value": 0.103451129686336,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 1
+  },
+  {
+   "indicator": {
+    "id": "NE.RSB.GNFS.ZS",
+    "value": "External balance on goods and services (% of GDP)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "1967",
+   "value": -0.908677873693776,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 1
+  },
+  {
+   "indicator": {
+    "id": "NE.RSB.GNFS.ZS",
+    "value": "External balance on goods and services (% of GDP)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "1966",
+   "value": 1.5388312648676,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 1
+  },
+  {
+   "indicator": {
+    "id": "NE.RSB.GNFS.ZS",
+    "value": "External balance on goods and services (% of GDP)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "1965",
+   "value": 0.701459231610334,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 1
+  },
+  {
+   "indicator": {
+    "id": "NE.RSB.GNFS.ZS",
+    "value": "External balance on goods and services (% of GDP)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "1964",
+   "value": 4.17718221707965,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 1
+  },
+  {
+   "indicator": {
+    "id": "NE.RSB.GNFS.ZS",
+    "value": "External balance on goods and services (% of GDP)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "1963",
+   "value": 3.07018299318063,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 1
+  },
+  {
+   "indicator": {
+    "id": "NE.RSB.GNFS.ZS",
+    "value": "External balance on goods and services (% of GDP)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "1962",
+   "value": 1.91265537394847,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 1
+  },
+  {
+   "indicator": {
+    "id": "NE.RSB.GNFS.ZS",
+    "value": "External balance on goods and services (% of GDP)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "1961",
+   "value": 1.58721793446803,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 1
+  },
+  {
+   "indicator": {
+    "id": "NE.RSB.GNFS.ZS",
+    "value": "External balance on goods and services (% of GDP)"
+   },
+   "country": {
+    "id": "KE",
+    "value": "Kenya"
+   },
+   "countryiso3code": "KEN",
+   "date": "1960",
+   "value": -2.57435802455331,
+   "unit": "",
+   "obs_status": "",
+   "decimal": 1
+  }
+ ]
+]
