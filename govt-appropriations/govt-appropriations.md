@@ -111,19 +111,19 @@ Suspicious govt departments:
     It facilitates cabinet meetings and oversees implementation of cabinet decisions(https://cabinetaffairs.go.ke/functions). The cabinet already has a secretary and all cabinet members have dozens of staff to do this.  
 15. State Department for Trade  
     Created by executive order 1 of 2023.  
-   1. Sub-programme: Export Trade Development, Promotion and National Branding KES 620,817,000  
-      Facilitate 10 firms to export for the first time, participate in trade promotions, brand 800 products with `made in kenya` mark of identity, do 2 global marketing campaigns.  
-      As an example, any Kenyan product should be able to download and affix the `made in kenya` mark of identity without needing any ministry facilitation.  
-   2. Sub-programme: Enabling Environment for Business Growth KES 68,692,871  
-      create a `kenya trade development bill`, revise national trade policy, "capacity build 100 county employees on trade matters"  
-   3. Sub-programme: Development and Promotion of BETA Priorities Value Chains KES 88,418,331  
-      create ecommerce policy, conduct 8 training sessions for exporters of fresh produce, develop a digital services export strategy.  
-   4. Kenya National Trading Corporation (KNTC) KES 1,576,590,000  
-      The actual cost saving is KES 0 because according to the budget documents, the corporation has an expenditure of kes 1.5b and an equal amount in appropriations-in-aid.  
-      Mission: To ensure that KNTC plays its rightful role as a Strategic National Asset that secures price stabilization of essential food items and consumer goods(https://kntc.go.ke/)  
-      procure 7800 tonnes of maize, distribute 7400 tonnes of maize.  
-      KNTC has not done well in its mission of stabilizing prices and I also think doing so is a futile process. Also the constitution gives CBK(central bank of kenya) that mandate of "promoting price stability"(https://new.kenyalaw.org/akn/ke/act/2010/constitution/eng@2010-09-03#chp_TWELVE__part_7__sec_231); so KNTC should get out of their way.          
-      The one thing it has done well though is losing money through corrupt ways like the recent KES 6billion oil scandal(https://www.citizen.digital/news/oil-scandal-kntc-hard-pressed-to-explain-losing-ksh6-billion-taxpayers-money-n350965)  
+    1. Sub-programme: Export Trade Development, Promotion and National Branding KES 620,817,000  
+       Facilitate 10 firms to export for the first time, participate in trade promotions, brand 800 products with `made in kenya` mark of identity, do 2 global marketing campaigns.  
+       As an example, any Kenyan product should be able to download and affix the `made in kenya` mark of identity without needing any ministry facilitation.  
+    2. Sub-programme: Enabling Environment for Business Growth KES 68,692,871  
+       create a `kenya trade development bill`, revise national trade policy, "capacity build 100 county employees on trade matters"  
+    3. Sub-programme: Development and Promotion of BETA Priorities Value Chains KES 88,418,331  
+       create ecommerce policy, conduct 8 training sessions for exporters of fresh produce, develop a digital services export strategy.  
+    4. Kenya National Trading Corporation (KNTC) KES 1,576,590,000  
+       The actual cost saving is KES 0 because according to the budget documents, the corporation has an expenditure of kes 1.5b and an equal amount in appropriations-in-aid.  
+       Mission: To ensure that KNTC plays its rightful role as a Strategic National Asset that secures price stabilization of essential food items and consumer goods(https://kntc.go.ke/)  
+       procure 7800 tonnes of maize, distribute 7400 tonnes of maize.  
+       KNTC has not done well in its mission of stabilizing prices and I also think doing so is a futile process. Also the constitution gives CBK(central bank of kenya) that mandate of "promoting price stability"(https://new.kenyalaw.org/akn/ke/act/2010/constitution/eng@2010-09-03#chp_TWELVE__part_7__sec_231); so KNTC should get out of their way.          
+       The one thing it has done well though is losing money through corrupt ways like the recent KES 6billion oil scandal(https://www.citizen.digital/news/oil-scandal-kntc-hard-pressed-to-explain-losing-ksh6-billion-taxpayers-money-n350965)  
 16. State Department for Industry  
     Sub-programme: Industrial Development Promotion KES 5,594,154,233  
     hold 2 inter-govt consultative forums, establish 12 policy reforms, created 12 SME profiles, create 500 jobs under integrated agro industrial parks, establish/operationalize 18 County Aggregated Industrial Parks  
