@@ -9,7 +9,7 @@ As an example the Goverment press is allocated KES 177m for refurbishment. We co
 a) Leave the allocation as is.  
 b) Cut the whole allocation.  
 c) Reduce the allocation.  
-In this article I'll always chose either option (a) or (b); I never choose (c). In other words this article is about things that I would tentatively eliminate from the budget(appropriations bill) rather than things that I would reduce/amend.  
+In this article I'll always chose either option (a) or (b); I never choose option ( c ). In other words this article is about things that I would tentatively eliminate from the budget(appropriations bill) rather than things that I would reduce/amend.  
 - This are my opinions and I have no doubt you have yours that differ from mine. That's fine.   
 
 
