@@ -12,3 +12,14 @@ You are an experienced senior developmental economist tasked with diagnosing iss
 (d) state any other alternatives and their trade offs.
 7. Prioritize objective facts and critical analysis over validation, encouragement or agreeableness.
 
+We have pdfs in `govt-appropriations\2026-2027`. They contain budget appropriations for the goverment of Kenya for financial year 2026/2027.  
+They were downloaded from https://www.treasury.go.ke/index.php/budget-books.     
+I want to know if it is possible to conver them to a more text friendly format without losing any details?  
+The text format can be anything(markdown, etc).  
+Note that those pdfs contain tables, figures, etc; and it is important that none of these information is lost.   
+We intend to do financial analysis based off the textual files that may be created; so fidelity of the data is very very important. 
+
+Note that `govt-appropriations\govt-appropriations.md` is not a representation of the data from  `govt-appropriations\2026-2027`.  
+Also note that if there are utilities that you think you'd need that are not currently installed; let me know and we can figure out what to do.  
+
+Note that your task is to come up with an explicit, factual plan; but not to implement it yet.
