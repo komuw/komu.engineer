@@ -300,7 +300,7 @@ Suspicious govt departments:
 39. State Department for Forestry  
     sub-programme: Commercial Forestry Services KES 7,360,560  
       It only has one KPI: develop zero centres. Yes, zero.  
-40. Auditor general .   
+40. Auditor general.      
     sub-programme: CDF Audits KES 85,643,300  
       cdf will be abolished since it is un-constitutional.  
 
