@@ -12,17 +12,17 @@ A. https://www.treasury.go.ke/index.php/budget-books
 B. FY-2025-26-Development-Budget-Book-Vol.-1-1011-1083.pdf  
 
 Suspicious govt departments:  
-Office of the President  
-0. Government Printing Services  KES 944,596,015  
+1. Office of the President  
+1.1 Government Printing Services  KES 944,596,015  
    Abolish the goverment printer(goverment press aka GP); https://www.governmentpress.go.ke/background and replace it with a "Kenya Gazette website".  
    The constitution defines "Gazette" as "Gazette means the Kenya Gazette published by authority of the national government, or a supplement to the Kenya Gazette"(https://new.kenyalaw.org/akn/ke/act/2010/constitution/eng@2010-09-03#chp_Seventeen__sec_260)  
    Thus a website is enough to meet that definition.  
    The replacement(Gazette website) would require a budget to build and run. But that budget won't be kes 944m. I'm not going to include that expense here, but based on my experience building & running software applications I'm convinced it would be an expense small enough not to affect the overall calculations carried out here.  
    This would also require amendments to various laws that talk about manual printing in the gazette. eg the Revision of the Laws Act  
    which says: "The Laws of Kenya shall be printed in the form of booklets, a separate booklet being printed for..."; https://new.kenyalaw.org/akn/ke/act/1979/9/eng@2022-12-31#sec_6  
-0. General Works at the Office of the Deputy President KES 100,000,000  
+1.2 General Works at the Office of the Deputy President KES 100,000,000  
    The president's state house has a budget of KES 680m for maintenance works. The two offices can agree on how to share up that figure.  
-0. General Maintenance Works at Eldoret State Lodge KES 60,150,000  
+1.2 General Maintenance Works at Eldoret State Lodge KES 60,150,000  
    General Maintenance Works at State House Sagana  KES 15,000,000  
    Refurbishment of buildings at Mombasa State House KES 42,500,000  
    Refurbishment of buildings at Nakuru State House KES 25,000,000  
@@ -38,22 +38,22 @@ Office of the President
      State Lodges          KES 103,123,103  
    Maintain only one presidential official residence.  
    Many countries have only one; https://en.wikipedia.org/wiki/Official_residence  
-0. Public Entities Oversight Services  KES 276,591,062  
+1.4 Public Entities Oversight Services  KES 276,591,062  
    evaluate 340 state corporations, induct 100% of board members, carry out 12 management audit reports.  
    This office seems to duplicate the `State Department for Investments and Assets Management`. That department "is entrusted with the administration of public enterprises and review of performance and providing recommendations for asset optimizatio"  
    That department has a budget of 116m  
 
-1. State Department for National Government Coordination KES 194,266,125  
+2. State Department for National Government Coordination KES 194,266,125  
    Mission: Effectively coordinate the formulation and implementation of National Government policies and legislations to accelerate the achievement of the National Development.  
    This is a recent creation to pad the un-constitutional Office of the Prime Cabinet Secretary. It needs to be purged using a constitutional sword.  
    Besides, this department seems to be performing duplicate work of that of the `state Department for Performance and Delivery Management` which has a `Cordination and Supervison of Government` programme.    
-1.1. Office of the Prime Cabinet Secretary KES 866,803,092  
+2.1 Office of the Prime Cabinet Secretary KES 866,803,092  
     It's an un-constitutional office.  
-1.5. State Department for Parliamentary Affairs KES 333,508,889  
+2.3 State Department for Parliamentary Affairs KES 333,508,889  
     Created by executive order 1 of 2023.  
     Mission: To proficiently oversee the development and execution of National Government policies and legislation aimed at expediting the realization of the national development agenda.  
     This is another one of those from the un-constitutional office of Prime Cabinet Secretary.  
-2. State Department for Devolution KES 17,226,352,790  
+3. State Department for Devolution KES 17,226,352,790  
    Mission: To offer strategic leadership and establish policy direction in the governance of devolution and intergovernmental relations.  
    The State Department for Devolution is tasked with the coordination of intergovernmental relations between the National and County Governments.  
    There's significant overlap between this and the work of; the Senate, Commission on Revenue Allocation, Intergovernmental Budget and Economic Council, the Council of Governors, Intergovernmental Relations Technical Committee(igrtc.go.ke) among others.  
