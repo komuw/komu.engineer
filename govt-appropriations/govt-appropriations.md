@@ -186,135 +186,139 @@ Suspicious govt departments:
        A few years ago, the KBC managing director [committed  the goverment](https://nation.africa/kenya/news/kbc-managing-director-samuel-maina-sacked-over-sh750bn-payment-4468844) to pay KES 750 billion at the London court of arbitration, without even consulting the line ministry. That's money equivalent to ~4 years of the ministry of health's budget. My taxes will eventually be used to pay up in London; all for what? Just so the national broadcaster can stream the world cup in 480p once every 4years?           
 24. State Department for Internal Security & National Administration  
     1. Sub-programme: Peace Building, National Cohesion and Values KES 511,182,000  
-      train 500 people on national cohesion, sensitize 200k people on climate change related conflicts, ensure 47 counties have county peace forums.  
-      I'm not discounting the need to sensitize people on how climate change can cause conflicts, I'm just saying that given our meagre resources this is something that we can put on the back burner.  
-    sub-programme: National Government Administration Coordination Services KES 19,681,360,942  
-      100% security coordination at the counties, construct 15 offices for county adminstration, refurbishment of 10 county commissioners offices.  
-      We need to dismantle the provincial adminstration(which nowadays they call National Government Administration). Yes chiefs do play some role but most of their roles are duplicative and are just a carry-over from the pre-2010 constitituon.  
-      Chiefs do solve some family cases but this can very well be solved via the judiciary, religious roots or even via community members. Yes sometimes when you apply for your national ID it is delivered to your sub-chief, but you can as well have it delivered at the nearest huduma center.  
-      Back in my village, we sometimes report chicken thieves to the chief but this a role that the police system can handle well. For every role that the provincial adminstration plays, there's a duplicate goverment office that is mandated by law to do the same. Let's let the offices mandated by law to do their work.  
-      "Within five years ...national government shall restructure ...the provincial administration to accord with and respect the system of devolved government" - https://new.kenyalaw.org/akn/ke/act/2010/constitution/eng@2010-09-03#att_6__part_4__para_17  
-      Look at how thin the NATIONAL GOVERNMENT CO-ORDINATION ACT is; https://new.kenyalaw.org/akn/ke/act/2013/1/eng@2024-05-17  
-      It does not even assign any duties to national government administrative officers(chiefs, county commissioner, etc)  
+       KPI: train 500 people on national cohesion, sensitize 200k people on climate change related conflicts, ensure 47 counties have county peace forums.  
+       I'm not discounting the need to sensitize people on how climate change can cause conflicts, I'm just saying that given our meagre resources this is something that we can put on the back burner.  
+    2. Sub-programme: National Government Administration Coordination Services KES 19,681,360,942  
+       KPI: 100% security coordination at the counties, construct 15 offices for county adminstration, refurbishment of 10 county commissioners offices.  
+       We need to dismantle the provincial adminstration(which nowadays they call National Government Administration). Yes chiefs do play some role but most of their roles are duplicative and are just a carry-over from the pre-2010 constitituon.    
+       Chiefs do solve some family cases but this can very well be solved via the judiciary, religious forums or even via community members. Yes sometimes when you apply for your national ID it is delivered to your sub-chief, but you can as well have it delivered at the nearest huduma center.  
+       Back in my village, we sometimes report chicken thieves to the chief but this a role that the police system can handle well. For every role that the provincial adminstration plays, there's a duplicate goverment office that is mandated by law to do the same. Let's let the offices mandated by law to do their work.  
+       "Within five years ...national government shall restructure ...the provincial administration to accord with and respect the system of devolved government" - https://new.kenyalaw.org/akn/ke/act/2010/constitution/eng@2010-09-03#att_6__part_4__para_17     
+       Look at how thin the NATIONAL GOVERNMENT CO-ORDINATION ACT is; https://new.kenyalaw.org/akn/ke/act/2013/1/eng@2024-05-17      
+       It does not even assign any duties to national government administrative officers(chiefs, county commissioner, etc)  
 25. Ministry of Defence  
-    sub-programme: Kenya Meat Commission KES 200,000,000  
-                                         KES 2,980,000,000  
+    Sub-programme: Kenya Meat Commission KES 200,000,000 (development) and KES 2,980,000,000 (recurrent).      
       The 200m is expenditure and the 2.9b is recurrent. The 2.9b comes from aia(kmc's own fees) but 200m is from govt. We include the 2.9b here because the final expenditures in the budget books are inclusive of AIA.  
-      The defence ministry ought to have better things to do other than runnung slaughter houses.  
+      The defence ministry ought to have better things to do other than running slaughter houses.  
 26. State Department for Economic Planning  
-    sub-programme: Community Development  
-      delivery unit: National Government Constituency Fund(NGCDF) KES 58,797,728,147  
-      CDF is un-constitutional and there are court cases from here all the way to the supreme court.  
-      The only hindrance to killing this thing are members of parliament.  
+    Sub-programme: Community Development  
+      Delivery unit: National Government Constituency Fund(NGCDF) KES 58,797,728,147  
+      CDF was declared un-constitutional by the high court. But the court of appeal overturned that decision.    
+      I still think we should remove it neverthless. This would be a huge battle since repealing the ACT would have to be done via parliament and those members are the biggest beneficiary of this fund. Chances are slim, but this is my blogpost and I'm listing aspirations.        
 27. State Department for Roads KES 79,450,254,469  
     The total allocation is kes 195b, with kes 115b coming from road maintenance levy and 79b from other sources.  
-    We cut out the funding from other sources and are leave that department to run with the money from road maintenance levy.  
+    We are going to cut out the funding from other sources and leave the department to run with the money from road maintenance levy.   
     TODO: give a maths explanation of how the monies from road development levy are enough to construct new roads and maintain existing ones.  
-    sub-programme: Construction of Roads and Bridges  
-      Looking at `Program-Based-Budget-Book` the department proposes to construct about 434 km of roads.  
-    sub-programme: Rehabilitation of Roads  
-      Looking at `Program-Based-Budget-Book` the department proposes to rehabilitate about 1453km of roads.  
-      Looking at `Program-Based-Budget-Book` the department proposes to gravel about 1482km of roads.  
+    1. Sub-programme: Construction of Roads and Bridges  
+       Looking at `Program-Based-Budget-Book` the department proposes to construct about 434 km of roads.  
+    2. Sub-programme: Rehabilitation of Roads  
+       Looking at `Program-Based-Budget-Book` the department proposes to rehabilitate about 1453km of roads.  
+       Looking at `Program-Based-Budget-Book` the department proposes to gravel about 1482km of roads.  
 28. State Department for Transport  
-    Nairobi Metropolitan Area Transport Authority (NAMATA) KES 465,588,000  
-      NAMATA(https://namata.go.ke/about_us) was established by Executive Order 18 of 2017. It's mandate with the mandate of overseeing the establishment of a public transport system within the Nairobi metro area.  
-      The constitituon says that county goverments are responsible for "county transport including county roads and public road transport" (https://new.kenyalaw.org/akn/ke/act/2010/constitution/eng@2010-09-03#att_4__part_2__para_5)  
-      NAMATA is therefore duplicating roles that are designated to the counties.  
-    Nairobi Bus Rapid Transport  
-      Establishment of Bus Rapid Transit Line 5 Project-Nairobi-BETA KES 441,284,613  
-      Nairobi Bus Rapid Transport Project-BETA KES 331,204,920  
-      Public Transport Technical BRT Assistance Project- Phase 1 KES 30,040,164  
-      The BRT project does not make sense. I'm surprised this thing is still been pursued.  
+    1. Nairobi Metropolitan Area Transport Authority (NAMATA) KES 465,588,000  
+       NAMATA(https://namata.go.ke/about_us) was established by Executive Order 18 of 2017. It's mandate with the mandate of overseeing the establishment of a public transport system within the Nairobi metro area.  
+       The constitituon says that county goverments are responsible for "county transport including county roads and public road transport" (https://new.kenyalaw.org/akn/ke/act/2010/constitution/eng@2010-09-03#att_4__part_2__para_5)  
+       NAMATA is therefore duplicating roles that are designated to the counties.  
+    2. Nairobi Bus Rapid Transport  
+       Establishment of Bus Rapid Transit Line 5 Project-Nairobi-BETA KES 441,284,613  
+       Nairobi Bus Rapid Transport Project-BETA KES 331,204,920  
+       Public Transport Technical BRT Assistance Project- Phase 1 KES 30,040,164  
+       I'm not super opposed to a BRT. But the pace at which this project has moved(or more appropriately, not moved) and the crazy ideas I hear govt mandarins throw around about; makes me think that this is not worth it. I'm surprised this thing is still been pursued.   
 29. State Department for Energy  
-    sub-programme: Alternative Energy Technologies KES 2,296,936,839  
+    1. Sub-programme: Alternative Energy Technologies KES 2,296,936,839  
     install 20 stand-alone solar home systems, disseminate 75k clean cook stoves, refforest 1m hectare of hydro dams catchment areas, support 1 community small hydro project, construct 4 institutional biogas plants & 300 domestic ones.  
 30. `Aids Control Unit`  
     All the following offices/departments have a delivery-unit(programme/whatever) called `Aids Control Unit`.  
-    As an example, the `State Department for Livestock Development` has a delivery unit called `Aids Control Unit` whose key perfomance indicators for 2025/2026 are listed as;  
-    Conduct 8 AIDS awareness sessions, test 200 people for AIDS. That's it. Thats their whole KPI.  
-    We have a whole ministry of health and also a state corporation(The National Syndemic Diseases Control Council) that are mandated to deal with HIV/AIDS so why does every office in govt need to duplicate that?  
-    What then, should every goverment office also have a `Covid control unit`?  
-    Office of the president       KES 402,750  
-    Office of DP                  KES 1,650,900  
-    Dept of cabinet affairs       KES 146,569  
-    State house                   KES 839,897  
-    Dept of correctional services KES 5,466,623  
-    Dept for immigration          KES 2,177,742  
-    Dept for internal security    KES 2,337,923  
-    Ministry for defence          KES 4,642,500  
-    Dept for foreign affairs      KES 15,149,193  
-    Dept for technical vocation   KES 3,622,664  
-    Dept for higher education     KES 1,945,329  
-    Dept for basic education      KES 4,125,881  
-    National treasury             KES 849,750  
-    Dept for economic planning    KES 5,115,000  
-    Dept for investments          KES 3,962,500  
-    Dept for medical services     KES 3,884,039  
-    Dept for public health        KES 12,461,923  
-    Dept for roads                KES 0  
-    Dept for transport            KES 6,954,122  
-    Dept for shipping             KES 3,640,991  
-    Dept for housing              KES 368,367  
-    Dept for public works         KES 1,006,195  
-    Dept for water                KES 2,464,380  
-    Dept for lands                KES 420,000  
-    Dept for ICT                  KES 2,031,067  
-    Dept for broadcasting         KES 1,125,000  
-    Dept for sports               KES 463,850  
-    Dept for energy               KES 746,445  
-    Dept for livestock            KES 7,306,786  
-    Dept for blue economy         KES 2,554,393  
-    Dept for co-operatives        KES 828,846  
-    Dept for trade                KES 828,846  
-    Dept for industry             KES 1,068,143  
-    Dept for SME                  KES 1,659,825  
-    Dept for labour               KES 359,740  
-    Dept for social protection    KES 4,393,126  
-    Dept for children             KES 3,225,938  
-    Dept for tourism              KES 691,764  
-    Dept for wildlife             KES 643,111  
-    Dept for public service       KES 2,842,500  
-    State law office              KES 791,250  
-    PSC                           KES 2,175,000  
-    TSC                           KES 3,841,298  
-    National police service(NPS)  KES 1,853,270  
-    National police service(NPS)  KES 1,759,125  
-    National police service(NPS)  KES 3,826,693    
-    Yes for the NPS(National police service), aids control unit, exists 3 times. Maybe its for each branch of the police???       
+    As an example, the `State Department for Livestock Development` has a delivery unit called `Aids Control Unit`(with a budget of kes 7m) whose key perfomance indicators for 2025/2026 are listed as;  
+    a) Conduct 8 AIDS awareness sessions.     
+    b) Test 200 people for AIDS.    
+    That's it. Thats their whole KPI.  
+
+    We have a whole ministry of health and also a state corporation(The National Syndemic Diseases Control Council) that are mandated to deal with HIV/AIDS; so why does every office in govt need to duplicate that? Should every goverment office also have a `Covid control unit`?   
+    Here are the offices/departments that have an "AIDS control unit" and the budget for that item.    
+    - Office of the president       KES 402,750  
+    - State house                   KES 839,897  
+    - Office of DP                  KES 1,650,900  
+    - Dept of cabinet affairs       KES 146,569  
+    - Dept of correctional services KES 5,466,623  
+    - Dept for immigration          KES 2,177,742  
+    - Dept for internal security    KES 2,337,923  
+    - Ministry for defence          KES 4,642,500  
+    - Dept for foreign affairs      KES 15,149,193  
+    - Dept for technical vocation   KES 3,622,664  
+    - Dept for higher education     KES 1,945,329  
+    - Dept for basic education      KES 4,125,881  
+    - National treasury             KES 849,750  
+    - Dept for economic planning    KES 5,115,000  
+    - Dept for investments          KES 3,962,500  
+    - Dept for medical services     KES 3,884,039  
+    - Dept for public health        KES 12,461,923  
+    - Dept for roads                KES 0  
+    - Dept for transport            KES 6,954,122  
+    - Dept for shipping             KES 3,640,991  
+    - Dept for housing              KES 368,367  
+    - Dept for public works         KES 1,006,195  
+    - Dept for water                KES 2,464,380  
+    - Dept for lands                KES 420,000  
+    - Dept for ICT                  KES 2,031,067  
+    - Dept for broadcasting         KES 1,125,000  
+    - Dept for sports               KES 463,850  
+    - Dept for energy               KES 746,445  
+    - Dept for livestock            KES 7,306,786  
+    - Dept for blue economy         KES 2,554,393  
+    - Dept for co-operatives        KES 828,846  
+    - Dept for trade                KES 828,846  
+    - Dept for industry             KES 1,068,143  
+    - Dept for SME                  KES 1,659,825  
+    - Dept for labour               KES 359,740  
+    - Dept for social protection    KES 4,393,126  
+    - Dept for children             KES 3,225,938  
+    - Dept for tourism              KES 691,764  
+    - Dept for wildlife             KES 643,111  
+    - Dept for public service       KES 2,842,500  
+    - State law office              KES 791,250  
+    - PSC                           KES 2,175,000  
+    - TSC                           KES 3,841,298  
+    - National police service(NPS)  KES 1,853,270  
+    - National police service(NPS)  KES 1,759,125  
+    - National police service(NPS)  KES 3,826,693    
+    Yes for the NPS(National police service), aids control unit, exists 3 times. Maybe its for each branch of the police???        
+    Yes the "Office of the president" has an 'AIDS control unit' and so does "state house". Go figure.     
+    Who approves these things? Does anyone in power ever read the budget appropriations books? 
 31. State Department for Livestock Development  
     Kenya leather Development Council KES 222,608,340  
     It's a state corporation formed under private-public partnership to represent the interests of the leather sector(https://leathercouncil.go.ke/background-strategic-plan/)  
     Representation is drawn from Livestock Marketing Council, Slaughter Houses Association, footwear manufacturers, leather manufacturers, academia, etc.  
-    I think it should be possible to "represent interests of the leather sector" without using taxpayers money. Otherwise all other sectors in the industry will want to form their own tax funded councils.  
+    I think it should be possible to "represent interests of the leather sector" without using taxpayers money. Otherwise all other sectors in the country will also want to form their own taxpayer funded councils. Again, who approves these things?        
 32. State Department for Labour and Skills Development  
-    sub-programme: Human Resource Planning & Development KES 249,407,201  
-      carry out 1 labor market survey, train 30 people on production of labor market information.  
-    sub-programme: Productivity Promotion, Measurement & improvement KES 66,724,043  
-      have 35 companies do productivity improvement, train 5k public officers on productivity improvement.  
-    sub-programme: Management of Skills Development and Post-Training KES 24,384,902  
-      train 5k youth on online employment skills, develop 10 occupational standards.  
-    National Industrial Training Authority                  KES 2,472,000,000  
-    National Employment Authority                           KES 326,144,000  
-    National Youth Opportunities Towards Advancement(NYOTA) KES 1,400,000,000  
-    Micro Small Enterprises Authority (MSEA)                KES 543,060,000  
-    National Construction Authority(NCA)                    KES 2,378,700,000  
-    TODO: explain why NCA this have to go; https://x.com/search?q=NITA%20(from%3Akinjeketile)&src=typed_query&f=top  
+    1. Sub-programme: Human Resource Planning & Development KES 249,407,201  
+       KPI: carry out 1 labor market survey, train 30 people on production of labor market information.  
+    2. Sub-programme: Productivity Promotion, Measurement & improvement KES 66,724,043  
+       KPI: have 35 companies do productivity improvement, train 5k public officers on productivity improvement.  
+    3. Sub-programme: Management of Skills Development and Post-Training KES 24,384,902  
+       KPI: train 5k youth on online employment skills, develop 10 occupational standards.  
+    4. National Industrial Training Authority                  KES 2,472,000,000  
+    5. National Employment Authority                           KES 326,144,000  
+    6. National Youth Opportunities Towards Advancement(NYOTA) KES 1,400,000,000  
+    7. Micro Small Enterprises Authority (MSEA)                KES 543,060,000  
+    8. National Construction Authority(NCA)                    KES 2,378,700,000  
+       TODO: explain why NCA this have to go; https://x.com/search?q=NITA%20(from%3Akinjeketile)&src=typed_query&f=top  
 33. State Department for Petroleum  
-    sub-programme: Oil and gas exploration KES 3,355,434,958  
-      market 2 petroleum blocks and conduct bid round, complete 80% of preliminary activities for land acquistion of South Lokichar Oil Field, complete 50% of preliminary activities on development of the Kenya-Tanzania natural gas pipeline  
-      TODO: talk about why. Tullow pulling out bcoz of viability, etc.  
-    sub-programme: Distribution of petroleum and gas  
-      delivery unit: Midstream and Downstream Petroleum Distribution KES 255,000,000  
-        supply 100k low income households with 6kg gas cyclinders, conduct 36 industry engangements,  
+    1. Sub-programme: Oil and gas exploration KES 3,355,434,958  
+       KPI: market 2 petroleum blocks and conduct bid round, complete 80% of preliminary activities for land acquistion of South Lokichar Oil Field, complete 50% of preliminary activities on development of the Kenya-Tanzania natural gas pipeline  
+       TODO: talk about why. Tullow pulling out bcoz of viability, etc.  
+    2. Sub-programme: Distribution of petroleum and gas  
+       Delivery unit: Midstream and Downstream Petroleum Distribution KES 255,000,000  
+       KPI: supply 100k low income households with 6kg gas cyclinders, conduct 36 industry engangements,  
 34. State Department for Public Service  
-    sub-programme: Management Consultancy Services KES 122,235,131  
-      develop 25 career guidelines, review 20 MDACs organizational structures. That's it.  
+    Sub-programme: Management Consultancy Services KES 122,235,131  
+    KPI: develop 25 career guidelines, review 20 MDACs organizational structures. That's it.  
 35. State Department for Forestry  
-    sub-programme: Commercial Forestry Services KES 7,360,560  
-      It only has one KPI: develop zero centres. Yes, zero.  
+    Sub-programme: Commercial Forestry Services KES 7,360,560  
+      It only has one KPI: develop zero centres. Yes, zero. It's probably a typographical error.   
 36. Auditor general.      
-    sub-programme: CDF Audits KES 85,643,300  
-      cdf(consitituency development fund) will be abolished since it is un-constitutional.  
+    Sub-programme: CDF Audits KES 85,643,300  
+    Since we will abolish CDF, then this specific sub programme in the auditor general's office will no longer need funding. It can be funded for one extra year just to audit the last CDF's budget but nothing after that.     
 
 
 
