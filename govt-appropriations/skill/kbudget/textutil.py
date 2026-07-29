@@ -36,10 +36,11 @@ def norm_upper(s: str) -> str:
 # produced by two independent parsers.
 _ANY_NUM = re.compile(r"\d[\d,]*\d|\d")
 
-# A money value or an explicit nil dash, as they appear in the tables. Money is
-# always comma-grouped here (values are >= 1,000), so requiring a comma group
-# keeps codes/years out of the trailing numeric run of a table row.
-_MONEY = re.compile(r"^-$|^\d{1,3}(?:,\d{3})+$")
+# A money value or an explicit nil dash, as they appear in the tables. Values
+# >= 1,000 are always comma-grouped; values < 1,000 appear as a bare 1-3 digit
+# number. Codes (7/10/11-digit) and years (4-digit) have >= 4 digits and no
+# comma, so they are excluded from a row's trailing numeric run.
+_MONEY = re.compile(r"^-$|^\d{1,3}(?:,\d{3})+$|^\d{1,3}$")
 
 
 def number_tokens(text: str) -> list[str]:

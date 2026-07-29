@@ -94,15 +94,20 @@ Nothing ships as `verified` until its queue item is resolved.
 | `DEV_FM_TABLE_I` (development front-matter summary) | parsed + arithmetic-validated |
 | `DEV_VOTE_SUMMARY_I` (development per-vote head-level) | parsed + arithmetic-validated |
 | `REC_VOTE_SUMMARY_I` (recurrent per-vote head-level) | parsed + arithmetic-validated |
-| `DEV_VOTE_SUMMARY_II`, `DEV_VOTE_ESTIMATES` (development item-level detail) | TODO structural parse |
-| `REC_VOTE_SUMMARY_II` (recurrent heads-and-items detail) | TODO structural parse |
-| `REC_FM` (recurrent front-matter summary) | TODO structural parse |
-| Program-based `PART F/G/H` (expenditure by programme / economic class) | TODO structural parse |
+| `REC_VOTE_SUMMARY_II` (recurrent heads-and-items, economic detail) | parsed + arithmetic-validated |
+| `DEV_VOTE_ESTIMATES` (development Table III, per-project source of funding) | parsed + validated + cross-checked to Table I |
+| Program-based `PART H` (programme x economic classification) | parsed + arithmetic-validated |
+| `DEV_VOTE_SUMMARY_II` (development heads-and-items economic detail) | parsed + arithmetic-validated |
+| `REC_FM` (recurrent front-matter summary + Consolidated Fund Services) | parsed + arithmetic-validated |
+| Program-based `PART G` (by vote x economic classification) | parsed + arithmetic-validated |
+| Program-based `PART F` (by programme) | parsed + arithmetic-validated |
 
-Reconciliation already guarantees *no numbers lost* on the not-yet-parsed templates;
-only the structured row/column dataset for them is pending. The head-level summary
-parser is shared by Development and Recurrent (`REC_VOTE_SUMMARY_I` reuses it: same
-6 columns, same `gross - aia = net` identity; head codes may be 10 or 11 digits).
+Every structural template in all six books is now parsed and arithmetic-validated;
+cross-engine reconciliation independently guarantees *no numbers lost* on every
+page. Parsers are shared where the layouts coincide: the head-level summary parser
+serves both Development and Recurrent Table I, the Table II item parser serves both
+Recurrent and Development heads-and-items, and the economic-classification block
+parser serves both program-based PART G and PART H.
 
 ## Architecture (`skill/kbudget/`)
 

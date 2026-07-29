@@ -28,7 +28,7 @@ fy-2026-27-development-book-volume-1-1011-1083,1023,State Department for Correct
 fy-2026-27-development-book-volume-1-1011-1083,1023,State Department for Correctional Services,head,1023101200,Security in Penal Institutions,2565000,111512500,0,111512500,172070000,137000000,40,yes
 fy-2026-27-development-book-volume-1-1011-1083,1023,State Department for Correctional Services,head,1023101300,Construction of Penal Facilities III,10440000,67498000,0,67498000,198070000,51689000,40,yes
 fy-2026-27-development-book-volume-1-1011-1083,1023,State Department for Correctional Services,head,1023101400,Revitalisation of Prison Farms,1500000,7500000,0,7500000,423184707,120080000,40,yes
-fy-2026-27-development-book-volume-1-1011-1083,1023,State Department for Correctional Services,head,1023101500,Modernization of Prisons Industries-BETA 20,6650000,10700000,0,10700000,40300000,0,40,yes
+fy-2026-27-development-book-volume-1-1011-1083,1023,State Department for Correctional Services,head,1023101500,Modernization of Prisons Industries-BETA,6650000,10700000,0,10700000,40300000,0,40,yes
 fy-2026-27-development-book-volume-1-1011-1083,1023,State Department for Correctional Services,head,1023101600,Complete Construction of Staff Houses,32015000,32500000,0,32500000,200365240,118150000,41,yes
 fy-2026-27-development-book-volume-1-1011-1083,1023,State Department for Correctional Services,head,1023101800,Aquisition of Prisons ICT & Telecommuniction infrustructure,5776788,40000000,0,40000000,150000000,189494264,41,yes
 fy-2026-27-development-book-volume-1-1011-1083,1023,State Department for Correctional Services,head,1023101900,Modernisation of Prison staff training facilities,0,0,0,0,0,63000000,41,yes
@@ -40,7 +40,7 @@ fy-2026-27-development-book-volume-1-1011-1083,1023,State Department for Correct
 fy-2026-27-development-book-volume-1-1011-1083,1023,State Department for Correctional Services,head,1023103200,Refurbishment of KIbera Probation Office,0,5920000,0,5920000,0,0,41,yes
 fy-2026-27-development-book-volume-1-1011-1083,1023,State Department for Correctional Services,head,1023103300,"Perimeter Wall,Watch Towers & Gate Lodge",0,0,0,0,44120000,27500000,41,yes
 fy-2026-27-development-book-volume-1-1011-1083,1023,State Department for Correctional Services,head,1023103400,Prisoners Wards,780000,1000000,0,1000000,0,0,41,yes
-fy-2026-27-development-book-volume-1-1011-1083,1023,State Department for Correctional Services,head,1023103500,Administration Blocks 21,0,0,0,0,26300000,0,41,yes
+fy-2026-27-development-book-volume-1-1011-1083,1023,State Department for Correctional Services,head,1023103500,Administration Blocks,0,0,0,0,26300000,0,41,yes
 fy-2026-27-development-book-volume-1-1011-1083,1023,State Department for Correctional Services,head,1023103600,Borehole/Water Supply System/ Sewerage,4000000,0,0,0,33034954,0,42,yes
 fy-2026-27-development-book-volume-1-1011-1083,1023,State Department for Correctional Services,head,1023103700,Kitchens,0,0,0,0,14000000,0,42,yes
 fy-2026-27-development-book-volume-1-1011-1083,1023,State Department for Correctional Services,head,1023104000,Construction of Magereza Level 4 Referral Hospital-BETA,40000000,224380000,0,224380000,226620000,0,42,yes
@@ -57,7 +57,7 @@ fy-2026-27-development-book-volume-1-1011-1083,1024,State Department for Immigra
 fy-2026-27-development-book-volume-1-1011-1083,1024,State Department for Immigration and Citizen Services,head,1024102000,Supplies for Passport Production,47550000,595050000,547500000,47550000,595050000,667490000,95,yes
 fy-2026-27-development-book-volume-1-1011-1083,1024,State Department for Immigration and Citizen Services,head,1024102200,Construction of border points,0,100000000,100000000,0,100000000,100000000,95,yes
 fy-2026-27-development-book-volume-1-1011-1083,1024,State Department for Immigration and Citizen Services,head,1024102400,"Maintenance of passport system (both Hardware, software and licenses",0,250000000,250000000,0,250000000,250000000,95,yes
-fy-2026-27-development-book-volume-1-1011-1083,1024,State Department for Immigration and Citizen Services,head,1024102800,Purchase of e-Passport books 75,1036524845,2036520000,1000000000,1036520000,2036520000,2036520000,95,yes
+fy-2026-27-development-book-volume-1-1011-1083,1024,State Department for Immigration and Citizen Services,head,1024102800,Purchase of e-Passport books,1036524845,2036520000,1000000000,1036520000,2036520000,2036520000,95,yes
 fy-2026-27-development-book-volume-1-1011-1083,1024,State Department for Immigration and Citizen Services,head,1024103200,Digitization of Immigration Records,0,207000000,207000000,0,207000000,207000000,96,yes
 fy-2026-27-development-book-volume-1-1011-1083,1024,State Department for Immigration and Citizen Services,head,1024103300,e-Citizen Services-BETA,700000000,3227500000,3227500000,0,3227500000,3227500000,96,yes
 fy-2026-27-development-book-volume-1-1011-1083,1024,State Department for Immigration and Citizen Services,head,1024103400,Unique Personal Identifier Project-BETA,5000000,383840000,333840000,50000000,383840000,396350000,96,yes
@@ -86,7 +86,7 @@ fy-2026-27-development-book-volume-1-1011-1083,1026,State Department for Interna
 fy-2026-27-development-book-volume-1-1011-1083,1026,State Department for Internal Security & National Administration,head,1026106500,Cyber Crime,0,0,0,0,125000000,112852627,127,yes
 fy-2026-27-development-book-volume-1-1011-1083,1026,State Department for Internal Security & National Administration,head,1026107300,Construction of Miritini Treatment and Rehabilitation Center-BETA,65000000,80000000,0,80000000,200000000,200000000,127,yes
 fy-2026-27-development-book-volume-1-1011-1083,1026,State Department for Internal Security & National Administration,head,1026108700,Construction of NGA Offices,10000000,20030000,0,20030000,210000000,321521727,127,yes
-fy-2026-27-development-book-volume-1-1011-1083,1026,State Department for Internal Security & National Administration,head,1026108800,Construction of the Newly Gazetted Sub County Headquarters 107,0,30000000,0,30000000,0,72166568,127,yes
+fy-2026-27-development-book-volume-1-1011-1083,1026,State Department for Internal Security & National Administration,head,1026108800,Construction of the Newly Gazetted Sub County Headquarters,0,30000000,0,30000000,0,72166568,127,yes
 fy-2026-27-development-book-volume-1-1011-1083,1026,State Department for Internal Security & National Administration,head,1026108900,Refurbishment of Sub County Field Administration Offices,20000000,40000000,0,40000000,50000000,100000000,128,yes
 fy-2026-27-development-book-volume-1-1011-1083,1026,State Department for Internal Security & National Administration,head,1026109300,Construction and Operationalization of Sub-county Offices,40000000,0,0,0,30000000,0,128,yes
 fy-2026-27-development-book-volume-1-1011-1083,1026,State Department for Internal Security & National Administration,head,1026109400,Construction of Administration Units,10000000,0,0,0,20000000,0,128,yes
@@ -113,7 +113,7 @@ fy-2026-27-development-book-volume-1-1011-1083,1036,State Department for the ASA
 fy-2026-27-development-book-volume-1-1011-1083,1036,State Department for the ASALs and Regional Development,head,1036103300,Gum Arabic and Resins Integrated Development Programme-BETA,116000000,0,0,0,0,0,158,yes
 fy-2026-27-development-book-volume-1-1011-1083,1036,State Department for the ASALs and Regional Development,head,1036103600,Tana Delta Rice Irrigation Project (TDIP) - BETA,21000000,59650000,0,59650000,99650000,109649999,158,yes
 fy-2026-27-development-book-volume-1-1011-1083,1036,State Department for the ASALs and Regional Development,head,1036103800,Ewaso Ngiro Leather Factory - BETA,20000000,44650000,0,44650000,115000000,155000000,158,yes
-fy-2026-27-development-book-volume-1-1011-1083,1036,State Department for the ASALs and Regional Development,head,1036103900,Integrated Bamboo commercialisation and Value addition-BETA 138,0,15000000,0,15000000,30000000,30000000,158,yes
+fy-2026-27-development-book-volume-1-1011-1083,1036,State Department for the ASALs and Regional Development,head,1036103900,Integrated Bamboo commercialisation and Value addition-BETA,0,15000000,0,15000000,30000000,30000000,158,yes
 fy-2026-27-development-book-volume-1-1011-1083,1036,State Department for the ASALs and Regional Development,head,1036104100,Wei Wei Phase 3 Irrigation Project - BETA,20000000,30000000,0,30000000,230000000,230000000,159,yes
 fy-2026-27-development-book-volume-1-1011-1083,1036,State Department for the ASALs and Regional Development,head,1036104200,Mango Value Chain Programme-BETA,0,20000000,0,20000000,40000000,40000000,159,yes
 fy-2026-27-development-book-volume-1-1011-1083,1036,State Department for the ASALs and Regional Development,head,1036104300,Integrated Fruit and Honey Processing - BETA,0,20000000,0,20000000,50000000,50000000,159,yes
@@ -125,7 +125,7 @@ fy-2026-27-development-book-volume-1-1011-1083,1036,State Department for the ASA
 fy-2026-27-development-book-volume-1-1011-1083,1036,State Department for the ASALs and Regional Development,head,1036111000,Rehabilitation of Strategic Water Facilities,100000000,0,0,0,0,0,159,yes
 fy-2026-27-development-book-volume-1-1011-1083,1036,State Department for the ASALs and Regional Development,head,1036112200,Drought Mitigation - TARDA,45000000,0,0,0,0,0,159,yes
 fy-2026-27-development-book-volume-1-1011-1083,1036,State Department for the ASALs and Regional Development,head,1036112300,Drought Mitigation - KVDA,120000000,130000000,0,130000000,0,0,159,yes
-fy-2026-27-development-book-volume-1-1011-1083,1036,State Department for the ASALs and Regional Development,head,1036112400,Drought Mitigation - ENSDA 139,240000000,0,0,0,0,0,159,yes
+fy-2026-27-development-book-volume-1-1011-1083,1036,State Department for the ASALs and Regional Development,head,1036112400,Drought Mitigation - ENSDA,240000000,0,0,0,0,0,159,yes
 fy-2026-27-development-book-volume-1-1011-1083,1036,State Department for the ASALs and Regional Development,head,1036112500,Construction of Peace Dams,120000000,0,0,0,0,0,160,yes
 fy-2026-27-development-book-volume-1-1011-1083,1036,State Department for the ASALs and Regional Development,head,1036112600,Cherengany Watershed Conservation Programme,110000000,39650000,0,39650000,60680000,67860000,160,yes
 fy-2026-27-development-book-volume-1-1011-1083,1036,State Department for the ASALs and Regional Development,head,1036112700,Northern Kenya Integrated Camel Development Programme,0,45140000,0,45140000,60000000,60000000,160,yes
@@ -137,7 +137,7 @@ fy-2026-27-development-book-volume-1-1011-1083,1036,State Department for the ASA
 fy-2026-27-development-book-volume-1-1011-1083,1036,State Department for the ASALs and Regional Development,head,1036114800,Drought Mitigation Interventions - ENNDA,83000000,130400000,0,130400000,0,0,160,yes
 fy-2026-27-development-book-volume-1-1011-1083,1036,State Department for the ASALs and Regional Development,head,1036115100,Tana and Athi river Catchment Management Program -TARDA,0,30000000,0,30000000,30000000,30000000,160,yes
 fy-2026-27-development-book-volume-1-1011-1083,1036,State Department for the ASALs and Regional Development,head,1036116000,BETA Priorities and Flood Control -KVDA,100000000,0,0,0,0,0,160,yes
-fy-2026-27-development-book-volume-1-1011-1083,1036,State Department for the ASALs and Regional Development,head,1036116100,BETA Priorities and Flood Control-ENNDA 140,440000000,0,0,0,0,0,160,yes
+fy-2026-27-development-book-volume-1-1011-1083,1036,State Department for the ASALs and Regional Development,head,1036116100,BETA Priorities and Flood Control-ENNDA,440000000,0,0,0,0,0,160,yes
 fy-2026-27-development-book-volume-1-1011-1083,1036,State Department for the ASALs and Regional Development,head,1036116200,BETA Priorities and Flood Control - TARDA,40000000,0,0,0,0,0,161,yes
 fy-2026-27-development-book-volume-1-1011-1083,1036,State Department for the ASALs and Regional Development,head,1036116300,BETA Priorities and Flood Control - LBDA,90000000,0,0,0,0,0,161,yes
 fy-2026-27-development-book-volume-1-1011-1083,1036,State Department for the ASALs and Regional Development,head,1036116400,BETA Priorities and Flood Control - CDA,70000000,0,0,0,0,0,161,yes
@@ -149,7 +149,7 @@ fy-2026-27-development-book-volume-1-1011-1083,1036,State Department for the ASA
 fy-2026-27-development-book-volume-1-1011-1083,1036,State Department for the ASALs and Regional Development,head,1036120100,Eldas Lakoley South Water Supply Project - ENNDA,10000000,0,0,0,0,0,161,yes
 fy-2026-27-development-book-volume-1-1011-1083,1036,State Department for the ASALs and Regional Development,head,1036120200,Sololo Ramata Water Supply Project,10000000,0,0,0,0,0,161,yes
 fy-2026-27-development-book-volume-1-1011-1083,1036,State Department for the ASALs and Regional Development,head,1036120400,Pulunga Borehole - ENSDA,10000000,0,0,0,0,0,161,yes
-fy-2026-27-development-book-volume-1-1011-1083,1036,State Department for the ASALs and Regional Development,head,1036120500,Kiserian (Ereteti Village KJD) - ENSDA 141,10000000,0,0,0,0,0,161,yes
+fy-2026-27-development-book-volume-1-1011-1083,1036,State Department for the ASALs and Regional Development,head,1036120500,Kiserian (Ereteti Village KJD) - ENSDA,10000000,0,0,0,0,0,161,yes
 fy-2026-27-development-book-volume-1-1011-1083,1036,State Department for the ASALs and Regional Development,head,1036120600,Ololtoto Borehole - ENSDA,10000000,0,0,0,0,0,162,yes
 fy-2026-27-development-book-volume-1-1011-1083,1036,State Department for the ASALs and Regional Development,head,1036121000,St Celestino Nyangubo girls water project - ( LBDA),15000000,0,0,0,0,0,162,yes
 fy-2026-27-development-book-volume-1-1011-1083,1036,State Department for the ASALs and Regional Development,head,1036121100,St Francis Wiga girls water project - ( LBDA),15000000,0,0,0,0,0,162,yes
@@ -161,7 +161,7 @@ fy-2026-27-development-book-volume-1-1011-1083,1036,State Department for the ASA
 fy-2026-27-development-book-volume-1-1011-1083,1036,State Department for the ASALs and Regional Development,head,1036122000,Loyapat Surface Irrigation Scheme- KVDA,50000000,0,0,0,0,0,162,yes
 fy-2026-27-development-book-volume-1-1011-1083,1036,State Department for the ASALs and Regional Development,head,1036122100,Drilling and equipping of 11 water boreholes -KVDA,120000000,0,0,0,0,0,162,yes
 fy-2026-27-development-book-volume-1-1011-1083,1036,State Department for the ASALs and Regional Development,head,1036122200,"Construction of a water Pan in Lokakwan, Kibish-KVDA",20000000,0,0,0,0,0,162,yes
-fy-2026-27-development-book-volume-1-1011-1083,1036,State Department for the ASALs and Regional Development,head,1036122300,Climate Smart Integrated Pasture Production in Song'ot-KVDA 142,30000000,0,0,0,0,0,162,yes
+fy-2026-27-development-book-volume-1-1011-1083,1036,State Department for the ASALs and Regional Development,head,1036122300,Climate Smart Integrated Pasture Production in Song'ot-KVDA,30000000,0,0,0,0,0,162,yes
 fy-2026-27-development-book-volume-1-1011-1083,1036,State Department for the ASALs and Regional Development,head,1036122400,Construction of Napuu Farm Guest House-KVDA,30000000,0,0,0,0,0,163,yes
 fy-2026-27-development-book-volume-1-1011-1083,1036,State Department for the ASALs and Regional Development,head,1036122600,Construction of Chemaluk Water Project in Uasin Gishu - KVDA,0,26700000,0,26700000,0,0,163,yes
 fy-2026-27-development-book-volume-1-1011-1083,1036,State Department for the ASALs and Regional Development,head,1036122700,Community Lead Initiative - Climate Adaptation & Rights (CLICCAR),0,100000000,0,100000000,0,0,163,yes
@@ -179,7 +179,7 @@ fy-2026-27-development-book-volume-1-1011-1083,1053,State Department for Foreign
 fy-2026-27-development-book-volume-1-1011-1083,1053,State Department for Foreign Affairs,head,1053100900,Construction of chancery in Islamabad,35000000,0,0,0,0,0,235,yes
 fy-2026-27-development-book-volume-1-1011-1083,1053,State Department for Foreign Affairs,head,1053101100,Renovation of government owned properties in Kinshasa,120000000,150000000,0,150000000,150000000,120000000,235,yes
 fy-2026-27-development-book-volume-1-1011-1083,1053,State Department for Foreign Affairs,head,1053101200,Renovation of government owned properties in Addis Ababa,150000000,30000000,0,30000000,30000000,0,235,yes
-fy-2026-27-development-book-volume-1-1011-1083,1053,State Department for Foreign Affairs,head,1053101300,Renovation of government properties in New York 215,550000000,623200000,0,623200000,925000000,1380000000,235,yes
+fy-2026-27-development-book-volume-1-1011-1083,1053,State Department for Foreign Affairs,head,1053101300,Renovation of government properties in New York,550000000,623200000,0,623200000,925000000,1380000000,235,yes
 fy-2026-27-development-book-volume-1-1011-1083,1053,State Department for Foreign Affairs,head,1053101400,Renovation of government owned properties in Lusaka,170000000,100000000,0,100000000,195000000,215000000,236,yes
 fy-2026-27-development-book-volume-1-1011-1083,1053,State Department for Foreign Affairs,head,1053101500,Alterations of chancery and security enhancement in Kampala,10000000,100000000,0,100000000,0,0,236,yes
 fy-2026-27-development-book-volume-1-1011-1083,1053,State Department for Foreign Affairs,head,1053101700,Repairs of Embassy roof in Paris,35000000,50000000,0,50000000,50000000,0,236,yes
@@ -191,7 +191,7 @@ fy-2026-27-development-book-volume-1-1011-1083,1053,State Department for Foreign
 fy-2026-27-development-book-volume-1-1011-1083,1053,State Department for Foreign Affairs,head,1053103800,"Construction of Chancery, residence and fencing in Juba",0,120000000,0,120000000,45000000,65000000,236,yes
 fy-2026-27-development-book-volume-1-1011-1083,1053,State Department for Foreign Affairs,head,1053104200,Renovation of Embassy and Ambassador's residence in Beijing,5000000,30000000,0,30000000,10000000,15000000,236,yes
 fy-2026-27-development-book-volume-1-1011-1083,1053,State Department for Foreign Affairs,head,1053104300,Renovation of properties in Harare,10000000,20000000,0,20000000,50000000,55000000,236,yes
-fy-2026-27-development-book-volume-1-1011-1083,1053,State Department for Foreign Affairs,head,1053104400,Renovation of Embassy and Ambassador's residence in Riyadh 216,0,30000000,0,30000000,30000000,30000000,236,yes
+fy-2026-27-development-book-volume-1-1011-1083,1053,State Department for Foreign Affairs,head,1053104400,Renovation of Embassy and Ambassador's residence in Riyadh,0,30000000,0,30000000,30000000,30000000,236,yes
 fy-2026-27-development-book-volume-1-1011-1083,1053,State Department for Foreign Affairs,head,1053104700,ICT Infrastructure in Missions abroad,93100000,93100000,0,93100000,150000000,165000000,237,yes
 fy-2026-27-development-book-volume-1-1011-1083,1053,State Department for Foreign Affairs,head,1053105100,Construction of Ministry of Foreign Affairs Headquarters Building,100000000,100000000,0,100000000,340000000,500000000,237,yes
 fy-2026-27-development-book-volume-1-1011-1083,1053,State Department for Foreign Affairs,head,1053105200,Purchase of Chancery - London,550000000,0,0,0,0,0,237,yes
@@ -211,7 +211,7 @@ fy-2026-27-development-book-volume-1-1011-1083,1064,State Department for Technic
 fy-2026-27-development-book-volume-1-1011-1083,1064,State Department for Technical Vocational Education and Training,head,1064104200,Mukiria TTI,0,0,0,0,23000000,37000000,257,yes
 fy-2026-27-development-book-volume-1-1011-1083,1064,State Department for Technical Vocational Education and Training,head,1064104900,Ol'Lessos TTI,0,6370000,0,6370000,50000000,31973505,257,yes
 fy-2026-27-development-book-volume-1-1011-1083,1064,State Department for Technical Vocational Education and Training,head,1064105100,Rift Valley TTI,0,31850000,0,31850000,30000000,30947351,257,yes
-fy-2026-27-development-book-volume-1-1011-1083,1064,State Department for Technical Vocational Education and Training,head,1064105700,Wote TTI 237,0,20946248,0,20946248,0,73783999,257,yes
+fy-2026-27-development-book-volume-1-1011-1083,1064,State Department for Technical Vocational Education and Training,head,1064105700,Wote TTI,0,20946248,0,20946248,0,73783999,257,yes
 fy-2026-27-development-book-volume-1-1011-1083,1064,State Department for Technical Vocational Education and Training,head,1064106100,Gusii IT,0,19110000,0,19110000,30000000,20000000,258,yes
 fy-2026-27-development-book-volume-1-1011-1083,1064,State Department for Technical Vocational Education and Training,head,1064106300,Nyandarua IST,0,25480000,0,25480000,30000000,23080321,258,yes
 fy-2026-27-development-book-volume-1-1011-1083,1064,State Department for Technical Vocational Education and Training,head,1064107000,Sikri TTI for the Blind and Deaf,45000000,12740000,0,12740000,10000000,17500000,258,yes
@@ -223,7 +223,7 @@ fy-2026-27-development-book-volume-1-1011-1083,1064,State Department for Technic
 fy-2026-27-development-book-volume-1-1011-1083,1064,State Department for Technical Vocational Education and Training,head,1064108800,East Africa Skills Transformation and Reginal Integration,600000000,500000000,0,500000000,0,0,258,yes
 fy-2026-27-development-book-volume-1-1011-1083,1064,State Department for Technical Vocational Education and Training,head,1064109300,TVET Infrastructure Support,49000000,29108479,0,29108479,235000000,247827785,258,yes
 fy-2026-27-development-book-volume-1-1011-1083,1064,State Department for Technical Vocational Education and Training,head,1064109500,Promotion of Youth Employment and Vocational Training in Kenya I,18850000,909555000,900000000,9555000,0,0,258,yes
-fy-2026-27-development-book-volume-1-1011-1083,1064,State Department for Technical Vocational Education and Training,head,1064109600,"GoK-AfDB Technical, Vocational Education Training & Entrepreneurship 238",66250000,1544590000,1500000000,44590000,500000000,0,258,yes
+fy-2026-27-development-book-volume-1-1011-1083,1064,State Department for Technical Vocational Education and Training,head,1064109600,"GoK-AfDB Technical, Vocational Education Training & Entrepreneurship",66250000,1544590000,1500000000,44590000,500000000,0,258,yes
 fy-2026-27-development-book-volume-1-1011-1083,1064,State Department for Technical Vocational Education and Training,head,1064109700,Promotion of Youth Employment and Vocational Training in Kenya II,0,600000000,600000000,0,500000000,500000000,259,yes
 fy-2026-27-development-book-volume-1-1011-1083,1064,State Department for Technical Vocational Education and Training,head,1064109900,Public Participation Projects,24300990,31850000,0,31850000,104800000,222600000,259,yes
 fy-2026-27-development-book-volume-1-1011-1083,1064,State Department for Technical Vocational Education and Training,head,1064110000,Promotion of Youth Employment thro' Scholarships Ph 2-Wings to Fly IV,0,300000000,300000000,0,604000000,1000000000,259,yes
@@ -235,7 +235,7 @@ fy-2026-27-development-book-volume-1-1011-1083,1064,State Department for Technic
 fy-2026-27-development-book-volume-1-1011-1083,1064,State Department for Technical Vocational Education and Training,head,1064112000,Kitui East TVET,0,6370000,0,6370000,5000000,5000000,259,yes
 fy-2026-27-development-book-volume-1-1011-1083,1064,State Department for Technical Vocational Education and Training,head,1064112200,Nyakeiboreire TVET,0,5734205,0,5734205,15000000,52000000,259,yes
 fy-2026-27-development-book-volume-1-1011-1083,1064,State Department for Technical Vocational Education and Training,head,1064112300,Molo TVET,10000000,6370000,0,6370000,10000000,35000000,259,yes
-fy-2026-27-development-book-volume-1-1011-1083,1064,State Department for Technical Vocational Education and Training,head,1064112400,AU Skills Initiative for Africa(SIFA) 239,10000000,56370000,50000000,6370000,502000000,247500000,259,yes
+fy-2026-27-development-book-volume-1-1011-1083,1064,State Department for Technical Vocational Education and Training,head,1064112400,AU Skills Initiative for Africa(SIFA),10000000,56370000,50000000,6370000,502000000,247500000,259,yes
 fy-2026-27-development-book-volume-1-1011-1083,1064,State Department for Technical Vocational Education and Training,head,1064112500,Kenya School of TVET Infrastructure Improvement,60000000,25480000,0,25480000,40000000,40000000,260,yes
 fy-2026-27-development-book-volume-1-1011-1083,1064,State Department for Technical Vocational Education and Training,head,1064112600,Infrastructure Support to TTIs,770000000,521050111,0,521050111,1144500442,1310451774,260,yes
 fy-2026-27-development-book-volume-1-1011-1083,1064,State Department for Technical Vocational Education and Training,head,1064112700,Infrastructure Support to National Polytechnics,260000000,194458719,0,194458719,273000000,176716296,260,yes
@@ -256,7 +256,7 @@ fy-2026-27-development-book-volume-1-1011-1083,1065,State Department for Higher 
 fy-2026-27-development-book-volume-1-1011-1083,1065,State Department for Higher Education,head,1065101100,Masinde Muliro University,15000000,80000000,0,80000000,100000000,266000000,337,yes
 fy-2026-27-development-book-volume-1-1011-1083,1065,State Department for Higher Education,head,1065101200,Koitalel Arap Samoei University College,495000000,100000000,0,100000000,200000000,200000000,337,yes
 fy-2026-27-development-book-volume-1-1011-1083,1065,State Department for Higher Education,head,1065101300,Gatundu University College,40000000,100000000,0,100000000,200000000,200000000,337,yes
-fy-2026-27-development-book-volume-1-1011-1083,1065,State Department for Higher Education,head,1065101400,Bomet University College 317,40000000,100000000,0,100000000,100000000,200000000,337,yes
+fy-2026-27-development-book-volume-1-1011-1083,1065,State Department for Higher Education,head,1065101400,Bomet University College,40000000,100000000,0,100000000,100000000,200000000,337,yes
 fy-2026-27-development-book-volume-1-1011-1083,1065,State Department for Higher Education,head,1065101500,Tom Mboya University,40000000,100000000,0,100000000,100000000,300000000,338,yes
 fy-2026-27-development-book-volume-1-1011-1083,1065,State Department for Higher Education,head,1065101600,Alupe University,40000000,100000000,0,100000000,0,0,338,yes
 fy-2026-27-development-book-volume-1-1011-1083,1065,State Department for Higher Education,head,1065101700,Kaimosi University,25000000,100000000,0,100000000,100000000,300000000,338,yes
@@ -268,7 +268,7 @@ fy-2026-27-development-book-volume-1-1011-1083,1065,State Department for Higher 
 fy-2026-27-development-book-volume-1-1011-1083,1065,State Department for Higher Education,head,1065102300,Laikipia University of Technology,23000000,107000000,0,107000000,97000000,80000000,338,yes
 fy-2026-27-development-book-volume-1-1011-1083,1065,State Department for Higher Education,head,1065102400,Meru University of Science and Technology,32000000,130000000,0,130000000,100000000,414000000,338,yes
 fy-2026-27-development-book-volume-1-1011-1083,1065,State Department for Higher Education,head,1065102500,Multimedia University of Kenya,55000000,58000000,0,58000000,0,0,338,yes
-fy-2026-27-development-book-volume-1-1011-1083,1065,State Department for Higher Education,head,1065102600,Maasai Mara University 318,15000000,80000000,0,80000000,100000000,280000000,338,yes
+fy-2026-27-development-book-volume-1-1011-1083,1065,State Department for Higher Education,head,1065102600,Maasai Mara University,15000000,80000000,0,80000000,100000000,280000000,338,yes
 fy-2026-27-development-book-volume-1-1011-1083,1065,State Department for Higher Education,head,1065102700,University of Kabianga,15000000,80000000,0,80000000,200000000,150000000,339,yes
 fy-2026-27-development-book-volume-1-1011-1083,1065,State Department for Higher Education,head,1065102800,University of Eldoret,200000000,0,0,0,0,0,339,yes
 fy-2026-27-development-book-volume-1-1011-1083,1065,State Department for Higher Education,head,1065102900,Karatina University,22516443,92000000,0,92000000,0,0,339,yes
@@ -280,7 +280,7 @@ fy-2026-27-development-book-volume-1-1011-1083,1065,State Department for Higher 
 fy-2026-27-development-book-volume-1-1011-1083,1065,State Department for Higher Education,head,1065103500,Garissa University,146000000,177154541,0,177154541,242000000,150000000,339,yes
 fy-2026-27-development-book-volume-1-1011-1083,1065,State Department for Higher Education,head,1065103600,Kirinyaga University,20000000,80000000,0,80000000,200000000,153000000,339,yes
 fy-2026-27-development-book-volume-1-1011-1083,1065,State Department for Higher Education,head,1065103700,Dedan Kimathi University of Technology,20000000,110000000,0,110000000,38000000,0,339,yes
-fy-2026-27-development-book-volume-1-1011-1083,1065,State Department for Higher Education,head,1065103800,Taita Taveta University 319,20000000,90000000,0,90000000,232000000,355000000,339,yes
+fy-2026-27-development-book-volume-1-1011-1083,1065,State Department for Higher Education,head,1065103800,Taita Taveta University,20000000,90000000,0,90000000,232000000,355000000,339,yes
 fy-2026-27-development-book-volume-1-1011-1083,1065,State Department for Higher Education,head,1065104200,Tharaka University College,45000000,100000000,0,100000000,250000000,574000000,340,yes
 fy-2026-27-development-book-volume-1-1011-1083,1065,State Department for Higher Education,head,1065104400,Mariene Research Institute,45000000,50000000,0,50000000,271000000,811104100,340,yes
 fy-2026-27-development-book-volume-1-1011-1083,1065,State Department for Higher Education,head,1065104600,Turkana University College,45000000,100000000,0,100000000,100000000,377000000,340,yes
@@ -302,7 +302,7 @@ fy-2026-27-development-book-volume-1-1011-1083,1066,State Department for Basic E
 fy-2026-27-development-book-volume-1-1011-1083,1066,State Department for Basic Education,head,1066102800,Establishment of Lugari Diploma Teachers Training College,0,100000000,0,100000000,78000000,0,383,yes
 fy-2026-27-development-book-volume-1-1011-1083,1066,State Department for Basic Education,head,1066102900,Establishment of Kibabii Diploma Teachers Training College,0,100000000,0,100000000,100000000,109000000,383,yes
 fy-2026-27-development-book-volume-1-1011-1083,1066,State Department for Basic Education,head,1066103100,Infrastructure Improvement-Kagumo Diploma Teachers Training College,0,50000000,0,50000000,100000000,166000000,383,yes
-fy-2026-27-development-book-volume-1-1011-1083,1066,State Department for Basic Education,head,1066103600,Construction of Education Resource Centre at KICD-Phase I 363,0,153000000,0,153000000,300000000,300000000,383,yes
+fy-2026-27-development-book-volume-1-1011-1083,1066,State Department for Basic Education,head,1066103600,Construction of Education Resource Centre at KICD-Phase I,0,153000000,0,153000000,300000000,300000000,383,yes
 fy-2026-27-development-book-volume-1-1011-1083,1066,State Department for Basic Education,head,1066104700,Procurement of Digital Machines to Print OMR Forms,0,147000000,0,147000000,0,0,384,yes
 fy-2026-27-development-book-volume-1-1011-1083,1066,State Department for Basic Education,head,1066105000,ICT Infrastructure to Support Competency Based Assessment - BETA,25000000,25000000,0,25000000,40000000,87000000,384,yes
 fy-2026-27-development-book-volume-1-1011-1083,1066,State Department for Basic Education,head,1066105100,Promotion of Youth Employment thro' Scholarships Ph 2-Wings to Fly IV,0,120000000,120000000,0,120000000,120000000,384,yes
@@ -314,7 +314,7 @@ fy-2026-27-development-book-volume-1-1011-1083,1066,State Department for Basic E
 fy-2026-27-development-book-volume-1-1011-1083,1066,State Department for Basic Education,head,1066105900,Primary and Secondary School Infrastructure,50000000,0,0,0,0,0,384,yes
 fy-2026-27-development-book-volume-1-1011-1083,1066,State Department for Basic Education,head,1066106000,Kenya Secondary Education Equity Improvement Program,4000000000,4654000000,0,4654000000,3316000000,4083000000,384,yes
 fy-2026-27-development-book-volume-1-1011-1083,1066,State Department for Basic Education,head,1066106100,Primary & Secondary Schools Infrastructure Improvement II,85000000,0,0,0,0,0,384,yes
-fy-2026-27-development-book-volume-1-1011-1083,1066,State Department for Basic Education,head,1066106200,Primary & Secondary Schools Infrastructure Improvement III 364,450170000,0,0,0,0,0,384,yes
+fy-2026-27-development-book-volume-1-1011-1083,1066,State Department for Basic Education,head,1066106200,Primary & Secondary Schools Infrastructure Improvement III,450170000,0,0,0,0,0,384,yes
 fy-2026-27-development-book-volume-1-1011-1083,1066,State Department for Basic Education,head,1066106300,Infrastructure Support to Primary Special Needs Schools,100000000,0,0,0,0,0,385,yes
 fy-2026-27-development-book-volume-1-1011-1083,1066,State Department for Basic Education,head,1066106400,Infrastructure Support to Teachers' Training Colleges,100000000,0,0,0,0,0,385,yes
 fy-2026-27-development-book-volume-1-1011-1083,1066,State Department for Basic Education,head,1066106500,Construction of Education Assessment Resource Centres (EARCs),50000000,0,0,0,0,0,385,yes
@@ -334,7 +334,7 @@ fy-2026-27-development-book-volume-1-1011-1083,1071,The National Treasury,head,1
 fy-2026-27-development-book-volume-1-1011-1083,1071,The National Treasury,head,1071104400,Contingency Fund Transfers,1800000000,2000000000,0,2000000000,5000000000,5000000000,509,yes
 fy-2026-27-development-book-volume-1-1011-1083,1071,The National Treasury,head,1071104500,Equalisation Fund Transfers - BETA,7507170425,9602170425,0,9602170425,18602200000,22602200000,509,yes
 fy-2026-27-development-book-volume-1-1011-1083,1071,The National Treasury,head,1071105400,Treasury-Bima-Herufi Security System: Car Scanners Fire Systems CCTV,13000000,0,0,0,0,0,509,yes
-fy-2026-27-development-book-volume-1-1011-1083,1071,The National Treasury,head,1071106400,Development of market openness gauge system 489,0,87000000,0,87000000,0,0,509,yes
+fy-2026-27-development-book-volume-1-1011-1083,1071,The National Treasury,head,1071106400,Development of market openness gauge system,0,87000000,0,87000000,0,0,509,yes
 fy-2026-27-development-book-volume-1-1011-1083,1071,The National Treasury,head,1071106600,Strategic Response to Public Initiatives,0,5000000000,0,5000000000,2500000000,2500000000,510,yes
 fy-2026-27-development-book-volume-1-1011-1083,1071,The National Treasury,head,1071108100,Kenya Affordable Housing Project - BETA,1875792040,0,0,0,0,0,510,yes
 fy-2026-27-development-book-volume-1-1011-1083,1071,The National Treasury,head,1071108200,Kenya Financing Locally Led Climate Action Programme (FLLCoA) BETA,9200000000,8899750000,0,8899750000,0,0,510,yes
@@ -345,9 +345,9 @@ fy-2026-27-development-book-volume-1-1011-1083,1071,The National Treasury,head,1
 fy-2026-27-development-book-volume-1-1011-1083,1071,The National Treasury,head,1071110800,National Treasury Capacity Strenghtening Project,1000000,0,0,0,24700000,24700000,510,yes
 fy-2026-27-development-book-volume-1-1011-1083,1071,The National Treasury,head,1071111700,Supporting Access to Finance & Enterprise Recovery (SAFER) - BETA,1500000000,5386000000,150000000,5236000000,0,0,510,yes
 fy-2026-27-development-book-volume-1-1011-1083,1071,The National Treasury,head,1071113300,Rural Kenya Financial Inclusion Facility (RK-FINFA) - BETA,1077000000,1145000000,0,1145000000,332300000,277300000,510,yes
-fy-2026-27-development-book-volume-1-1011-1083,1071,The National Treasury,head,1071113600,Special Global Fund - TB NFM 4,534325494,1262894300,887921630,374972670,1599100001,552600000,510,yes
-fy-2026-27-development-book-volume-1-1011-1083,1071,The National Treasury,head,1071113700,Special Global Fund - HIV NFM 4 490,1794043756,8828699000,6440964783,2387734217,9747900000,4469600000,510,yes
-fy-2026-27-development-book-volume-1-1011-1083,1071,The National Treasury,head,1071113800,Special Global Fund - Malaria NFM 4,602892553,2278500000,1622964335,655535665,2276599999,666400000,511,yes
+fy-2026-27-development-book-volume-1-1011-1083,1071,The National Treasury,head,1071113600,Special Global Fund - TB NFM,534325494,1262894300,887921630,374972670,1599100001,552600000,510,yes
+fy-2026-27-development-book-volume-1-1011-1083,1071,The National Treasury,head,1071113700,Special Global Fund - HIV NFM,1794043756,8828699000,6440964783,2387734217,9747900000,4469600000,510,yes
+fy-2026-27-development-book-volume-1-1011-1083,1071,The National Treasury,head,1071113800,Special Global Fund - Malaria NFM,602892553,2278500000,1622964335,655535665,2276599999,666400000,511,yes
 fy-2026-27-development-book-volume-1-1011-1083,1071,The National Treasury,head,1071114000,Disaster Recovery & Upgrade of ICT Infrastructure-KONZA Technopolis,448000000,0,0,0,0,0,511,yes
 fy-2026-27-development-book-volume-1-1011-1083,1071,The National Treasury,head,1071114100,Purchase & Refurbishment of Jubilee Insurance House,1400000000,1160000000,0,1160000000,0,0,511,yes
 fy-2026-27-development-book-volume-1-1011-1083,1071,The National Treasury,head,1071114200,Institutional Support to the National Treasury,0,40000000,40000000,0,40000000,40000000,511,yes
@@ -363,7 +363,7 @@ fy-2026-27-development-book-volume-1-1011-1083,1072,State Department for Economi
 fy-2026-27-development-book-volume-1-1011-1083,1072,State Department for Economic Planning,head,1072108700,Making Every Woman and Girl Count,22700000,12000000,0,12000000,22700000,22700000,535,yes
 fy-2026-27-development-book-volume-1-1011-1083,1072,State Department for Economic Planning,head,1072109200,East African Regional Statistics Programme for Results - BETA,2885548247,341000000,0,341000000,1986700000,1860400000,535,yes
 fy-2026-27-development-book-volume-1-1011-1083,1072,State Department for Economic Planning,head,1072109400,Institutional Support to KNBS,0,50000000,50000000,0,0,0,535,yes
-fy-2026-27-development-book-volume-1-1011-1083,1072,State Department for Economic Planning,head,1072109500,Purchase of Building - Headquarters for KIPPRA 515,180000000,0,0,0,0,0,535,yes
+fy-2026-27-development-book-volume-1-1011-1083,1072,State Department for Economic Planning,head,1072109500,Purchase of Building - Headquarters for KIPPRA,180000000,0,0,0,0,0,535,yes
 fy-2026-27-development-book-volume-1-1011-1083,1072,State Department for Economic Planning,vote_total,,TOTAL FOR VOTE,62200963082,62526900000,50000000,62476900000,65542600000,65346600000,536,yes
 fy-2026-27-development-book-volume-1-1011-1083,1073,State Department for Public Investments and Assets Management,head,1073100100,"Upgrading, Integration of Pensions Management Information Systems",36000000,102700000,0,102700000,102700000,102700000,545,yes
 fy-2026-27-development-book-volume-1-1011-1083,1073,State Department for Public Investments and Assets Management,head,1073100200,Implementation of e-Procurement System for the Govt. of Kenya- BETA,700000000,350000000,0,350000000,832600000,959800000,545,yes
@@ -372,14 +372,14 @@ fy-2026-27-development-book-volume-1-1011-1083,1073,State Department for Public 
 fy-2026-27-development-book-volume-1-1011-1083,1082,State Department for Medical Services,head,1082100100,KNH Burns and Pediatrics Centre,300000000,487000000,415000000,72000000,0,0,549,yes
 fy-2026-27-development-book-volume-1-1011-1083,1082,State Department for Medical Services,head,1082100200,National Commodities Storage Center (KEMSA),0,120000000,0,120000000,120000000,180000000,549,yes
 fy-2026-27-development-book-volume-1-1011-1083,1082,State Department for Medical Services,head,1082100300,East Africa's Centre of Excellence for Skills & Tertiary Education,215000000,0,0,0,0,0,549,yes
-fy-2026-27-development-book-volume-1-1011-1083,1082,State Department for Medical Services,head,1082100500,Managed Equipment Service-Hire of Medical Equipment for 98 Hospital,380000000,0,0,0,0,0,549,yes
+fy-2026-27-development-book-volume-1-1011-1083,1082,State Department for Medical Services,head,1082100500,Managed Equipment Service-Hire of Medical Equipment for Hospital,380000000,0,0,0,0,0,549,yes
 fy-2026-27-development-book-volume-1-1011-1083,1082,State Department for Medical Services,head,1082100700,Renovation/Equipping Buildings-Mathari Teaching & Referral Hospital,100000000,200000000,0,200000000,401450000,617300000,549,yes
 fy-2026-27-development-book-volume-1-1011-1083,1082,State Department for Medical Services,head,1082100800,Renovation & Equipping of National Spinal Injury Hospital,0,150105635,0,150105635,600000000,700000000,549,yes
 fy-2026-27-development-book-volume-1-1011-1083,1082,State Department for Medical Services,head,1082100900,Procurement of Equipment at the National Blood Transfusion Services,900000000,600000000,0,600000000,1000000000,1200000000,549,yes
 fy-2026-27-development-book-volume-1-1011-1083,1082,State Department for Medical Services,head,1082101100,Cancer & Chronic Disease Management Centre MTRH,0,72000000,0,72000000,75000000,85000000,549,yes
 fy-2026-27-development-book-volume-1-1011-1083,1082,State Department for Medical Services,head,1082101200,Construction and Equipping Children Hospital- MTRH,0,0,0,0,50000000,50000000,549,yes
 fy-2026-27-development-book-volume-1-1011-1083,1082,State Department for Medical Services,head,1082101300,Equipping Maternity Unit (Mother & Baby Hospital),0,0,0,0,70000000,50000000,549,yes
-fy-2026-27-development-book-volume-1-1011-1083,1082,State Department for Medical Services,head,1082101400,Expansion and Equipping of ICU-MTRH 529,0,0,0,0,75000000,30000000,549,yes
+fy-2026-27-development-book-volume-1-1011-1083,1082,State Department for Medical Services,head,1082101400,Expansion and Equipping of ICU-MTRH,0,0,0,0,75000000,30000000,549,yes
 fy-2026-27-development-book-volume-1-1011-1083,1082,State Department for Medical Services,head,1082101500,Construction and upgrading of KEMRI Laboratories,160000000,145000000,0,145000000,300000000,400000000,550,yes
 fy-2026-27-development-book-volume-1-1011-1083,1082,State Department for Medical Services,head,1082101700,Construction of a Cancer Centre at Kisii Level 5 Hospital,0,1016000000,980000000,36000000,1080000000,0,550,yes
 fy-2026-27-development-book-volume-1-1011-1083,1082,State Department for Medical Services,head,1082101800,Strengthening of Cancer Management at KNH,100000000,300000000,0,300000000,500000000,1000000000,550,yes
@@ -391,7 +391,7 @@ fy-2026-27-development-book-volume-1-1011-1083,1082,State Department for Medical
 fy-2026-27-development-book-volume-1-1011-1083,1082,State Department for Medical Services,head,1082102600,Construction and Equipping of Children Hospital at KUTRRH,0,0,0,0,50000000,300000000,550,yes
 fy-2026-27-development-book-volume-1-1011-1083,1082,State Department for Medical Services,head,1082103000,Digital Health Platform,0,0,0,0,950000000,400000000,550,yes
 fy-2026-27-development-book-volume-1-1011-1083,1082,State Department for Medical Services,head,1082103100,Procurement of Family Planning & Reproductive Health Commodities,520000000,500000000,0,500000000,700000000,1200000000,550,yes
-fy-2026-27-development-book-volume-1-1011-1083,1082,State Department for Medical Services,head,1082103800,Vaccines Programme 530,4627000000,6360000000,1760000000,4600000000,6360000000,5860000000,550,yes
+fy-2026-27-development-book-volume-1-1011-1083,1082,State Department for Medical Services,head,1082103800,Vaccines Programme,4627000000,6360000000,1760000000,4600000000,6360000000,5860000000,550,yes
 fy-2026-27-development-book-volume-1-1011-1083,1082,State Department for Medical Services,head,1082103900,Supply of Medical Equipmnt & Fight for Maternal & Infant Mortality,0,100000000,100000000,0,100000000,50000000,551,yes
 fy-2026-27-development-book-volume-1-1011-1083,1082,State Department for Medical Services,head,1082104300,Primary Health Care in the Devolved Context,578000000,36400000,20000000,16400000,0,0,551,yes
 fy-2026-27-development-book-volume-1-1011-1083,1082,State Department for Medical Services,head,1082104400,Human Vaccine Production - BETA,100000000,244000000,0,244000000,300000000,0,551,yes
@@ -403,7 +403,7 @@ fy-2026-27-development-book-volume-1-1011-1083,1082,State Department for Medical
 fy-2026-27-development-book-volume-1-1011-1083,1082,State Department for Medical Services,head,1082105100,Upgrading & Equipping of Maternal & New Born Ward -Endebess Hospital,70000000,0,0,0,50000000,100000000,551,yes
 fy-2026-27-development-book-volume-1-1011-1083,1082,State Department for Medical Services,head,1082105200,Construction of Private Wing Inpatient Complex - MTRH,0,0,0,0,50000000,150000000,551,yes
 fy-2026-27-development-book-volume-1-1011-1083,1082,State Department for Medical Services,head,1082105300,Procurement of Specialized Medical Equipment - MTRH,0,0,0,0,50000000,150000000,551,yes
-fy-2026-27-development-book-volume-1-1011-1083,1082,State Department for Medical Services,head,1082105400,Supply of Cyflow CD4 Counter Instruments 531,50000000,0,0,0,0,0,551,yes
+fy-2026-27-development-book-volume-1-1011-1083,1082,State Department for Medical Services,head,1082105400,Supply of Cyflow CD4 Counter Instruments,50000000,0,0,0,0,0,551,yes
 fy-2026-27-development-book-volume-1-1011-1083,1082,State Department for Medical Services,head,1082105500,Supply of Medical Supplies and Commodities - Vulcan Pending Bill,140000000,0,0,0,0,0,552,yes
 fy-2026-27-development-book-volume-1-1011-1083,1082,State Department for Medical Services,head,1082105600,Upgrading and Equiping of Lusigetti Hospital Kikuyu,48000000,0,0,0,0,200000000,552,yes
 fy-2026-27-development-book-volume-1-1011-1083,1082,State Department for Medical Services,head,1082106000,Acquisition of Speciliazed Medical Equipment CHP,500000000,700000000,0,700000000,1200000000,1200000000,552,yes
@@ -415,7 +415,7 @@ fy-2026-27-development-book-volume-1-1011-1083,1082,State Department for Medical
 fy-2026-27-development-book-volume-1-1011-1083,1082,State Department for Medical Services,head,1082107800,Construction and Equipping of Level 4 Hospitals,425000000,0,0,0,0,0,552,yes
 fy-2026-27-development-book-volume-1-1011-1083,1082,State Department for Medical Services,head,1082108600,Infrastructure Upgrade-Jaramogi Oginga Odinga Teaching & Ref. Hos,230000000,190000000,0,190000000,387000000,845000000,552,yes
 fy-2026-27-development-book-volume-1-1011-1083,1082,State Department for Medical Services,head,1082108700,Completion of Radiotherapy Centre - JOOTRH,400000000,0,0,0,50000000,100000000,552,yes
-fy-2026-27-development-book-volume-1-1011-1083,1082,State Department for Medical Services,head,1082108800,"New 2,000 Bed Multi-Specialty MTRH 532",2000000000,2000000000,0,2000000000,0,0,552,yes
+fy-2026-27-development-book-volume-1-1011-1083,1082,State Department for Medical Services,head,1082108800,"New 2,000 Bed Multi-Specialty MTRH",2000000000,2000000000,0,2000000000,0,0,552,yes
 fy-2026-27-development-book-volume-1-1011-1083,1082,State Department for Medical Services,head,1082108900,Mwai Kibaki Referral Hospital - Renovation & Infrastructure Upgrade,50000000,150000000,0,150000000,50000000,0,553,yes
 fy-2026-27-development-book-volume-1-1011-1083,1082,State Department for Medical Services,head,1082109000,National Equipment Service Program (NESP),92000000,0,0,0,0,0,553,yes
 fy-2026-27-development-book-volume-1-1011-1083,1082,State Department for Medical Services,head,1082109100,Monitoring & Evaluation of BETA Projects,0,50000000,0,50000000,50000000,50000000,553,yes
@@ -430,7 +430,7 @@ fy-2026-27-development-book-volume-1-1011-1083,1083,State Department for Public 
 fy-2026-27-development-book-volume-1-1011-1083,1083,State Department for Public Health and Professional Standards,head,1083102500,Construction of Health Centres,50000000,0,0,0,0,0,600,yes
 fy-2026-27-development-book-volume-1-1011-1083,1083,State Department for Public Health and Professional Standards,head,1083102600,Snake Anti-venom Processing Plant Facility,400000000,300000000,0,300000000,200000000,400000000,600,yes
 fy-2026-27-development-book-volume-1-1011-1083,1083,State Department for Public Health and Professional Standards,head,1083102700,Central Radioactive Waste Processing Facilities,0,107690000,0,107690000,110000000,152000000,600,yes
-fy-2026-27-development-book-volume-1-1011-1083,1083,State Department for Public Health and Professional Standards,head,1083102800,Public Participation Projects 580,85500000,10000000,0,10000000,0,0,600,yes
+fy-2026-27-development-book-volume-1-1011-1083,1083,State Department for Public Health and Professional Standards,head,1083102800,Public Participation Projects,85500000,10000000,0,10000000,0,0,600,yes
 fy-2026-27-development-book-volume-1-1011-1083,1083,State Department for Public Health and Professional Standards,head,1083102900,Building Resilience and Responsive Health System Project,75000000,4773000000,1296200000,3476800000,8783630000,7423980000,601,yes
 fy-2026-27-development-book-volume-1-1011-1083,1083,State Department for Public Health and Professional Standards,head,1083103000,Special Global Fund Malaria Grant-NFM4,948897958,1850000000,0,1850000000,1100000000,1500000000,601,yes
 fy-2026-27-development-book-volume-1-1011-1083,1083,State Department for Public Health and Professional Standards,head,1083103100,Special Global Fund TB Grant-NFM4,406793809,649000000,0,649000000,594000000,794000000,601,yes

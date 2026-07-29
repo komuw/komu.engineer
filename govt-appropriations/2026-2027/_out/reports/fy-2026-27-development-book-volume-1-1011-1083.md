@@ -11,3 +11,9 @@
 
 ## cross_check_fm1_vs_summary
 - checks: 20  passed: 20  failed: 0  pass-rate: 100.00%
+
+## DEV_TABLE_III
+- checks: 1722  passed: 1722  failed: 0  pass-rate: 100.00%
+
+## DEV_TABLE_II
+- checks: 1915  passed: 1915  failed: 0  pass-rate: 100.00%

@@ -11,3 +11,13 @@
 
 ## cross_check_fm1_vs_summary
 - checks: 6  passed: 6  failed: 0  pass-rate: 100.00%
+
+## DEV_TABLE_III
+- checks: 3187  passed: 3186  failed: 1  pass-rate: 99.97%
+
+| check | scope | detail |
+|---|---|---|
+| parse | vote 1091 | head 1091182800: sum(project nets)!=head net |
+
+## DEV_TABLE_II
+- checks: 3214  passed: 3214  failed: 0  pass-rate: 100.00%
