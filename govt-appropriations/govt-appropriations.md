@@ -1,4 +1,7 @@
-A few caveats;  
+In this blogpost I'm going to propose specific ways in which Kenya can reduce government expenditure.   
+
+A few caveats;   
+- This presumes that we do need to reduce government expenditure. If you think we shouldn't, this is probably not the blogpost for you.    
 - This analysis is done based on the budget appropriations books as presented on Kenya's national treasury website(https://www.treasury.go.ke/index.php/budget-books) as of 29th july 2026. Those books might not yet contain any ammendments that are made in parliament.    
 - In my analysis I either cut out a whole budget item or I leave it as is.  
 In other words, I do not go into the details of trying to reduce certain budget allocations.  
@@ -9,12 +12,9 @@ c) Reduce the allocation.
 In this article I'll always chose either option (a) or (b); I never choose (c). In other words this article is about things that I would tentatively eliminate from the budget(appropriations bill) rather than things that I would reduce/amend.  
 - This are my opinions and I have no doubt you have yours that differ from mine. That's fine.   
 
-TODO: look at the various tourism regulators(tourism board, etc)  
 
-A. https://www.treasury.go.ke/index.php/budget-books  
-B. FY-2025-26-Development-Budget-Book-Vol.-1-1011-1083.pdf  
-
-Suspicious govt departments:  
+### Suspicious government departments/offices/programmes:       
+These are the ones that I think we can look at if we want to reduce expenditure.         
 1. Office of the President  
    1. Government Printing Services  KES 944,596,015  
       Abolish the goverment printer(goverment press aka GP); https://www.governmentpress.go.ke/background and replace it with a "Kenya Gazette website".  
@@ -321,8 +321,9 @@ Suspicious govt departments:
     Since we will abolish CDF, then this specific sub programme in the auditor general's office will no longer need funding. It can be funded for one extra year just to audit the last CDF's budget but nothing after that.     
 
 
-
-TODO:  
+### Some more things to look at;    
+TODO:    
+- look at the various tourism regulators(tourism board, etc)    
 - Talk about reducing goverment spening by 6% of gdp.  
 - Talk about reducing govt debt cost by ~30%.  
   This will involve creating a voluntary debt exchange program. Kenya debt cost for 2025/26 is kes 1.9t. This includes about kes 800b in domestic debt redemptions and 400b of domestic debt interest payments. The rest are external.  
@@ -354,8 +355,10 @@ TODO: where is the provincial adminstration? Can we remove it?
 TODO: where is fuel development levy(road development levy) in the budget/appropriations books? (maybe `Transfer of receipts` in  the `Program-Based-Budget-Book`??)  
 TODO: search kenha/kura/KeRRA/krb  
 
-
-There are about 5 books/pdfs per year:  
+### How to analyze kenya buget books.    
+- Get them from https://www.treasury.go.ke/index.php/budget-books     
+- Also utilize https://openbudget.or.ke/  
+- There are about 5 books/pdfs per year:  
 1. Program-Based-Budget-Book  
 2. Development-Budget-Book-Vol-1  
 3. Development-Budget-Book-Vol-2  
