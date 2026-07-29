@@ -7,6 +7,7 @@ a) Leave the allocation as is.
 b) Cut the whole allocation.  
 c) Reduce the allocation.  
 In this article I'll always chose either option (a) or (b); I never choose (c). In other words this article is about things that I would tentatively eliminate from the budget(appropriations bill) rather than things that I would reduce/amend.  
+- This are my opinions and I have no doubt you have yours that differ from mine. That's fine.   
 
 TODO: look at the various tourism regulators(tourism board, etc)  
 
@@ -112,70 +113,79 @@ Suspicious govt departments:
 15. State Department for Trade  
     Created by executive order 1 of 2023.  
     1. Sub-programme: Export Trade Development, Promotion and National Branding KES 620,817,000  
-       Facilitate 10 firms to export for the first time, participate in trade promotions, brand 800 products with `made in kenya` mark of identity, do 2 global marketing campaigns.  
+       Some of its KPI are: Facilitate 10 firms to export for the first time, participate in trade promotions, brand 800 products with `made in kenya` mark of identity, do 2 global marketing campaigns.  
        As an example, any Kenyan product should be able to download and affix the `made in kenya` mark of identity without needing any ministry facilitation.  
     2. Sub-programme: Enabling Environment for Business Growth KES 68,692,871  
-       create a `kenya trade development bill`, revise national trade policy, "capacity build 100 county employees on trade matters"  
+       Some of its KPI are: Create a `kenya trade development bill`, revise national trade policy, "capacity build 100 county employees on trade matters"  
     3. Sub-programme: Development and Promotion of BETA Priorities Value Chains KES 88,418,331  
-       create ecommerce policy, conduct 8 training sessions for exporters of fresh produce, develop a digital services export strategy.  
+       Some of its KPI are: create ecommerce policy, conduct 8 training sessions for exporters of fresh produce, develop a digital services export strategy.  
     4. Kenya National Trading Corporation (KNTC) KES 1,576,590,000  
        The actual cost saving is KES 0 because according to the budget documents, the corporation has an expenditure of kes 1.5b and an equal amount in appropriations-in-aid.  
        Mission: To ensure that KNTC plays its rightful role as a Strategic National Asset that secures price stabilization of essential food items and consumer goods(https://kntc.go.ke/)  
-       procure 7800 tonnes of maize, distribute 7400 tonnes of maize.  
+       Some of its KPI are: procure 7800 tonnes of maize, distribute 7400 tonnes of maize.  
        KNTC has not done well in its mission of stabilizing prices and I also think doing so is a futile process. Also the constitution gives CBK(central bank of kenya) that mandate of "promoting price stability"(https://new.kenyalaw.org/akn/ke/act/2010/constitution/eng@2010-09-03#chp_TWELVE__part_7__sec_231); so KNTC should get out of their way.          
        The one thing it has done well though is losing money through corrupt ways like the recent KES 6billion oil scandal(https://www.citizen.digital/news/oil-scandal-kntc-hard-pressed-to-explain-losing-ksh6-billion-taxpayers-money-n350965)  
 16. State Department for Industry  
     Sub-programme: Industrial Development Promotion KES 5,594,154,233  
     hold 2 inter-govt consultative forums, establish 12 policy reforms, created 12 SME profiles, create 500 jobs under integrated agro industrial parks, establish/operationalize 18 County Aggregated Industrial Parks  
 17. State Department for Tourism  
-    sub-programme: Destination Marketing(kenya tourism board) KES 402,888,000  
-      It's mandate is to develop, implement and co-ordinate a National Tourism marketing strategy(https://ktb.go.ke/).  
-      I think this is a service that kenya can, subjectively, do without. Individual sector players(hotels, resorts, etc) can market their services globally on their own. These players can also self-organize and do promotions jointly if they so wish.  
-    sub-programme: Tourism Promotion (1,090,848,000 - 390,000,000) == KES 700,848,000  
-      remove key outputs(KO) `Tourism Research Services` & `Tourism Promotion Services` but retain `Tourism Regulatory Services`  
+    1. sub-programme: Destination Marketing(kenya tourism board) KES 402,888,000  
+       It's mandate is to develop, implement and co-ordinate a National Tourism marketing strategy(https://ktb.go.ke/).  
+       I think this is a service that kenya can, subjectively, do without. Individual sector players(hotels, resorts, etc) can market their services globally on their own. These players can also self-organize and do promotions jointly if they so wish.  
+    2. sub-programme: Tourism Promotion (1,090,848,000 - 390,000,000) == KES 700,848,000    
+       Key output(KO): Tourism Research Services; conduct 3 tourism research studies, write 2 reports on tourism perfomance.  
+       Key output(KO): Tourism Promotion Services; conduct 3 training forums, 25% completion of bamburi plot perimeter wall, develop 300 tourism promotion materials.   
+       Key Outpout(KO): Tourism Regulatory Services.    
+       We would remove key outputs(KO) `Tourism Research Services` & `Tourism Promotion Services` but retain `Tourism Regulatory Services`  
       `Tourism Regulatory Services`(Tourism Regulatory Authority) has a budget of 390,000,000. That one we'll leave it as is.  
-       KO: Tourism Research Services; conduct 3 tourism research studies, write 2 reports on tourism perfomance.  
-       KO: Tourism Promotion Services; conduct 3 training forums, 25% completion of bamburi plot perimeter wall, develop 300 tourism promotion materials.  
 18. State Department for Science, Innovation and Research KES 942,865,404  
     The State Department was not operational during the review period of Fiscal Year 2021/22 to 2023/24.  
 19. State Department for Diaspora Affairs  
-    sub-programme: Diaspora Investments, Remittances and International Jobs KES 47,101,469  
-      hold 2 investment expos, conduct 4 diaspora job fairs.  
+    Sub-programme: Diaspora Investments, Remittances and International Jobs KES 47,101,469  
+    It's KPI are: to hold 2 investment expos, conduct 4 diaspora job fairs.  
 20. State Department for Housing & Urban Development  
-    sub-programme: Delivery of Affordable and Social Housing Units KES 96,000,200,000  
-      90% occupancy of completed units, register 580k potential homeowners on bomayangu, 100% completion of ruiru AHP, 30% completion of starehe AHP.  
-      The kes 96b is AIA from AHP levy. This would effectively mean repealing the AHP ACT.  
+    Sub-programme: Delivery of Affordable and Social Housing Units KES 96,000,200,000  
+    It's KPI are: 90% occupancy of completed units, register 580k potential homeowners on bomayangu, 100% completion of ruiru AHP, 30% completion of starehe AHP.  
+    I do not think the government, especially one that is as resource constrained as Kenya, should be in the business of building houses. 
+    The kes 96b we are removing is the AIA(appropriations in aid) from AHP levy. This would effectively mean repealing the AHP ACT.        
+    People always like saying the govt should build houses because "Private sector hasn't done much".     
+    Between the 2009 and 2019 census;    
+    a) the number of houses with grass thatched roofs reduced from 13% to 5%. Assuming typical house sizes and iron sheet prices, that alone is probably a housing sector improvement of KES ~40b by the private sector(aka, you and me).   
+    b) the number of houses with earthen floors reduced from 56% to 40%. I'll approximate that to about KES ~80b.  
+    c) the number of households with a refridgerator increased from 3% to 10%. etc.    
+    The private sector has done a lot; just because it isn't concentrated in one place where a politician can come and cut a ribbon to launch doesn't mean people have been idling and letting their houses rot.      
+    In the same time period(2009 - 2019), the number of urban households with access to piped water(a service the govt ought to be providing) reduce from 53% to 42%.    
 21. State Department for Public Works  
-    sub-programme: Stalled and new Government buildings  
-      Delivery unit: Construction of County Headquarters-BETA KES 454,000,000  
+    1. Sub-programme: Stalled and new Government buildings  
+       Delivery unit: Construction of County Headquarters-BETA KES 454,000,000  
         Why is the national goverment building headquarters for counties? Counties that feel like they want a HQ can pass a motion in their own county assemblies, put it in their own budgets and finance it on their own.  
-    sub-programme: Research Services  
-      Delivery unit: Kenya Building Research Centre KES 18,362,481  
-      It promotes research in building and has been vital in Affordable housing program(https://kbrc.publicworks.go.ke/).  
-      This is duplicating roles that are best perfomed by universities(which are already underfunded). Since we are also killing AHP, this can die as well.  
+    2. Sub-programme: Research Services  
+       Delivery unit: Kenya Building Research Centre KES 18,362,481  
+       It promotes research in building and has been vital in Affordable housing program(https://kbrc.publicworks.go.ke/).  
+       This is duplicating roles that are best perfomed by universities(which are already underfunded). Since we are also killing AHP, this can die as well.  
 22. State Department for Information Communication Technology & Digital Economy  
-    sub-programme: ICT and BPO Development; this one is kes 4b. It is the one that has  
-      100% operationalize konza technopolis devpt authority(KOTDA), 100% completion of konza horizontal infrastructure,  
-      I wanted to kill it since I really do not believe in govt planned cities like konza. But I've left it in because; it is only 4b and more importantly it is going to get konza horizontal infrastructure to 100%.  
-      After that(ie, after financial year 2025/26) I believe that we should stop any further infrastructure funding of konza. It should sink or swim.  
-    sub-programme: ICT Infrastructure Connectivity  
-      Delivery unit: Kenya Digital Economy Acceleration Project KES 3,688,002,050  
-      That delivery unit and `E-Government Services.Digital Superhighway` have the exact same key perfomance indicators;  
-      1500 internet connectivity to ward level, schols and govt, install 6170 public wifi in counties.  
-      Since those two are essentially doing the same thing I have eliminated one.  
+    1. Sub-programme: ICT and BPO Development; this one is kes 4b. It is the one that has  
+       100% operationalize konza technopolis devpt authority(KOTDA), 100% completion of konza horizontal infrastructure,  
+       I wanted to kill it since I really do not believe in govt planned cities like konza. But I've left it in because; it is only 4b and more importantly it is going to get konza horizontal infrastructure to 100%.  
+       After that(ie, after financial year 2025/26) I believe that we should stop any further infrastructure funding of konza. It should sink or swim on its own.  
+    2. Sub-programme: ICT Infrastructure Connectivity  
+       Delivery unit: Kenya Digital Economy Acceleration Project KES 3,688,002,050  
+       That delivery unit and `E-Government Services.Digital Superhighway` have the exact same key perfomance indicators(KPI); that is: 1500 internet connectivity to ward level, schools and govt, install 6170 public wifi in counties.  
+       Since those two are essentially doing the same thing I have eliminated one.  
 23. State Department for Broadcasting & Telecommunications  
-    sub-programme: News And Information services KES 4,727,157,566  
-      create 302 news briefs, produce 4200 tv news items, produce 12 monitoring reports on govt websites.  
-      I don't think that the government being in the business of news dissemination is particulary important. If the govt does anything worthwhile, the general masss media(plus social media) will have no trouble disseminating it.  
-    sub-programme: Brand Kenya Initiative KES 170,000,000  
-      produce kenya yearbook. What even is this??  
-    KBC  
-      Kenya Broadcasting Corporation (KBC) - recurrent expenditure KES 2,284,811,000  
-      KBC Analogue to Digital TV Migration-BETA                    KES 101,569,509  
-      KBC Rollout of Studio Mashinani-BETA                         KES 38,640,574  
-      I don't think that the government being in the business of news dissemination is particulary important. If the govt does anything worthwhile, the general masss media(plus social media) will have no trouble disseminating it.  
+    1. Sub-programme: News And Information services KES 4,727,157,566  
+       KPI: create 302 news briefs, produce 4200 tv news items, produce 12 monitoring reports on govt websites.  
+       I don't think that the government being in the business of news dissemination is particulary important. If the govt does anything worthwhile, the general masss media(plus social media) will have no trouble disseminating it.  
+    2. Sub-programme: Brand Kenya Initiative KES 170,000,000  
+       KPI: produce kenya yearbook. What even is this??  
+    3. KBC  
+       Kenya Broadcasting Corporation (KBC) - recurrent expenditure KES 2,284,811,000  
+       KBC Analogue to Digital TV Migration-BETA                    KES 101,569,509  
+       KBC Rollout of Studio Mashinani-BETA                         KES 38,640,574  
+       I don't think that the government being in the business of news dissemination is particulary important. If the govt does anything worth of reporting, the general masss media(plus social media) will have no trouble disseminating it.      
+       A few years ago, the KBC managing director [committed  the goverment](https://nation.africa/kenya/news/kbc-managing-director-samuel-maina-sacked-over-sh750bn-payment-4468844) to pay KES 750 billion at the London court of arbitration, without even consulting the line ministry. That's money equivalent to ~4 years of the ministry of health's budget. My taxes will eventually be used to pay up in London; all for what? Just so the national broadcaster can stream the world cup in 480p once every 4years?           
 24. State Department for Internal Security & National Administration  
-    sub-programme: Peace Building, National Cohesion and Values KES 511,182,000  
+    1. Sub-programme: Peace Building, National Cohesion and Values KES 511,182,000  
       train 500 people on national cohesion, sensitize 200k people on climate change related conflicts, ensure 47 counties have county peace forums.  
       I'm not discounting the need to sensitize people on how climate change can cause conflicts, I'm just saying that given our meagre resources this is something that we can put on the back burner.  
     sub-programme: National Government Administration Coordination Services KES 19,681,360,942  
