@@ -1,17 +1,17 @@
-In my analysis I either cut out a whole budget item or I leave it as is.  
-In other words, I do not go into the details of trying to reduce certain budget allocations. 
-As an example the Goverment press is allocated KES 177m for refurbishment. We could do either of three things;
-(a) Leave the allocation as is.
-(b) Cut the whole allocation.
-(c) Reduce the allocation.
-In this article I'll always chose either option (a) or (b); I never choose (c). In other words this article is about things that I would tentatively eliminate from the budget(appropriations bill) rather than things that I would reduce/amend.   
+In my analysis I either cut out a whole budget item or I leave it as is.            
+In other words, I do not go into the details of trying to reduce certain budget allocations.                 
+As an example the Goverment press is allocated KES 177m for refurbishment. We could do either of three things;                         
+(a) Leave the allocation as is.                    
+(b) Cut the whole allocation.               
+(c) Reduce the allocation.                
+In this article I'll always chose either option (a) or (b); I never choose (c). In other words this article is about things that I would tentatively eliminate from the budget(appropriations bill) rather than things that I would reduce/amend.                  
 
-TODO: look at the various tourism regulators(tourism board, etc)
+TODO: look at the various tourism regulators(tourism board, etc)                            
 
-A. https://www.treasury.go.ke/budget-books-1/
-B. FY-2025-26-Development-Budget-Book-Vol.-1-1011-1083.pdf
+A. https://www.treasury.go.ke/index.php/budget-books           
+B. FY-2025-26-Development-Budget-Book-Vol.-1-1011-1083.pdf                 
 
-Suss govt departments:
+Suspicious govt departments:              
 Office of the President
 0. Government Printing Services  KES 944,596,015
    Abolish the goverment printer(goverment press aka GP); https://www.governmentpress.go.ke/background and replace it with a "Kenya Gazette website".  
@@ -435,11 +435,13 @@ kerra = 21.2b (KES 63m/constituency)
    special interest groups: 2
 
 
-wget -nc https://www.treasury.go.ke/wp-content/uploads/2024/07/FY-2024-25-Development-Budget-Book-1011-1083.pdf
-wget -nc https://www.treasury.go.ke/wp-content/uploads/2024/07/FY-2024-25-Development-Budget-Book-1091-1091.pdf
-wget -nc https://www.treasury.go.ke/wp-content/uploads/2024/07/FY-2024-25-Development-Budget-Book-1092-2141.pdf
-wget -nc https://www.treasury.go.ke/wp-content/uploads/2024/07/FY-2024-25-Recurrent-Budget-Book-1011-1162.pdf
-wget -nc https://www.treasury.go.ke/wp-content/uploads/2024/07/FY-2024-25-Recurrent-Budget-Book-1166-2151.pdf
-wget -nc https://www.treasury.go.ke/wp-content/uploads/2024/07/FY-2024-25-Program-Based-Budget-Book.pdf
-
+How to get appropriations books; 
+```
+wget -nc https://www.treasury.go.ke/wp-content/uploads/2024/07/FY-2024-25-Development-Budget-Book-1011-1083.pdf      
+wget -nc https://www.treasury.go.ke/wp-content/uploads/2024/07/FY-2024-25-Development-Budget-Book-1091-1091.pdf      
+wget -nc https://www.treasury.go.ke/wp-content/uploads/2024/07/FY-2024-25-Development-Budget-Book-1092-2141.pdf      
+wget -nc https://www.treasury.go.ke/wp-content/uploads/2024/07/FY-2024-25-Recurrent-Budget-Book-1011-1162.pdf      
+wget -nc https://www.treasury.go.ke/wp-content/uploads/2024/07/FY-2024-25-Recurrent-Budget-Book-1166-2151.pdf      
+wget -nc https://www.treasury.go.ke/wp-content/uploads/2024/07/FY-2024-25-Program-Based-Budget-Book.pdf      
+```
 (15/15) * (2/100)* 115_000_000_000
