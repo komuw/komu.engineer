@@ -74,29 +74,29 @@ Suspicious govt departments:
     General Administration, Planning and Support Services KES 136,302,915  
     I'd keep `Public Records Mangement` & `Library Services` - TODO: reconsider this, we may need to also cut this ones out.  
 7. State Department for Youth Affairs and Creative Economy KES 4,305,744,453  
-   Mission: To improve the employability of youth, foster entrepreneurship, and stimulate job creation.  
+   Its Mission is: To improve the employability of youth, foster entrepreneurship, and stimulate job creation.  
    The mandate of the State Department for Youth Affairs and Creative Economy encompasses the integration of youth into national development initiatives while effectively managing and promoting their active participation.  
-   train 65 youth in film, graduate 27 people from kenya film school, etc  
-   This also kills the Youth Enterprise Development Fund. This is okay since the hustler fund is retained.  
-   I personally don't think the goverment should be engaged in this activities. For example the appropriation bill says that this department will train 61,263 youths in "mindset education" in 2025/26. I don't know what `mindset education` is, I'm guessing it's useful but it just sounds like the title to an Andrew Tate(https://en.wikipedia.org/wiki/Andrew_Tate) youtube video. I don't want to water down the departments achievements, for example in 2024/25 they claim to have "generated 187,451 employment opportunities for youth" which is not a bad thing. I was going to ask whether an "employment opportunity" is the same thing as a "job" but I'll stop.  
+   Some of their KPI(key perfomance indicators) are to; train 65 youth in film, graduate 27 people from kenya film school, etc  
+   Removing this department would also mean killing the Youth Enterprise Development Fund. This is okay since the hustler fund is retained.  
+   I personally don't think the goverment should be engaged in this activities. For example the appropriation bill says that this department will train 61,263 youths in "mindset education" in 2025/26. I don't know what `mindset education` is, I'm guessing it's useful but it just sounds like the title to an Andrew Tate(https://en.wikipedia.org/wiki/Andrew_Tate) youtube video. I don't want to water down the departments achievements, for example in 2024/25 they claim to have "generated 187,451 employment opportunities for youth" which is not a bad thing.    
 8. State Department for Investment Promotion KES 3,512,463,200  
-   Mission: To coordinate, promote, enable, and facilitate local, diaspora, and foreign private investments by creating a competitive investment climate and business environment that fosters a sustainably transformed economy in alignment with Vision 2030.  
+   Its Mission is: To coordinate, promote, enable, and facilitate local, diaspora, and foreign private investments by creating a competitive investment climate and business environment that fosters a sustainably transformed economy in alignment with Vision 2030.  
    It works on, among other things, establishment of EPZ's. We need to make the whole of Kenya friendly for business and not just a few selected zones where international players can get preferential treatment. We would keep the current number of gazetted EPZ's as is and willing companies can setup in there. But we wouldn't keep this state department around.  
 9. State Department for Gender and Affirmative Action KES 6,299,100,453  
     `National Gender and Equality Commission`(https://www.ngeckenya.org/about/15/mandate) already exists. The mandate between the state department and the commission overlaps somehow.  
 10. State Department for Micro, Small and Medium Enterprises  KES 5,593,490,075  
     Created with executive order 1 of 2023.  
-    Mission: To establish a cohesive and supportive framework for a highly productive and diversified Micro, Small, and Medium Enterprises (MSMEs) sector through strategic financing, incubation, and comprehensive entrepreneurship management and training aimed at fostering wealth generation and employment opportunities.  
+    Its Mission is: To establish a cohesive and supportive framework for a highly productive and diversified Micro, Small, and Medium Enterprises (MSMEs) sector through strategic financing, incubation, and comprehensive entrepreneurship management and training aimed at fostering wealth generation and employment opportunities.  
     Among its highlights from 2024/25 was;  
     - Creation of 61 Constituency Industrial Development Centres  
     - creation of 20,000 jobs through the Kenya Youth Enterprise (KYEOP) project  
     - provision of KSh. 12.8 billion in credit through the Hustler Fund  
     In 2025/26 it plans to;  
-    - Establish a National credit rating service. aka a  
+    - Establish a National credit rating service.      
     This effectively means that we wouldn't provide `hustler fund` with new monies. However `hustler fund` would still continue as a revolving fund using the capitation it had already received in the last ~3years.  
     So far it has had about KES 30 billion allocated to it over that period and a good part of it should still be circulating inside it.  
 11. State Department for East African Community KES 784,727,960  
-    It's role can be performed by the ministry of foreign affairs. Neither Tanzania nor Rwanda have a specific ministry for EAC and they aren't less for it.  
+    It's role can be performed by the ministry of foreign affairs. Neither Tanzania nor Rwanda have a specific ministry for EAC and, as far as I can tell, they seem to be doing just fine.     
 12.  Ministry of East African Community (EAC), the ASALs and Regional Development.    
      depts:  
        - East African Community            
@@ -111,18 +111,19 @@ Suspicious govt departments:
     It facilitates cabinet meetings and oversees implementation of cabinet decisions(https://cabinetaffairs.go.ke/functions). The cabinet already has a secretary and all cabinet members have dozens of staff to do this.  
 15. State Department for Trade  
     Created by executive order 1 of 2023.  
-    Sub-programme: Export Trade Development, Promotion and National Branding KES 620,817,000  
+   1. Sub-programme: Export Trade Development, Promotion and National Branding KES 620,817,000  
       Facilitate 10 firms to export for the first time, participate in trade promotions, brand 800 products with `made in kenya` mark of identity, do 2 global marketing campaigns.  
       As an example, any Kenyan product should be able to download and affix the `made in kenya` mark of identity without needing any ministry facilitation.  
-    Sub-programme: Enabling Environment for Business Growth KES 68,692,871  
+   2. Sub-programme: Enabling Environment for Business Growth KES 68,692,871  
       create a `kenya trade development bill`, revise national trade policy, "capacity build 100 county employees on trade matters"  
-    Sub-programme: Development and Promotion of BETA Priorities Value Chains KES 88,418,331  
+   3. Sub-programme: Development and Promotion of BETA Priorities Value Chains KES 88,418,331  
       create ecommerce policy, conduct 8 training sessions for exporters of fresh produce, develop a digital services export strategy.  
-    Kenya National Trading Corporation (KNTC) KES 1,576,590,000  
-     The actual cost saving is KES 0 because according to the budget documents, the corporation has an expenditure of kes 1.5b and an equal amount in appropriations-in-aid.  
-     Mission: To ensure that KNTC plays its rightful role as a Strategic National Asset that secures price stabilization of essential food items and consumer goods(https://kntc.go.ke/)  
-     procure 7800 tonnes of maize, distribute 7400 tonnes of maize.  
-     KNTC has not done well in its mission of stabilizing prices and I also think doing so is a futile process. The one thing it has done well though is losing money through corrupt ways like the recent KES 6billion oil scandal(https://www.citizen.digital/news/oil-scandal-kntc-hard-pressed-to-explain-losing-ksh6-billion-taxpayers-money-n350965)  
+   4. Kenya National Trading Corporation (KNTC) KES 1,576,590,000  
+      The actual cost saving is KES 0 because according to the budget documents, the corporation has an expenditure of kes 1.5b and an equal amount in appropriations-in-aid.  
+      Mission: To ensure that KNTC plays its rightful role as a Strategic National Asset that secures price stabilization of essential food items and consumer goods(https://kntc.go.ke/)  
+      procure 7800 tonnes of maize, distribute 7400 tonnes of maize.  
+      KNTC has not done well in its mission of stabilizing prices and I also think doing so is a futile process. Also the constitution gives CBK(central bank of kenya) that mandate of "promoting price stability"(https://new.kenyalaw.org/akn/ke/act/2010/constitution/eng@2010-09-03#chp_TWELVE__part_7__sec_231); so KNTC should get out of their way.          
+      The one thing it has done well though is losing money through corrupt ways like the recent KES 6billion oil scandal(https://www.citizen.digital/news/oil-scandal-kntc-hard-pressed-to-explain-losing-ksh6-billion-taxpayers-money-n350965)  
 16. State Department for Industry  
     Sub-programme: Industrial Development Promotion KES 5,594,154,233  
     hold 2 inter-govt consultative forums, establish 12 policy reforms, created 12 SME profiles, create 500 jobs under integrated agro industrial parks, establish/operationalize 18 County Aggregated Industrial Parks  
