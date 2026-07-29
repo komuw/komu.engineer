@@ -22,7 +22,7 @@ Suspicious govt departments:
    which says: "The Laws of Kenya shall be printed in the form of booklets, a separate booklet being printed for..."; https://new.kenyalaw.org/akn/ke/act/1979/9/eng@2022-12-31#sec_6  
 1.2 General Works at the Office of the Deputy President KES 100,000,000  
    The president's state house has a budget of KES 680m for maintenance works. The two offices can agree on how to share up that figure.  
-1.2 General Maintenance Works at Eldoret State Lodge KES 60,150,000  
+1.3 General Maintenance Works at Eldoret State Lodge KES 60,150,000  
    General Maintenance Works at State House Sagana  KES 15,000,000  
    Refurbishment of buildings at Mombasa State House KES 42,500,000  
    Refurbishment of buildings at Nakuru State House KES 25,000,000  
@@ -59,31 +59,31 @@ Suspicious govt departments:
    There's significant overlap between this and the work of; the Senate, Commission on Revenue Allocation, Intergovernmental Budget and Economic Council, the Council of Governors, Intergovernmental Relations Technical Committee(igrtc.go.ke) among others.  
    We already have doctors working in counties among other devolved functionationaries. What we do not have is the devolution of funds to follow those functions. It can be argued that the fact we have a national goverment 'eating' KES 17b per year ostensibly to facilitate devolution is one reason why devolution is yet to be fully achieved.  
    There also exists the `State Department for Justice Human Rights and Constitutional Affairs` which among other objects helps in Effective Implementation of the Constitution(https://www.statelaw.go.ke/departments/department-of-justice/)  
-3. State Department for Special Programmes KES 609,495,880  
+4. State Department for Special Programmes KES 609,495,880  
    Mission: To promote comprehensive disaster preparedness and awareness, to help vulnerable communities adapt to future challenges and mitigate impact of disasters.  
    We already have national drought management authority(https://ndma.go.ke/), National Disaster Management Unit(https://disastermanagement.go.ke/) and National Disaster Operations Center(https://www.ndoc.go.ke/). I'm almost pretty certain that there's one or two others that I'm missing. How many agencies do you really need to fight disasters?  
    Additionally, almost every county has a disaster management fund(https://new.kenyalaw.org/search/?q=DISASTER+MANAGEMENT+FUND#gsc.tab=0). For example the one for Kwale county says "The County Government shall establish the County Disaster County Disaster Management Fund that shall be equivalent to 2% of annual county budget."(https://new.kenyalaw.org/akn/ke-002/act/2016/7/eng@2016-11-04)  
-4. State Department for the ASALs and Regional Development KES 10,880,825,658  
+5. State Department for the ASALs and Regional Development KES 10,880,825,658  
    Mission: To facilitate the strategic planning and development of the Arid and Semi-Arid Lands (ASALs) and basin-based regions, with the aim of enhancing resilience and improving livelihoods to foster socio-economic development.  
    There alrady exists the Equalisation Fund(https://new.kenyalaw.org/akn/ke/act/2010/constitution/eng@2010-09-03#chp_TWELVE__part_I__sec_204) in the constitituon and it exits  "to provide basic services ... to marginalised areas ... to bring ... those areas to the level generally enjoyed by the rest of the nation"  
    The Equalisation Fund which is allocated 0.5% of goverment revenues would not be impacted by this change.  
-7. State Department for Culture, The Arts and Heritage - Done.  
+6. State Department for Culture, The Arts and Heritage - Done.  
     Culture/ Heritage         KES 1,954,224,282  
     The Arts                  KES 379,286,071  
     General Administration, Planning and Support Services KES 136,302,915  
     I'd keep `Public Records Mangement` & `Library Services` - TODO: reconsider this, we may need to also cut this ones out.  
-8. State Department for Youth Affairs and Creative Economy KES 4,305,744,453  
+7. State Department for Youth Affairs and Creative Economy KES 4,305,744,453  
    Mission: To improve the employability of youth, foster entrepreneurship, and stimulate job creation.  
    The mandate of the State Department for Youth Affairs and Creative Economy encompasses the integration of youth into national development initiatives while effectively managing and promoting their active participation.  
    train 65 youth in film, graduate 27 people from kenya film school, etc  
    This also kills the Youth Enterprise Development Fund. This is okay since the hustler fund is retained.  
    I personally don't think the goverment should be engaged in this activities. For example the appropriation bill says that this department will train 61,263 youths in "mindset education" in 2025/26. I don't know what `mindset education` is, I'm guessing it's useful but it just sounds like the title to an Andrew Tate(https://en.wikipedia.org/wiki/Andrew_Tate) youtube video. I don't want to water down the departments achievements, for example in 2024/25 they claim to have "generated 187,451 employment opportunities for youth" which is not a bad thing. I was going to ask whether an "employment opportunity" is the same thing as a "job" but I'll stop.  
-9. State Department for Investment Promotion KES 3,512,463,200  
+8. State Department for Investment Promotion KES 3,512,463,200  
    Mission: To coordinate, promote, enable, and facilitate local, diaspora, and foreign private investments by creating a competitive investment climate and business environment that fosters a sustainably transformed economy in alignment with Vision 2030.  
    It works on, among other things, establishment of EPZ's. We need to make the whole of Kenya friendly for business and not just a few selected zones where international players can get preferential treatment. We would keep the current number of gazetted EPZ's as is and willing companies can setup in there. But we wouldn't keep this state department around.  
-10. State Department for Gender and Affirmative Action KES 6,299,100,453  
+9. State Department for Gender and Affirmative Action KES 6,299,100,453  
     `National Gender and Equality Commission`(https://www.ngeckenya.org/about/15/mandate) already exists. The mandate between the state department and the commission overlaps somehow.  
-11. State Department for Micro, Small and Medium Enterprises  KES 5,593,490,075  
+10. State Department for Micro, Small and Medium Enterprises  KES 5,593,490,075  
     Created with executive order 1 of 2023.  
     Mission: To establish a cohesive and supportive framework for a highly productive and diversified Micro, Small, and Medium Enterprises (MSMEs) sector through strategic financing, incubation, and comprehensive entrepreneurship management and training aimed at fostering wealth generation and employment opportunities.  
     Among its highlights from 2024/25 was;  
@@ -94,21 +94,21 @@ Suspicious govt departments:
     - Establish a National credit rating service. aka a  
     This effectively means that we wouldn't provide `hustler fund` with new monies. However `hustler fund` would still continue as a revolving fund using the capitation it had already received in the last ~3years.  
     So far it has had about KES 30 billion allocated to it over that period and a good part of it should still be circulating inside it.  
-12. State Department for East African Community KES 784,727,960  
+11. State Department for East African Community KES 784,727,960  
     It's role can be performed by the ministry of foreign affairs. Neither Tanzania nor Rwanda have a specific ministry for EAC and they aren't less for it.  
-13.  Ministry of East African Community (EAC), the ASALs and Regional Development - DONE  
+12.  Ministry of East African Community (EAC), the ASALs and Regional Development - DONE  
      depts:  
        - East African Community          - DONE  
        - ASALs and Regional Development  - DONE  
-14.  Ministry of Gender, Culture, the Arts, and Heritage - DONE  
+13.  Ministry of Gender, Culture, the Arts, and Heritage - DONE  
      depts:  
        - Gender and Affirmative Action  - DONE  
        - Culture, Arts and Heritage      - DONE  
-16. State Department for Cabinet Affairs KES 203,723,204  
+14. State Department for Cabinet Affairs KES 203,723,204  
     Created by executive order 1 of 2023.  
     Mission: To ensure the effective execution of cabinet decisions, strategic governmental initiatives, and public sector reforms, through proficient coordination aimed at fostering transformative and inclusive growth  
     It facilitates cabinet meetings and oversees implementation of cabinet decisions(https://cabinetaffairs.go.ke/functions). The cabinet already has a secretary and all cabinet members have dozens of staff to do this.  
-19. State Department for Trade  
+15. State Department for Trade  
     Created by executive order 1 of 2023.  
     Sub-programme: Export Trade Development, Promotion and National Branding KES 620,817,000  
       Facilitate 10 firms to export for the first time, participate in trade promotions, brand 800 products with `made in kenya` mark of identity, do 2 global marketing campaigns.  
@@ -122,10 +122,10 @@ Suspicious govt departments:
      Mission: To ensure that KNTC plays its rightful role as a Strategic National Asset that secures price stabilization of essential food items and consumer goods(https://kntc.go.ke/)  
      procure 7800 tonnes of maize, distribute 7400 tonnes of maize.  
      KNTC has not done well in its mission of stabilizing prices and I also think doing so is a futile process. The one thing it has done well though is losing money through corrupt ways like the recent KES 6billion oil scandal(https://www.citizen.digital/news/oil-scandal-kntc-hard-pressed-to-explain-losing-ksh6-billion-taxpayers-money-n350965)  
-20. State Department for Industry  
+16. State Department for Industry  
     Sub-programme: Industrial Development Promotion KES 5,594,154,233  
     hold 2 inter-govt consultative forums, establish 12 policy reforms, created 12 SME profiles, create 500 jobs under integrated agro industrial parks, establish/operationalize 18 County Aggregated Industrial Parks  
-21. State Department for Tourism  
+17. State Department for Tourism  
     sub-programme: Destination Marketing(kenya tourism board) KES 402,888,000  
       It's mandate is to develop, implement and co-ordinate a National Tourism marketing strategy(https://ktb.go.ke/).  
       I think this is a service that kenya can, subjectively, do without. Individual sector players(hotels, resorts, etc) can market their services globally on their own. These players can also self-organize and do promotions jointly if they so wish.  
@@ -134,16 +134,16 @@ Suspicious govt departments:
       `Tourism Regulatory Services`(Tourism Regulatory Authority) has a budget of 390,000,000. That one we'll leave it as is.  
        KO: Tourism Research Services; conduct 3 tourism research studies, write 2 reports on tourism perfomance.  
        KO: Tourism Promotion Services; conduct 3 training forums, 25% completion of bamburi plot perimeter wall, develop 300 tourism promotion materials.  
-22. State Department for Science, Innovation and Research KES 942,865,404  
+18. State Department for Science, Innovation and Research KES 942,865,404  
     The State Department was not operational during the review period of Fiscal Year 2021/22 to 2023/24.  
-23. State Department for Diaspora Affairs  
+19. State Department for Diaspora Affairs  
     sub-programme: Diaspora Investments, Remittances and International Jobs KES 47,101,469  
       hold 2 investment expos, conduct 4 diaspora job fairs.  
-24. State Department for Housing & Urban Development  
+20. State Department for Housing & Urban Development  
     sub-programme: Delivery of Affordable and Social Housing Units KES 96,000,200,000  
       90% occupancy of completed units, register 580k potential homeowners on bomayangu, 100% completion of ruiru AHP, 30% completion of starehe AHP.  
       The kes 96b is AIA from AHP levy. This would effectively mean repealing the AHP ACT.  
-25. State Department for Public Works  
+21. State Department for Public Works  
     sub-programme: Stalled and new Government buildings  
       Delivery unit: Construction of County Headquarters-BETA KES 454,000,000  
         Why is the national goverment building headquarters for counties? Counties that feel like they want a HQ can pass a motion in their own county assemblies, put it in their own budgets and finance it on their own.  
@@ -151,7 +151,7 @@ Suspicious govt departments:
       Delivery unit: Kenya Building Research Centre KES 18,362,481  
       It promotes research in building and has been vital in Affordable housing program(https://kbrc.publicworks.go.ke/).  
       This is duplicating roles that are best perfomed by universities(which are already underfunded). Since we are also killing AHP, this can die as well.  
-26. State Department for Information Communication Technology & Digital Economy  
+22. State Department for Information Communication Technology & Digital Economy  
     sub-programme: ICT and BPO Development; this one is kes 4b. It is the one that has  
       100% operationalize konza technopolis devpt authority(KOTDA), 100% completion of konza horizontal infrastructure,  
       I wanted to kill it since I really do not believe in govt planned cities like konza. But I've left it in because; it is only 4b and more importantly it is going to get konza horizontal infrastructure to 100%.  
@@ -161,7 +161,7 @@ Suspicious govt departments:
       That delivery unit and `E-Government Services.Digital Superhighway` have the exact same key perfomance indicators;  
       1500 internet connectivity to ward level, schols and govt, install 6170 public wifi in counties.  
       Since those two are essentially doing the same thing I have eliminated one.  
-27. State Department for Broadcasting & Telecommunications  
+23. State Department for Broadcasting & Telecommunications  
     sub-programme: News And Information services KES 4,727,157,566  
       create 302 news briefs, produce 4200 tv news items, produce 12 monitoring reports on govt websites.  
       I don't think that the government being in the business of news dissemination is particulary important. If the govt does anything worthwhile, the general masss media(plus social media) will have no trouble disseminating it.  
@@ -172,7 +172,7 @@ Suspicious govt departments:
       KBC Analogue to Digital TV Migration-BETA                    KES 101,569,509  
       KBC Rollout of Studio Mashinani-BETA                         KES 38,640,574  
       I don't think that the government being in the business of news dissemination is particulary important. If the govt does anything worthwhile, the general masss media(plus social media) will have no trouble disseminating it.  
-28. State Department for Internal Security & National Administration  
+24. State Department for Internal Security & National Administration  
     sub-programme: Peace Building, National Cohesion and Values KES 511,182,000  
       train 500 people on national cohesion, sensitize 200k people on climate change related conflicts, ensure 47 counties have county peace forums.  
       I'm not discounting the need to sensitize people on how climate change can cause conflicts, I'm just saying that given our meagre resources this is something that we can put on the back burner.  
@@ -184,17 +184,17 @@ Suspicious govt departments:
       "Within five years ...national government shall restructure ...the provincial administration to accord with and respect the system of devolved government" - https://new.kenyalaw.org/akn/ke/act/2010/constitution/eng@2010-09-03#att_6__part_4__para_17  
       Look at how thin the NATIONAL GOVERNMENT CO-ORDINATION ACT is; https://new.kenyalaw.org/akn/ke/act/2013/1/eng@2024-05-17  
       It does not even assign any duties to national government administrative officers(chiefs, county commissioner, etc)  
-29. Ministry of Defence  
+25. Ministry of Defence  
     sub-programme: Kenya Meat Commission KES 200,000,000  
                                          KES 2,980,000,000  
       The 200m is expenditure and the 2.9b is recurrent. The 2.9b comes from aia(kmc's own fees) but 200m is from govt. We include the 2.9b here because the final expenditures in the budget books are inclusive of AIA.  
       The defence ministry ought to have better things to do other than runnung slaughter houses.  
-30. State Department for Economic Planning  
+26. State Department for Economic Planning  
     sub-programme: Community Development  
       delivery unit: National Government Constituency Fund(NGCDF) KES 58,797,728,147  
       CDF is un-constitutional and there are court cases from here all the way to the supreme court.  
       The only hindrance to killing this thing are members of parliament.  
-31. State Department for Roads KES 79,450,254,469  
+27. State Department for Roads KES 79,450,254,469  
     The total allocation is kes 195b, with kes 115b coming from road maintenance levy and 79b from other sources.  
     We cut out the funding from other sources and are leave that department to run with the money from road maintenance levy.  
     TODO: give a maths explanation of how the monies from road development levy are enough to construct new roads and maintain existing ones.  
@@ -203,7 +203,7 @@ Suspicious govt departments:
     sub-programme: Rehabilitation of Roads  
       Looking at `Program-Based-Budget-Book` the department proposes to rehabilitate about 1453km of roads.  
       Looking at `Program-Based-Budget-Book` the department proposes to gravel about 1482km of roads.  
-32. State Department for Transport  
+28. State Department for Transport  
     Nairobi Metropolitan Area Transport Authority (NAMATA) KES 465,588,000  
       NAMATA(https://namata.go.ke/about_us) was established by Executive Order 18 of 2017. It's mandate with the mandate of overseeing the establishment of a public transport system within the Nairobi metro area.  
       The constitituon says that county goverments are responsible for "county transport including county roads and public road transport" (https://new.kenyalaw.org/akn/ke/act/2010/constitution/eng@2010-09-03#att_4__part_2__para_5)  
@@ -213,10 +213,10 @@ Suspicious govt departments:
       Nairobi Bus Rapid Transport Project-BETA KES 331,204,920  
       Public Transport Technical BRT Assistance Project- Phase 1 KES 30,040,164  
       The BRT project does not make sense. I'm surprised this thing is still been pursued.  
-33. State Department for Energy  
+29. State Department for Energy  
     sub-programme: Alternative Energy Technologies KES 2,296,936,839  
     install 20 stand-alone solar home systems, disseminate 75k clean cook stoves, refforest 1m hectare of hydro dams catchment areas, support 1 community small hydro project, construct 4 institutional biogas plants & 300 domestic ones.  
-34. `Aids Control Unit`  
+30. `Aids Control Unit`  
     All the following offices/departments have a delivery-unit(programme/whatever) called `Aids Control Unit`.  
     As an example, the `State Department for Livestock Development` has a delivery unit called `Aids Control Unit` whose key perfomance indicators for 2025/2026 are listed as;  
     Conduct 8 AIDS awareness sessions, test 200 people for AIDS. That's it. Thats their whole KPI.  
@@ -269,12 +269,12 @@ Suspicious govt departments:
     National police service(NPS)  KES 1,759,125  
     National police service(NPS)  KES 3,826,693    
     Yes for the NPS(National police service), aids control unit, exists 3 times. Maybe its for each branch of the police???       
-35. State Department for Livestock Development  
+31. State Department for Livestock Development  
     Kenya leather Development Council KES 222,608,340  
     It's a state corporation formed under private-public partnership to represent the interests of the leather sector(https://leathercouncil.go.ke/background-strategic-plan/)  
     Representation is drawn from Livestock Marketing Council, Slaughter Houses Association, footwear manufacturers, leather manufacturers, academia, etc.  
     I think it should be possible to "represent interests of the leather sector" without using taxpayers money. Otherwise all other sectors in the industry will want to form their own tax funded councils.  
-36. State Department for Labour and Skills Development  
+32. State Department for Labour and Skills Development  
     sub-programme: Human Resource Planning & Development KES 249,407,201  
       carry out 1 labor market survey, train 30 people on production of labor market information.  
     sub-programme: Productivity Promotion, Measurement & improvement KES 66,724,043  
@@ -287,20 +287,20 @@ Suspicious govt departments:
     Micro Small Enterprises Authority (MSEA)                KES 543,060,000  
     National Construction Authority(NCA)                    KES 2,378,700,000  
     TODO: explain why NCA this have to go; https://x.com/search?q=NITA%20(from%3Akinjeketile)&src=typed_query&f=top  
-37. State Department for Petroleum  
+33. State Department for Petroleum  
     sub-programme: Oil and gas exploration KES 3,355,434,958  
       market 2 petroleum blocks and conduct bid round, complete 80% of preliminary activities for land acquistion of South Lokichar Oil Field, complete 50% of preliminary activities on development of the Kenya-Tanzania natural gas pipeline  
       TODO: talk about why. Tullow pulling out bcoz of viability, etc.  
     sub-programme: Distribution of petroleum and gas  
       delivery unit: Midstream and Downstream Petroleum Distribution KES 255,000,000  
         supply 100k low income households with 6kg gas cyclinders, conduct 36 industry engangements,  
-38. State Department for Public Service  
+34. State Department for Public Service  
     sub-programme: Management Consultancy Services KES 122,235,131  
       develop 25 career guidelines, review 20 MDACs organizational structures. That's it.  
-39. State Department for Forestry  
+35. State Department for Forestry  
     sub-programme: Commercial Forestry Services KES 7,360,560  
       It only has one KPI: develop zero centres. Yes, zero.  
-40. Auditor general.      
+36. Auditor general.      
     sub-programme: CDF Audits KES 85,643,300  
       cdf will be abolished since it is un-constitutional.  
 
@@ -338,34 +338,9 @@ TODO:
 
 TODO: effect of investment promotion levy: https://x.com/AmbokoJH/status/1924826493592432967  
                                          : https://x.com/ntvkenya/status/1932686729967734794  
-TODO: where is the provincial adminstration? Can we bin it?  
+TODO: where is the provincial adminstration? Can we remove it?  
 TODO: where is fuel development levy(road development levy) in the budget/appropriations books? (maybe `Transfer of receipts` in  the `Program-Based-Budget-Book`??)  
 TODO: search kenha/kura/KeRRA/krb  
-
-```python
-y = x.split("\n")
-
-all_buj = []
-hold = []
-for i in y:
-    i = i.strip()
-    if "kes" in i.lower():
-      all_buj.append(i)
-    a = i.split(" ")
-    hold.append(a[len(a)-1])
-
-print(all_buj)
-
-amt = []
-for i in hold:
-    b = i.replace(",", "")
-    try:
-        amt.append(float(b))
-    except ValueError as e:
-        pass
-
-print(f"{sum(amt):_}")
-```
 
 
 There are about 5 books/pdfs per year:  
@@ -444,4 +419,3 @@ wget -nc https://www.treasury.go.ke/wp-content/uploads/2024/07/FY-2024-25-Recurr
 wget -nc https://www.treasury.go.ke/wp-content/uploads/2024/07/FY-2024-25-Recurrent-Budget-Book-1166-2151.pdf      
 wget -nc https://www.treasury.go.ke/wp-content/uploads/2024/07/FY-2024-25-Program-Based-Budget-Book.pdf      
 ```
-(15/15) * (2/100)* 115_000_000_000  
