@@ -41,10 +41,9 @@ Suspicious govt departments:
       Maintain only one presidential official residence.  
       Many countries have only one; https://en.wikipedia.org/wiki/Official_residence  
    4. Public Entities Oversight Services  KES 276,591,062  
-      evaluate 340 state corporations, induct 100% of board members, carry out 12 management audit reports.  
+      Evaluate 340 state corporations, induct 100% of board members, carry out 12 management audit reports.  
       This office seems to duplicate the `State Department for Investments and Assets Management`. That department "is entrusted with the administration of public enterprises and review of performance and providing recommendations for asset optimizatio"  
       That department has a budget of 116m  
-
 2. State Department for National Government Coordination KES 194,266,125  
    Mission: Effectively coordinate the formulation and implementation of National Government policies and legislations to accelerate the achievement of the National Development.  
    This is a recent creation to pad the un-constitutional Office of the Prime Cabinet Secretary. It needs to be purged using a constitutional sword.  
@@ -69,7 +68,7 @@ Suspicious govt departments:
    Mission: To facilitate the strategic planning and development of the Arid and Semi-Arid Lands (ASALs) and basin-based regions, with the aim of enhancing resilience and improving livelihoods to foster socio-economic development.  
    There alrady exists the Equalisation Fund(https://new.kenyalaw.org/akn/ke/act/2010/constitution/eng@2010-09-03#chp_TWELVE__part_I__sec_204) in the constitituon and it exits  "to provide basic services ... to marginalised areas ... to bring ... those areas to the level generally enjoyed by the rest of the nation"  
    The Equalisation Fund which is allocated 0.5% of goverment revenues would not be impacted by this change.  
-6. State Department for Culture, The Arts and Heritage - Done.  
+6. State Department for Culture, The Arts and Heritage.    
     Culture/ Heritage         KES 1,954,224,282  
     The Arts                  KES 379,286,071  
     General Administration, Planning and Support Services KES 136,302,915  
@@ -98,14 +97,14 @@ Suspicious govt departments:
     So far it has had about KES 30 billion allocated to it over that period and a good part of it should still be circulating inside it.  
 11. State Department for East African Community KES 784,727,960  
     It's role can be performed by the ministry of foreign affairs. Neither Tanzania nor Rwanda have a specific ministry for EAC and they aren't less for it.  
-12.  Ministry of East African Community (EAC), the ASALs and Regional Development - DONE  
+12.  Ministry of East African Community (EAC), the ASALs and Regional Development.    
      depts:  
-       - East African Community          - DONE  
-       - ASALs and Regional Development  - DONE  
-13.  Ministry of Gender, Culture, the Arts, and Heritage - DONE  
+       - East African Community            
+       - ASALs and Regional Development    
+13.  Ministry of Gender, Culture, the Arts, and Heritage   
      depts:  
-       - Gender and Affirmative Action  - DONE  
-       - Culture, Arts and Heritage      - DONE  
+       - Gender and Affirmative Action   
+       - Culture, Arts and Heritage       
 14. State Department for Cabinet Affairs KES 203,723,204  
     Created by executive order 1 of 2023.  
     Mission: To ensure the effective execution of cabinet decisions, strategic governmental initiatives, and public sector reforms, through proficient coordination aimed at fostering transformative and inclusive growth  
@@ -304,12 +303,8 @@ Suspicious govt departments:
       It only has one KPI: develop zero centres. Yes, zero.  
 36. Auditor general.      
     sub-programme: CDF Audits KES 85,643,300  
-      cdf will be abolished since it is un-constitutional.  
+      cdf(consitituency development fund) will be abolished since it is un-constitutional.  
 
-
-
-update:  
-- In `Program-Based-Budget-Book.pdf` we have gone upto; DONE  
 
 
 TODO:  
