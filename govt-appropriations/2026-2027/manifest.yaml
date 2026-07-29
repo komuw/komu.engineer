@@ -1,0 +1,32 @@
+year_dir: govt-appropriations\2026-2027
+books:
+- id: fy-2026-27-development-book-volume-1-1011-1083
+  filename: FY 2026-27 Development Book Volume 1 (1011-1083).pdf
+  sha256: f3a30072247c609c1cc91541052700b7e15942eb43723a9def376971225cdca7
+  pages: 634
+  kind: development
+- id: fy-2026-27-development-book-volume-ii-1091-1097
+  filename: FY 2026-27 Development Book Volume II (1091-1097).pdf
+  sha256: d4c8d4efbf9bedcb825a7f68595adad2f7161fe035a54993bc3e05ecd913b5f7
+  pages: 1029
+  kind: development
+- id: fy-2026-27-development-book-volume-iii-1104-2111
+  filename: FY 2026-27 Development Book Volume III (1104-2111).pdf
+  sha256: b21ebb58087499433a098920916fad61c31ee63c55a391eb85c5bec50d676af8
+  pages: 1042
+  kind: development
+- id: fy-2026-27-program-based-1011-2151
+  filename: FY 2026-27 Program-based (1011-2151).pdf
+  sha256: 66ad5dfad1477805022e42c733801998ad2a4de181c8d656bfab6c8854d41261
+  pages: 1141
+  kind: program-based
+- id: fy-2026-27-recurrent-volume-i-1011-1166-29-04-26
+  filename: FY 2026-27 Recurrent Volume I 1011-1166 29-04-26.pdf
+  sha256: 2140867aa14209939e69166762af498835a97359f7e9d94cfb070a62a90d2ce4
+  pages: 842
+  kind: recurrent
+- id: fy-2026-27-recurrent-volume-ii-1169-2151-29-04-26
+  filename: FY 2026-27 Recurrent Volume II 1169-2151 29-04-26.pdf
+  sha256: 3d217f0e7c1085ac92fce7fdd6ee1c2262de00b8ff5a2d80655aeb74d86a1142
+  pages: 376
+  kind: recurrent
