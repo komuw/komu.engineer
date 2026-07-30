@@ -2,7 +2,7 @@ In this blogpost I'm going to propose specific ways in which Kenya can reduce go
 
 A few caveats;   
 1. This presumes that we do need to reduce government expenditure. If you think we shouldn't, this is probably not the blogpost for you.    
-2. This analysis is done based on the budget appropriations books as presented on Kenya's national treasury website(https://www.treasury.go.ke/index.php/budget-books) as of 29th july 2026. Those books might not yet contain any ammendments that are made in parliament.    
+2. This analysis is done based on the budget appropriations books as presented on Kenya's national treasury website(https://www.treasury.go.ke/index.php/budget-books) as of 29th july 2026. Those books might not yet contain any ammendments that are made in parliament. You can also get them from parliament website https://www.parliament.go.ke/budget-books-fy-2026-2027     
 3. In my analysis I either cut out a whole budget item or I leave it as is.  
 In other words, I do not go into the details of trying to reduce certain budget allocations.  
 As an example the Goverment press is allocated KES 177m for refurbishment. We could do either of three things;  
