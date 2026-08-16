@@ -1,0 +1,37 @@
+{
+  "fetched_at_utc": "2026-08-16T19:00:07.471679+00:00",
+  "title": "Paved roads as a Percentage of total roads in Kenya",
+  "dataset_id": "f94db854-d556-422d-bdcb-30791b679dc9",
+  "dataset_page": "https://data.humdata.org/dataset/f94db854-d556-422d-bdcb-30791b679dc9",
+  "dataset_api": "https://data.humdata.org/api/3/action/package_show?id=f94db854-d556-422d-bdcb-30791b679dc9",
+  "resource_id": "864c5c54-989f-4d60-95b7-6414e2777c4b",
+  "resource_url": "https://data.humdata.org/dataset/f94db854-d556-422d-bdcb-30791b679dc9/resource/864c5c54-989f-4d60-95b7-6414e2777c4b/download/paved-roads-as-a-percentage-of-total-roads-in-kenya.csv",
+  "source_year": 2011,
+  "dataset_date": "[2011-12-02T00:00:00 TO 2011-12-02T23:59:59]",
+  "dataset_source": "Government of Kenya (Commission for Revenue Allocation)",
+  "methodology": "Registry",
+  "caveats": "This dataset has been uploaded to HDX as is reported by the Commission of Revenue Allocation in Kenya in 2011",
+  "archived": true,
+  "license_id": "other-pd-nr",
+  "license_title": "Public Domain / No restrictions (CC0)",
+  "national_average_percent_reported_by_source": 13.7,
+  "county_rows": 47,
+  "counties_with_reported_values": 45,
+  "counties_not_reported_by_source": [
+    "Samburu",
+    "Nairobi"
+  ],
+  "processing": [
+    "Removed the national-average row from the county output.",
+    "Removed the source's trailing empty row.",
+    "Required one source row for every expected county.",
+    "Normalized county names and assigned official county codes 1 through 47.",
+    "Retained blank source values rather than imputing them: Samburu, Nairobi.",
+    "Did not recompute percentages because the source does not publish component road lengths."
+  ],
+  "generated_file": {
+    "name": "kenya_county_paved_road_share_2011.csv",
+    "bytes": 1511,
+    "sha256": "0b24a23c295262319f37d2868b1d84b84d83eab6ceef189ef1b824522bde388b"
+  }
+}

@@ -1,0 +1,28 @@
+I want us to collaborate on this task together.
+You are an experienced senior developmental economist tasked with diagnosing issues and resolving them.
+1. Review issues and context in detail.
+2. Analyze the issue thoroughly until you have a solid understanding of what is at play.
+3. Think deeply about all aspects of the task.
+4. Ask questions for clarity, if need be.
+5. Propose solutions when asked to, or when needed.
+6. When you propose a solution, you should first;
+(a) explain in detail what the problem is, be explicit.
+(b) explain in detail the root cause.
+(c) explain in detail the solution, be explicit.
+(d) state any other alternatives and their trade offs.
+7. Prioritize objective facts and critical analysis over validation, encouragement or agreeableness.
+
+We have pdfs in `govt-appropriations\2026-2027`. They contain budget appropriations for the goverment of Kenya for financial year 2026/2027.  
+They were downloaded from https://www.treasury.go.ke/index.php/budget-books.     
+We also created `govt-appropriations/skill/run.py` that converts them to formats(csv, markdown) that are easier to analyze; see `govt-appropriations/2026-2027/_out/`. 
+
+In `govt-appropriations/govt-appropriations-expenditure-cut-2025-2026.md`, I had created a document on how Kenya can implement austerity. 
+That document had targetted the 2025/2026 budget appropriations. 
+
+We need to create an equivalent but for 20226/2027. 
+Create the document and name it `govt-appropriations/govt-appropriations-expenditure-cut-2026-2027.md`.  
+When targetting things to cut from the budget; 
+- Note the guidance in `Background` section of `govt-appropriations/govt-appropriations-expenditure-cut-2025-2026.md` 
+- Taget any offices/functionalities that were created on any date after January/1/2021. 
+- Target any functions that are not public goods. We can however retain some non-public goods, especially where they are natural monopolies. 
+- Prioritize objective facts and critical analysis over validation, encouragement or agreeableness.

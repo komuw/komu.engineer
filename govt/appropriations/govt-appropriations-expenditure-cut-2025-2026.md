@@ -1,3 +1,4 @@
+### Background
 In this blogpost I'm going to propose specific ways in which Kenya can reduce government expenditure.   
 
 A few caveats;   

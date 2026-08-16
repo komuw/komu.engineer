@@ -1,0 +1,48 @@
+county_code,county_name,paved_road_share_percent,data_status,source_year
+1,Mombasa,28.6,reported,2011
+2,Kwale,5.5,reported,2011
+3,Kilifi,7.3,reported,2011
+4,Tana River,11.1,reported,2011
+5,Lamu,1.3,reported,2011
+6,Taita Taveta,22.3,reported,2011
+7,Garissa,13.0,reported,2011
+8,Wajir,0.2,reported,2011
+9,Mandera,0.0,reported,2011
+10,Marsabit,0.0,reported,2011
+11,Isiolo,0.2,reported,2011
+12,Meru,5.4,reported,2011
+13,Tharaka Nithi,0.0,reported,2011
+14,Embu,4.5,reported,2011
+15,Kitui,2.4,reported,2011
+16,Machakos,6.9,reported,2011
+17,Makueni,3.2,reported,2011
+18,Nyandarua,3.5,reported,2011
+19,Nyeri,8.9,reported,2011
+20,Kirinyaga,6.6,reported,2011
+21,Muranga,9.7,reported,2011
+22,Kiambu,16.0,reported,2011
+23,Turkana,9.3,reported,2011
+24,West Pokot,7.1,reported,2011
+25,Samburu,,not_reported_by_source,2011
+26,Trans Nzoia,9.3,reported,2011
+27,Uasin Gishu,7.6,reported,2011
+28,Elgeyo Marakwet,5.7,reported,2011
+29,Nandi,7.9,reported,2011
+30,Baringo,15.7,reported,2011
+31,Laikipia,6.3,reported,2011
+32,Nakuru,8.3,reported,2011
+33,Narok,4.6,reported,2011
+34,Kajiado,5.9,reported,2011
+35,Kericho,13.8,reported,2011
+36,Bomet,5.4,reported,2011
+37,Kakamega,4.9,reported,2011
+38,Vihiga,16.6,reported,2011
+39,Bungoma,6.0,reported,2011
+40,Busia,4.9,reported,2011
+41,Siaya,6.4,reported,2011
+42,Kisumu,14.2,reported,2011
+43,Homabay,4.8,reported,2011
+44,Migori,4.7,reported,2011
+45,Kisii,5.2,reported,2011
+46,Nyamira,6.9,reported,2011
+47,Nairobi,,not_reported_by_source,2011

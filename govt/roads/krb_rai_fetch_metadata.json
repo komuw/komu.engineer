@@ -1,0 +1,49 @@
+{
+  "fetched_at_utc": "2026-08-16T19:02:38.352440+00:00",
+  "source_map_url": "https://maps.krb.go.ke/kenya-roads-board12769/maps/119381/7-rural-access-index",
+  "source_map_id": "13be7704-b7b8-11eb-a5c1-06765ea3034e",
+  "source_map_config_url": "https://maps.krb.go.ke/maps/13be7704-b7b8-11eb-a5c1-06765ea3034e/map_config",
+  "layers": {
+    "2018": {
+      "name": "RAI 2018",
+      "layer_id": "1a62ca2c-b869-11eb-b5c6-06765ea3034e",
+      "shape_table": "shp_24008796_b7b9_11eb_9c46_06765ea3034e",
+      "value_field": "rai_1"
+    },
+    "2025": {
+      "name": "RAI 2025",
+      "layer_id": "4a4a9540-3d1b-11f0-b229-02af6ed49e2d",
+      "shape_table": "shp_3f223c40_3d1b_11f0_b229_02af6ed49e2d",
+      "value_field": "rai_2025"
+    }
+  },
+  "feature_count_per_layer": 47,
+  "geometry_zoom": 20,
+  "api_endpoints": {
+    "count": "https://maps.krb.go.ke/maps/13be7704-b7b8-11eb-a5c1-06765ea3034e/count_features?layer_id=<LAYER_ID>",
+    "attributes": "https://maps.krb.go.ke/maps/13be7704-b7b8-11eb-a5c1-06765ea3034e/get_feature_gid",
+    "geometry": "https://maps.krb.go.ke/maps/13be7704-b7b8-11eb-a5c1-06765ea3034e/get_feature_geo_json"
+  },
+  "validation": {
+    "county_codes": "ordered integers 1 through 47 in both layers",
+    "maximum_2025_rounding_difference_percentage_points": 0.4931798171
+  },
+  "generated_files": {
+    "krb_rai_2018_counties_full.csv": {
+      "bytes": 5283,
+      "sha256": "d60cf05bd1c91ac9f9654e2f220e098ccf967fafa93c623b20bcc2441d3eb665"
+    },
+    "krb_rai_2025_counties_full.csv": {
+      "bytes": 7757,
+      "sha256": "d089ef9cc76e231808f00002c5bd097314d05defd18e11364ba4ee84bf14d441"
+    },
+    "kenya_county_rural_access_index_2018_2025.csv": {
+      "bytes": 911,
+      "sha256": "8be29f702a31739058156e36aa8470d195565a4684b80cc3056d17efdef74b3d"
+    },
+    "krb_rai_2025_counties.geojson": {
+      "bytes": 9201312,
+      "sha256": "eff9bd97beb6e2befc1c7f4eb46a603dea9a7ab4e435fdac1e15cdfe57a88355"
+    }
+  }
+}
