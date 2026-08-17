@@ -3,11 +3,12 @@
 This repository contains:
 
 1. County-level Rural Access Index (RAI) data from the Kenya Roads Board (KRB) map.
-2. County paved-road shares reported for 2011 by the Government of Kenya's Commission on Revenue Allocation and archived on the Humanitarian Data Exchange (HDX).
-3. Reproducible, self-contained [`uv`](https://docs.astral.sh/uv/guides/scripts/) scripts for fetching, normalizing, validating, and processing the data.
-4. A processor for calculating updated paved-road shares from authorized KRB RICS 2023 road-segment CSV exports.
+2. A reproducible **2023 modelled county paved-road-share estimate** calculated from the national road-surface dataset published by Zhou, Liu, and Huang in 2024.
+3. County paved-road shares reported for 2011 by the Government of Kenya's Commission on Revenue Allocation and archived on the Humanitarian Data Exchange (HDX).
+4. Reproducible, self-contained [`uv`](https://docs.astral.sh/uv/guides/scripts/) scripts for fetching, normalizing, validating, and processing the data.
+5. A processor for calculating official-network shares from authorized KRB RICS 2023 road-segment CSV exports.
 
-The included files were refreshed on **2026-08-16**.
+The modelled 2023 paved-road output was regenerated successfully from the remote source archives on **2026-08-17 UTC**. The other included snapshots were refreshed on **2026-08-16**.
 
 ## Results available now
 
@@ -17,7 +18,7 @@ The included files were refreshed on **2026-08-16**.
 
 ### Percentage of each county's roads that are paved
 
-`kenya_county_paved_road_share_2011.csv` contains one row for each of the 47 counties and uses this definition:
+The newer result is `kenya_county_paved_road_share_osm_google_2023.csv`. It has paved, unpaved, and total lengths and a calculated share for all 47 counties:
 
 ```text
 paved-road share (%) = paved road-network length
@@ -25,17 +26,29 @@ paved-road share (%) = paved road-network length
                        total road-network length
 ```
 
-Important limitations:
+Its source is the CC0 [Road Surface Type Dataset of Kenya](https://doi.org/10.6084/m9.figshare.25415206.v1) accompanying Zhou, Liu, and Huang's 2024 *Scientific Data* [paper](https://doi.org/10.1038/s41597-024-03158-7). The researchers classified **1,267,818 segments** in an OpenStreetMap (OSM) road network downloaded through January 2023, using OSM labels and high-resolution Google satellite imagery. This repository clips those lines to public-domain 2020 geoBoundaries county polygons, measures the clipped geometry geodesically, and calculates each share.
 
-- The county source is from **2011**, not 2023 or 2025.
-- It reports percentages directly; it does not provide paved and total component lengths that would allow an independent recalculation.
-- Values are reported for 45 counties. The source leaves **Nairobi** and **Samburu** blank; this repository retains them as missing rather than imputing values.
-- The source reports a national average of **13.7%**.
-- The source is an archived HDX dataset attributed to the Government of Kenya's Commission on Revenue Allocation. HDX labels it `Public Domain / No restrictions (CC0)`.
+Important interpretation limits:
 
-The latest KRB Surface Type Map contains the fields required for a newer calculation, but its five 2023 layers contain **260,773 road segments** and public bulk export is not available anonymously. The portal's dataset page redirects to sign-in, and making hundreds of thousands of individual feature requests would be inappropriate. Therefore, this repository does not present the 2011 result as a current KRB RICS 2023 result.
+- This is a **modelled research estimate**, not an official Government of Kenya or KRB statistic.
+- Its denominator is the OSM-derived network represented in the research dataset. The 2011 government source and KRB RICS represent different networks, so differences between their percentages must not be interpreted solely as roads having been paved or unpaved.
+- Surface labels are model predictions rather than a field inventory. The paper reports precision, recall, and F1 scores above 0.94 for its method.
+- The paper identifies the road source as January 2023 and labels the imagery `Maps Data ©2023`, but also says Google imagery comes from different sensors and dates. `source_year=2023` is therefore a dataset-vintage label, not one uniform observation date.
+- County polygons capture **99.7663%** of released source line length. The unallocated 880.045758 km is excluded; exact totals and checksums are in the metadata.
+- The paper's narrative says the national paved proportion is 30%, but it does not publish component lengths for that statement. Measuring the released line file produces **9.928736%** before county clipping and **9.922117%** for the portions allocated to counties. This repository uses the explicit network-length formula above.
 
-After obtaining authorized KRB CSV exports, use `scripts/calculate_paved_share_from_krb_segments.py` to calculate the current percentages. See [Calculating a 2023 paved-road share](#calculating-a-2023-paved-road-share).
+Two newer-vintage HeiGIT datasets were also evaluated but do not match this all-road denominator. The [November 2024 Mapillary/OSM dataset](https://data.humdata.org/dataset/kenya-road-surface-data) says surface information is still missing for 67.2116% of mapped road length. The [2020/2024 PlanetScope dataset](https://data.humdata.org/dataset/kenya-planet-road-surface-data) has near-complete predictions, but only for OSM motorway, trunk, primary, and secondary roads (and their link classes). It can answer an **arterial-road** question, not paved length as a share of all mapped road length. The 2023 Zhou–Liu–Huang release is therefore the most recent source found that supplies a paved/unpaved class for every segment in its nationwide all-road OSM network.
+
+For historical continuity, `kenya_county_paved_road_share_2011.csv` retains the reported government values. That source:
+
+- reports percentages directly and provides no component lengths;
+- reports values for 45 counties, leaving **Nairobi** and **Samburu** blank;
+- reports a national average of **13.7%**; and
+- is an archived HDX dataset attributed to the Government of Kenya's Commission on Revenue Allocation and labelled `Public Domain / No restrictions (CC0)` by HDX.
+
+The latest KRB Surface Type Map contains the fields required for an official-network 2023 calculation, but its five layers contain **260,773 road segments** and public bulk export is not available anonymously. The portal's dataset page redirects to sign-in, and making hundreds of thousands of individual feature requests would be inappropriate. The new research estimate is consequently not labelled as a KRB RICS result.
+
+After obtaining authorized KRB CSV exports, use `scripts/calculate_paved_share_from_krb_segments.py`. See [Calculating an official KRB RICS 2023 paved-road share](#calculating-an-official-krb-rics-2023-paved-road-share).
 
 ## What the Rural Access Index means
 
@@ -67,9 +80,12 @@ RAI and paved-road share answer different questions:
 | `krb_rai_2025_counties_full.csv` | All attributes returned by the KRB portal's `RAI 2025` layer. |
 | `krb_rai_2025_counties.geojson` | All 2025 attributes and 47 county web-map geometries. |
 | `krb_rai_fetch_metadata.json` | RAI fetch time, source URLs, discovered IDs, checksums, and validation results. |
-| `kenya_county_paved_road_share_2011.csv` | Normalized 47-county table of reported 2011 paved-road shares. |
+| `kenya_county_paved_road_share_osm_google_2023.csv` | Calculated 47-county table of modelled 2023 paved/unpaved lengths and paved shares. |
+| `kenya_county_paved_road_share_osm_google_2023_metadata.json` | Research-data citation, source and boundary checksums, method, coverage validation, and caveats. |
+| `kenya_county_paved_road_share_2011.csv` | Normalized 47-county table of reported 2011 government paved-road shares. |
 | `kenya_county_paved_road_share_2011_metadata.json` | HDX source metadata, license, transformations, checksum, and missing-value notes. |
 | `scripts/download_krb_rai.py` | Fetches, processes, and validates KRB RAI attributes and geometry. |
+| `scripts/download_osm_google_paved_road_share.py` | Downloads, clips, measures, aggregates, and validates the modelled 2023 research dataset. |
 | `scripts/download_county_paved_road_share.py` | Fetches and normalizes the archived 2011 county paved-road shares from HDX. |
 | `scripts/calculate_paved_share_from_krb_segments.py` | Calculates county shares from authorized KRB RICS 2023 segment CSV exports. |
 | `aa.png` | Screenshot of the KRB RAI map supplied with the original request. |
@@ -86,7 +102,13 @@ Refresh the RAI files:
 uv run scripts/download_krb_rai.py
 ```
 
-Refresh the archived county paved-road-share file:
+Recalculate the modelled 2023 paved-road shares:
+
+```bash
+uv run scripts/download_osm_google_paved_road_share.py
+```
+
+Refresh the archived 2011 county paved-road-share file:
 
 ```bash
 uv run scripts/download_county_paved_road_share.py
@@ -96,6 +118,7 @@ Because the scripts have `uv` shebangs and are executable, on systems supporting
 
 ```bash
 ./scripts/download_krb_rai.py
+./scripts/download_osm_google_paved_road_share.py
 ./scripts/download_county_paved_road_share.py
 ```
 
@@ -103,6 +126,7 @@ Show script-specific options:
 
 ```bash
 uv run scripts/download_krb_rai.py --help
+uv run scripts/download_osm_google_paved_road_share.py --help
 uv run scripts/download_county_paved_road_share.py --help
 uv run scripts/calculate_paved_share_from_krb_segments.py --help
 ```
@@ -228,6 +252,47 @@ The map does not publish a complete data dictionary for its other fields. Full o
 - Four county labels differ in punctuation or spacing between layers. Records are joined by county code; the combined output uses 2025 labels.
 - KRB warns that portal boundaries are not authoritative for boundary delimitation.
 
+## Calculating the modelled 2023 OSM/Google paved-road shares
+
+Road dataset:
+
+- Figshare record: <https://doi.org/10.6084/m9.figshare.25415206.v1>
+- Associated paper: <https://doi.org/10.1038/s41597-024-03158-7>
+
+Run:
+
+```bash
+uv run scripts/download_osm_google_paved_road_share.py
+```
+
+The source ZIP is 181.6 MB and expands to approximately 530 MB, so the first run needs enough temporary disk space and can take several minutes. If the two archives were downloaded previously, avoid downloading them again while retaining all checksum validation:
+
+```bash
+uv run scripts/download_osm_google_paved_road_share.py \
+  --road-archive /path/to/road-surface.zip \
+  --boundary-archive /path/to/geoBoundaries-KEN-ADM1-all.zip
+```
+
+Write results elsewhere with `--output-dir /path/to/output`.
+
+### 2023 research-estimate processing protocol
+
+The script fails closed if a source changes unexpectedly. It:
+
+1. Calls the Figshare API for article `25415206`, finds file `45061495`, and verifies its title, size, MD5, SHA-256, and CC0 label.
+2. Extracts the national line dataset and requires exactly **1,267,818** features: 253,328 labelled `paved` and 1,014,490 labelled `unpaved`.
+3. Downloads a pinned geoBoundaries `gbOpen` release at commit `9469f09`, verifies its SHA-256, metadata, public-domain label, and 47 county polygons.
+4. Matches polygons to official county codes 1–47 by normalized name and rejects missing, duplicate, invalid, or overlapping polygons.
+5. Uses a spatial index to select roads for each county and intersects each line with the polygon. A road crossing a county boundary is therefore split rather than assigned wholly to one side.
+6. Transforms clipped line vertices from EPSG:3857 to longitude/latitude and measures edges geodesically on the WGS84 ellipsoid. It does not use Web Mercator planar length.
+7. Sums lengths by paved/unpaved class and writes all three component lengths plus the calculated percentage.
+8. Independently measures the complete source network and verifies that county polygons capture between 99% and 100% of its length. The current result captures **99.766252%**.
+9. Writes citations, source-vintage notes, source checksums, exact national and allocated totals, caveats, and the output checksum to `kenya_county_paved_road_share_osm_google_2023_metadata.json`.
+
+The checked-in snapshot was generated by a complete remote-download run at `2026-08-17T22:54:47Z`. Both metadata inputs have `input_mode=downloaded`, confirming that this run fetched rather than reused local archives. The resulting CSV SHA-256 is `50f32e944c0e82fe4163c1d70b607532f77a955021f41c0bcd79a2e30d42744a`.
+
+The raw 181.6 MB research archive is not committed to this repository. The normalized CSV is small, while the script and metadata retain a reproducible chain to the exact source file.
+
 ## Fetching the reported 2011 paved-road shares
 
 Source dataset:
@@ -254,7 +319,9 @@ The script:
 
 No paved or total length fields are present in this source, so the script does not claim to recompute its percentages.
 
-## Calculating a 2023 paved-road share
+## Calculating an official KRB RICS 2023 paved-road share
+
+This is a separate calculation against the KRB network; it does not use or reproduce the modelled OSM/Google result above.
 
 KRB's [Road Network Surface Type Map](https://maps.krb.go.ke/kenya-roads-board12769/maps/110570/4-road-network-surface-type-map) says its latest data come from RICS 2023. The current map configuration divides the road network into five layers:
 
@@ -331,6 +398,11 @@ There is no direct globally standardized SDG counterpart to RAI that requires pa
 - KRB RAI map: <https://maps.krb.go.ke/kenya-roads-board12769/maps/119381/7-rural-access-index>
 - KRB map portal and disclaimer: <https://maps.krb.go.ke/kenya-roads-board12769/maps>
 - KRB Surface Type Map: <https://maps.krb.go.ke/kenya-roads-board12769/maps/110570/4-road-network-surface-type-map>
+- Zhou, Liu, and Huang 2023 road-surface dataset: <https://doi.org/10.6084/m9.figshare.25415206.v1>
+- Associated 2024 *Scientific Data* paper: <https://doi.org/10.1038/s41597-024-03158-7>
+- HeiGIT November 2024 Mapillary/OSM road-surface dataset evaluated for coverage: <https://data.humdata.org/dataset/kenya-road-surface-data>
+- HeiGIT 2020/2024 PlanetScope arterial-road dataset evaluated for scope: <https://data.humdata.org/dataset/kenya-planet-road-surface-data>
+- Pinned geoBoundaries Kenya ADM1 release: <https://github.com/wmgeolab/geoBoundaries/tree/9469f09/releaseData/gbOpen/KEN/ADM1>
 - HDX 2011 county paved-road shares: <https://data.humdata.org/dataset/f94db854-d556-422d-bdcb-30791b679dc9>
 - World Bank RAI overview: <https://datacatalog.worldbank.org/search/dataset/0038250/rural-access-index-rai>
 - Official SDG 9.1.1 metadata: <https://unstats.un.org/sdgs/metadata/files/Metadata-09-01-01.pdf>
@@ -343,6 +415,10 @@ There is no direct globally standardized SDG counterpart to RAI that requires pa
 
 The KRB portal identifies its content and data as KRB property and states that reproduction or transfer requires prior written consent. It requires attribution to **Kenya Roads Board** and limits reuse under its terms. Review the current portal terms and obtain required permission before publishing, transferring, or commercially using KRB-derived files. This repository does not grant a separate license to KRB data.
 
-### Archived paved-road-share file
+### Modelled 2023 paved-road-share files
+
+The Figshare API labels the released Zhou, Liu, and Huang road-surface dataset **CC0**. The associated article is published under **CC BY 4.0**. The pinned geoBoundaries metadata labels the 2020 county polygons **Public Domain**. The generated metadata records the exact source files, licenses as reported by their providers, and checksums. Consult the current source records and applicable underlying-source terms before redistribution.
+
+### Archived 2011 paved-road-share file
 
 HDX identifies the 2011 Commission on Revenue Allocation dataset as `Public Domain / No restrictions (CC0)`. Consult the current HDX metadata record before redistribution.

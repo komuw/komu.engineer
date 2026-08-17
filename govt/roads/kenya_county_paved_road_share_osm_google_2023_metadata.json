@@ -1,0 +1,114 @@
+{
+  "calculated_at_utc": "2026-08-17T22:54:47.466440+00:00",
+  "title": "Modelled paved-road share of OpenStreetMap road length by Kenya county, 2023",
+  "indicator": "Paved roads as a percentage of total road length by county",
+  "formula": "paved geodesic line length / (paved + unpaved geodesic line length) * 100",
+  "source_year": 2023,
+  "source_vintage_notes": [
+    "The research paper says OSM road data through January 2023 were used.",
+    "The paper labels the imagery Maps Data ©2023, but Google imagery can come from different sensors and acquisition dates.",
+    "The source dataset was published on Figshare on 2024-03-21; the associated paper was published on 2024-04-03."
+  ],
+  "official_statistic": false,
+  "source_road_dataset": {
+    "title": "Road Surface Type Dataset of Kenya",
+    "authors": [
+      "Qi Zhou",
+      "Zixian Liu",
+      "Zesheng Huang"
+    ],
+    "figshare_article_id": 25415206,
+    "figshare_page": "https://springernature.figshare.com/articles/dataset/Road_Surface_Type_Dataset_of_Kenya/25415206",
+    "figshare_api": "https://api.figshare.com/v2/articles/25415206",
+    "dataset_doi": "10.6084/m9.figshare.25415206.v1",
+    "associated_paper": "https://doi.org/10.1038/s41597-024-03158-7",
+    "associated_paper_doi": "10.1038/s41597-024-03158-7",
+    "published_date": "2024-03-21T11:10:29Z",
+    "license_name_reported_by_figshare": "CC0",
+    "license_url_reported_by_figshare": "https://creativecommons.org/publicdomain/zero/1.0/",
+    "file_id": 45061495,
+    "file_name": "Road Surface Type Dataset of Kenya.zip",
+    "download_url": "https://ndownloader.figshare.com/files/45061495",
+    "input_mode": "downloaded",
+    "bytes": 181604451,
+    "md5": "3e715936145666869cd55cbcb9c312ec",
+    "sha256": "030e8955bed42635f5bb12edbf818967a6f69a79b367ee64feecb57a5271a357"
+  },
+  "county_boundaries": {
+    "provider": "geoBoundaries gbOpen",
+    "release_commit": "9469f09",
+    "download_url": "https://github.com/wmgeolab/geoBoundaries/raw/9469f09/releaseData/gbOpen/KEN/ADM1/geoBoundaries-KEN-ADM1-all.zip",
+    "input_mode": "downloaded",
+    "bytes": 5728988,
+    "md5": "4980a123a7ea673f6e02b35b8129b925",
+    "sha256": "61801055936be31ac8655631f998c8b468a9202045466ef0d86e72ebd91edce2",
+    "metadata": {
+      "boundaryID": "KEN-ADM1-32016919",
+      "boundaryISO": "KEN",
+      "boundaryYear": "2020",
+      "boundaryType": "ADM1",
+      "boundarySource": "RCMRD GeoPortal, Africa GeoPortal",
+      "boundaryCanonical": "Counties",
+      "boundaryLicense": "Public Domain",
+      "licenseDetail": "",
+      "licenseSource": "https//rcmrd.africageoportal.com/datasets/africageoportal",
+      "boundarySourceURL": "https//rcmrd.africageoportal.com/datasets/africageoportal",
+      "sourceDataUpdateDate": "Thu Jan 19 07:31:04 2023",
+      "buildDate": "Dec 12, 2023",
+      "admUnitCount": "47",
+      "meanVertices": "3897.0",
+      "minVertices": "555",
+      "maxVertices": "12302",
+      "meanPerimeterLengthKM": "583.9524686524665",
+      "maxPerimeterLengthKM": "1675.0063100040054",
+      "minPerimeterLengthKM": "151.90393606754756",
+      "meanAreaSqKM": "12572.304483011549",
+      "minAreaSqKM": "226.4819538269366",
+      "maxAreaSqKM": "75925.18087289555"
+    }
+  },
+  "processing": [
+    "Validated the pinned archives by byte count and cryptographic checksums.",
+    "Required exactly 1,267,818 source road segments and only paved/unpaved surface values with the expected class counts.",
+    "Matched all 47 boundary polygons to official county codes by normalized county name.",
+    "Reprojected 2020 geoBoundaries polygons to the road source CRS (EPSG:3857).",
+    "Split road geometry at county polygons so cross-county segments contribute only their in-county portions.",
+    "Transformed clipped line vertices to longitude/latitude and measured each edge geodesically on the WGS84 ellipsoid.",
+    "Summed paved and unpaved lengths and calculated paved / (paved + unpaved) * 100 for every county."
+  ],
+  "validation": {
+    "source_road_features": 1267818,
+    "source_surface_feature_counts": {
+      "unpaved": 1014490,
+      "paved": 253328
+    },
+    "source_network_length_km": {
+      "paved": 37380.966679,
+      "unpaved": 339111.747401,
+      "total": 376492.71408,
+      "paved_share_percent": 9.928736
+    },
+    "length_allocated_to_counties_km": {
+      "paved": 37268.727106,
+      "unpaved": 338343.941217,
+      "total": 375612.668323,
+      "paved_share_percent": 9.922117
+    },
+    "source_length_allocated_to_counties_percent": 99.766252,
+    "source_length_outside_county_polygons_km": 880.045758,
+    "county_rows": 47
+  },
+  "caveats": [
+    "This is a modelled research estimate, not an official Kenya Roads Board inventory or statistic.",
+    "The denominator is the complete OSM-derived road network released by this study; it differs from the 2011 government source and KRB RICS, so changes between files must not be interpreted solely as roads being paved or unpaved.",
+    "Surface labels are model predictions informed by OSM and Google satellite imagery, not a field survey. The paper reports precision, recall, and F1 above 0.94 for its method.",
+    "Google satellite imagery was captured by different sensors at different, incompletely documented dates.",
+    "The county output excludes source line portions outside the pinned county polygons; the validation block reports the included percentage and omitted length.",
+    "The paper narrative says the nationwide paved proportion is 30% without publishing component lengths. The explicit geodesic length calculation from its released line file is reported in validation.source_network_length_km and is about 9.93%; this output uses the reproducible line-length definition."
+  ],
+  "generated_file": {
+    "name": "kenya_county_paved_road_share_osm_google_2023.csv",
+    "bytes": 4225,
+    "sha256": "50f32e944c0e82fe4163c1d70b607532f77a955021f41c0bcd79a2e30d42744a"
+  }
+}
