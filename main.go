@@ -194,11 +194,6 @@ func router(l *slog.Logger, opts config.Opts, rootDir string) http.HandlerFunc {
 			website(w, r)
 			return
 		}
-		if strings.Contains(hst, strings.ReplaceAll(fmt.Sprintf("srs.%s", domain), "..", "")) {
-			// Redirect to new domain.
-			http.Redirect(w, r, "https://dushed.com", http.StatusTemporaryRedirect)
-			return
-		}
 		if strings.Contains(hst, strings.ReplaceAll(fmt.Sprintf("algo.%s", domain), "..", "")) {
 			algo(w, r)
 			return
