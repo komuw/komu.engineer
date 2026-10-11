@@ -18,8 +18,6 @@ import (
 	"github.com/komuw/ong/config"
 	"github.com/komuw/ong/id"
 	"github.com/komuw/ong/log"
-	"github.com/komuw/ong/mux"
-	"github.com/komuw/srs/ext"
 	"go.akshayshah.org/attest"
 )
 
@@ -92,7 +90,7 @@ func TestMux(t *testing.T) {
 	l := log.New(context.Background(), w, 10)
 	opts := config.DevOpts(l, id.UUID4().String())
 	opts.Domain = "localhost"
-	mx := getMux(l, opts, cwd, mux.Muxer{})
+	mx := getMux(l, opts, cwd)
 
 	httpsPort := getPort()
 	ts, err := TlsServer(mx, opts.Domain, httpsPort)
@@ -188,7 +186,7 @@ func TestMuxRedirects(t *testing.T) {
 	l := log.New(context.Background(), w, 10)
 	opts := config.DevOpts(l, id.UUID4().String())
 	opts.Domain = "localhost"
-	mx := getMux(l, opts, cwd, mux.Muxer{})
+	mx := getMux(l, opts, cwd)
 
 	httpsPort := getPort()
 	ts, err := TlsServer(mx, opts.Domain, httpsPort)
@@ -258,17 +256,6 @@ func TestMuxRedirects(t *testing.T) {
 func TestMuxRouteSubdomains(t *testing.T) {
 	t.Parallel()
 
-	srsMx := func(t *testing.T) mux.Muxer {
-		dbPath := t.TempDir() + "/srs.sqlite"
-		mx, _, closer, _, _, err := ext.Run(dbPath, "development")
-		attest.Ok(t, err)
-		t.Cleanup(func() {
-			closer()
-		})
-
-		return mx
-	}
-
 	cwd, err := os.Getwd()
 	attest.Ok(t, err)
 
@@ -276,7 +263,7 @@ func TestMuxRouteSubdomains(t *testing.T) {
 	l := log.New(context.Background(), w, 10)
 	opts := config.DevOpts(l, id.UUID4().String())
 	opts.Domain = "localhost"
-	mx := getMux(l, opts, cwd, srsMx(t))
+	mx := getMux(l, opts, cwd)
 
 	httpsPort := getPort()
 	ts, err := TlsServer(mx, opts.Domain, httpsPort)
@@ -308,16 +295,10 @@ func TestMuxRouteSubdomains(t *testing.T) {
 			expectedBody:       "Is a software developer currently",
 		},
 		{
-			host:               "srs.localhost:80",
-			uri:                "/zhealthz",
+			host:               "algo.localhost", // no port.
+			uri:                "/index.html",
 			expectedStatusCode: http.StatusOK,
-			expectedBody:       `"status": "ok"`,
-		},
-		{
-			host:               "srs.localhost", // no port
-			uri:                "/zhealthz",
-			expectedStatusCode: http.StatusOK,
-			expectedBody:       `"status": "ok"`,
+			expectedBody:       "4_stack_n_queue",
 		},
 		{
 			host:               "algo.localhost:80",

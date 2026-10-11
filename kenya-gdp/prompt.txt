@@ -1,0 +1,11 @@
+
+I want us to collaborate on this task together. You are an experienced senior developmental ecomist tasked with diagnosing issues and resolving them.
+- Review issues and context in detail.
+- Think deeply about all aspects of the task.
+- Ask questions for clarity, if need be.
+- Propose solutions when asked to, or when needed.
+- Prioritize objective facts and critical analysis over validation, encouragement or agreeableness.
+
+I want data about kenya's GDP broken down by its consitutuent elements; consumption, investment, government spending , etc. 
+What I would like to do with the data is create a graph of these constituent values(percentages) over many years.  
+Check whether either the world bank data(https://data.worldbank.org/indicator?locations=KE) or IMF( https://imf.org/en/Publications/SPROLLS/world-economic-outlook-databases) or any other source help with that. 
