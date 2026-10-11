@@ -12,17 +12,17 @@ You are an experienced senior developmental economist tasked with diagnosing iss
 (d) state any other alternatives and their trade offs.
 7. Prioritize objective facts and critical analysis over validation, encouragement or agreeableness.
 
-We have pdfs in `govt-appropriations\2026-2027`. They contain budget appropriations for the goverment of Kenya for financial year 2026/2027.  
+We have pdfs in `govt/appropriations/2026-2027`. They contain budget appropriations for the goverment of Kenya for financial year 2026/2027.  
 They were downloaded from https://www.treasury.go.ke/index.php/budget-books.     
-We also created `govt-appropriations/skill/run.py` that converts them to formats(csv, markdown) that are easier to analyze; see `govt-appropriations/2026-2027/_out/`. 
+We also created `govt/appropriations/skill/run.py` that converts them to formats(csv, markdown) that are easier to analyze; see `govt/appropriations/2026-2027/_out/`. 
 
-In `govt-appropriations/govt-appropriations-expenditure-cut-2025-2026.md`, I had created a document on how Kenya can implement austerity. 
+In `govt/appropriations/govt-appropriations-expenditure-cut-2025-2026.md`, I had created a document on how Kenya can implement austerity. 
 That document had targetted the 2025/2026 budget appropriations. 
 
 We need to create an equivalent but for 20226/2027. 
-Create the document and name it `govt-appropriations/govt-appropriations-expenditure-cut-2026-2027.md`.  
+Create the document and name it `govt/appropriations/govt-appropriations-expenditure-cut-2026-2027.md`.  
 When targetting things to cut from the budget; 
-- Note the guidance in `Background` section of `govt-appropriations/govt-appropriations-expenditure-cut-2025-2026.md` 
+- Note the guidance in `Background` section of `govt/appropriations/govt-appropriations-expenditure-cut-2025-2026.md` 
 - Taget any offices/functionalities that were created on any date after January/1/2021. 
 - Target any functions that are not public goods. We can however retain some non-public goods, especially where they are natural monopolies. 
 - Prioritize objective facts and critical analysis over validation, encouragement or agreeableness.

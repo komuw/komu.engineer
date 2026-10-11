@@ -1,5 +1,5 @@
 ### Background
-In this blogpost I'm going to propose specific ways in which Kenya can reduce government expenditure. This is the FY **2026/2027** edition; the previous edition (`govt-appropriations-expenditure-cut-2025-2026.md`) targeted the 2025/2026 appropriations.
+In this blogpost I'm going to propose specific ways in which Kenya can reduce government expenditure. This is the FY **2026/2027** edition; the previous edition (`govt/appropriations/govt-appropriations-expenditure-cut-2025-2026.md`) targeted the 2025/2026 appropriations.
 
 A few caveats;
 1. This presumes that we do need to reduce government expenditure. If you think we shouldn't, this is probably not the blogpost for you.

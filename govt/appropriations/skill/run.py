@@ -8,9 +8,9 @@
 """kbudget pipeline entrypoint.
 
 Run with uv (self-contained; installs its own deps):
-    uv run --script govt-appropriations/skill/run.py run --year-dir govt-appropriations/2026-2027
-    uv run --script skill/run.py manifest --year-dir govt-appropriations/2026-2027
-    uv run --script skill/run.py run      --year-dir govt-appropriations/2026-2027 --only "Development Book Volume 1"
+    uv run --script govt/appropriations/skill/run.py run --year-dir govt/appropriations/2026-2027
+    uv run --script skill/run.py manifest --year-dir govt/appropriations/2026-2027
+    uv run --script skill/run.py run      --year-dir govt/appropriations/2026-2027 --only "Development Book Volume 1"
 
 System prerequisite: Xpdf `pdftotext` on PATH (already installed).
 """

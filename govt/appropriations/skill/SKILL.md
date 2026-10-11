@@ -46,17 +46,17 @@ both engines AND every arithmetic identity touching it holds. Everything else is
 ## Run it for a financial year
 
 ```bash
-# 1. Put the year's PDFs in one folder, e.g. govt-appropriations/2026-2027/
+# 1. Put the year's PDFs in one folder, e.g. govt/appropriations/2026-2027/
 # 2. Freeze the inputs (records filenames, SHA-256, page counts):
-uv run --script skill/run.py manifest --year-dir govt-appropriations/2026-2027
+uv run --script skill/run.py manifest --year-dir govt/appropriations/2026-2027
 
 # 3. Run the pipeline (start with one book to gauge coverage):
-uv run --script skill/run.py run --year-dir govt-appropriations/2026-2027 \
+uv run --script skill/run.py run --year-dir govt/appropriations/2026-2027 \
        --only "Development Book Volume 1"
 
 # whole year, or filter by kind:
-uv run --script skill/run.py run --year-dir govt-appropriations/2026-2027
-uv run --script skill/run.py run --year-dir govt-appropriations/2026-2027 --kind development
+uv run --script skill/run.py run --year-dir govt/appropriations/2026-2027
+uv run --script skill/run.py run --year-dir govt/appropriations/2026-2027 --kind development
 ```
 
 Flags: `--only <substr>` filter by filename, `--kind development|recurrent|program-based`,
