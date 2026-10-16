@@ -12,23 +12,32 @@ shopt -s nullglob globstar
 
 
 # run as:
-# export HOST_NAME_IS=SomeIP && bash deploy.sh
+# bash deploy.sh
 #
 
+
+DOMAIN_NAME="komu.engineer"
 
 run_check_env() {
     printf "\n\n running check environment variables: \n"
 
-    if [[ -z "${HOST_NAME_IS}" ]]
-    then
-        printf "\n\n environment var HOST_NAME_IS is empty \n"
+    if ! SERVER_IP=$(dig +short A "${DOMAIN_NAME}" @8.8.8.8 | grep -E '^[0-9]{1,3}(\.[0-9]{1,3}){3}$'); then
+        printf "Error: Expected exactly 1 IP for %s\n" "${DOMAIN_NAME}" >&2
+        exit 1
+    fi
+
+    if [[ "${SERVER_IP}" == *$'\n'* ]]; then
+        printf "Error: Expected exactly 1 IP for %s\n" "${DOMAIN_NAME}" >&2
         exit 1
     fi
 }
 
-SERVER_IP="${HOST_NAME_IS}"
+
 get_ip() {
-    printf "\n\n SERVER_IP are:\n"
+    printf "\n\n DOMAIN_NAME is:\n"
+        printf "%s\n" "$DOMAIN_NAME"
+
+    printf "\n\n SERVER_IP is:\n"
         printf "%s\n" "$SERVER_IP"
 } 
 
