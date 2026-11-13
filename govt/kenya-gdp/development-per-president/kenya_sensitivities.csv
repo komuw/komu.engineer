@@ -1,0 +1,37 @@
+case,president,FYs,measure,avg_of_yearly
+baseline,Kibaki,03/04-12/13,dev_pct_gdp,5.0
+baseline,Kibaki,03/04-12/13,dev_pct_rev_after_interest,34.9
+baseline,Kibaki,03/04-12/13,dev_pct_rev_after_inherited_int,33.5
+baseline,Kibaki,03/04-12/13,recurrent_balance_pct_rev_after_int,13.8
+baseline,Kenyatta,13/14-21/22,dev_pct_gdp,5.9
+baseline,Kenyatta,13/14-21/22,dev_pct_rev_after_interest,44.8
+baseline,Kenyatta,13/14-21/22,dev_pct_rev_after_inherited_int,39.3
+baseline,Kenyatta,13/14-21/22,recurrent_balance_pct_rev_after_int,-10.7
+baseline,Ruto,22/23-25/26,dev_pct_gdp,3.6
+baseline,Ruto,22/23-25/26,dev_pct_rev_after_interest,30.7
+baseline,Ruto,22/23-25/26,dev_pct_rev_after_inherited_int,28.5
+baseline,Ruto,22/23-25/26,recurrent_balance_pct_rev_after_int,-21.3
+160bn moved back to FY12/13,Kibaki,03/04-12/13,dev_pct_gdp,4.7
+160bn moved back to FY12/13,Kibaki,03/04-12/13,dev_pct_rev_after_interest,32.7
+160bn moved back to FY12/13,Kibaki,03/04-12/13,dev_pct_rev_after_inherited_int,31.4
+160bn moved back to FY12/13,Kibaki,03/04-12/13,recurrent_balance_pct_rev_after_int,13.8
+160bn moved back to FY12/13,Kenyatta,13/14-21/22,dev_pct_gdp,6.3
+160bn moved back to FY12/13,Kenyatta,13/14-21/22,dev_pct_rev_after_interest,46.9
+160bn moved back to FY12/13,Kenyatta,13/14-21/22,dev_pct_rev_after_inherited_int,41.4
+160bn moved back to FY12/13,Kenyatta,13/14-21/22,recurrent_balance_pct_rev_after_int,-10.7
+160bn moved back to FY12/13,Ruto,22/23-25/26,dev_pct_gdp,3.6
+160bn moved back to FY12/13,Ruto,22/23-25/26,dev_pct_rev_after_interest,30.7
+160bn moved back to FY12/13,Ruto,22/23-25/26,dev_pct_rev_after_inherited_int,28.5
+160bn moved back to FY12/13,Ruto,22/23-25/26,recurrent_balance_pct_rev_after_int,-21.3
+FY assigned to president who passed the budget,Kibaki,03/04-13/14,dev_pct_gdp,5.0
+FY assigned to president who passed the budget,Kibaki,03/04-13/14,dev_pct_rev_after_interest,34.9
+FY assigned to president who passed the budget,Kibaki,03/04-13/14,dev_pct_rev_after_inherited_int,33.3
+FY assigned to president who passed the budget,Kibaki,03/04-13/14,recurrent_balance_pct_rev_after_int,12.6
+FY assigned to president who passed the budget,Kenyatta,14/15-22/23,dev_pct_gdp,5.8
+FY assigned to president who passed the budget,Kenyatta,14/15-22/23,dev_pct_rev_after_interest,44.2
+FY assigned to president who passed the budget,Kenyatta,14/15-22/23,dev_pct_rev_after_inherited_int,39.1
+FY assigned to president who passed the budget,Kenyatta,14/15-22/23,recurrent_balance_pct_rev_after_int,-13.0
+FY assigned to president who passed the budget,Ruto,23/24-25/26,dev_pct_gdp,3.6
+FY assigned to president who passed the budget,Ruto,23/24-25/26,dev_pct_rev_after_interest,31.1
+FY assigned to president who passed the budget,Ruto,23/24-25/26,dev_pct_rev_after_inherited_int,30.3
+FY assigned to president who passed the budget,Ruto,23/24-25/26,recurrent_balance_pct_rev_after_int,-21.7
